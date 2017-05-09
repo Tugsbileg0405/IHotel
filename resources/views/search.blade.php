@@ -844,6 +844,21 @@
                                 optimized: false,
                                 zIndex:80
                             });
+                            var star = "";
+                            var times = el.star;
+                            for(var i=0; i < times; i++){
+                                    star += "<i class='icon yellow star'></i>";
+                            }
+                            var lowest = Number.POSITIVE_INFINITY;
+                            var saledprice;
+                            for(var i=0; i < el.rooms.length; i++){
+                                tmp = el.rooms[i].price;
+                                if(el.rooms[i].sales.length > 0){
+                                        saledprice = el.rooms[i].sales[0].price;
+                                        lowest = saledprice;
+                                }
+                                if (tmp < lowest) lowest = tmp;
+                            }
                             var url = '{{ route("search.hotel", "id") }}';
                             url = url.replace('id', el.id);
                             var rating = '{{ $rate }}';
