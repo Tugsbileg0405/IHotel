@@ -97,7 +97,13 @@
                         <input type="text" name="name" placeholder="{{ __('messages.Name') }}">
                     </div>
                     <div class="field">
+                        <input type="text" name="surname" placeholder="{{ __('messages.Surname') }}">
+                    </div>
+                    <div class="field">
                         <input type="email" name="email" placeholder="{{ __('messages.Email') }}">
+                    </div>
+                    <div class="field">
+                        <input type="text" name="country" placeholder="{{ __('messages.Country') }}">
                     </div>
                     <div class="field">
                         <input type="password" name="password" placeholder="{{ __('messages.Password') }}">

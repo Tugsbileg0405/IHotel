@@ -18,7 +18,7 @@
 			<div class="two fields">
 				<div class="field">
 					<label>{{ __('messages.Firstname') }}</label>
-					<input type="text" name="first_name" placeholder="{{ __('messages.Firstname') }}" value="{{ Auth::user()->first_name }}">
+					<input type="text" name="surname" placeholder="{{ __('messages.Firstname') }}" value="{{ Auth::user()->surname }}">
 				</div>
 				<div class="required field">
 					<label>{{ __('messages.Lastname') }}</label>

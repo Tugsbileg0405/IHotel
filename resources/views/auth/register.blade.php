@@ -62,8 +62,6 @@
                                                     </div>
                                                 @endif
                                             </div>
-
-
                                             <div class="field{{ $errors->has('country') ? ' error' : '' }}">
                                                 <input type="text" name="country" placeholder="{{ __('messages.Country') }}" value="{{ old('country') }}">
                                                 @if ($errors->has('country'))
@@ -72,8 +70,6 @@
                                                     </div>
                                                 @endif
                                             </div>
-
-
                                             <div class="field{{ $errors->has('password') ? ' error' : '' }}">
                                                 <input type="password" name="password" placeholder="{{ __('messages.Password') }}">
                                                 @if ($errors->has('password'))

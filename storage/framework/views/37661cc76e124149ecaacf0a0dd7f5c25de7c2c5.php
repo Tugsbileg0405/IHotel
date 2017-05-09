@@ -104,7 +104,13 @@
                         <input type="text" name="name" placeholder="<?php echo e(__('messages.Name')); ?>">
                     </div>
                     <div class="field">
+                        <input type="text" name="surname" placeholder="<?php echo e(__('messages.Surname')); ?>">
+                    </div>
+                    <div class="field">
                         <input type="email" name="email" placeholder="<?php echo e(__('messages.Email')); ?>">
+                    </div>
+                    <div class="field">
+                        <input type="text" name="country" placeholder="<?php echo e(__('messages.Country')); ?>">
                     </div>
                     <div class="field">
                         <input type="password" name="password" placeholder="<?php echo e(__('messages.Password')); ?>">

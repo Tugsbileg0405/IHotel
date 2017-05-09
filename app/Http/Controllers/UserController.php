@@ -27,7 +27,7 @@ class UserController extends Controller
 		$user = Auth::user();
 		$user->name = $request->get('name');
 		$user->email = $request->get('email');
-		$user->first_name = $request->get('first_name');
+		$user->surname = $request->get('surname');
 		$user->gender = $request->get('gender');
 		$user->phone_number = $request->get('phone_number');
 		$user->avatar = $request->get('image');
