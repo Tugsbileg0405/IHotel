@@ -283,14 +283,13 @@
                 },
                 error: function(data){
                     $('#register-form button').removeClass('loading disabled');
-                    if (data.responseText.email != 'undefined') {
-                        $('#register-message').html('<div class="ui warning message"><?php echo e(__("auth.emailunique")); ?></div>');
-                    }
-                    else {
-                        if (data.responseText.password != 'undefined') {
-                            $('#register-message').html('<div class="ui warning message">Нууц үг буруу байна</div>');
-                        }
-                    }
+                    var errors = data.responseJSON;
+                    var registererror = '<div class="ui warning message"><ul>';
+                    $.each(errors, function( key, value ) {
+                        registererror += '<li>' + value[0] + '</li>';
+                    });
+                    registererror += '</div></ul>';
+                    $('#register-message').html(registererror);
                 }
             });
         }

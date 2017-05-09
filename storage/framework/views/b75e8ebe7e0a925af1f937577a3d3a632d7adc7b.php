@@ -3,19 +3,35 @@
 <?php $__env->startSection('content'); ?>
 <div class="home-banner">
 	<ul class="rslides">
-		<li><img src="<?php echo e(asset('img/banner1.jpg')); ?>" alt=""></li>
-		<li><img src="<?php echo e(asset('img/banner2.jpg')); ?>" alt=""></li>
-		<li><img src="<?php echo e(asset('img/banner3.jpg')); ?>" alt=""></li>
+		<li>
+			<?php if(App::isLocale('en')): ?>
+				<div class="rslides-item" style="background-image: url(<?php echo e(asset('img/banner5.jpg')); ?>)"></div>
+			<?php else: ?>
+				<img src="<?php echo e(asset('img/banner1.jpg')); ?>">
+			<?php endif; ?>
+		</li>
 	</ul>
 </div>
-<div id="main-search">
+<div id="main-search" style="top: <?php echo e(App::isLocale('en') ? '33vh' : '150px'); ?>">
 	<div class="ui stackable container">
 		<div id="context2">
 			<div class="ui stackable secondary menu">
-				<a class="item active" data-tab="hotel"><i class="hotel icon"></i><?php echo e(__('messages.Hotel')); ?></a>
-				<a href="<?php echo e(url('aspac2017')); ?>" class="item tab-aspac"><i class="world icon"></i>JCI ASPAC <?php echo e(date('Y')); ?></a>
-				<a href="https://www.sixt.com/php/reservation" target="_blance" class="item"><i class="car icon"></i><?php echo e(__('messages.Rent a car')); ?></a>
-				<a href="<?php echo e(url('posts')); ?>" class="item tab-travel"><i class="plane icon"></i><?php echo e(__('messages.Travel Inspiration')); ?></a>
+				<a class="item active" data-tab="hotel">
+					<i class="hotel icon"></i><?php echo e(__('messages.Hotel')); ?>
+
+				</a>
+				<a href="<?php echo e(url('aspac2017')); ?>" class="item tab-aspac">
+					<i class="world icon"></i>JCI ASPAC <?php echo e(date('Y')); ?>
+
+				</a>
+				<a href="https://www.sixt.com/php/reservation" target="_blance" class="item">
+					<i class="car icon"></i><?php echo e(__('messages.Rent a car')); ?>
+
+				</a>
+				<a href="<?php echo e(url('posts')); ?>" class="item tab-travel">
+					<i class="plane icon"></i><?php echo e(__('messages.Travel Inspiration')); ?>
+
+				</a>
 			</div>
 			<form class="ui form active tab segment" data-tab="hotel" action="<?php echo e(url('searchresult')); ?>" method="POST">
 				<div class="ui grid stackable">
@@ -87,58 +103,54 @@
 					</div>
 				</div>
 			</form>
-			<div class="ui tab segment" data-tab="fly">
-				FLY
-			</div>
-			<div class="ui tab segment" data-tab="travel">
-				aylah sedel
-			</div>
 		</div>
 	</div>
 </div>
-<?php if($informations->count() > 0): ?>
-	<section class="cd-hero">
-		<ul class="cd-hero-slider autoplay">
-			<?php $__currentLoopData = $informations; $__env->addLoop($__currentLoopData); foreach($__currentLoopData as $key => $information): $__env->incrementLoopIndices(); $loop = $__env->getLastLoop(); ?>
-				<li class="<?php echo e($key == 0 ? 'selected':''); ?>">
-					<div class="cd-full-width">
-						<?php if(App::isLocale('en')): ?>
-							<h2><?php echo e($information->subtitle_en); ?></h2>
-							<?php echo $information->content_en; ?>
+<?php if(App::isLocale('mn')): ?>
+	<?php if($informations->count() > 0): ?>
+		<section class="cd-hero">
+			<ul class="cd-hero-slider autoplay">
+				<?php $__currentLoopData = $informations; $__env->addLoop($__currentLoopData); foreach($__currentLoopData as $key => $information): $__env->incrementLoopIndices(); $loop = $__env->getLastLoop(); ?>
+					<li class="<?php echo e($key == 0 ? 'selected':''); ?>">
+						<div class="cd-full-width">
+							<?php if(App::isLocale('en')): ?>
+								<h2><?php echo e($information->subtitle_en); ?></h2>
+								<?php echo $information->content_en; ?>
 
-						<?php elseif(App::isLocale('mn')): ?>
-							<h2><?php echo e($information->subtitle); ?></h2>
-							<?php echo $information->content; ?>
+							<?php elseif(App::isLocale('mn')): ?>
+								<h2><?php echo e($information->subtitle); ?></h2>
+								<?php echo $information->content; ?>
 
-						<?php endif; ?>
-					</div>
-				</li>
-			<?php endforeach; $__env->popLoop(); $loop = $__env->getLastLoop(); ?>
-		</ul>
-		<div class="cd-slider-nav">
-			<nav>
-				<span class="cd-marker item-1"></span>
-				<ul>
-					<?php $__currentLoopData = $informations; $__env->addLoop($__currentLoopData); foreach($__currentLoopData as $key => $information): $__env->incrementLoopIndices(); $loop = $__env->getLastLoop(); ?>
-						<li class="<?php echo e($key == 0 ? 'selected':''); ?>">
-							<a href="#">
-								<img src="<?php echo e(asset($information->image)); ?>">
-								<label style="word-spacing: 9999px">
-									<?php if(App::isLocale('en')): ?>
-										<?php echo e($information->title_en); ?>
+							<?php endif; ?>
+						</div>
+					</li>
+				<?php endforeach; $__env->popLoop(); $loop = $__env->getLastLoop(); ?>
+			</ul>
+			<div class="cd-slider-nav">
+				<nav>
+					<span class="cd-marker item-1"></span>
+					<ul>
+						<?php $__currentLoopData = $informations; $__env->addLoop($__currentLoopData); foreach($__currentLoopData as $key => $information): $__env->incrementLoopIndices(); $loop = $__env->getLastLoop(); ?>
+							<li class="<?php echo e($key == 0 ? 'selected':''); ?>">
+								<a href="#">
+									<img src="<?php echo e(asset($information->image)); ?>">
+									<label style="word-spacing: 9999px">
+										<?php if(App::isLocale('en')): ?>
+											<?php echo e($information->title_en); ?>
 
-									<?php elseif(App::isLocale('mn')): ?>
-										<?php echo e($information->title); ?>
+										<?php elseif(App::isLocale('mn')): ?>
+											<?php echo e($information->title); ?>
 
-									<?php endif; ?>
-								</label>
-							</a>
-						</li>
-					<?php endforeach; $__env->popLoop(); $loop = $__env->getLastLoop(); ?>
-				</ul>
-			</nav>
-		</div>
-	</section>
+										<?php endif; ?>
+									</label>
+								</a>
+							</li>
+						<?php endforeach; $__env->popLoop(); $loop = $__env->getLastLoop(); ?>
+					</ul>
+				</nav>
+			</div>
+		</section>
+	<?php endif; ?>
 <?php endif; ?>
 <div class="back-silver">
 	<div class="ui container">

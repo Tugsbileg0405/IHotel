@@ -5,19 +5,31 @@
 @section('content')
 <div class="home-banner">
 	<ul class="rslides">
-		<li><img src="{{ asset('img/banner1.jpg') }}" alt=""></li>
-		<li><img src="{{ asset('img/banner2.jpg') }}" alt=""></li>
-		<li><img src="{{ asset('img/banner3.jpg') }}" alt=""></li>
+		<li>
+			@if (App::isLocale('en'))
+				<div class="rslides-item" style="background-image: url({{ asset('img/banner5.jpg') }})"></div>
+			@else
+				<img src="{{ asset('img/banner1.jpg') }}">
+			@endif
+		</li>
 	</ul>
 </div>
-<div id="main-search">
+<div id="main-search" style="top: {{ App::isLocale('en') ? '33vh' : '150px' }}">
 	<div class="ui stackable container">
 		<div id="context2">
 			<div class="ui stackable secondary menu">
-				<a class="item active" data-tab="hotel"><i class="hotel icon"></i>{{ __('messages.Hotel') }}</a>
-				<a href="{{ url('aspac2017') }}" class="item tab-aspac"><i class="world icon"></i>JCI ASPAC {{ date('Y') }}</a>
-				<a href="https://www.sixt.com/php/reservation" target="_blance" class="item"><i class="car icon"></i>{{ __('messages.Rent a car') }}</a>
-				<a href="{{ url('posts') }}" class="item tab-travel"><i class="plane icon"></i>{{ __('messages.Travel Inspiration') }}</a>
+				<a class="item active" data-tab="hotel">
+					<i class="hotel icon"></i>{{ __('messages.Hotel') }}
+				</a>
+				<a href="{{ url('aspac2017') }}" class="item tab-aspac">
+					<i class="world icon"></i>JCI ASPAC {{ date('Y') }}
+				</a>
+				<a href="https://www.sixt.com/php/reservation" target="_blance" class="item">
+					<i class="car icon"></i>{{ __('messages.Rent a car') }}
+				</a>
+				<a href="{{ url('posts') }}" class="item tab-travel">
+					<i class="plane icon"></i>{{ __('messages.Travel Inspiration') }}
+				</a>
 			</div>
 			<form class="ui form active tab segment" data-tab="hotel" action="{{ url('searchresult') }}" method="POST">
 				<div class="ui grid stackable">
@@ -88,54 +100,50 @@
 					</div>
 				</div>
 			</form>
-			<div class="ui tab segment" data-tab="fly">
-				FLY
-			</div>
-			<div class="ui tab segment" data-tab="travel">
-				aylah sedel
-			</div>
 		</div>
 	</div>
 </div>
-@if ($informations->count() > 0)
-	<section class="cd-hero">
-		<ul class="cd-hero-slider autoplay">
-			@foreach ($informations as $key => $information)
-				<li class="{{ $key == 0 ? 'selected':'' }}">
-					<div class="cd-full-width">
-						@if (App::isLocale('en'))
-							<h2>{{ $information->subtitle_en }}</h2>
-							{!!  $information->content_en !!}
-						@elseif (App::isLocale('mn'))
-							<h2>{{ $information->subtitle }}</h2>
-							{!!  $information->content !!}
-						@endif
-					</div>
-				</li>
-			@endforeach
-		</ul>
-		<div class="cd-slider-nav">
-			<nav>
-				<span class="cd-marker item-1"></span>
-				<ul>
-					@foreach ($informations as $key => $information)
-						<li class="{{ $key == 0 ? 'selected':'' }}">
-							<a href="#">
-								<img src="{{ asset($information->image) }}">
-								<label style="word-spacing: 9999px">
-									@if (App::isLocale('en'))
-										{{ $information->title_en }}
-									@elseif (App::isLocale('mn'))
-										{{ $information->title }}
-									@endif
-								</label>
-							</a>
-						</li>
-					@endforeach
-				</ul>
-			</nav>
-		</div>
-	</section>
+@if (App::isLocale('mn'))
+	@if ($informations->count() > 0)
+		<section class="cd-hero">
+			<ul class="cd-hero-slider autoplay">
+				@foreach ($informations as $key => $information)
+					<li class="{{ $key == 0 ? 'selected':'' }}">
+						<div class="cd-full-width">
+							@if (App::isLocale('en'))
+								<h2>{{ $information->subtitle_en }}</h2>
+								{!!  $information->content_en !!}
+							@elseif (App::isLocale('mn'))
+								<h2>{{ $information->subtitle }}</h2>
+								{!!  $information->content !!}
+							@endif
+						</div>
+					</li>
+				@endforeach
+			</ul>
+			<div class="cd-slider-nav">
+				<nav>
+					<span class="cd-marker item-1"></span>
+					<ul>
+						@foreach ($informations as $key => $information)
+							<li class="{{ $key == 0 ? 'selected':'' }}">
+								<a href="#">
+									<img src="{{ asset($information->image) }}">
+									<label style="word-spacing: 9999px">
+										@if (App::isLocale('en'))
+											{{ $information->title_en }}
+										@elseif (App::isLocale('mn'))
+											{{ $information->title }}
+										@endif
+									</label>
+								</a>
+							</li>
+						@endforeach
+					</ul>
+				</nav>
+			</div>
+		</section>
+	@endif
 @endif
 <div class="back-silver">
 	<div class="ui container">

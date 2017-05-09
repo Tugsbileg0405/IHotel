@@ -211,18 +211,16 @@
 <script src="<?php echo e(asset('js/simplepagination.js')); ?>"></script>
 <script type="text/javascript">
     $(document).ready(function() {
-        // $('.search-google-map').scrollToFixed({
-        //     marginTop: $('.search-result').offset().top + 10,
-        //     limit: function() {
-        //         var top = $('.search-google-map').offset().top;
-        //         var height=$('.search-google-map').outerHeight();
-        //         var limit = $('footer').offset().top - $('#demo').outerHeight(true) - top - height;
-        //         console.log(limit);
-        //         return limit;
-        //     },
-        //     zIndex: 999,
-        //     spacerClass : 'spacerFixHeight',
-        // });
+         $('.search-google-map').scrollToFixed({
+            marginTop: $('.search-result').offset().top + 10,
+            limit: function() {
+                var limit = $('.search-result').offset().top - $('.search-google-map').height() - 20;
+                return limit;
+            },
+            zIndex: 999,
+        });
+        $('.search-google-map').trigger('resize');
+        $('.search-google-map').attr("style","");
     });
 </script>
 <script type="text/javascript">
@@ -642,6 +640,21 @@
 
             var image = "<?php echo e(asset('/img/mapicon/villa.png')); ?>";
             var image2 = "<?php echo e(asset('/img/mapicon2/villa.png')); ?>";
+
+            // for(var i=0; i < data.allhotels.length; i++){
+            //                 var marker = new google.maps.Marker({
+            //                     map: map,
+            //                     draggable: false,
+            //                     id: data.allhotels[i].id,
+            //                     animation: google.maps.Animation.DROP,
+            //                     position: { lat: parseFloat(JSON.parse(data.allhotels[i].location)[0]), lng: parseFloat(JSON.parse(data.allhotels[i].location)[1]) },
+            //                     icon: image,
+            //                 });
+            //                 if(data.allhotels[i].id != data.data[key][0].id){
+            //                     marker.setIcon(image2);
+            //                 }
+            //                 markers.push(marker);
+            //             }
             var marker = new google.maps.Marker({
                 map: map,
                 draggable: false,
@@ -742,7 +755,7 @@
                                                     </span>\
                                                 </p>\
                                                 <div class='room-button'>\
-                                                	<a href='" + url + "' class='ui blue button'><?php echo e(__('messages.Book now')); ?></a>\
+                                                	<a href='" + url + "' target='_blank' class='ui blue button'><?php echo e(__('messages.Book now')); ?></a>\
                                                 </div>\
                                             </div>";
             }
@@ -778,7 +791,7 @@
                                                     </span>\
                                                 </p>\
                                                 <div class='room-button'>\
-                                                	<a href='" + url + "' class='ui blue button'><?php echo e(__('messages.Book now')); ?></a>\
+                                                	<a href='" + url + "' target='_blank' class='ui blue button'><?php echo e(__('messages.Book now')); ?></a>\
                                                 </div>\
                                             </div>";
             }
