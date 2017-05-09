@@ -188,7 +188,7 @@
 							</div>
 						</div>
 						<div class="search-google-map column">
-							<div class="ihotel-google-map column" id="map" style="height:100vh">
+							<div class="ihotel-google-map column" id="map" style="height:90vh">
 							</div>
 						</div>
 					</div>
@@ -212,15 +212,14 @@
 <script type="text/javascript">
     $(document).ready(function() {
          $('.search-google-map').scrollToFixed({
-            marginTop: $('.search-result').offset().top + 10,
+            marginTop: $('.search-result').offset().top ,
             limit: function() {
-                var limit = $('.search-result').offset().top - $('.search-google-map').height() + 20;
+                var limit = $('#result').height() - $('.search-result').offset().top ;
                 return limit;
             },
             zIndex: 999,
         });
         $('.search-google-map').trigger('resize');
-        $('.search-google-map').attr("style","");
     });
 </script>
 <script type="text/javascript">
@@ -811,6 +810,26 @@
                     });
                     }
 
+                    var icon1 =  new google.maps.Circle({
+                                    path: google.maps.SymbolPath.CIRCLE,
+                                    fillColor : "#1972AA",
+                                    strokeColor: "white",
+                                    strokeWeight: 1,
+                                    scale: 5,
+                                    strokeOpacity: 1,
+                                    fillOpacity: 1,
+                                });
+
+                    var icon2 =  new google.maps.Circle({
+                                    path: google.maps.SymbolPath.CIRCLE,
+                                    fillColor : "#FD8A00",
+                                    strokeColor: "white",
+                                    strokeWeight: 1,
+                                    scale: 5,
+                                    strokeOpacity: 1,
+                                    fillOpacity: 1,
+                                })
+
                     allHotels.map(function (el) {
                         var found = false;
                         markers.map(function (data) {
@@ -825,18 +844,96 @@
                                 id: el.id,
                                 animation: google.maps.Animation.DROP,
                                 position: { lat: parseFloat(JSON.parse(el.location)[0]), lng: parseFloat(JSON.parse(el.location)[1]) },
-                                icon: new google.maps.Circle({
-                                    path: google.maps.SymbolPath.CIRCLE,
-                                    fillColor : "#1972AA",
-                                    strokeColor: "white",
-                                    strokeWeight: 1,
-                                    scale: 5,
-                                    strokeOpacity: 1,
-                                    fillOpacity: 1,
-                                }),
+                                icon: icon1,
                                 optimized: false,
                                 zIndex:80
                             });
+                            var url = '<?php echo e(route("search.hotel", "id")); ?>';
+                            url = url.replace('id', el.id);
+                            var rating = '<?php echo e($rate); ?>';
+                            <?php if(App::isLocale('en')): ?> {
+                            var contentString = "<div style='padding:0;width:100%;margin:0;overflow: hidden;'> \
+                                                <img src='" + el.cover_photo + "' height='200px' style='filter:brightness(50%);width:100%;background-image: linear-gradient(180deg, rgba(0, 0, 0, .5) 0, transparent 25%, transparent 50%, rgba(0, 0, 0, .7));'>\
+                                                <div class='maptitle'>" + el.name_en + "</div>\
+                                                <span class='mapstar'>" + star + "</span>\
+                                                <div class='mapprice'>" + numeral(lowest / rating).format('0,0.00') + "$</div>\
+                                                </div>";
+                                                        
+                            var contentString1 = "<div style='padding:0;margin:0;overflow: hidden;'> \
+                                                    <img src='" + el.cover_photo + "' height='200px' style='filter:brightness(50%);width:100%;background-image: linear-gradient(180deg, rgba(0, 0, 0, .5) 0, transparent 25%, transparent 50%, rgba(0, 0, 0, .7));'>\
+                                                    <div class='maptitle'>" + el.name_en + "</div>\
+                                                    <div class='mapprice'>" + numeral(lowest / rating ).format('0,0.00') + "$</div>\
+                                                    <span class='mapstar'>" + star + "</span>\
+                                                    <a href='" + url + "' target='_blank'>\<button class='ui button mapbutton' style='background-color:#2185D0;color:white'><?php echo e(__('messages.Read More')); ?></button></a>\
+                                                </div>";
+                            }
+                            <?php elseif(App::isLocale('mn')): ?> {
+                            var contentString = "<div style='padding:0;width:100%;margin:0;overflow: hidden;'> \
+                                                    <img src='" + el.cover_photo + "' height='200px' style='filter:brightness(50%);width:100%;background-image: linear-gradient(180deg, rgba(0, 0, 0, .5) 0, transparent 25%, transparent 50%, rgba(0, 0, 0, .7));'>\
+                                                    <div class='maptitle'>" + el.name + "</div>\
+                                                    <span class='mapstar'>" + star + "</span>\
+                                                    <div class='mapprice'>" + numeral(lowest).format('0,0') + "₮</div>\
+                                                </div>";
+
+                            var contentString1 = "<div style='padding:0;margin:0;overflow: hidden;'> \
+                                                        <img src='" + el.cover_photo + "' height='200px' style='filter:brightness(50%);width:100%;background-image: linear-gradient(180deg, rgba(0, 0, 0, .5) 0, transparent 25%, transparent 50%, rgba(0, 0, 0, .7));'>\
+                                                        <div class='maptitle'>" + el.name + "</div>\
+                                                        <div class='mapprice'>" + numeral(lowest).format('0,0') + "₮</div>\
+                                                        <span class='mapstar'>" + star + "</span>\
+                                                        <a href='" + url + "' target='_blank'>\<button class='ui button mapbutton' style='background-color:#2185D0;color:white'><?php echo e(__('messages.Read More')); ?></button></a>\
+                                                </div>";
+                            }
+                            <?php endif; ?>
+
+                            var infowindow = new google.maps.InfoWindow({
+                                content: contentString,
+                                maxWidth: 250,
+                                zIndex: 10,
+                            });
+                            var infowindow1 = new google.maps.InfoWindow({
+                                content: contentString1,
+                                maxWidth: 250,
+                                zIndex: 10,
+                            });
+
+                            var clicked = false;
+                            google.maps.event.addListener(marker, 'mouseover', (function (marker, contentString, infowindow) {
+                                return function () {
+                                    if (!clicked) {
+                                        infowindow.open(map, marker);
+                                        marker.setIcon(icon2);
+                                        $('#' + marker.id).find('.img.left').addClass('hover');
+                                    }
+                                };
+                            })(marker, contentString, infowindow));
+                            google.maps.event.addListener(marker, 'mouseout', (function (marker, contentString, infowindow, infowindow1) {
+                                return function () {
+                                    if (!clicked) {
+                                        infowindow.close();
+                                        infowindow1.close();
+                                        marker.setIcon(icon1);
+                                        $('#' + marker.id).find('.img.left').removeClass('hover');
+                                    }
+                                };
+                            })(marker, contentString, infowindow, infowindow1));
+
+
+                            google.maps.event.addListener(infowindow1, 'closeclick', (function (marker) {
+                                return function(){
+                                    clicked = false;
+                                    marker.setIcon(icon1);
+                                    $('#' + marker.id).find('.img.left').removeClass('hover');
+                                }
+                            })(marker));
+
+                            google.maps.event.addListener(marker, 'click', (function (marker, contentString1, infowindow1, infowindow) {
+                                return function () {
+                                    clicked = true;
+                                    infowindow.close();
+                                    infowindow1.open(map, marker);
+                                    marker.setIcon(icon2);
+                                };
+                            })(marker, contentString1, infowindow1, infowindow));
                             markers.push(marker);
                         }
                     })
