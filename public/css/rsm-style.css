@@ -1,0 +1,138 @@
+ 
+html {
+	font-family: 'Roboto', sans-serif !important;
+	line-height: 1.2;
+}
+body {
+font-family: 'Roboto', sans-serif !important;
+/*background:
+	linear-gradient(
+		cyan,
+		transparent
+	),
+	linear-gradient(
+		-45deg,
+		magenta,
+		transparent
+	),
+	linear-gradient(
+		45deg,
+		yellow,
+		transparent
+	);
+background-blend-mode: multiply;*/
+background: #03629a;
+line-height: 1.2;
+}
+body.rsm-main {
+font-family: 'Roboto', sans-serif !important;
+ 
+background: #fff;
+line-height: 1.2;
+}
+h1 {
+font-size: 36px;
+text-transform: uppercase;
+font-weight: 500;
+font-family: 'Roboto', sans-serif !important;
+}
+
+h3 {
+font-size: 24px;
+text-transform: uppercase;
+font-weight: 500;
+font-family: 'Roboto', sans-serif !important;
+}
+
+h4 {
+font-size: 20px;
+text-transform: uppercase;
+font-weight: 500;
+font-family: 'Roboto', sans-serif !important;
+}
+
+h5 {
+font-size: 18px;
+text-transform: uppercase;
+font-weight: 500;
+font-family: 'Roboto', sans-serif !important;
+}
+
+h4.ui.inverted.header {
+font-size: 14px !important;
+font-weight: 500;
+text-transform: uppercase;
+font-family: 'Roboto', sans-serif !important;
+}
+p {
+font-weight: 400;
+color: #555;
+line-height: 1.4 !important;
+}
+label{
+	font-style: 14px;
+	font-weight: 400 !important;
+	font-family: 'Roboto', sans-serif !important;
+}
+label.center.aligned.security{
+	margin-top: 10px;
+	text-align: center;
+}
+button{
+	font-style: 14px !important;
+}
+.ui.ihotel.fluid.button{
+	background: #0063a1;
+	color: #fff;
+	font-weight: 500;
+	font-family: 'Roboto', sans-serif !important;
+}
+.ui.ihotel.fluid.button:hover{
+	background: #0063a1;
+	color: #fff;
+}
+.login-body{
+	padding-top: 10%;
+height: 100%;
+}
+.copyright{
+		font-family: 'Roboto', sans-serif;
+	text-transform: lowercase;
+color: #fff;
+}
+.ihotel{
+background: #000;
+}
+.ui.horizontal.divider{
+	font-weight: 500;
+}
+.cd-logo{
+	padding-top: 5px;
+}
+header {
+position: fixed;
+z-index: 30;
+height: 50px;
+width: 100%;
+top: 0;
+left: 0;
+background-color: rgba(0, 99, 161, 0.9);
+-webkit-font-smoothing: antialiased;
+-moz-osx-font-smoothing: grayscale;  /* Force Hardware Acceleration */
+-webkit-transform: translateZ(0);
+-moz-transform: translateZ(0);
+-ms-transform: translateZ(0);
+-o-transform: translateZ(0);
+transform: translateZ(0);
+-webkit-backface-visibility: hidden;
+backface-visibility: hidden;
+-webkit-transition: -webkit-transform 0.3s;
+-moz-transition: -moz-transform 0.3s;
+transition: transform 0.3s;
+-moz-box-shadow: 0 0 4px rgba(0, 0, 0, .4);
+-webkit-box-shadow: 0 0 4px rgba(0, 0, 0, .4);
+box-shadow: 0 0 4px rgba(0, 0, 0, .4);
+}
+.rsm-date{
+	background: #000;
+}
