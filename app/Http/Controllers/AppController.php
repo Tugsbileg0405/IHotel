@@ -37482,14 +37482,21 @@ class AppController extends Controller
                         ];
                     }
                     $model->pickup = serialize($array);
-                    $array = [
+                    $array = [];
+                    $array[] = [
                         'room_id' => $room->id,
                         'room_name' => $room->name,
                         'room_number' => $order['qty'],
                         'room_price' => $room->price,
                     ];
                     $model->rooms = serialize($array);
-                    $model->carddata = json_encode((object) []);
+                    $model->carddata = json_encode((object) [
+                        'cardnumber' => '',
+                        'cardname' => '',
+                        'expirymonth' => '',
+                        'expiryyear' => '',
+                        'cvv' => '',
+                    ]);
                     if($order['status'] == 1){
                         $model->status = 2;
                     }else if ($order['status'] == -1){
@@ -37500,7 +37507,6 @@ class AppController extends Controller
                     $model->save();
 
                     $model->number = 'PO-'.$model->id;
-                
                     $model->save();
                 }
                 else {

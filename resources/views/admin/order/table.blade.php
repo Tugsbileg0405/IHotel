@@ -51,10 +51,10 @@
 								<td>{{ $order->startdate }}</td>
 								<td>{{ $order->enddate }}</td>
 								<td>
-									@if ($order->dollar_rate)
-										{{ number_format($order->price/$order->dollar_rate,2) }}
+									@if ($order->price_dollar)
+										{{ number_format($order->price_dollar) }}$
 									@else
-										{{ number_format($order->price) }}
+										{{ number_format($order->price) }}₮
 									@endif
 								</td>
 								<td>

@@ -51,12 +51,10 @@
 								<td><?php echo e($order->startdate); ?></td>
 								<td><?php echo e($order->enddate); ?></td>
 								<td>
-									<?php if($order->dollar_rate): ?>
-										<?php echo e(number_format($order->price/$order->dollar_rate,2)); ?>
-
+									<?php if($order->price_dollar): ?>
+										<?php echo e(number_format($order->price_dollar)); ?>$
 									<?php else: ?>
-										<?php echo e(number_format($order->price)); ?>
-
+										<?php echo e(number_format($order->price)); ?>₮
 									<?php endif; ?>
 								</td>
 								<td>

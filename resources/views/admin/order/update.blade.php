@@ -33,14 +33,10 @@
 					<td>Гарах өдөр</td>
 					<td>{{ $order->enddate }}</td>
 				</tr>
-				@if ($order->pickup)
+				@if (unserialize($order->pickup))
 					<tr>
 						<td>Онгоцны буудлаас тосох</td>
-						@if ($order->dollar_rate)
-							<td>{{ $order->pickup->name }} - {{ number_format(order->pickup->price/$order->dollar_rate,2) }}</td>
-						@else
-							<td>{{ $order->pickup->name }} - {{ number_format(order->pickup->price) }}</td>
-						@endif
+						<td>{{ unserialize($order->pickup)['name'] }}</td>
 					</tr>
 				@endif
 				<tr>
@@ -50,10 +46,10 @@
 				<tr>
 					<td>Нийт үнэ (*НӨАТ орсон)</td>
 					<td>
-						@if ($order->dollar_rate)
-							{{ number_format($order->price/$order->dollar_rate,2) }}
+						@if ($order->price_dollar)
+							{{ number_format($order->price_dollar) }}$
 						@else
-							{{ number_format($order->price) }}
+							{{ number_format($order->price) }}₮
 						@endif
 					</td>
 				</tr>
@@ -70,14 +66,14 @@
 				</tr>
 			</thead>
 			<tbody>
-				@foreach (json_decode($order->rooms) as $key => $room)
+				@foreach (unserialize($order->rooms) as $room)
 					<tr>
-						<td>{{ $rooms[$key]->name }}</td>
-						<td>{{ $room->room_number }}</td>
-						@if ($order->dollar_rate)
-							<td>{{ number_format($rooms[$key]->price/$order->dollar_rate,2) }}</td>
+						<td>{{ $room['room_name'] }}</td>
+						<td>{{ $room['room_number'] }}</td>
+						@if ($order->price_dollar)
+							<td>{{ number_format($room['room_price']) }}$</td>
 						@else
-							<td>{{ number_format($rooms[$key]->price) }}</td>
+							<td>{{ number_format($room['room_price']) }}₮</td>
 						@endif
 					</tr>
 				@endforeach

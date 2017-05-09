@@ -105,28 +105,28 @@
                         @endif
                     </tr>
                 @endforeach
-                @if ($order->pickup)
+                @if (unserialize($order->pickup))
                     <tr>
                         <td colspan="2">{{ __('messages.Pickup service') }}</td>
                         @if (App::isLocale('mn'))
-                            <td colspan="3">{{ $order->pickup->name }} - {{number_format($order->pickup->price)}}₮</td>
+                            <td colspan="3">{{ unserialize($order->pickup)['name'] }}</td>
                         @elseif (App::isLocale('en'))
-                            <td colspan="3">{{ $order->pickup->name_en }} - {{number_format($order->pickup->price/$order->dollar_rate,2)}}$</td>
+                            <td colspan="3">{{ unserialize($order->pickup)['name_en'] }}</td>
                         @endif
                     </tr>
                 @endif
-                <tr>
+                <!--<tr>
                     <td colspan="2">{{ __('messages.Price before tax') }} ({{ __('messages.Tax') }} 10%)</td>
                     @if ($order->dollar_rate) 
                         <td colspan="3">{{number_format($price/$order->dollar_rate,2)}} $ ({{number_format($price*0.1/$order->dollar_rate,2)}} $)</td>
                     @else
                         <td colspan="3">{{number_format($price)}} ₮ ({{number_format($price*0.1)}} ₮)</td>
                     @endif
-                </tr>
+                </tr>-->
                 <tr>
                     <td colspan="2">{{ __('messages.Price after tax') }}</td>
-                    @if ($order->dollar_rate) 
-                        <td colspan="3">{{number_format($order->price/$order->dollar_rate,2)}} $</td>
+                    @if ($order->price_dollar) 
+                        <td colspan="3">{{number_format($order->price_dollar)}} $</td>
                     @else
                         <td colspan="3">{{number_format($order->price)}} ₮</td>
                     @endif

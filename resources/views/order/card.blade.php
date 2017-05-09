@@ -143,20 +143,20 @@
 															@endif
 														</tr>
 													@endif
-													<tr>
+													<!--<tr>
 														<td colspan="2">{{ __('messages.Price before tax') }} ({{ __('messages.Tax') }} 10%)</td>
 														@if (App::isLocale('mn')) 
 															<td colspan="3">{{number_format($price)}} ₮ ({{number_format($price*0.1)}} ₮)</td>
 														@elseif (App::isLocale('en'))
 															<td colspan="3">{{number_format($price/$rate,2)}} $ ({{number_format($price*0.1/$rate,2)}} $)</td>
 														@endif
-													</tr>
+													</tr>-->
 													<tr>
 														<td colspan="2">{{ __('messages.Price after tax') }}</td>
 														@if (App::isLocale('mn')) 
-															<td colspan="3">{{number_format($price*1.1)}} ₮</td>
+															<td colspan="3">{{number_format($price)}} ₮</td>
 														@elseif (App::isLocale('en'))
-															<td colspan="3">{{number_format($price*1.1/$rate,2)}} $</td>
+															<td colspan="3">{{number_format($price/$rate,2)}} $</td>
 														@endif
 													</tr>
 												</tbody>
@@ -174,11 +174,11 @@
 												<div class="field">
 													<label>Нийт дүн / Total Price</label>
 													@if (App::isLocale('mn')) 
-														<input type="text" name="total" value="{{ number_format($price*1.1) }} ₮" disabled="">
-														<input type="hidden" name="price" value="{{ number_format($price*1.1) }}">
+														<input type="text" name="total" value="{{ number_format($price) }} ₮" disabled="">
+														<input type="hidden" name="price" value="{{ number_format($price) }}">
 													@elseif (App::isLocale('en'))
-														<input type="text" name="total" value="{{ number_format($price*1.1/$rate,2) }} $" disabled="">
-														<input type="hidden" name="price" value="{{ number_format($price*1.1/$rate,2) }}">
+														<input type="text" name="total" value="{{ number_format($price/$rate,2) }} $" disabled="">
+														<input type="hidden" name="price" value="{{ number_format($price/$rate,2) }}">
 													@endif
 												</div>
 											</div>

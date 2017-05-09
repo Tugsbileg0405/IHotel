@@ -15,7 +15,7 @@ class OrderController extends Controller
     public function index()
     {
         $orders = \App\Order::orderBy('created_at', 'desc')
-            ->paginate(20);
+            ->paginate(30);
 
         return view('admin.order.table', [
             'orders' => $orders,
@@ -64,16 +64,8 @@ class OrderController extends Controller
     {
         $order = \App\Order::findOrFail($id);
 
-        $rooms = [];
-        foreach (json_decode($order->rooms) as $item)
-        {
-            $room = \App\Room::findOrFail($item->room_id);
-            $rooms[] = $room;
-        }
-
         return view('admin.order.update', [
             'order' => $order,
-            'rooms' => $rooms,
         ]);
     }
 

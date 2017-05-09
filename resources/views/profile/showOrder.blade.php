@@ -27,7 +27,7 @@
 							<div class="meta">
 								<div class="ui blue header">
 									<i class="icon check"></i>
-									{{ __('messages.The order number')}} - {{ $order->id }}
+									{{ __('messages.The order number')}} - {{ $order->nummber }}
 								</div>
 							</div>
 							<div class="extra">

@@ -149,20 +149,20 @@
 															<?php endif; ?>
 														</tr>
 													<?php endif; ?>
-													<tr>
+													<!--<tr>
 														<td colspan="2"><?php echo e(__('messages.Price before tax')); ?> (<?php echo e(__('messages.Tax')); ?> 10%)</td>
 														<?php if(App::isLocale('mn')): ?> 
 															<td colspan="3"><?php echo e(number_format($price)); ?> ₮ (<?php echo e(number_format($price*0.1)); ?> ₮)</td>
 														<?php elseif(App::isLocale('en')): ?>
 															<td colspan="3"><?php echo e(number_format($price/$rate,2)); ?> $ (<?php echo e(number_format($price*0.1/$rate,2)); ?> $)</td>
 														<?php endif; ?>
-													</tr>
+													</tr>-->
 													<tr>
 														<td colspan="2"><?php echo e(__('messages.Price after tax')); ?></td>
 														<?php if(App::isLocale('mn')): ?> 
-															<td colspan="3"><?php echo e(number_format($price*1.1)); ?> ₮</td>
+															<td colspan="3"><?php echo e(number_format($price)); ?> ₮</td>
 														<?php elseif(App::isLocale('en')): ?>
-															<td colspan="3"><?php echo e(number_format($price*1.1/$rate,2)); ?> $</td>
+															<td colspan="3"><?php echo e(number_format($price/$rate,2)); ?> $</td>
 														<?php endif; ?>
 													</tr>
 												</tbody>
@@ -181,11 +181,11 @@
 												<div class="field">
 													<label>Нийт дүн / Total Price</label>
 													<?php if(App::isLocale('mn')): ?> 
-														<input type="text" name="total" value="<?php echo e(number_format($price*1.1)); ?> ₮" disabled="">
-														<input type="hidden" name="price" value="<?php echo e(number_format($price*1.1)); ?>">
+														<input type="text" name="total" value="<?php echo e(number_format($price)); ?> ₮" disabled="">
+														<input type="hidden" name="price" value="<?php echo e(number_format($price)); ?>">
 													<?php elseif(App::isLocale('en')): ?>
-														<input type="text" name="total" value="<?php echo e(number_format($price*1.1/$rate,2)); ?> $" disabled="">
-														<input type="hidden" name="price" value="<?php echo e(number_format($price*1.1/$rate,2)); ?>">
+														<input type="text" name="total" value="<?php echo e(number_format($price/$rate,2)); ?> $" disabled="">
+														<input type="hidden" name="price" value="<?php echo e(number_format($price/$rate,2)); ?>">
 													<?php endif; ?>
 												</div>
 											</div>

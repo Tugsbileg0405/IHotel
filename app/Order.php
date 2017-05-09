@@ -20,9 +20,4 @@ class Order extends Model
 	{
 		return $this->hasMany('App\Close');
 	}
-
-	public function pickup()
-	{
-		return $this->belongsTo('App\Pickup');
-	}
 }

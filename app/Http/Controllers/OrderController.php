@@ -155,12 +155,19 @@ class OrderController extends Controller
 		$order->day = $request->session()->get('order_day');
 		$order->startdate = $request->session()->get('order_startdate');
 		$order->enddate = $request->session()->get('order_enddate');
-		$order->price = $request->session()->get('order_price') * 1.1;
+		$order->price = $request->session()->get('order_price');
+		$array = [];
 		if ($request->session()->get('order_pickup')) {
-			$order->pickup_id = $request->session()->get('order_pickup');
+			$pickup = \App\Pickup::findorfail($request->session()->get('order_pickup'));
+			$array = [
+				'id' => $pickup->id,
+				'name' => $pickup->name,
+				'name_en' =>  $pickup->name_en,
+			];
 		}
+		$order->pickup = serialize($array);
 		if (\App::isLocale('en')) {
-			$order->price_dollar = ($request->session()->get('order_price') * 1.1) / $rate;
+			$order->price_dollar = $request->session()->get('order_price') / $rate;
 			$order->dollar_rate = $rate;
 		}
 		$order->carddata = json_encode($cardData);
