@@ -21240,52 +21240,52 @@ class AppController extends Controller
             ]
         ];
 
-        foreach ($users as $user) {
-            if (array_key_exists("phone", $user)) {
-                if (array_key_exists("country", $user)) {
-                    \App\User::create([
-                        'name' => $user['name'],
-                        'surname' => $user['name'],
-                        'email' => $user['email'],
-                        'phone_number' => $user['phone'],
-                        'is_admin' => false,
-                        'country' => $user['country'],
-                        'password' => bcrypt(str_random(12)),
-                    ]);
-                }
-                else {
-                    \App\User::create([
-                        'name' => $user['name'],
-                        'surname' => $user['name'],
-                        'email' => $user['email'],
-                        'phone_number' => $user['phone'],
-                        'is_admin' => false,
-                        'password' => bcrypt(str_random(12)),
-                    ]);
-                }
-            }
-            else {
-                if (array_key_exists("country", $user)) {
-                    \App\User::create([
-                        'name' => $user['name'],
-                        'surname' => $user['name'],
-                        'email' => $user['email'],
-                        'is_admin' => false,
-                        'country' => $user['country'],
-                        'password' => bcrypt(str_random(12)),
-                    ]);
-                }
-                else {
-                    \App\User::create([
-                        'name' => $user['name'],
-                        'surname' => $user['name'],
-                        'email' => $user['email'],
-                        'is_admin' => false,
-                        'password' => bcrypt(str_random(12)),
-                    ]);
-                }
-            }
-        }
+        // foreach ($users as $user) {
+        //     if (array_key_exists("phone", $user)) {
+        //         if (array_key_exists("country", $user)) {
+        //             \App\User::create([
+        //                 'name' => $user['name'],
+        //                 'surname' => $user['name'],
+        //                 'email' => $user['email'],
+        //                 'phone_number' => $user['phone'],
+        //                 'is_admin' => false,
+        //                 'country' => $user['country'],
+        //                 'password' => bcrypt(str_random(12)),
+        //             ]);
+        //         }
+        //         else {
+        //             \App\User::create([
+        //                 'name' => $user['name'],
+        //                 'surname' => $user['name'],
+        //                 'email' => $user['email'],
+        //                 'phone_number' => $user['phone'],
+        //                 'is_admin' => false,
+        //                 'password' => bcrypt(str_random(12)),
+        //             ]);
+        //         }
+        //     }
+        //     else {
+        //         if (array_key_exists("country", $user)) {
+        //             \App\User::create([
+        //                 'name' => $user['name'],
+        //                 'surname' => $user['name'],
+        //                 'email' => $user['email'],
+        //                 'is_admin' => false,
+        //                 'country' => $user['country'],
+        //                 'password' => bcrypt(str_random(12)),
+        //             ]);
+        //         }
+        //         else {
+        //             \App\User::create([
+        //                 'name' => $user['name'],
+        //                 'surname' => $user['name'],
+        //                 'email' => $user['email'],
+        //                 'is_admin' => false,
+        //                 'password' => bcrypt(str_random(12)),
+        //             ]);
+        //         }
+        //     }
+        // }
 
         // foreach ($hotels as $hotel) {
         //     if ($hotel['asem'] == 1) {
