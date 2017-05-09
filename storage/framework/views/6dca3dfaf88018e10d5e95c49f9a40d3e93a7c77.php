@@ -1,9 +1,7 @@
-@extends('layouts.hoteladmin')
+<?php $__env->startSection('title', 'iHotel'); ?>
 
-@section('title', 'iHotel')
-
-@section('content')
-@include('profile.hotel.partials.header')
+<?php $__env->startSection('content'); ?>
+<?php echo $__env->make('profile.hotel.partials.header', array_except(get_defined_vars(), array('__data', '__path')))->render(); ?>
 <div class="main-page">
 	<div class="admin-header">
 		<div class="admin-body">
@@ -11,12 +9,14 @@
 				<div class="ui stackable column grid">
 					<div class="sixteen wide column">
 						<div id="context1">
-							@include('profile.hotel.partials.menu')
+							<?php echo $__env->make('profile.hotel.partials.menu', array_except(get_defined_vars(), array('__data', '__path')))->render(); ?>
 							<div class="ui segment com-service">
-								<form class="ui form" id="order-search-form" action="{{ url('admin/hotel/order/search', $hotel->id) }}" method="POST">
-									{{ csrf_field() }}
+								<form class="ui form" id="order-search-form" action="<?php echo e(url('admin/hotel/order/search', $hotel->id)); ?>" method="POST">
+									<?php echo e(csrf_field()); ?>
+
 									<div class="ui stackable grid search-form">
-										<div class="three wide column">{{ date('Y-m-d') }}
+										<div class="three wide column"><?php echo e(date('Y-m-d')); ?>
+
 											<h4 class="ui header">Захиалгын мэдээлэл</h4>
 										</div>
 										<div class="four wide column">
@@ -46,7 +46,7 @@
 													value=""/>
 													<i class="calendar icon"></i>
 												</div>
-												<input type="hidden" name="date" id="date" value="{{ date('Y-m-d') }}">
+												<input type="hidden" name="date" id="date" value="<?php echo e(date('Y-m-d')); ?>">
 											</div>
 										</div>
 										<div class="two wide search-btn column">
@@ -60,7 +60,7 @@
 							<div class="ui stackable grid">
 								<div class="sixteen wide column">
 									<div id="order-list">
-										@if ($orders->count() > 0)
+										<?php if($orders->count() > 0): ?>
 											<table class="ui stackable selectable table">
 												<thead>
 													<tr>
@@ -76,44 +76,45 @@
 													</tr>
 												</thead>
 												<tbody>
-													@foreach ($orders as $key => $order)
-														<tr {{ $key%2 == 0 ? 'class=ihotel-blue' : '' }}>
-															<td>{{ $order->number }}</td>
-															<td>{{ date('Y-m-d', strtotime($order->created_at)) }}</td>
-															<td>{{ $order->user->name }}</td>
-															<td>{{ $order->startdate }}</td>
-															<td>{{ $order->enddate }}</td>
-															@if ($order->price_dollar)
-																<td>{{ number_format($order->price_dollar) }}$</td>
-																<td>{{ number_format($order->price_dollar*0.1) }}$</td>
-															@else
-																<td>{{ number_format($order->price) }}₮</td>
-																<td>{{ number_format($order->price*0.1) }}₮</td>
-															@endif
+													<?php $__currentLoopData = $orders; $__env->addLoop($__currentLoopData); foreach($__currentLoopData as $key => $order): $__env->incrementLoopIndices(); $loop = $__env->getLastLoop(); ?>
+														<tr <?php echo e($key%2 == 0 ? 'class=ihotel-blue' : ''); ?>>
+															<td><?php echo e($order->number); ?></td>
+															<td><?php echo e(date('Y-m-d', strtotime($order->created_at))); ?></td>
+															<td><?php echo e($order->user->name); ?></td>
+															<td><?php echo e($order->startdate); ?></td>
+															<td><?php echo e($order->enddate); ?></td>
+															<?php if($order->price_dollar): ?>
+																<td><?php echo e(number_format($order->price_dollar)); ?>$</td>
+																<td><?php echo e(number_format($order->price_dollar*0.1)); ?>$</td>
+															<?php else: ?>
+																<td><?php echo e(number_format($order->price)); ?>₮</td>
+																<td><?php echo e(number_format($order->price*0.1)); ?>₮</td>
+															<?php endif; ?>
 															<td>
-																@if ($order->status == 1)
+																<?php if($order->status == 1): ?>
 																	<span class="ui teal label">Баталгаажаагүй</span>
-																@elseif ($order->status == 2)
+																<?php elseif($order->status == 2): ?>
 																	<span class="ui green label">Баталгаажсан</span>
-																@elseif ($order->status == 3)
+																<?php elseif($order->status == 3): ?>
 																	<span class="ui red label">Цуцлагдсан</span>
-																@endif
+																<?php endif; ?>
 															</td>
 															<td>
-																<a class="ui icon button" href="{{ url('admin/hotel/order/'.$hotel->id.'/'.$order->id) }}">
+																<a class="ui icon button" href="<?php echo e(url('admin/hotel/order/'.$hotel->id.'/'.$order->id)); ?>">
 																	<i class="eye icon"></i>
 																</a>
 															</td>
 														</tr>
-													@endforeach
+													<?php endforeach; $__env->popLoop(); $loop = $__env->getLastLoop(); ?>
 												</tbody>
 											</table>
-											{{ $orders->links() }}
-										@else
+											<?php echo e($orders->links()); ?>
+
+										<?php else: ?>
 											<div class="ui segment">
 												<p>Захиалга байхгүй байна.</p>
 											</div>
-										@endif
+										<?php endif; ?>
 									</div>
 								</div>
 							</div>
@@ -124,9 +125,9 @@
 		</div>
 	</div>
 </div>
-@endsection
+<?php $__env->stopSection(); ?>
 
-@push('script')
+<?php $__env->startPush('script'); ?>
 <script type="text/javascript">
 	$(document).ready(function() {
 		var orderSearch = $('#order-search-form');
@@ -147,11 +148,12 @@
 	    $('#reservation').daterangepicker({
 	        singleDatePicker: true,
 			autoApply: true,
-			startDate: {{ date('d/m/Y') }},
+			startDate: <?php echo e(date('d/m/Y')); ?>,
 	    }, function(start, end, label) {
 			var date = start.format('YYYY-MM-DD');
 			$('#date').val(date);
 	    });
 	});
 </script>
-@endpush
+<?php $__env->stopPush(); ?>
+<?php echo $__env->make('layouts.hoteladmin', array_except(get_defined_vars(), array('__data', '__path')))->render(); ?>

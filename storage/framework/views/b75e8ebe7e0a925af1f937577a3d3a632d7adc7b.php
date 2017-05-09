@@ -1,31 +1,29 @@
-@extends('layouts.app')
+<?php $__env->startSection('title', 'iHotel'); ?>
 
-@section('title', 'iHotel')
-
-@section('content')
+<?php $__env->startSection('content'); ?>
 <div class="home-banner">
 	<ul class="rslides">
-		<li><img src="{{ asset('img/banner1.jpg') }}" alt=""></li>
-		<li><img src="{{ asset('img/banner2.jpg') }}" alt=""></li>
-		<li><img src="{{ asset('img/banner3.jpg') }}" alt=""></li>
+		<li><img src="<?php echo e(asset('img/banner1.jpg')); ?>" alt=""></li>
+		<li><img src="<?php echo e(asset('img/banner2.jpg')); ?>" alt=""></li>
+		<li><img src="<?php echo e(asset('img/banner3.jpg')); ?>" alt=""></li>
 	</ul>
 </div>
 <div id="main-search">
 	<div class="ui stackable container">
 		<div id="context2">
 			<div class="ui stackable secondary menu">
-				<a class="item active" data-tab="hotel"><i class="hotel icon"></i>{{ __('messages.Hotel') }}</a>
-				<a href="{{ url('aspac2017') }}" class="item tab-aspac"><i class="world icon"></i>JCI ASPAC {{ date('Y') }}</a>
-				<a href="https://www.sixt.com/php/reservation" target="_blance" class="item"><i class="car icon"></i>{{ __('messages.Rent a car') }}</a>
-				<a href="{{ url('category/2') }}" class="item tab-travel"><i class="plane icon"></i>{{ __('messages.Travel Inspiration') }}</a>
+				<a class="item active" data-tab="hotel"><i class="hotel icon"></i><?php echo e(__('messages.Hotel')); ?></a>
+				<a href="<?php echo e(url('aspac2017')); ?>" class="item tab-aspac"><i class="world icon"></i>JCI ASPAC <?php echo e(date('Y')); ?></a>
+				<a href="https://www.sixt.com/php/reservation" target="_blance" class="item"><i class="car icon"></i><?php echo e(__('messages.Rent a car')); ?></a>
+				<a href="<?php echo e(url('category/2')); ?>" class="item tab-travel"><i class="plane icon"></i><?php echo e(__('messages.Travel Inspiration')); ?></a>
 			</div>
-			<form class="ui form active tab segment" data-tab="hotel" action="{{ url('searchresult') }}" method="POST">
+			<form class="ui form active tab segment" data-tab="hotel" action="<?php echo e(url('searchresult')); ?>" method="POST">
 				<div class="ui grid stackable">
 					<div class="four wide column">
 						<div class="local example">
 							<div class="ui search">
 								<div class="ui fluid left icon input datalocation">
-									<input class="prompt" type="text" name="place" id="searchplace"  data-content="{{ __('messages.Write your destination of travel') }}"  placeholder="{{ __('messages.Destination') }}">
+									<input class="prompt" type="text" name="place" id="searchplace"  data-content="<?php echo e(__('messages.Write your destination of travel')); ?>"  placeholder="<?php echo e(__('messages.Destination')); ?>">
 									<i class="marker icon"></i>
 								</div>
 								<div class="results"></div>
@@ -49,17 +47,17 @@
 							<a class="plus" href="#" id="plus">
 								<i class="chevron up icon"></i>
 							</a>
-							<input type="number" name="roomnumber" placeholder="{{ __('messages.Rooms') }}" id="selectedRoom" min="1" value="15">
+							<input type="number" name="roomnumber" placeholder="<?php echo e(__('messages.Rooms')); ?>" id="selectedRoom" min="1" value="15">
 							<a class="minus" href="#" id="minus">
 								<i class="chevron down icon"></i>
 							</a>
 						</div>
 						<select class="ui fluid search dropdown selectedRoom">
-							<option value="">{{ __('messages.Rooms') }}</option>
-							@for ($i=1; $i< 15; $i++)
-							<option value="{{ $i }}" @If($i == 1) selected @endif>{{ $i }} {{ __('messages.room') }}</option>
-							@endfor
-							<option value="more">{{ __('messages.More') }}</option>
+							<option value=""><?php echo e(__('messages.Rooms')); ?></option>
+							<?php for($i=1; $i< 15; $i++): ?>
+							<option value="<?php echo e($i); ?>" <?php if($i == 1): ?> selected <?php endif; ?>><?php echo e($i); ?> <?php echo e(__('messages.room')); ?></option>
+							<?php endfor; ?>
+							<option value="more"><?php echo e(__('messages.More')); ?></option>
 						</select>
 					</div>
 					
@@ -68,22 +66,23 @@
 							<a class="plus" href="#" id="plus1">
 								<i class="chevron up icon"></i>
 							</a>
-							<input type="number" name="peoplenumber" placeholder="{{ __('messages.People') }}" id="selectedPeople" min="1" value="15">
+							<input type="number" name="peoplenumber" placeholder="<?php echo e(__('messages.People')); ?>" id="selectedPeople" min="1" value="15">
 							<a class="minus" href="#" id="minus1">
 								<i class="chevron down icon"></i>
 							</a>
 						</div>
 						<select class="ui fluid search dropdown selectedPeople">
-							<option value="">{{ __('messages.People') }}</option>
-							@for ($i=1; $i< 15; $i++)
-							<option value="{{ $i }}" @If($i == 2) selected @endif>{{ $i }} {{ __('messages.people') }}</option>
-							@endfor
-							<option value="more">{{ __('messages.More') }}</option>
+							<option value=""><?php echo e(__('messages.People')); ?></option>
+							<?php for($i=1; $i< 15; $i++): ?>
+							<option value="<?php echo e($i); ?>" <?php if($i == 2): ?> selected <?php endif; ?>><?php echo e($i); ?> <?php echo e(__('messages.people')); ?></option>
+							<?php endfor; ?>
+							<option value="more"><?php echo e(__('messages.More')); ?></option>
 						</select>
 				   </div>
 					<div class="two wide search-btn column">
-						<div class="fluid ui red button" id="searchButton" data-token="{{ csrf_token() }}">
-							{{ __('messages.Search') }}
+						<div class="fluid ui red button" id="searchButton" data-token="<?php echo e(csrf_token()); ?>">
+							<?php echo e(__('messages.Search')); ?>
+
 						</div>
 					</div>
 				</div>
@@ -97,52 +96,56 @@
 		</div>
 	</div>
 </div>
-@if ($informations->count() > 0)
+<?php if($informations->count() > 0): ?>
 	<section class="cd-hero">
 		<ul class="cd-hero-slider autoplay">
-			@foreach ($informations as $key => $information)
-				<li class="{{ $key == 0 ? 'selected':'' }}">
+			<?php $__currentLoopData = $informations; $__env->addLoop($__currentLoopData); foreach($__currentLoopData as $key => $information): $__env->incrementLoopIndices(); $loop = $__env->getLastLoop(); ?>
+				<li class="<?php echo e($key == 0 ? 'selected':''); ?>">
 					<div class="cd-full-width">
-						@if (App::isLocale('en'))
-							<h2>{{ $information->subtitle_en }}</h2>
-							{!!  $information->content_en !!}
-						@elseif (App::isLocale('mn'))
-							<h2>{{ $information->subtitle }}</h2>
-							{!!  $information->content !!}
-						@endif
+						<?php if(App::isLocale('en')): ?>
+							<h2><?php echo e($information->subtitle_en); ?></h2>
+							<?php echo $information->content_en; ?>
+
+						<?php elseif(App::isLocale('mn')): ?>
+							<h2><?php echo e($information->subtitle); ?></h2>
+							<?php echo $information->content; ?>
+
+						<?php endif; ?>
 					</div>
 				</li>
-			@endforeach
+			<?php endforeach; $__env->popLoop(); $loop = $__env->getLastLoop(); ?>
 		</ul>
 		<div class="cd-slider-nav">
 			<nav>
 				<span class="cd-marker item-1"></span>
 				<ul>
-					@foreach ($informations as $key => $information)
-						<li class="{{ $key == 0 ? 'selected':'' }}">
+					<?php $__currentLoopData = $informations; $__env->addLoop($__currentLoopData); foreach($__currentLoopData as $key => $information): $__env->incrementLoopIndices(); $loop = $__env->getLastLoop(); ?>
+						<li class="<?php echo e($key == 0 ? 'selected':''); ?>">
 							<a href="#">
-								<img src="{{ asset($information->image) }}">
+								<img src="<?php echo e(asset($information->image)); ?>">
 								<label style="word-spacing: 9999px">
-									@if (App::isLocale('en'))
-										{{ $information->title_en }}
-									@elseif (App::isLocale('mn'))
-										{{ $information->title }}
-									@endif
+									<?php if(App::isLocale('en')): ?>
+										<?php echo e($information->title_en); ?>
+
+									<?php elseif(App::isLocale('mn')): ?>
+										<?php echo e($information->title); ?>
+
+									<?php endif; ?>
 								</label>
 							</a>
 						</li>
-					@endforeach
+					<?php endforeach; $__env->popLoop(); $loop = $__env->getLastLoop(); ?>
 				</ul>
 			</nav>
 		</div>
 	</section>
-@endif
+<?php endif; ?>
 <div class="back-silver">
 	<div class="ui container">
 		<div class="page-title">
 			<div id="ihotel" class="ui stackable container ">
 				<div class="sixteen wide center aligned column">
-					<h4 id="contact">{{ __('messages.Login to control system') }}</h4>
+					<h4 id="contact"><?php echo e(__('messages.Login to control system')); ?></h4>
 				</div>
 			</div>
 		</div>
@@ -155,10 +158,10 @@
 								<img class="ui tiny centered image" src="img/marker.png">
 							</div>
 							<div class="content">
-								<h4 class="ui sub header">{{ __('messages.Add hotel') }}</h4>
+								<h4 class="ui sub header"><?php echo e(__('messages.Add hotel')); ?></h4>
 							</div>
 							<div class="extra content">
-								<a href="{{ url('hotel/create') }}" class="ui primary button">{{ __('messages.Add') }}</a>
+								<a href="<?php echo e(url('hotel/create')); ?>" class="ui primary button"><?php echo e(__('messages.Add')); ?></a>
 							</div>
 						</div>
 					</div>
@@ -170,10 +173,10 @@
 								<img class="ui tiny centered image" src="img/room.png">
 							</div>
 							<div class="content">
-								<h4 class="ui sub header">{{ __('messages.Room Control System') }}</h4>
+								<h4 class="ui sub header"><?php echo e(__('messages.Room Control System')); ?></h4>
 							</div>
 							<div class="extra content">
-								<a href="{{ url('profile/hotels') }}" class="ui primary button">{{ __('messages.Login') }}</a>
+								<a href="<?php echo e(url('profile/hotels')); ?>" class="ui primary button"><?php echo e(__('messages.Login')); ?></a>
 							</div>
 						</div>
 					</div>
@@ -185,10 +188,10 @@
 								<img class="ui tiny centered image" src="img/hotel.png">
 							</div>
 							<div class="content">
-								<h4 class="ui sub header">{{ __('messages.Hotel Booking System') }}</h4>
+								<h4 class="ui sub header"><?php echo e(__('messages.Hotel Booking System')); ?></h4>
 							</div>
 							<div class="extra content">
-								<a href="#" class="ui primary button">{{ __('messages.Login') }}</a>
+								<a href="#" class="ui primary button"><?php echo e(__('messages.Login')); ?></a>
 							</div>
 						</div>
 					</div>
@@ -201,10 +204,11 @@
 	<div class="ui container">
 		<div class="ui stackable grid">
 			<div class="three column row">
-				@if ($firstPost)
+				<?php if($firstPost): ?>
 					<div class="column">
 						<h4 class="ui centered header">
-							<i class="ui globe icon"></i>{{ App::isLocale('mn') ? $firstPost->category->name : $firstPost->category->name_en }}
+							<i class="ui globe icon"></i><?php echo e(App::isLocale('mn') ? $firstPost->category->name : $firstPost->category->name_en); ?>
+
 						</h4>
 						<div class="ui special raised link cards">
 							<div class="card">
@@ -212,29 +216,31 @@
 									<div class="ui inverted dimmer">
 										<div class="content">
 											<div class="center">
-												<a class="ui primary button" href="{{ url('post', $firstPost->id) }}">{{ __('messages.Read More') }}</a>
+												<a class="ui primary button" href="<?php echo e(url('post', $firstPost->id)); ?>"><?php echo e(__('messages.Read More')); ?></a>
 											</div>
 										</div>
 									</div>
-									<img src="{{ asset(unserialize($firstPost->photos)[0]) }}">
+									<img src="<?php echo e(asset(unserialize($firstPost->photos)[0])); ?>">
 								</div>
 								<div class="content footer-news">
-									<a class="header" href="{{ url('post', $firstPost->id) }}">{{ $firstPost->title }}</a>
+									<a class="header" href="<?php echo e(url('post', $firstPost->id)); ?>"><?php echo e($firstPost->title); ?></a>
 									<div class="meta">
 										<span class="date">
 											<i class="ui calendar icon"></i>
-											{{ date('Y-m-d', strtotime($firstPost->created_at)) }}
+											<?php echo e(date('Y-m-d', strtotime($firstPost->created_at))); ?>
+
 										</span>
 									</div>
 								</div>
 							</div>
 						</div>
 					</div>
-				@endif
-				@if ($secondPost)
+				<?php endif; ?>
+				<?php if($secondPost): ?>
 					<div class="column">
 						<h4 class="ui centered header">
-							<i class="ui map icon"></i>{{ App::isLocale('mn') ? $secondPost->category->name : $secondPost->category->name_en }}
+							<i class="ui map icon"></i><?php echo e(App::isLocale('mn') ? $secondPost->category->name : $secondPost->category->name_en); ?>
+
 						</h4>
 						<div class="ui special raised link cards">
 							<div class="card">
@@ -242,29 +248,31 @@
 									<div class="ui inverted dimmer">
 										<div class="content">
 											<div class="center">
-												<a class="ui primary button" href="{{ url('post', $secondPost->id) }}">{{ __('messages.Read More') }}</a>
+												<a class="ui primary button" href="<?php echo e(url('post', $secondPost->id)); ?>"><?php echo e(__('messages.Read More')); ?></a>
 											</div>
 										</div>
 									</div>
-									<img src="{{ asset(unserialize($secondPost->photos)[0]) }}">
+									<img src="<?php echo e(asset(unserialize($secondPost->photos)[0])); ?>">
 								</div>
 								<div class="content footer-news">
-									<a class="header">{{ $secondPost->title }}</a>
+									<a class="header"><?php echo e($secondPost->title); ?></a>
 									<div class="meta">
 										<span class="date">
 											<i class="ui calendar icon"></i>
-											{{ date('Y-m-d', strtotime($secondPost->created_at)) }}
+											<?php echo e(date('Y-m-d', strtotime($secondPost->created_at))); ?>
+
 										</span>
 									</div>
 								</div>
 							</div>
 						</div>
 					</div>
-				@endif
-				@if ($hotel)
+				<?php endif; ?>
+				<?php if($hotel): ?>
 					<div class="column">
 						<h4 class="ui centered header">
-							<i class="ui tags icon"></i>{{ __('messages.Sale') }}
+							<i class="ui tags icon"></i><?php echo e(__('messages.Sale')); ?>
+
 						</h4>
 						<div class="ui special raised link cards">
 							<div class="card">
@@ -272,39 +280,41 @@
 									<div class="ui inverted dimmer">
 										<div class="content">
 											<div class="center">
-												<a class="ui primary button" href="{{ url('search/hotel', $hotel->id) }}">{{ __('messages.Read More') }}</a>
+												<a class="ui primary button" href="<?php echo e(url('search/hotel', $hotel->id)); ?>"><?php echo e(__('messages.Read More')); ?></a>
 											</div>
 										</div>
 									</div>
 									<div class="ui fluid image">
 										<div class="ui red right ribbon label">
-											{{ $room->price }}₮
+											<?php echo e($room->price); ?>₮
 										</div>
-										<img src="{{ asset($hotel->cover_photo) }}">
+										<img src="<?php echo e(asset($hotel->cover_photo)); ?>">
 									</div>
 								</div>
 								<div class="content footer-news">
-									<a class="header">{{ $hotel->name }}
-									@for ($i=0;$i<$hotel->star;$i++)
+									<a class="header"><?php echo e($hotel->name); ?>
+
+									<?php for($i=0;$i<$hotel->star;$i++): ?>
 										<i class="ui star icon"></i>
-									@endfor
+									<?php endfor; ?>
 									</a>
 									<div class="meta">
 										<span class="date">
 											<i class="marker icon"></i>
-											{{ $hotel->address }}
+											<?php echo e($hotel->address); ?>
+
 										</span>
 									</div>
 								</div>
 							</div>
 						</div>
 					</div>
-				@endif
+				<?php endif; ?>
 			</div>
 		</div>
 	</div>
 </div>
-@if ($comments->count() > 0)
+<?php if($comments->count() > 0): ?>
 	<div class="people-say">
 		<div class="ui container">
 			<div class="ui two column centered stackable grid">
@@ -312,26 +322,26 @@
 					<section class="slider">
 						<div class="flexslider">
 							<ul class="slides">
-								@foreach ($comments as $comment)
+								<?php $__currentLoopData = $comments; $__env->addLoop($__currentLoopData); foreach($__currentLoopData as $comment): $__env->incrementLoopIndices(); $loop = $__env->getLastLoop(); ?>
 									<li class="artive">
 										<article>
 											<div id="owl">
 												<div class="large-12 columns testimonial">
 													<div class="quote">
-														<p>{{ $comment->content }}</p>
+														<p><?php echo e($comment->content); ?></p>
 													</div>
 													<div class="student">
 														<div class="photo round-image">
-															<img class="ui medium circular image" src="{{ asset($comment->photo) }}">
+															<img class="ui medium circular image" src="<?php echo e(asset($comment->photo)); ?>">
 														</div>
-														<p>{{ $comment->name }}</p>
-														<p>{{ $comment->description }}</p>
+														<p><?php echo e($comment->name); ?></p>
+														<p><?php echo e($comment->description); ?></p>
 													</div>
 												</div>
 											</div>
 										</article>
 									</li>
-								@endforeach
+								<?php endforeach; $__env->popLoop(); $loop = $__env->getLastLoop(); ?>
 							</ul>
 						</div>
 					</section>
@@ -339,16 +349,16 @@
 			</div>
 		</div>
 	</div>
-@endif
+<?php endif; ?>
 
 <div id="places"></div>
-@endsection
+<?php $__env->stopSection(); ?>
 
-@push('script')
+<?php $__env->startPush('script'); ?>
 <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyBjW4iZ6gWxhzJOE3Vi4wvHZcTH0vgdDqk&libraries=places"></script>
-<script src="{{ asset('js/moment.js') }}"></script>
-<script src="{{ asset('js/daterangepicker.js') }}"></script>
-<script src="{{ asset('js/jquery.flexslider.js') }}"></script>
+<script src="<?php echo e(asset('js/moment.js')); ?>"></script>
+<script src="<?php echo e(asset('js/daterangepicker.js')); ?>"></script>
+<script src="<?php echo e(asset('js/jquery.flexslider.js')); ?>"></script>
 <script type="text/javascript">
 	$(window).load(function() {
 		$('.flexslider').flexslider({
@@ -514,7 +524,7 @@
 	
 		$("#searchButton").click(function(){
 			$('#searchButton').addClass('loading');
-			@if (App::isLocale('mn')) 
+			<?php if(App::isLocale('mn')): ?> 
 				if(!people){
 					people = 2;
 				}
@@ -526,18 +536,20 @@
 				searchPlace = $('#searchplace').val();
 				$.get('search?roomnumber=' + roomNumber + '&peoplenumber=' + people + '&startdate=' + startDate + '&enddate=' + endDate + '&place=' + searchPlace)
 				.success(function (data) {
-					window.location = "{{URL::to('searchresult')}}";
+					window.location = "<?php echo e(URL::to('searchresult')); ?>";
 				})
 				.error(function(jqXHR, textStatus, errorThrown){
 					if (textStatus == 'error'){
 							alert(errorThrown);
 					}
 				});
-			@elseif (App::isLocale('en')) 
-				window.location = "{{URL::to('aspac2017')}}";
-			@endif
+			<?php elseif(App::isLocale('en')): ?> 
+				window.location = "<?php echo e(URL::to('aspac2017')); ?>";
+			<?php endif; ?>
 		});
 
     
 </script>
-@endpush
+<?php $__env->stopPush(); ?>
+
+<?php echo $__env->make('layouts.app', array_except(get_defined_vars(), array('__data', '__path')))->render(); ?>

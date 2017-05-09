@@ -1,8 +1,6 @@
-@extends('layouts.profile')
+<?php $__env->startSection('title', 'Захиалга'); ?>
 
-@section('title', 'Захиалга')
-
-@section('content')
+<?php $__env->startSection('content'); ?>
 <div class="eleven wide column">
 	<div class="ui green segment">
 		<h4 class="ui header">Захиалгын мэдээлэл</h4>
@@ -11,46 +9,46 @@
 			<tbody>
 				<tr>
 					<td>Захиалагчийн нэр</td>
-					<td>{{ $order->user->name }}</td>
+					<td><?php echo e($order->user->name); ?></td>
 				</tr>
 				<tr>
 					<td>Захиалагчийн и-мэйл</td>
-					<td>{{ $order->user->email }}</td>
+					<td><?php echo e($order->user->email); ?></td>
 				</tr>
 				<tr>
 					<td>Буудлын нэр</td>
-					<td>{{ $order->hotel_name }}</td>
+					<td><?php echo e($order->hotel_name); ?></td>
 				</tr>
 				<tr>
 					<td>Захиалсан өдөр</td>
-					<td>{{ date('Y-m-d', strtotime($order->created_at)) }}</td>
+					<td><?php echo e(date('Y-m-d', strtotime($order->created_at))); ?></td>
 				</tr>
 				<tr>
 					<td>Ирэх өдөр</td>
-					<td>{{ $order->startdate }}</td>
+					<td><?php echo e($order->startdate); ?></td>
 				</tr>
 				<tr>
 					<td>Гарах өдөр</td>
-					<td>{{ $order->enddate }}</td>
+					<td><?php echo e($order->enddate); ?></td>
 				</tr>
-				@if (unserialize($order->pickup))
+				<?php if(unserialize($order->pickup)): ?>
 					<tr>
 						<td>Онгоцны буудлаас тосох</td>
-						<td>{{ unserialize($order->pickup)['name'] }}</td>
+						<td><?php echo e(unserialize($order->pickup)['name']); ?></td>
 					</tr>
-				@endif
+				<?php endif; ?>
 				<tr>
 					<td>Хоног</td>
-					<td>{{ $order->day }}</td>
+					<td><?php echo e($order->day); ?></td>
 				</tr>
 				<tr>
 					<td>Нийт үнэ</td>
 					<td>
-						@if ($order->price_dollar)
-							{{ number_format($order->price_dollar) }}$
-						@else
-							{{ number_format($order->price) }}₮
-						@endif
+						<?php if($order->price_dollar): ?>
+							<?php echo e(number_format($order->price_dollar)); ?>$
+						<?php else: ?>
+							<?php echo e(number_format($order->price)); ?>₮
+						<?php endif; ?>
 					</td>
 				</tr>
 			</tbody>
@@ -66,17 +64,17 @@
 				</tr>
 			</thead>
 			<tbody>
-				@foreach (unserialize($order->rooms) as $room)
+				<?php $__currentLoopData = unserialize($order->rooms); $__env->addLoop($__currentLoopData); foreach($__currentLoopData as $room): $__env->incrementLoopIndices(); $loop = $__env->getLastLoop(); ?>
 					<tr>
-						<td>{{ $room['room_name'] }}</td>
-						<td>{{ $room['room_number'] }}</td>
-						@if ($order->price_dollar)
-							<td>{{ number_format($room['room_price']) }}$</td>
-						@else
-							<td>{{ number_format($room['room_price']) }}₮</td>
-						@endif
+						<td><?php echo e($room['room_name']); ?></td>
+						<td><?php echo e($room['room_number']); ?></td>
+						<?php if($order->price_dollar): ?>
+							<td><?php echo e(number_format($room['room_price'])); ?>$</td>
+						<?php else: ?>
+							<td><?php echo e(number_format($room['room_price'])); ?>₮</td>
+						<?php endif; ?>
 					</tr>
-				@endforeach
+				<?php endforeach; $__env->popLoop(); $loop = $__env->getLastLoop(); ?>
 			</tbody>
 		</table>
 		<h4 class="ui header">Картын мэдээлэл</h4>
@@ -92,34 +90,36 @@
 			</thead>
 			<tbody>
 				<tr>
-					<td>{{ json_decode($order->carddata)->cardnumber }}</td>
-					<td>{{ json_decode($order->carddata)->cardname }}</td>
-					<td>{{ json_decode($order->carddata)->expirymonth }}/{{ json_decode($order->carddata)->expiryyear }}</td>
-					<td>{{ json_decode($order->carddata)->cvv }}</td>
+					<td><?php echo e(json_decode($order->carddata)->cardnumber); ?></td>
+					<td><?php echo e(json_decode($order->carddata)->cardname); ?></td>
+					<td><?php echo e(json_decode($order->carddata)->expirymonth); ?>/<?php echo e(json_decode($order->carddata)->expiryyear); ?></td>
+					<td><?php echo e(json_decode($order->carddata)->cvv); ?></td>
 				</tr>
 			</tbody>
 		</table>
 		<h4 class="ui header">Статус</h4>
 		<div class="ui divider"></div>
 		<form id="order-form" class="ui left floated form">
-			{{ csrf_field() }}
-			{{ method_field('PUT') }}
+			<?php echo e(csrf_field()); ?>
+
+			<?php echo e(method_field('PUT')); ?>
+
 			<div class="inline field" id="order-status">
-				@if ($order->status == 3)
+				<?php if($order->status == 3): ?>
 					<div class="ui left floated red label">Цуцлагдсан</div>
-				@else
+				<?php else: ?>
 					<div class="ui slider checkbox">
-						<input type="checkbox" name="active" tabindex="0" class="hidden" {{ $order->status == 2 ? 'checked' : '' }}>
-						<label class="editable-role">{{ $order->status == 2 ? 'Баталгаажсан' : 'Баталгаажаагүй' }}</label>
+						<input type="checkbox" name="active" tabindex="0" class="hidden" <?php echo e($order->status == 2 ? 'checked' : ''); ?>>
+						<label class="editable-role"><?php echo e($order->status == 2 ? 'Баталгаажсан' : 'Баталгаажаагүй'); ?></label>
 					</div>
-					<button id="cancel-btn" type="button" class="ui right floated red button{{ $order->status == 1 ? '' : ' disabled' }}">Цуцлах</button>
-				@endif
+					<button id="cancel-btn" type="button" class="ui right floated red button<?php echo e($order->status == 1 ? '' : ' disabled'); ?>">Цуцлах</button>
+				<?php endif; ?>
 			</div>
 		</form><br>
 		<div id="message"></div>
 	</div>
 </div>
-@if ($order->status == 1)
+<?php if($order->status == 1): ?>
 	<div id="cancel-modal" class="ui modal">
 		<div class="header">Захиалга цуцлах</div>
 		<div class="content">
@@ -131,22 +131,24 @@
 				<i class="checkmark icon"></i>Тийм
 			</a>
 			<form action="" method="POST">
-				{{ csrf_field() }}
-				{{ method_field('DELETE') }}
+				<?php echo e(csrf_field()); ?>
+
+				<?php echo e(method_field('DELETE')); ?>
+
 			</form>
 		</div>
 	</div>
-@endif
-@endsection
+<?php endif; ?>
+<?php $__env->stopSection(); ?>
 
-@push('script')
+<?php $__env->startPush('script'); ?>
 <script type="text/javascript">
 	$(document).ready(function() {
 		$('#cancel-btn').click(function(e) {
 			$('#cancel-modal').modal({
 				onApprove : function() {
 					$('#cancel-btn').addClass('loading disabled');
-					$('#cancel-modal').find('form').attr('action', '{{ url("profile/order", $order->id)}}');
+					$('#cancel-modal').find('form').attr('action', '<?php echo e(url("profile/order", $order->id)); ?>');
 					$('#cancel-modal').find('form').submit();
 				}
 			}).modal('show');
@@ -156,7 +158,7 @@
 	    	$('.checkbox').addClass('disabled');
 		    $.ajax({
 				type: "POST",
-				url: "{{ url('profile/order', $order->id) }}",
+				url: "<?php echo e(url('profile/order', $order->id)); ?>",
 		       	data: $('#order-form').serialize(),
 		       	success: function(data) {
 	    			$('.checkbox').removeClass('disabled');
@@ -185,4 +187,5 @@
 	    });
 	});
 </script>
-@endpush
+<?php $__env->stopPush(); ?>
+<?php echo $__env->make('layouts.profile', array_except(get_defined_vars(), array('__data', '__path')))->render(); ?>

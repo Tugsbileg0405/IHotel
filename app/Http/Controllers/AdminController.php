@@ -218,6 +218,17 @@ class AdminController extends Controller
 		]);
 	}
 
+	public function showSingleOrder($id, $rid)
+	{
+		$order = \App\Order::findorfail($rid);
+		$hotel = \App\Hotel::findorfail($id);
+
+		return view('profile.hotel.showOrder', [
+			'order' => $order,
+			'hotel' => $hotel,
+		]);
+	}
+
 	public function searchOrder(Request $request, $id)
 	{
 		$name = $request->get('name');

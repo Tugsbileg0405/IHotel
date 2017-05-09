@@ -205,6 +205,7 @@ Route::group(['middleware' => 'locale'], function() {
 		Route::get('admin/hotel/rooms/{id}', 'AdminController@showRooms');
 		Route::get('admin/hotel/rating/{id}', 'AdminController@showRating');
 		Route::get('admin/hotel/order/{id}', 'AdminController@showOrder');
+		Route::get('admin/hotel/order/{id}/{rid}', 'AdminController@showSingleOrder');
 		Route::post('admin/hotel/order/search/{id}', 'AdminController@searchOrder');
 	});
 
