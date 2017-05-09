@@ -110,9 +110,6 @@
                         <input type="email" name="email" placeholder="<?php echo e(__('messages.Email')); ?>">
                     </div>
                     <div class="field">
-                        <input type="text" name="country" placeholder="<?php echo e(__('messages.Country')); ?>">
-                    </div>
-                    <div class="field">
                         <input type="password" name="password" placeholder="<?php echo e(__('messages.Password')); ?>">
                     </div>
                     <div class="field">
@@ -203,6 +200,19 @@
                     }
                 ]
             },
+            surname: {
+                identifier: 'surname',
+                rules: [
+                    {
+                        type: 'empty',
+                        prompt: '<?php echo e(__("form.Please enter your surname")); ?>'
+                    },
+                    {
+                        type   : 'maxLength[191]',
+                        prompt : '<?php echo e(__("form.Please enter at most 191 characters")); ?>'
+                    }
+                ]
+            },
             email: {
                 identifier: 'email',
                 rules: [
@@ -268,18 +278,19 @@
                 data: $("#register-form").serialize(),
                 success: function() {
                     $('#register-form button').removeClass('loading');
-                    $('#register-message').html('<div class="ui success message"></i><?php echo e(__("auth.failed")); ?><i class="ui tiny active inline loader"></div>');
+                    $('#register-message').html('<div class="ui success message"></i><?php echo e(__("auth.wait")); ?><i class="ui tiny active inline loader"></div>');
                     window.location.href = "<?php echo e(url('/')); ?>";
                 },
                 error: function(data){
                     $('#register-form button').removeClass('loading disabled');
-                    var errors = data.responseJSON;
-                    var registererror = '<div class="ui warning message"><ul>';
-                    $.each(errors, function( key, value ) {
-                        registererror += '<li>' + value[0] + '</li>';
-                    });
-                    registererror += '</div></ul>';
-                    $('#register-message').html(registererror);
+                    if (data.responseText.email != 'undefined') {
+                        $('#register-message').html('<div class="ui warning message"><?php echo e(__("auth.emailunique")); ?></div>');
+                    }
+                    else {
+                        if (data.responseText.password != 'undefined') {
+                            $('#register-message').html('<div class="ui warning message">Нууц үг буруу байна</div>');
+                        }
+                    }
                 }
             });
         }

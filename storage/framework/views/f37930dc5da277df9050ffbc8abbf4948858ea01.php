@@ -35,7 +35,9 @@
 
     <?php echo $__env->yieldContent('content'); ?>
 
-    <?php echo $__env->make('partials.footer', array_except(get_defined_vars(), array('__data', '__path')))->render(); ?>
+    <?php if(!Request::is('aspac2017') && !Request::is('searchresult')): ?>
+        <?php echo $__env->make('partials.footer', array_except(get_defined_vars(), array('__data', '__path')))->render(); ?>
+    <?php endif; ?>
     
     <script src="<?php echo e(asset('js/modernizr.js')); ?>"></script>
     <script src="<?php echo e(asset('dist/components/popup.js')); ?>"></script>

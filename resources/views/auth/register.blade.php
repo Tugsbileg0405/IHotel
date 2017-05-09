@@ -62,14 +62,6 @@
                                                     </div>
                                                 @endif
                                             </div>
-                                            <div class="field{{ $errors->has('country') ? ' error' : '' }}">
-                                                <input type="text" name="country" placeholder="{{ __('messages.Country') }}" value="{{ old('country') }}">
-                                                @if ($errors->has('country'))
-                                                    <div class="ui basic red pointing prompt label transition visible">
-                                                        {{ $errors->first('country') }}
-                                                    </div>
-                                                @endif
-                                            </div>
                                             <div class="field{{ $errors->has('password') ? ' error' : '' }}">
                                                 <input type="password" name="password" placeholder="{{ __('messages.Password') }}">
                                                 @if ($errors->has('password'))
@@ -140,19 +132,6 @@
                     {
                         type: 'email',
                         prompt: '{{ __("form.Please enter your email") }}'
-                    },
-                    {
-                        type   : 'maxLength[191]',
-                        prompt : '{{ __("form.Please enter at most 191 characters") }}'
-                    }
-                ]
-            },
-            country: {
-                identifier: 'country',
-                rules: [
-                    {
-                        type: 'empty',
-                        prompt: '{{ __("form.Please enter your country") }}'
                     },
                     {
                         type   : 'maxLength[191]',

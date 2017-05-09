@@ -20,7 +20,7 @@ class CreateUsersTable extends Migration
             $table->string('email')->unique();
             $table->string('password');
             $table->boolean('is_admin')->default(false);
-            $table->string('country');
+            $table->string('country')->nullable()->default(null);
             $table->string('gender')->nullable()->default(null);
             $table->string('phone_number')->nullable()->default(null);
             $table->string('avatar')->default('img/uploads/users/avatar.png');

@@ -103,9 +103,6 @@
                         <input type="email" name="email" placeholder="{{ __('messages.Email') }}">
                     </div>
                     <div class="field">
-                        <input type="text" name="country" placeholder="{{ __('messages.Country') }}">
-                    </div>
-                    <div class="field">
                         <input type="password" name="password" placeholder="{{ __('messages.Password') }}">
                     </div>
                     <div class="field">
@@ -221,19 +218,6 @@
                     }
                 ]
             },
-            country: {
-                identifier: 'country',
-                rules: [
-                    {
-                        type: 'empty',
-                        prompt: '{{ __("form.Please enter your country") }}'
-                    },
-                    {
-                        type   : 'maxLength[191]',
-                        prompt : '{{ __("form.Please enter at most 191 characters") }}'
-                    }
-                ]
-            },
             password: {
                 identifier: 'password',
                 rules: [
@@ -286,7 +270,7 @@
                 data: $("#register-form").serialize(),
                 success: function() {
                     $('#register-form button').removeClass('loading');
-                    $('#register-message').html('<div class="ui success message"></i>{{ __("auth.failed") }}<i class="ui tiny active inline loader"></div>');
+                    $('#register-message').html('<div class="ui success message"></i>{{ __("auth.wait") }}<i class="ui tiny active inline loader"></div>');
                     window.location.href = "{{ url('/') }}";
                 },
                 error: function(data){

@@ -21242,172 +21242,197 @@ class AppController extends Controller
 
         foreach ($users as $user) {
             if (array_key_exists("phone", $user)) {
-                \App\User::create([
-                    'name' => $user['name'],
-                    'email' => $user['email'],
-                    'phone_number' => $user['phone'],
-                    'is_admin' => false,
-                    'password' => bcrypt(str_random(12)),
-                    'key' => $user['objectId'],
-                ]);
+                if (array_key_exists("country", $user)) {
+                    \App\User::create([
+                        'name' => $user['name'],
+                        'surname' => $user['name'],
+                        'email' => $user['email'],
+                        'phone_number' => $user['phone'],
+                        'is_admin' => false,
+                        'country' => $user['country'],
+                        'password' => bcrypt(str_random(12)),
+                    ]);
+                }
+                else {
+                    \App\User::create([
+                        'name' => $user['name'],
+                        'surname' => $user['name'],
+                        'email' => $user['email'],
+                        'phone_number' => $user['phone'],
+                        'is_admin' => false,
+                        'password' => bcrypt(str_random(12)),
+                    ]);
+                }
             }
             else {
-                \App\User::create([
-                    'name' => $user['name'],
-                    'email' => $user['email'],
-                    'is_admin' => false,
-                    'password' => bcrypt(str_random(12)),
-                    'key' => $user['objectId'],
-                ]);
+                if (array_key_exists("country", $user)) {
+                    \App\User::create([
+                        'name' => $user['name'],
+                        'surname' => $user['name'],
+                        'email' => $user['email'],
+                        'is_admin' => false,
+                        'country' => $user['country'],
+                        'password' => bcrypt(str_random(12)),
+                    ]);
+                }
+                else {
+                    \App\User::create([
+                        'name' => $user['name'],
+                        'surname' => $user['name'],
+                        'email' => $user['email'],
+                        'is_admin' => false,
+                        'password' => bcrypt(str_random(12)),
+                    ]);
+                }
             }
         }
 
-        foreach ($hotels as $hotel) {
-            if ($hotel['asem'] == 1) {
-                $model = new \App\Hotel;
-                $model->user_id = 1;
-                $model->category_id = 1;
-                $model->name = $hotel['name'];
-                $model->name_en = $hotel['name'];
-                $model->star = $hotel['stars'];
-                $model->room_number = 0;
-                $model->website = $hotel['website'];
-                $model->contact = 'iHotel';
-                $model->contact_en = 'iHotel';
-                $model->phone_number = $hotel['phone'];
-                $model->email = 'info@ihotel.mn';
-                $model->address = $hotel['address'];
-                $model->address_en = $hotel['address'];
-                $model->introduction = $hotel['long_desc'];
-                $model->introduction_en = $hotel['long_desc'];
-                if (array_key_exists("children", $hotel)) {
-                    $model->is_child = $hotel['children'];
-                }
-                if (array_key_exists("wifi", $hotel)) {
-                    $model->is_internet = $hotel['wifi'];
-                }
+        // foreach ($hotels as $hotel) {
+        //     if ($hotel['asem'] == 1) {
+        //         $model = new \App\Hotel;
+        //         $model->user_id = 1;
+        //         $model->category_id = 1;
+        //         $model->name = $hotel['name'];
+        //         $model->name_en = $hotel['name'];
+        //         $model->star = $hotel['stars'];
+        //         $model->room_number = 0;
+        //         $model->website = $hotel['website'];
+        //         $model->contact = 'iHotel';
+        //         $model->contact_en = 'iHotel';
+        //         $model->phone_number = $hotel['phone'];
+        //         $model->email = 'info@ihotel.mn';
+        //         $model->address = $hotel['address'];
+        //         $model->address_en = $hotel['address'];
+        //         $model->introduction = $hotel['long_desc'];
+        //         $model->introduction_en = $hotel['long_desc'];
+        //         if (array_key_exists("children", $hotel)) {
+        //             $model->is_child = $hotel['children'];
+        //         }
+        //         if (array_key_exists("wifi", $hotel)) {
+        //             $model->is_internet = $hotel['wifi'];
+        //         }
 
-                $path = 'img/uploads/default.jpg';
-                if (array_key_exists("cover_image", $hotel)) {
-                    if ($this->is_url_exist('https://ihotel.mn/'.$hotel['cover_image'])) {
-                        $photo = Image::make('https://ihotel.mn/'.$hotel['cover_image']);
-                        $path = 'img/uploads/hotels/'.md5(microtime()).'.jpg';
-                        $photo->fit(1024, 680)->save($path);
-                    }
-                }
-                $model->cover_photo = $path;
+        //         $path = 'img/uploads/default.jpg';
+        //         if (array_key_exists("cover_image", $hotel)) {
+        //             if ($this->is_url_exist('https://ihotel.mn/'.$hotel['cover_image'])) {
+        //                 $photo = Image::make('https://ihotel.mn/'.$hotel['cover_image']);
+        //                 $path = 'img/uploads/hotels/'.md5(microtime()).'.jpg';
+        //                 $photo->fit(1024, 680)->save($path);
+        //             }
+        //         }
+        //         $model->cover_photo = $path;
                 
-                if (array_key_exists("images", $hotel)) {
-                    $images =[];
-                    foreach ($hotel['images'] as $image) {
-                        if ($this->is_url_exist('https://ihotel.mn/'.$image)) {
-                            $photo = Image::make('https://ihotel.mn/'.$image);
-                            $path = 'img/uploads/hotels/'.md5(microtime()).'.jpg';
-                            $photo->fit(1024, 680)->save($path);
-                            $images[] = $path;
-                        }
-                    }
-                    if (!$images) {
-                        $images[] = 'img/uploads/default.jpg';
-                    }
-                    $model->other_photos = serialize($images);
-                }
-                else {
-                    $images[] = 'img/uploads/default.jpg';
-                    $model->other_photos = serialize($images);
-                }
-                $model->other_info = $hotel['short_desc'];
-                $model->other_info_en = $hotel['short_desc'];
-                if (array_key_exists("geolocation", $hotel)) {
-                    $model->location = json_encode([$hotel['geolocation']['latitude'], $hotel['geolocation']['longitude']]);
-                    $model->what3words = 'зоригт.анхаарах.хуруу';
-                    $model->what3words_en = 'saving.masts.pile';
-                }
-                else {
-                    $model->location = json_encode('47.921622', '106.922362');
-                    $model->what3words = 'зоригт.анхаарах.хуруу';
-                    $model->what3words_en = 'saving.masts.pile';
-                } 
-                $model->published = true;
-                $model->step = 7;
-                $model->total_people = 0;
-                $model->room_number = 0;
-                $model->key = $hotel['objectId'];
-                $model->save();
-            }
-        }
+        //         if (array_key_exists("images", $hotel)) {
+        //             $images =[];
+        //             foreach ($hotel['images'] as $image) {
+        //                 if ($this->is_url_exist('https://ihotel.mn/'.$image)) {
+        //                     $photo = Image::make('https://ihotel.mn/'.$image);
+        //                     $path = 'img/uploads/hotels/'.md5(microtime()).'.jpg';
+        //                     $photo->fit(1024, 680)->save($path);
+        //                     $images[] = $path;
+        //                 }
+        //             }
+        //             if (!$images) {
+        //                 $images[] = 'img/uploads/default.jpg';
+        //             }
+        //             $model->other_photos = serialize($images);
+        //         }
+        //         else {
+        //             $images[] = 'img/uploads/default.jpg';
+        //             $model->other_photos = serialize($images);
+        //         }
+        //         $model->other_info = $hotel['short_desc'];
+        //         $model->other_info_en = $hotel['short_desc'];
+        //         if (array_key_exists("geolocation", $hotel)) {
+        //             $model->location = json_encode([$hotel['geolocation']['latitude'], $hotel['geolocation']['longitude']]);
+        //             $model->what3words = 'зоригт.анхаарах.хуруу';
+        //             $model->what3words_en = 'saving.masts.pile';
+        //         }
+        //         else {
+        //             $model->location = json_encode('47.921622', '106.922362');
+        //             $model->what3words = 'зоригт.анхаарах.хуруу';
+        //             $model->what3words_en = 'saving.masts.pile';
+        //         } 
+        //         $model->published = true;
+        //         $model->step = 7;
+        //         $model->total_people = 0;
+        //         $model->room_number = 0;
+        //         $model->key = $hotel['objectId'];
+        //         $model->save();
+        //     }
+        // }
 
-        foreach ($rooms as $room) {
-            if(isset($room['hotel'])) {
-                $model = new Room;
-                $hotel =  Hotel::where('key', $room['hotel']['objectId'])
-                    ->first();
-                if($hotel) {
-                    $model->hotel_id = $hotel->id;
-                    if ($room['bed_size'] == 'Full') {
-                    $model->room_category_id = 4;
-                    }
-                    elseif ($room['bed_size'] == 'King') {
-                        $model->room_category_id = 4;
-                    }
-                    elseif ($room['bed_size'] == 'Twin') {
-                        $model->room_category_id = 3;
-                    }
-                    elseif ($room['bed_size'] == 'Queen') {
-                        $model->room_category_id = 2;
-                    }
-                    else {
-                        $model->room_category_id = 1;
-                    }
-                    $model->name = $room['room_type'];
-                    $model->number = $room['num_rooms'];
-                    $model->bed_number = $room['num_beds'];
-                    $model->people_number = $room['adult_occupancy'];
-                    $model->price = $room['night_price'];
-                    $model->total_people = $room['adult_occupancy'] * $room['num_rooms'];
-                    $model->size = intval($room['roomt_size']);
-                    $model->introduction = $room['short_desc'];
-                    $model->introduction_en = $room['short_desc'];
-                    $images = [];
-                    if (array_key_exists("images", $room)) {
-                        foreach ($room['images'] as $image) {
-                            if ($this->is_url_exist('https://ihotel.mn/'.$image)) {
-                                $photo = Image::make('https://ihotel.mn/'.$image);
-                                $path = 'img/uploads/rooms/'.md5(microtime()).'.jpg';
-                                $photo->fit(1024, 680)->save($path);
+        // foreach ($rooms as $room) {
+        //     if(isset($room['hotel'])) {
+        //         $model = new Room;
+        //         $hotel =  Hotel::where('key', $room['hotel']['objectId'])
+        //             ->first();
+        //         if($hotel) {
+        //             $model->hotel_id = $hotel->id;
+        //             if ($room['bed_size'] == 'Full') {
+        //             $model->room_category_id = 4;
+        //             }
+        //             elseif ($room['bed_size'] == 'King') {
+        //                 $model->room_category_id = 4;
+        //             }
+        //             elseif ($room['bed_size'] == 'Twin') {
+        //                 $model->room_category_id = 3;
+        //             }
+        //             elseif ($room['bed_size'] == 'Queen') {
+        //                 $model->room_category_id = 2;
+        //             }
+        //             else {
+        //                 $model->room_category_id = 1;
+        //             }
+        //             $model->name = $room['room_type'];
+        //             $model->number = $room['num_rooms'];
+        //             $model->bed_number = $room['num_beds'];
+        //             $model->people_number = $room['adult_occupancy'];
+        //             $model->price = $room['night_price'];
+        //             $model->total_people = $room['adult_occupancy'] * $room['num_rooms'];
+        //             $model->size = intval($room['roomt_size']);
+        //             $model->introduction = $room['short_desc'];
+        //             $model->introduction_en = $room['short_desc'];
+        //             $images = [];
+        //             if (array_key_exists("images", $room)) {
+        //                 foreach ($room['images'] as $image) {
+        //                     if ($this->is_url_exist('https://ihotel.mn/'.$image)) {
+        //                         $photo = Image::make('https://ihotel.mn/'.$image);
+        //                         $path = 'img/uploads/rooms/'.md5(microtime()).'.jpg';
+        //                         $photo->fit(1024, 680)->save($path);
 
-                                $images[] = $path;
-                            }
-                        }
-                        if (!$images) {
-                            $images[] = 'img/uploads/default.jpg';
-                        }
-                    }
-                    else {
-                        $images[] = 'img/uploads/default.jpg';
-                    }
-                    $model->photos = serialize($images);
-                    $model->key = $room['objectId'];
-                    $model->save();
-                }
-            }
-        }
+        //                         $images[] = $path;
+        //                     }
+        //                 }
+        //                 if (!$images) {
+        //                     $images[] = 'img/uploads/default.jpg';
+        //                 }
+        //             }
+        //             else {
+        //                 $images[] = 'img/uploads/default.jpg';
+        //             }
+        //             $model->photos = serialize($images);
+        //             $model->key = $room['objectId'];
+        //             $model->save();
+        //         }
+        //     }
+        // }
 
-        $hotels = Hotel::get();
-        foreach($hotels as $hotel) {
-            $total_people_number = 0;
-            $total_room_number = 0;
-            $rooms = Room::where('hotel_id',$hotel->id)
-                ->get();
+        // $hotels = Hotel::get();
+        // foreach($hotels as $hotel) {
+        //     $total_people_number = 0;
+        //     $total_room_number = 0;
+        //     $rooms = Room::where('hotel_id',$hotel->id)
+        //         ->get();
 
-            foreach($rooms as $room) {
-                $total_people_number += $room->total_people;
-                $total_room_number += $room->number;
-            }
-            $hotel->total_people = $total_people_number;
-            $hotel->room_number = $total_room_number;
-            $hotel->save();
-        }
+        //     foreach($rooms as $room) {
+        //         $total_people_number += $room->total_people;
+        //         $total_room_number += $room->number;
+        //     }
+        //     $hotel->total_people = $total_people_number;
+        //     $hotel->room_number = $total_room_number;
+        //     $hotel->save();
+        // }
         
         return 'success';
     }

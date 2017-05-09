@@ -17,13 +17,13 @@
 			<?php echo e(method_field('PUT')); ?>
 
 			<div class="two fields">
-				<div class="field">
-					<label><?php echo e(__('messages.Firstname')); ?></label>
-					<input type="text" name="surname" placeholder="<?php echo e(__('messages.Firstname')); ?>" value="<?php echo e(Auth::user()->surname); ?>">
+				<div class="required field">
+					<label><?php echo e(__('messages.Surname')); ?></label>
+					<input type="text" name="surname" placeholder="<?php echo e(__('messages.Surname')); ?>" value="<?php echo e(Auth::user()->surname); ?>">
 				</div>
 				<div class="required field">
-					<label><?php echo e(__('messages.Lastname')); ?></label>
-					<input type="text" name="name" placeholder="<?php echo e(__('messages.Lastname')); ?>" value="<?php echo e(Auth::user()->name); ?>">
+					<label><?php echo e(__('messages.Name')); ?></label>
+					<input type="text" name="name" placeholder="<?php echo e(__('messages.Name')); ?>" value="<?php echo e(Auth::user()->name); ?>">
 				</div>
 			</div>
             <div class="field">
@@ -102,8 +102,21 @@
                 identifier: 'name',
                 rules: [
                     {
-                        type   : 'empty',
-                        prompt : '<?php echo e(__("form.Please enter a value")); ?>'
+                        type: 'empty',
+                        prompt: '<?php echo e(__("form.Please enter your name")); ?>'
+                    },
+                    {
+                        type   : 'maxLength[191]',
+                        prompt : '<?php echo e(__("form.Please enter at most 191 characters")); ?>'
+                    }
+                ]
+            },
+            surname: {
+                identifier: 'surname',
+                rules: [
+                    {
+                        type: 'empty',
+                        prompt: '<?php echo e(__("form.Please enter your surname")); ?>'
                     },
                     {
                         type   : 'maxLength[191]',
@@ -115,8 +128,25 @@
                 identifier: 'email',
                 rules: [
                     {
-                        type   : 'email',
-                        prompt : '<?php echo e(__("form.Please enter your email")); ?>'
+                        type: 'email',
+                        prompt: '<?php echo e(__("form.Please enter your email")); ?>'
+                    },
+                    {
+                        type   : 'maxLength[191]',
+                        prompt : '<?php echo e(__("form.Please enter at most 191 characters")); ?>'
+                    }
+                ]
+            },
+            country: {
+                identifier: 'country',
+                rules: [
+                    {
+                        type: 'empty',
+                        prompt: '<?php echo e(__("form.Please enter your country")); ?>'
+                    },
+                    {
+                        type   : 'maxLength[191]',
+                        prompt : '<?php echo e(__("form.Please enter at most 191 characters")); ?>'
                     }
                 ]
             },
