@@ -16,13 +16,13 @@
 			{{ csrf_field() }}
 			{{ method_field('PUT') }}
 			<div class="two fields">
-				<div class="field">
-					<label>{{ __('messages.Firstname') }}</label>
-					<input type="text" name="surname" placeholder="{{ __('messages.Firstname') }}" value="{{ Auth::user()->surname }}">
+				<div class="required field">
+					<label>{{ __('messages.Surname') }}</label>
+					<input type="text" name="surname" placeholder="{{ __('messages.Surname') }}" value="{{ Auth::user()->surname }}">
 				</div>
 				<div class="required field">
-					<label>{{ __('messages.Lastname') }}</label>
-					<input type="text" name="name" placeholder="{{ __('messages.Lastname') }}" value="{{ Auth::user()->name }}">
+					<label>{{ __('messages.Name') }}</label>
+					<input type="text" name="name" placeholder="{{ __('messages.Name') }}" value="{{ Auth::user()->name }}">
 				</div>
 			</div>
             <div class="field">
@@ -101,8 +101,21 @@
                 identifier: 'name',
                 rules: [
                     {
-                        type   : 'empty',
-                        prompt : '{{ __("form.Please enter a value") }}'
+                        type: 'empty',
+                        prompt: '{{ __("form.Please enter your name") }}'
+                    },
+                    {
+                        type   : 'maxLength[191]',
+                        prompt : '{{ __("form.Please enter at most 191 characters") }}'
+                    }
+                ]
+            },
+            surname: {
+                identifier: 'surname',
+                rules: [
+                    {
+                        type: 'empty',
+                        prompt: '{{ __("form.Please enter your surname") }}'
                     },
                     {
                         type   : 'maxLength[191]',
@@ -114,8 +127,25 @@
                 identifier: 'email',
                 rules: [
                     {
-                        type   : 'email',
-                        prompt : '{{ __("form.Please enter your email") }}'
+                        type: 'email',
+                        prompt: '{{ __("form.Please enter your email") }}'
+                    },
+                    {
+                        type   : 'maxLength[191]',
+                        prompt : '{{ __("form.Please enter at most 191 characters") }}'
+                    }
+                ]
+            },
+            country: {
+                identifier: 'country',
+                rules: [
+                    {
+                        type: 'empty',
+                        prompt: '{{ __("form.Please enter your country") }}'
+                    },
+                    {
+                        type   : 'maxLength[191]',
+                        prompt : '{{ __("form.Please enter at most 191 characters") }}'
                     }
                 ]
             },

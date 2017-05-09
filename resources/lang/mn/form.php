@@ -3,6 +3,8 @@
 return [
 
     'Please enter your name' => 'Нэр оруулна уу',
+    'Please enter your surname' => 'Овог оруулна уу',
+    'Please enter your country' => 'Улс оруулна уу',
     'Please enter at most 191 characters' => 'Та хамгийн ихдээ 191 тэмдэгт оруулах боломжтой',
     'Please enter your email' => 'И-мэйл хаяг оруулна уу',
     'Please enter a message' => 'Хүсэлт оруулна уу',

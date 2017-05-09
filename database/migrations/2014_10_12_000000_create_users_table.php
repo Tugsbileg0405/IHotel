@@ -30,8 +30,10 @@ class CreateUsersTable extends Migration
 
         \App\User::create([
             'name' => 'Админ',
+            'surname' => 'Супер',
             'email' => 'info@ihotel.mn',
             'is_admin' => true,
+            'country' => 'Mongolia',
             'password' => bcrypt('123456'),
         ]);
 

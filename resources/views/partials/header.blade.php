@@ -195,12 +195,38 @@
                     }
                 ]
             },
+            surname: {
+                identifier: 'surname',
+                rules: [
+                    {
+                        type: 'empty',
+                        prompt: '{{ __("form.Please enter your surname") }}'
+                    },
+                    {
+                        type   : 'maxLength[191]',
+                        prompt : '{{ __("form.Please enter at most 191 characters") }}'
+                    }
+                ]
+            },
             email: {
                 identifier: 'email',
                 rules: [
                     {
                         type: 'email',
                         prompt: '{{ __("form.Please enter your email") }}'
+                    },
+                    {
+                        type   : 'maxLength[191]',
+                        prompt : '{{ __("form.Please enter at most 191 characters") }}'
+                    }
+                ]
+            },
+            country: {
+                identifier: 'country',
+                rules: [
+                    {
+                        type: 'empty',
+                        prompt: '{{ __("form.Please enter your country") }}'
                     },
                     {
                         type   : 'maxLength[191]',

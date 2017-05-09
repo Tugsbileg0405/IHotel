@@ -64,6 +64,15 @@
                                                     </div>
                                                 <?php endif; ?>
                                             </div>
+                                            <div class="field<?php echo e($errors->has('country') ? ' error' : ''); ?>">
+                                                <input type="text" name="country" placeholder="<?php echo e(__('messages.Country')); ?>" value="<?php echo e(old('country')); ?>">
+                                                <?php if($errors->has('country')): ?>
+                                                    <div class="ui basic red pointing prompt label transition visible">
+                                                        <?php echo e($errors->first('country')); ?>
+
+                                                    </div>
+                                                <?php endif; ?>
+                                            </div>
                                             <div class="field<?php echo e($errors->has('password') ? ' error' : ''); ?>">
                                                 <input type="password" name="password" placeholder="<?php echo e(__('messages.Password')); ?>">
                                                 <?php if($errors->has('password')): ?>
