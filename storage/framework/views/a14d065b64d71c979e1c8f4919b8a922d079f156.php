@@ -1,8 +1,8 @@
-@extends('layouts.app') 
+ 
 
-@section('title', 'iHotel') 
+<?php $__env->startSection('title', 'iHotel'); ?> 
 
-@section('content')
+<?php $__env->startSection('content'); ?>
 <div class="search-result" id="result">
 	<div class="box">
 		<div class="center">
@@ -14,7 +14,7 @@
 								<div class="local example">
 									<div class="ui search searhlocation">
 										<div class="ui fluid left icon input datalocation">
-											<input class="prompt" type="text" id="searchplace" data-content="{{ __('messages.Write your destination of travel') }}" placeholder="{{ __('messages.Destination') }}">
+											<input class="prompt" type="text" id="searchplace" data-content="<?php echo e(__('messages.Write your destination of travel')); ?>" placeholder="<?php echo e(__('messages.Destination')); ?>">
 											<i class="marker icon"></i>
 										</div>
 										<div class="results"></div>
@@ -31,62 +31,65 @@
 							</div>
 							<div class="three wide column">
 								<div class="ui form">
-                                    <div class="people" style="display: {{$roomnumber >= 15 ? '' : 'none' }}">
+                                    <div class="people" style="display: <?php echo e($roomnumber >= 15 ? '' : 'none'); ?>">
                                         <a class="plus" href="#" id="plus">
                                             <i class="chevron up icon"></i>
                                         </a>
-                                        <input type="number" name="roomnumber" placeholder="{{ __('messages.Rooms') }}" id="selectedRoom" min="1" value="{{ $roomnumber ? $roomnumber : 15 }}">
+                                        <input type="number" name="roomnumber" placeholder="<?php echo e(__('messages.Rooms')); ?>" id="selectedRoom" min="1" value="<?php echo e($roomnumber ? $roomnumber : 15); ?>">
                                         <a class="minus" href="#" id="minus">
                                             <i class="chevron down icon"></i>
                                         </a>
                                     </div>
-                                    <select class="{{$roomnumber < 15 ? 'ui' : '' }} fluid search dropdown selectedRoom" style="display: {{$roomnumber < 15 ? '' : 'none' }}">
-                                        <option value="">{{ __('messages.Rooms') }}</option>
-                                        @for ($i=1; $i< 15; $i++)
-                                        <option value="{{ $i }}" @If($i == $roomnumber) selected @endif>{{ $i }} {{ __('messages.room') }}</option>
-                                        @endfor
-                                        <option value="more">{{ __('messages.More') }}</option>
+                                    <select class="<?php echo e($roomnumber < 15 ? 'ui' : ''); ?> fluid search dropdown selectedRoom" style="display: <?php echo e($roomnumber < 15 ? '' : 'none'); ?>">
+                                        <option value=""><?php echo e(__('messages.Rooms')); ?></option>
+                                        <?php for($i=1; $i< 15; $i++): ?>
+                                        <option value="<?php echo e($i); ?>" <?php if($i == $roomnumber): ?> selected <?php endif; ?>><?php echo e($i); ?> <?php echo e(__('messages.room')); ?></option>
+                                        <?php endfor; ?>
+                                        <option value="more"><?php echo e(__('messages.More')); ?></option>
                                     </select>
 								</div>
 							</div>
 							<div class="three wide column">
 								<div class="ui form">
-                                    <div class="room" style="display: {{$peoplenumber >= 15 ? '' : 'none' }}">
+                                    <div class="room" style="display: <?php echo e($peoplenumber >= 15 ? '' : 'none'); ?>">
                                         <a class="plus" href="#" id="plus1">
                                             <i class="chevron up icon"></i>
                                         </a>
-                                        <input type="number" name="peoplenumber" placeholder="{{ __('messages.People') }}" id="selectedPeople" min="1" value="{{ $peoplenumber ? $peoplenumber : 15 }}">
+                                        <input type="number" name="peoplenumber" placeholder="<?php echo e(__('messages.People')); ?>" id="selectedPeople" min="1" value="<?php echo e($peoplenumber ? $peoplenumber : 15); ?>">
                                         <a class="minus" href="#" id="minus1">
                                             <i class="chevron down icon"></i>
                                         </a>
                                     </div>
-                                    <select class="{{$peoplenumber < 15 ? 'ui' : '' }} fluid search dropdown selectedPeople" style="display: {{$peoplenumber < 15 ? '' : 'none' }}">
-                                        <option value="">{{ __('messages.People') }}</option>
-                                        @for ($i=1; $i< 15; $i++)
-                                        <option value="{{ $i }}" @If($i == $peoplenumber) selected @endif>{{ $i }} {{ __('messages.people') }}</option>
-                                        @endfor
-                                        <option value="more">{{ __('messages.More') }}</option>
+                                    <select class="<?php echo e($peoplenumber < 15 ? 'ui' : ''); ?> fluid search dropdown selectedPeople" style="display: <?php echo e($peoplenumber < 15 ? '' : 'none'); ?>">
+                                        <option value=""><?php echo e(__('messages.People')); ?></option>
+                                        <?php for($i=1; $i< 15; $i++): ?>
+                                        <option value="<?php echo e($i); ?>" <?php if($i == $peoplenumber): ?> selected <?php endif; ?>><?php echo e($i); ?> <?php echo e(__('messages.people')); ?></option>
+                                        <?php endfor; ?>
+                                        <option value="more"><?php echo e(__('messages.More')); ?></option>
                                     </select>
 								</div>
 							</div>
 							<div class="two wide column">
-								<div class="fluid ui red button" id="searchButton" data-token="{{ csrf_token() }}">
-									{{ __('messages.Search') }}
+								<div class="fluid ui red button" id="searchButton" data-token="<?php echo e(csrf_token()); ?>">
+									<?php echo e(__('messages.Search')); ?>
+
 								</div>
 
 							</div>
 						</div>
 						<div class="ui stackable grid">
 							<div class="three wide column">
-                                @If(App::isLocale('mn'))
-								<h4 class="ui header">{{ __('messages.Search results') }}
+                                <?php if(App::isLocale('mn')): ?>
+								<h4 class="ui header"><?php echo e(__('messages.Search results')); ?>
+
 									<div class="sub header">
-										{{ __('messages.Total') }}: <span id="resultLength">0</span> {{ __('messages.found') }}
+										<?php echo e(__('messages.Total')); ?>: <span id="resultLength">0</span> <?php echo e(__('messages.found')); ?>
+
 									</div>
 								</h4>
-                                @else
-                                    <img src="{{asset('img/aspac_logo.png')}}" class="ui image"/>
-                                @endif
+                                <?php else: ?>
+                                    <img src="<?php echo e(asset('img/aspac_logo.png')); ?>" class="ui image"/>
+                                <?php endif; ?>
 							</div>
 							<div class="five wide column">
 								<div class="ui computer tablet mobile grid" style="padding:10px 0">
@@ -109,7 +112,7 @@
 									<input name="language" type="hidden">
 									<div class="text">Star</div>
 									<div class="menu ui transition hidden">
-										<div class="item" data-value=""><i class="icon yellow star"></i>{{ __('messages.Total star') }}</div>
+										<div class="item" data-value=""><i class="icon yellow star"></i><?php echo e(__('messages.Total star')); ?></div>
 										<div class="item" data-value="1"><i class="icon yellow star"></i>1</div>
 										<div class="item" data-value="2">
 											<i class="icon yellow star"></i>
@@ -148,9 +151,9 @@
 							</div>
 							<div class="right aligned three wide column">
 								<div class="ui breadcrumb">
-									<a class="section" href="{{url('/')}}">{{ __('messages.Home') }}</a>
+									<a class="section" href="<?php echo e(url('/')); ?>"><?php echo e(__('messages.Home')); ?></a>
 									<span class="divider">/</span>
-									<div class="active section">{{ __('messages.Search results') }}</div>
+									<div class="active section"><?php echo e(__('messages.Search results')); ?></div>
 								</div>
 							</div>
 						</div>
@@ -169,7 +172,8 @@
 							<div class="box text-shadow align-center" id="noresult" style="display:none">
 								<div class="ui negative message">
 									<div class="ui centered header">
-										{{ __('messages.Not found') }}
+										<?php echo e(__('messages.Not found')); ?>
+
 									</div>
 								</div>
 							</div>
@@ -193,18 +197,18 @@
 		</div>
 	</div>
 </div>
-@endsection @push('script')
+<?php $__env->stopSection(); ?> <?php $__env->startPush('script'); ?>
 <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyAcb7yccvqGFWvD0IdVWZoXspwiofSq7WY&sensor=false&libraries=places"></script>
-<script src="{{ asset('js/moment.js') }}"></script>
-<script src="{{asset('js/daterangepicker.js')}}"></script>
-<link href="{{asset('dist/css/jplist.core.min.css') }}" rel="stylesheet" type="text/css" />
-<script src="{{asset('dist/js/jplist.core.min.js') }}"></script>
-<link href="{{asset('dist/css/jplist.jquery-ui-bundle.min.css') }}" rel="stylesheet" type="text/css" />
-<link rel="stylesheet" href="{{asset('css/nouislider.min.css')}}">
-<script src="{{asset('dist/js/jplist.jquery-ui-bundle.min.js') }}"></script>
-<script src="{{asset('dist/js/jplist.filter-dropdown-bundle.min.js') }}"></script>
-<link href="{{asset('css/simplepagination.css') }}" rel="stylesheet" type="text/css" />
-<script src="{{asset('js/simplepagination.js') }}"></script>
+<script src="<?php echo e(asset('js/moment.js')); ?>"></script>
+<script src="<?php echo e(asset('js/daterangepicker.js')); ?>"></script>
+<link href="<?php echo e(asset('dist/css/jplist.core.min.css')); ?>" rel="stylesheet" type="text/css" />
+<script src="<?php echo e(asset('dist/js/jplist.core.min.js')); ?>"></script>
+<link href="<?php echo e(asset('dist/css/jplist.jquery-ui-bundle.min.css')); ?>" rel="stylesheet" type="text/css" />
+<link rel="stylesheet" href="<?php echo e(asset('css/nouislider.min.css')); ?>">
+<script src="<?php echo e(asset('dist/js/jplist.jquery-ui-bundle.min.js')); ?>"></script>
+<script src="<?php echo e(asset('dist/js/jplist.filter-dropdown-bundle.min.js')); ?>"></script>
+<link href="<?php echo e(asset('css/simplepagination.css')); ?>" rel="stylesheet" type="text/css" />
+<script src="<?php echo e(asset('js/simplepagination.js')); ?>"></script>
 <script type="text/javascript">
     $(document).ready(function() {
          $('.search-google-map').scrollToFixed({
@@ -231,9 +235,9 @@
 	var valueArray = [];
 	var ratingArray = [];
     var markers = [];
-	endDate = '{{$enddate}}';
-	startDate = '{{$startdate}}';
-	searchPlace = '{{$place}}';
+	endDate = '<?php echo e($enddate); ?>';
+	startDate = '<?php echo e($startdate); ?>';
+	searchPlace = '<?php echo e($place); ?>';
 
 	if (searchPlace == 'undefined' || !searchPlace) {
 		$('.datalocation input').val('Ulaanbaatar, Mongolia');
@@ -242,13 +246,13 @@
 		$('.datalocation input').val(searchPlace);
 	}
     
-    if('{{ $peoplenumber }}' >= 15){
+    if('<?php echo e($peoplenumber); ?>' >= 15){
         people =$('#selectedPeople').val();
     }else{
         people =$('.selectedPeople option:selected').val();
     }
     
-    if('{{ $roomnumber }}' >= 15){
+    if('<?php echo e($roomnumber); ?>' >= 15){
         roomNumber = $('#selectedRoom').val();
     }else{
         roomNumber = $('.selectedRoom option:selected').val();
@@ -362,7 +366,7 @@
             endDate = end.format('L');
         });
 
-    roomNumber = '{{$roomnumber}}';
+    roomNumber = '<?php echo e($roomnumber); ?>';
 
     // =============================================================================
     //  - Show google map 
@@ -416,10 +420,10 @@
         // =============================================================================
 
         
-        var maxprice = '{{$maxprice}}';
-        var maxpricebydollar = numeral(maxprice/'{{$rate}}').format('0');
+        var maxprice = '<?php echo e($maxprice); ?>';
+        var maxpricebydollar = numeral(maxprice/'<?php echo e($rate); ?>').format('0');
         var snapSlider = document.getElementById('slider-snap');
-        @if (App::isLocale('mn')) 
+        <?php if(App::isLocale('mn')): ?> 
             noUiSlider.create(snapSlider, {
             start: [0, parseInt(maxprice)],
             step: 10,
@@ -428,7 +432,7 @@
                 'max': [parseInt(maxprice)]
                 }
             });
-        @elseif (App::isLocale('en')) 
+        <?php elseif(App::isLocale('en')): ?> 
             noUiSlider.create(snapSlider, {
             start: [0, parseInt(maxpricebydollar)],
             step: 1,
@@ -437,7 +441,7 @@
                 'max': [parseInt(maxpricebydollar)]
                 }
             });
-        @endif
+        <?php endif; ?>
 
         snapSlider.noUiSlider.on('end', function (values, handle) {
             valueArray[0] = parseInt(values[0]);
@@ -453,13 +457,13 @@
         });
 
         snapSlider.noUiSlider.on('update', function (values, handle) {
-             @if (App::isLocale('mn')) 
+             <?php if(App::isLocale('mn')): ?> 
                 $('#minVal').html('₮ ' + numeral(parseInt(values[0])).format('0,0'));
                 $('#maxVal').html('₮ ' + numeral(parseInt(values[1])).format('0,0'));
-            @elseif (App::isLocale('en')) 
+            <?php elseif(App::isLocale('en')): ?> 
                 $('#minVal').html('$ ' + numeral(parseInt(values[0])).format('0,0'));
                 $('#maxVal').html('$ ' + numeral(parseInt(values[1])).format('0,0'));
-            @endif
+            <?php endif; ?>
             
         });
 
@@ -500,7 +504,7 @@
 
 
         snapSlider1.noUiSlider.on('update', function (values, handle) {
-            $('#user-rating-value').html('{{ __("messages.User Rating")}}: ' + parseFloat(values[0]).toFixed(1) + "-" + parseFloat(values[1]).toFixed(1));
+            $('#user-rating-value').html('<?php echo e(__("messages.User Rating")); ?>: ' + parseFloat(values[0]).toFixed(1) + "-" + parseFloat(values[1]).toFixed(1));
         });
 
         // =============================================================================
@@ -508,7 +512,7 @@
         // =============================================================================
         $('#pagination').hide();
         $('#pagination').bootpag({
-            total: Math.ceil('{{$count}}'),
+            total: Math.ceil('<?php echo e($count); ?>'),
             activeClass: 'active',
             page: 1,
             maxVisible: 5,
@@ -586,10 +590,10 @@
                             }
                             if (tmp < lowest) lowest = tmp;
                         }
-                        var url = '{{ route("search.hotel", "id") }}';
+                        var url = '<?php echo e(route("search.hotel", "id")); ?>';
                         url = url.replace('id', data.data[key][0].id);
-                        var rating = '{{ $rate }}';
-                        @if (App::isLocale('en')) {
+                        var rating = '<?php echo e($rate); ?>';
+                        <?php if(App::isLocale('en')): ?> {
                                 var contentString = "<div style='padding:0;width:100%;margin:0;overflow: hidden;'> \
                                                         <img src='" + data.data[key][0].cover_photo + "' height='200px' style='filter:brightness(50%);width:100%;background-image: linear-gradient(180deg, rgba(0, 0, 0, .5) 0, transparent 25%, transparent 50%, rgba(0, 0, 0, .7));'>\
                                                         <div class='maptitle'>" + data.data[key][0].name_en + "</div>\
@@ -602,10 +606,10 @@
                                                           <div class='maptitle'>" + data.data[key][0].name_en + "</div>\
                                                           <div class='mapprice'>" + numeral(lowest / rating ).format('0,0.00') + "$</div>\
                                                           <span class='mapstar'>" + star + "</span>\
-                                                          <a href='" + url + "' target='_blank'>\<button class='ui button mapbutton' style='background-color:#2185D0;color:white'>{{ __('messages.Read More') }}</button></a>\
+                                                          <a href='" + url + "' target='_blank'>\<button class='ui button mapbutton' style='background-color:#2185D0;color:white'><?php echo e(__('messages.Read More')); ?></button></a>\
                                                       </div>";
                         }
-                        @elseif(App::isLocale('mn')) {
+                        <?php elseif(App::isLocale('mn')): ?> {
                                 var contentString = "<div style='padding:0;width:100%;margin:0;overflow: hidden;'> \
                                                             <img src='" + data.data[key][0].cover_photo + "' height='200px' style='filter:brightness(50%);width:100%;background-image: linear-gradient(180deg, rgba(0, 0, 0, .5) 0, transparent 25%, transparent 50%, rgba(0, 0, 0, .7));'>\
                                                             <div class='maptitle'>" + data.data[key][0].name + "</div>\
@@ -618,10 +622,10 @@
                                                              <div class='maptitle'>" + data.data[key][0].name + "</div>\
                                                              <div class='mapprice'>" + numeral(lowest).format('0,0') + "₮</div>\
                                                              <span class='mapstar'>" + star + "</span>\
-                                                             <a href='" + url + "' target='_blank'>\<button class='ui button mapbutton' style='background-color:#2185D0;color:white'>{{ __('messages.Read More') }}</button></a>\
+                                                             <a href='" + url + "' target='_blank'>\<button class='ui button mapbutton' style='background-color:#2185D0;color:white'><?php echo e(__('messages.Read More')); ?></button></a>\
                                                       </div>";
                         }
-                        @endif
+                        <?php endif; ?>
 
             var infowindow = new google.maps.InfoWindow({
                 content: contentString,
@@ -634,8 +638,8 @@
                 zIndex: 10,
             });
 
-            var image = "{{asset('/img/mapicon/villa.png')}}";
-            var image2 = "{{asset('/img/mapicon2/villa.png')}}";
+            var image = "<?php echo e(asset('/img/mapicon/villa.png')); ?>";
+            var image2 = "<?php echo e(asset('/img/mapicon2/villa.png')); ?>";
 
             // for(var i=0; i < data.allhotels.length; i++){
             //                 var marker = new google.maps.Marker({
@@ -719,7 +723,7 @@
             }else{
                 likedString = "<a href='#' class='favorite-btn' data-id="+data.data[key][0].id+"><i class='icon empty heart'></i></a>"; 
             }
-            @if (App::isLocale('en')) {
+            <?php if(App::isLocale('en')): ?> {
                 textToInsert = "<div class='list-item box' id='"+ data.data[key][0].id +"' data-id='"+ data.data[key][0].id +"'> \
                                                 <div class='img left'> \
                                                     <a href='" + url + "' style='color:white' target='_blank'>\
@@ -751,11 +755,11 @@
                                                     </span>\
                                                 </p>\
                                                 <div class='room-button'>\
-                                                	<a href='" + url + "' target='_blank' class='ui blue button'>{{ __('messages.Book now')}}</a>\
+                                                	<a href='" + url + "' target='_blank' class='ui blue button'><?php echo e(__('messages.Book now')); ?></a>\
                                                 </div>\
                                             </div>";
             }
-            @elseif(App::isLocale('mn')) {
+            <?php elseif(App::isLocale('mn')): ?> {
                 textToInsert = "<div class='list-item box' id='"+ data.data[key][0].id +"' data-id='"+ data.data[key][0].id +"'> \
                                                 <div class='img left'> \
                                                     <a href='" + url + "' style='color:white' target='_blank'>\
@@ -787,11 +791,11 @@
                                                     </span>\
                                                 </p>\
                                                 <div class='room-button'>\
-                                                	<a href='" + url + "' target='_blank' class='ui blue button'>{{ __('messages.Book now')}}</a>\
+                                                	<a href='" + url + "' target='_blank' class='ui blue button'><?php echo e(__('messages.Book now')); ?></a>\
                                                 </div>\
                                             </div>";
             }
-            @endif
+            <?php endif; ?>
         }
         $('#searchResult').append(textToInsert);
         $('.list-item').mouseover(function(){
@@ -837,7 +841,7 @@
     // =============================================================================        
 
     
-    var maxprice = '{{$maxprice}}';
+    var maxprice = '<?php echo e($maxprice); ?>';
     jQuery.fn.jplist.settings = {
         pricesSlider: function ($slider, $prev, $next) {
             $slider.slider({
@@ -886,7 +890,7 @@
         searchPlace = $('#searchplace').val();
         $.get('search?roomnumber=' + roomNumber + '&peoplenumber=' + people + '&startdate=' + startDate + '&enddate=' + endDate + '&place=' + searchPlace)
         .success(function (data) {
-            window.location = "{{URL::to('searchresult')}}";
+            window.location = "<?php echo e(URL::to('searchresult')); ?>";
         })
         .error(function(jqXHR, textStatus, errorThrown){
             if (textStatus == 'error'){
@@ -897,8 +901,8 @@
 
     $(document).ready(function () {
         setTimeout(function() {
-            if('{{ $hotel_id }}'){
-                $('#drop'+'{{ $hotel_id }}').dropdown('set selected', '1');
+            if('<?php echo e($hotel_id); ?>'){
+                $('#drop'+'<?php echo e($hotel_id); ?>').dropdown('set selected', '1');
             }
         }, 500)
     });
@@ -907,10 +911,10 @@
         var id = $(this).data('id');
         $.ajax({
             type: "POST",
-            url: "{{ url('favorite') }}",
+            url: "<?php echo e(url('favorite')); ?>",
             data: {
                 'hotel_id': id,
-                '_token': '{{ csrf_token() }}',
+                '_token': '<?php echo e(csrf_token()); ?>',
                 },
             success: function(data) {
                 if (data.favorited) {
@@ -929,4 +933,6 @@
 
 </script>
 
-@endpush
+<?php $__env->stopPush(); ?>
+
+<?php echo $__env->make('layouts.app', array_except(get_defined_vars(), array('__data', '__path')))->render(); ?>

@@ -35,7 +35,9 @@
 
     @yield('content')
 
-    @include('partials.footer')
+    @if(!Request::is('aspac2017') && !Request::is('searchresult'))
+        @include('partials.footer')
+    @endif
     
     <script src="{{ asset('js/modernizr.js') }}"></script>
     <script src="{{ asset('dist/components/popup.js') }}"></script>

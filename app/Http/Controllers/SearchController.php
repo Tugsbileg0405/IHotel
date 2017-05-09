@@ -408,7 +408,7 @@ class SearchController extends Controller
         if($request->user()){
            $favorites = $request->user()->favorites()->pluck('hotel_id')->toArray();
         }
-        return response()->json(array('success' => true, 'data' => $chunk, 'result' => $allresultlenth,'favorites' => $favorites));
+        return response()->json(array('success' => true, 'data' => $chunk, 'result' => $allresultlenth,'favorites' => $favorites, 'allhotels' => $collection));
     }
 
     public function likeHotel(Request $request){
