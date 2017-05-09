@@ -17,7 +17,7 @@
 				<a class="item active" data-tab="hotel"><i class="hotel icon"></i>{{ __('messages.Hotel') }}</a>
 				<a href="{{ url('aspac2017') }}" class="item tab-aspac"><i class="world icon"></i>JCI ASPAC {{ date('Y') }}</a>
 				<a href="https://www.sixt.com/php/reservation" target="_blance" class="item"><i class="car icon"></i>{{ __('messages.Rent a car') }}</a>
-				<a href="{{ url('category/2') }}" class="item tab-travel"><i class="plane icon"></i>{{ __('messages.Travel Inspiration') }}</a>
+				<a href="{{ url('posts') }}" class="item tab-travel"><i class="plane icon"></i>{{ __('messages.Travel Inspiration') }}</a>
 			</div>
 			<form class="ui form active tab segment" data-tab="hotel" action="{{ url('searchresult') }}" method="POST">
 				<div class="ui grid stackable">

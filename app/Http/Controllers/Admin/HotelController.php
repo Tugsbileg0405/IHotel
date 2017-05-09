@@ -85,6 +85,8 @@ class HotelController extends Controller
     {
         $hotel = \App\Hotel::findOrFail($id);
         $hotel->priority = $request->get('priority');
+        $hotel->published = $request->get('published');
+        $hotel->sale = $request->get('sale');
         $hotel->save();
 
         return redirect('profile/hotel');

@@ -1,30 +1,30 @@
-@extends('layouts.profile')
+<?php $__env->startSection('title', 'Буудал засах'); ?>
 
-@section('title', 'Буудал засах')
-
-@section('content')
+<?php $__env->startSection('content'); ?>
 <div class="eleven wide column">
-	<form class="ui form green segment" action="{{ url('profile/hotel', $hotel->id) }}" method="POST">
-		{{ csrf_field() }}
-		{{ method_field('PUT') }}
+	<form class="ui form green segment" action="<?php echo e(url('profile/hotel', $hotel->id)); ?>" method="POST">
+		<?php echo e(csrf_field()); ?>
+
+		<?php echo e(method_field('PUT')); ?>
+
 		<h4 class="ui header">Буудал засах</h4>
 		<div class="ui divider"></div>
 	    <div class="required field">
 	    	<label>Эрэмбэ</label>
-			<input type="text" name="priority" value="{{ $hotel->priority }}">
+			<input type="text" name="priority" value="<?php echo e($hotel->priority); ?>">
 		</div>
 	    <div class="required field">
 	    	<label>Идэвхитэй эсэх</label>
 			<select class="ui dropdown" name="published">
-				<option value="1" {{ $hotel->published ? 'selected' : '' }}>Тийм</option>
-				<option value="0" {{ $hotel->published ? '' : 'selected' }}>Үгүй</option>
+				<option value="1" <?php echo e($hotel->published ? 'selected' : ''); ?>>Тийм</option>
+				<option value="0" <?php echo e($hotel->published ? '' : 'selected'); ?>>Үгүй</option>
 			</select>
 		</div>
 	    <div class="required field">
 	    	<label>Хямдралтай эсэх</label>
 			<select class="ui dropdown" name="sale">
-				<option value="1" {{ $hotel->sale ? 'selected' : '' }}>Тийм</option>
-				<option value="0" {{ $hotel->sale ? '' : 'selected' }}>Үгүй</option>
+				<option value="1" <?php echo e($hotel->sale ? 'selected' : ''); ?>>Тийм</option>
+				<option value="0" <?php echo e($hotel->sale ? '' : 'selected'); ?>>Үгүй</option>
 			</select>
 		</div>
 		<div class="field">
@@ -32,9 +32,9 @@
 		</div>
 	</form>
 </div>
-@endsection
+<?php $__env->stopSection(); ?>
 
-@push('script')
+<?php $__env->startPush('script'); ?>
 <script type="text/javascript">
 	$(document).ready(function() {
 		$('.ui.form').form({
@@ -64,4 +64,5 @@
 		});
 	});
 </script>
-@endpush
+<?php $__env->stopPush(); ?>
+<?php echo $__env->make('layouts.profile', array_except(get_defined_vars(), array('__data', '__path')))->render(); ?>
