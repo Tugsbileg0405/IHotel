@@ -204,7 +204,7 @@
 												<div class="item" style="color:black" id="nullRoom">
 													{{ __('messages.Choose a room') }}
 												</div>
-												<div class="item">
+												<!--<div class="item">
 													<div class="content">
 														<h2 class="ui sub header">
 															{{ __('messages.Tax') }}
@@ -215,7 +215,7 @@
 															<span id="nuat">{{number_format(0)}} $</span> 
 														@endif
 													</div>
-												</div>
+												</div>-->
 												<div class="item">
 													<div class="right floated content">
 														<div class="ui ihotel button" id="order">{{ __('messages.Order') }}</div>
@@ -612,13 +612,13 @@
 				Totalsum += parseFloat($(this).text());
 			});
 			Totalsum += pickup_price;
-			nuat = parseFloat(Totalsum * 0.1).toFixed(2);
-			var finalprice = parseFloat(Totalsum * 0.1) + parseFloat(Totalsum);
+			// nuat = parseFloat(Totalsum * 0.1).toFixed(2);
+			var finalprice = parseFloat(Totalsum);
 			@if (App::isLocale('mn')) 
-				$('#nuat').html(numeral(nuat).format('0,0') + ' ₮');
+				// $('#nuat').html(numeral(nuat).format('0,0') + ' ₮');
 				$('#totalPrice').html(numeral(finalprice).format('0,0') + ' ₮');
 			@elseif(App::isLocale('en'))
-				$('#nuat').html(parseFloat(nuat /'{{ $rate }}').toFixed(2) + ' $');
+				// $('#nuat').html(parseFloat(nuat /'{{ $rate }}').toFixed(2) + ' $');
 				$('#totalPrice').html(parseFloat(finalprice/'{{ $rate }}').toFixed(2) + ' $');
 			@endif
             }
@@ -634,13 +634,13 @@
 			@endif
 			pickup_price += pickup.price;
 			Totalsum += pickup_price;
-			var nuat = parseFloat(Totalsum * 0.1).toFixed(2);
-			var finalprice = parseFloat(Totalsum * 0.1) + parseFloat(Totalsum);
+			// var nuat = parseFloat(Totalsum * 0.1).toFixed(2);
+			var finalprice = parseFloat(Totalsum);
 			@if (App::isLocale('mn')) 
-				$('#nuat').html(numeral(nuat).format('0,0') + ' ₮');
+				// $('#nuat').html(numeral(nuat).format('0,0') + ' ₮');
 				$('#totalPrice').html(numeral(finalprice).format('0,0') + ' ₮');
 			@elseif(App::isLocale('en'))
-				$('#nuat').html( parseFloat(nuat).toFixed(2) + ' $');
+				// $('#nuat').html( parseFloat(nuat).toFixed(2) + ' $');
 				$('#totalPrice').html(parseFloat(finalprice).toFixed(2) + ' $');
 			@endif
 		}
@@ -677,13 +677,13 @@
 				pickup_price -= pickup.price;
 				pickup = {};
 			}
-			var nuat = parseFloat(Totalsum * 0.1).toFixed(2);
-			var finalprice = parseFloat(Totalsum * 0.1) + parseFloat(Totalsum);
+			// var nuat = parseFloat(Totalsum * 0.1).toFixed(2);
+			var finalprice = parseFloat(Totalsum);
 			@if (App::isLocale('mn')) 
-				$('#nuat').html(numeral(nuat).format('0,0') + ' ₮');
+				// $('#nuat').html(numeral(nuat).format('0,0') + ' ₮');
 				$('#totalPrice').html(numeral(finalprice).format('0,0') + ' ₮');
 			@elseif(App::isLocale('en'))
-				$('#nuat').html( parseFloat(nuat).toFixed(2) + ' $');
+				// $('#nuat').html( parseFloat(nuat).toFixed(2) + ' $');
 				$('#totalPrice').html( parseFloat(finalprice).toFixed(2) + ' $');
 			@endif
 		});
@@ -708,13 +708,13 @@
 			}
 		}
 		Totalsum += pickup_price;
-		nuat = parseFloat(Totalsum * 0.1).toFixed(2);
-		var finalprice = parseFloat(Totalsum * 0.1) + parseFloat(Totalsum);
+		// nuat = parseFloat(Totalsum * 0.1).toFixed(2);
+		var finalprice = parseFloat(Totalsum);
 		@if (App::isLocale('mn')) 
-			$('#nuat').html(numeral(nuat).format('0,0') + ' ₮');
+			// $('#nuat').html(numeral(nuat).format('0,0') + ' ₮');
 			$('#totalPrice').html(numeral(finalprice).format('0,0') + ' ₮');
 		@elseif(App::isLocale('en'))
-			$('#nuat').html(parseFloat(nuat).toFixed(2) + ' $');
+			// $('#nuat').html(parseFloat(nuat).toFixed(2) + ' $');
 			$('#totalPrice').html(parseFloat(finalprice).toFixed(2) + ' $');
 		@endif
 		$('#night' + index).dropdown('set selected', 'selected');
@@ -832,13 +832,13 @@
 		Totalsum += parseFloat($(this).text());
 	});
 	Totalsum += pickup_price;
-	nuat = parseFloat(Totalsum * 0.1).toFixed(2);
-	var finalprice = parseFloat(Totalsum * 0.1) + parseFloat(Totalsum);
+	// nuat = parseFloat(Totalsum * 0.1).toFixed(2);
+	var finalprice = parseFloat(Totalsum);
 	@if (App::isLocale('mn')) 
-		$('#nuat').html(numeral(nuat).format('0,0') + ' ₮');
+		// $('#nuat').html(numeral(nuat).format('0,0') + ' ₮');
 		$('#totalPrice').html(numeral(finalprice).format('0,0') + ' ₮');
 	@elseif(App::isLocale('en'))
-		$('#nuat').html(parseFloat(nuat).toFixed(2) + ' $');
+		// $('#nuat').html(parseFloat(nuat).toFixed(2) + ' $');
 		$('#totalPrice').html(parseFloat(finalprice).toFixed(2) + ' $');
 	@endif
             }
