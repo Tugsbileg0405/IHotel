@@ -13,6 +13,8 @@ return [
     'Email' => 'Таны и-мэйл',
     'Password' => 'Нууц үг',
     'Name' => 'Таны нэр',
+    'Surname' => 'Таны овог',
+    'Country' => 'Улс',
     'per night' => 'хоног',
     'Message' => 'Таны хүсэлт',
     'Send' => 'Илгээх',

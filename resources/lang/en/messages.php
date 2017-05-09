@@ -13,6 +13,8 @@ return [
     'Email' => 'Email',
     'Password' => 'Password',
     'Name' => 'Name',
+    'Surname' => 'Surname',
+    'Country' => 'Country',
     'per night' => 'per night',
     'Message' => 'Message',
     'Send' => 'Send',
