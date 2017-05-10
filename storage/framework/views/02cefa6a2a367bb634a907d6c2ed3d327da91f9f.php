@@ -427,7 +427,7 @@
 													<?php endif; ?> 
 												<?php endif; ?>
 												<p class="ui justify">
-													<?php if($room->number == 0): ?>
+													<?php if($room->number < 1): ?>
 														<select class="ui fluid search dropdown disabled">
 															<option value="disabled" ><?php echo e(__('messages.No rooms available')); ?></option>
 														</select> 

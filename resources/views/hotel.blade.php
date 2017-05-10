@@ -413,7 +413,7 @@
 													@endif 
 												@endif
 												<p class="ui justify">
-													@if($room->number == 0)
+													@if($room->number < 1)
 														<select class="ui fluid search dropdown disabled">
 															<option value="disabled" >{{ __('messages.No rooms available') }}</option>
 														</select> 
