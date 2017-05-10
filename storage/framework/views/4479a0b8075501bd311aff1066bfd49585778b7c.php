@@ -33,7 +33,7 @@
 		<a class="item" href="<?php echo e(url('hotel/contract', $hotel->id)); ?>">
 	        Гэрээ хийх
 	    </a>
-    <?php elseif(!$hotel->co_day): ?>
+    <?php elseif(!$hotel->co_day AND !$hotel->published): ?>
 		<a class="item disabled">
 	        Гэрээ хийх
 	    </a>
