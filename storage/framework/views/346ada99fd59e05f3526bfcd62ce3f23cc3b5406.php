@@ -188,7 +188,7 @@
 							</div>
 						</div>
 						<div class="search-google-map column">
-							<div class="ihotel-google-map column" id="map" style="height:550px">
+							<div class="ihotel-google-map column" id="map" style="height:90vh">
 							</div>
 						</div>
 					</div>
@@ -212,15 +212,14 @@
 <script type="text/javascript">
     $(document).ready(function() {
          $('.search-google-map').scrollToFixed({
-            marginTop: $('.search-result').offset().top + 10,
+            marginTop: $('.search-result').offset().top ,
             limit: function() {
-                var limit = $('.search-result').offset().top - $('.search-google-map').height() - 20;
+                var limit = $('#result').height() - $('.search-result').offset().top ;
                 return limit;
             },
-            zIndex: 999,
+            zIndex: 10,
         });
         $('.search-google-map').trigger('resize');
-        $('.search-google-map').attr("style","");
     });
 </script>
 <script type="text/javascript">
@@ -235,6 +234,7 @@
 	var valueArray = [];
 	var ratingArray = [];
     var markers = [];
+    var allHotels = [];
 	endDate = '<?php echo e($enddate); ?>';
 	startDate = '<?php echo e($startdate); ?>';
 	searchPlace = '<?php echo e($place); ?>';
@@ -257,7 +257,6 @@
     }else{
         roomNumber = $('.selectedRoom option:selected').val();
     }
-    
 	
 	var plus = $('#plus');
 	var minus = $('#minus');
@@ -287,9 +286,6 @@
 		}
 		e.preventDefault();
 	});
-
-  
-   
 
 	var plus1 = $('#plus1');
 	var minus1 = $('#minus1');
@@ -394,7 +390,6 @@
         // =============================================================================
         //  - Search by star of hotels
         // =============================================================================
-         
 
         $(".star-filter").change(function (value) {
             star = $('.star-filter').dropdown('get value');
@@ -419,7 +414,6 @@
         //  - Search by price range 
         // =============================================================================
 
-        
         var maxprice = '<?php echo e($maxprice); ?>';
         var maxpricebydollar = numeral(maxprice/'<?php echo e($rate); ?>').format('0');
         var snapSlider = document.getElementById('slider-snap');
@@ -502,7 +496,6 @@
             $('#pagination').bootpag({ page: 1 });
         });
 
-
         snapSlider1.noUiSlider.on('update', function (values, handle) {
             $('#user-rating-value').html('<?php echo e(__("messages.User Rating")); ?>: ' + parseFloat(values[0]).toFixed(1) + "-" + parseFloat(values[1]).toFixed(1));
         });
@@ -510,6 +503,7 @@
         // =============================================================================
         //  - Pagination function
         // =============================================================================
+
         $('#pagination').hide();
         $('#pagination').bootpag({
             total: Math.ceil('<?php echo e($count); ?>'),
@@ -541,7 +535,7 @@
         //  - Show result of search by card
         //  - Show the results on google map
         // =============================================================================        
-
+        
         function loadData(page, star, first, last, rating1, rating2) {
             for (i = 0; i < markers.length; i++) {
                     markers[i].setMap(null);
@@ -549,6 +543,7 @@
             markers = [];
             $.get('checkhotels?page=' + page + '&filterprice1=' + first + '&filterprice2=' + last + '&filterstar=' + star + '&rating1=' + rating1 + '&rating2=' + rating2)
                 .success(function (data) {
+                allHotels = data.allhotels;
                 $('.searchResult').empty();
                 $('#pagination').bootpag({ total: Math.ceil(data.result / 10) });
                 var textToInsert = '';
@@ -565,276 +560,407 @@
                 }
                 for (var key in data.data) {
                     if (data.data.hasOwnProperty(key)) {
-                        var rating = 0;
-                        var finalrating = 0;
-                        if (data.data[key][0].rating != 0) {
-                            finalrating = '<i class="icon thumbs up"></i>' + parseFloat(data.data[key][0].rating).toFixed(1);
-                        }
-                        else {
-                            finalrating = '';
-                        }
+                    var rating = 0;
+                    var finalrating = 0;
+                    if (data.data[key][0].rating != 0) {
+                        finalrating = '<i class="icon thumbs up"></i>' + parseFloat(data.data[key][0].rating).toFixed(1);
+                    }
+                    else {
+                        finalrating = '';
+                    }
 
-                        var star = "";
-                        
-                        var times = data.data[key][0].star;
-                        for(var i=0; i < times; i++){
-                             star += "<i class='icon yellow star'></i>";
+                    var star = "";
+
+                    var times = data.data[key][0].star;
+                    for(var i=0; i < times; i++){
+                            star += "<i class='icon yellow star'></i>";
+                    }
+                    var lowest = data.data[key][0].rooms[0].price;
+                    var saledprice;
+                    for(var i=0; i < data.data[key][0].rooms.length; i++){
+                        tmp = data.data[key][0].rooms[i].price;
+                        if (data.data[key][0].rooms[i].sales.length > 0) {
+                            tmp = data.data[key][0].rooms[i].sales[0].price;
                         }
-                        var lowest = Number.POSITIVE_INFINITY;
-                        var saledprice;
-                        for(var i=0; i < data.data[key][0].rooms.length; i++){
-                            tmp = data.data[key][0].rooms[i].price;
-                            if(data.data[key][0].rooms[i].sales.length > 0){
-                                 saledprice = data.data[key][0].rooms[i].sales[0].price;
-                                 lowest = saledprice;
+                        if (parseFloat(tmp) < parseFloat(lowest)) {
+                        	lowest = tmp;
+                        }
+                    }
+                    var url = '<?php echo e(route("search.hotel", "id")); ?>';
+                    url = url.replace('id', data.data[key][0].id);
+                    var rating = '<?php echo e($rate); ?>';
+                    
+
+                    var star_class = '';
+                    if (data.data[key][0].star == 1) {
+                        star_class = 'onestar';
+                    } else if (data.data[key][0].star == 2) {
+                        star_class = 'twostar';
+                    } else if (data.data[key][0].star == 3) {
+                        star_class = 'threestar';
+                    } else if (data.data[key][0].star == 4) {
+                        star_class = 'fourstar';
+                    } else if (data.data[key][0].star == 5) {
+                        star_class = 'fivestar';
+                    }
+                    var likedString="";
+                    if('<?php echo e(Auth::check()); ?>'){
+                        if($.inArray(data.data[key][0].id,data.favorites) != -1){
+                            likedString = "<div class='like-heart'><a href='#' class='favorite-btn' data-id="+data.data[key][0].id+"><i class='icon heart'></i></a></div>"; 
+                        }else{
+                            likedString = "<div class='like-heart'><a href='#' class='favorite-btn' data-id="+data.data[key][0].id+"><i class='icon empty heart'></i></a></div>"; 
+                        }
+                    }
+                    <?php if(App::isLocale('en')): ?> {
+                    textToInsert = "<div class='list-item box' id='"+ data.data[key][0].id +"' data-id='"+ data.data[key][0].id +"'> \
+                                        <div class='img left'> \
+                                            <a href='" + url + "' style='color:white' target='_blank'>\
+                                            <div class='box-border'></div>\
+                                            <img class='ui fluid image' style='max-width:100%;max-height:100%' src='" + data.data[key][0].cover_photo + "'/> \
+                                            </a>\
+                                        </div>\
+                                        <div class='block left'>\
+                                            "+likedString+"\
+                                            <div class='review'>\
+                                                <h4><a href='#'>" + finalrating + "</a></h4>\
+                                            </div>\
+                                        </div>\
+                                        <div class='block right'>\
+                                            <div class='price'>\
+                                                <h4>" + numeral(lowest/rating).format('0,0.00') + "$</h4>\
+                                            </div>\
+                                            <div class='room-name' >\
+                                                <a href='" + url + "' style='color:white' target='_blank'>\
+                                                <h4>" + data.data[key][0].name_en + "</h4>\
+                                                </a>\
+                                            </div>\
+                                        </div>\
+                                        <p class='theme'>\
+                                            <span class='" + star_class + "'>\
+                                                " + star + "\
+                                            </span>\
+                                        </p>\
+                                        <div class='room-button'>\
+                                            <a href='" + url + "' target='_blank' class='ui blue button'><?php echo e(__('messages.Book now')); ?></a>\
+                                        </div>\
+                                    </div>";
+                    }
+                    <?php elseif(App::isLocale('mn')): ?> {
+                    textToInsert = "<div class='list-item box' id='"+ data.data[key][0].id +"' data-id='"+ data.data[key][0].id +"'> \
+                                        <div class='img left'> \
+                                            <a href='" + url + "' style='color:white' target='_blank'>\
+                                                <div class='box-border'></div>\
+                                            <img class='ui fluid image' style='max-width:100%;max-height:100%' src='" + data.data[key][0].cover_photo + "'/> \
+                                            </a>\
+                                        </div>\
+                                        <div class='block left'>\
+                                            "+likedString+"\
+                                            <div class='review'>\
+                                                <h4><a href='#'>" + finalrating + "</a></h4>\
+                                            </div>\
+                                        </div>\
+                                        <div class='block right'>\
+                                            <div class='price'>\
+                                                <h4>" + numeral(lowest).format('0,0') + "₮</h4>\
+                                            </div>\
+                                            <div class='room-name' >\
+                                                <a href='" + url + "' style='color:white' target='_blank'>\
+                                                <h4>" + data.data[key][0].name + "</h4>\
+                                                </a>\
+                                            </div>\
+                                        </div>\
+                                        <p class='theme'>\
+                                            <span class='" + star_class + "'>\
+                                                " + star + "\
+                                            </span>\
+                                        </p>\
+                                        <div class='room-button'>\
+                                            <a href='" + url + "' target='_blank' class='ui blue button'><?php echo e(__('messages.Book now')); ?></a>\
+                                        </div>\
+                                    </div>";
+                    }
+                    <?php endif; ?>
+                    }
+                    $('#searchResult').append(textToInsert);
+
+
+                    <?php if(App::isLocale('en')): ?> {
+                    var contentString = "<div style='padding:0;width:100%;margin:0;overflow: hidden;'> \
+                                            <img src='" + data.data[key][0].cover_photo + "' height='200px' style='filter:brightness(50%);width:100%;background-image: linear-gradient(180deg, rgba(0, 0, 0, .5) 0, transparent 25%, transparent 50%, rgba(0, 0, 0, .7));'>\
+                                            <div class='maptitle'>" + data.data[key][0].name_en + "</div>\
+                                            <span class='mapstar'>" + star + "</span>\
+                                            <div class='mapprice'>" + numeral(lowest / rating).format('0,0.00') + "$</div>\
+                                        </div>";
+                                                
+                    var contentString1 = "<div style='padding:0;margin:0;overflow: hidden;'> \
+                                            <img src='" + data.data[key][0].cover_photo + "' height='200px' style='filter:brightness(50%);width:100%;background-image: linear-gradient(180deg, rgba(0, 0, 0, .5) 0, transparent 25%, transparent 50%, rgba(0, 0, 0, .7));'>\
+                                            <div class='maptitle'>" + data.data[key][0].name_en + "</div>\
+                                            <div class='mapprice'>" + numeral(lowest / rating ).format('0,0.00') + "$</div>\
+                                            <span class='mapstar'>" + star + "</span>\
+                                            <a href='" + url + "' target='_blank'>\<button class='ui button mapbutton' style='background-color:#2185D0;color:white'><?php echo e(__('messages.Read More')); ?></button></a>\
+                                        </div>";
+                    }
+                    <?php elseif(App::isLocale('mn')): ?> {
+                    var contentString = "<div style='padding:0;width:100%;margin:0;overflow: hidden;'> \
+                                            <img src='" + data.data[key][0].cover_photo + "' height='200px' style='filter:brightness(50%);width:100%;background-image: linear-gradient(180deg, rgba(0, 0, 0, .5) 0, transparent 25%, transparent 50%, rgba(0, 0, 0, .7));'>\
+                                            <div class='maptitle'>" + data.data[key][0].name + "</div>\
+                                            <span class='mapstar'>" + star + "</span>\
+                                            <div class='mapprice'>" + numeral(lowest).format('0,0') + "₮</div>\
+                                        </div>";
+
+                    var contentString1 = "<div style='padding:0;margin:0;overflow: hidden;'> \
+                                            <img src='" + data.data[key][0].cover_photo + "' height='200px' style='filter:brightness(50%);width:100%;background-image: linear-gradient(180deg, rgba(0, 0, 0, .5) 0, transparent 25%, transparent 50%, rgba(0, 0, 0, .7));'>\
+                                            <div class='maptitle'>" + data.data[key][0].name + "</div>\
+                                            <div class='mapprice'>" + numeral(lowest).format('0,0') + "₮</div>\
+                                            <span class='mapstar'>" + star + "</span>\
+                                            <a href='" + url + "' target='_blank'>\<button class='ui button mapbutton' style='background-color:#2185D0;color:white'><?php echo e(__('messages.Read More')); ?></button></a>\
+                                        </div>";
+                    }
+                    <?php endif; ?>
+
+                    var infowindow = new google.maps.InfoWindow({
+                        content: contentString,
+                        maxWidth: 250,
+                        zIndex: 10,
+                    });
+                    var infowindow1 = new google.maps.InfoWindow({
+                        content: contentString1,
+                        maxWidth: 250,
+                        zIndex: 10,
+                    });
+
+                    var image = "<?php echo e(asset('/img/mapicon/villa.png')); ?>";
+                    var image2 = "<?php echo e(asset('/img/mapicon2/villa.png')); ?>";
+                    
+                    var marker = new google.maps.Marker({
+                        map: map,
+                        draggable: false,
+                        id: data.data[key][0].id,
+                        animation: google.maps.Animation.DROP,
+                        position: { lat: parseFloat(JSON.parse(data.data[key][0].location)[0]), lng: parseFloat(JSON.parse(data.data[key][0].location)[1]) },
+                        icon: image,
+                        optimized: false,
+                        zIndex:100
+                    });
+                    markers.push(marker);
+
+                    var clicked = false;
+                    google.maps.event.addListener(marker, 'mouseover', (function (marker, contentString, infowindow) {
+                        return function () {
+                            if (!clicked) {
+                                infowindow.open(map, marker);
+                                marker.setIcon(image2);
+                                $('#' + marker.id).find('.img.left').addClass('hover');
                             }
-                            if (tmp < lowest) lowest = tmp;
+                        };
+                    })(marker, contentString, infowindow));
+                    google.maps.event.addListener(marker, 'mouseout', (function (marker, contentString, infowindow, infowindow1) {
+                        return function () {
+                            if (!clicked) {
+                                infowindow.close();
+                                infowindow1.close();
+                                marker.setIcon(image);
+                                $('#' + marker.id).find('.img.left').removeClass('hover');
+                            }
+                        };
+                    })(marker, contentString, infowindow, infowindow1));
+
+                    google.maps.event.addListener(infowindow1, 'closeclick', (function (marker) {
+                        return function(){
+                            clicked = false;
+                            marker.setIcon(image);
+                            $('#' + marker.id).find('.img.left').removeClass('hover');
                         }
-                        var url = '<?php echo e(route("search.hotel", "id")); ?>';
-                        url = url.replace('id', data.data[key][0].id);
-                        var rating = '<?php echo e($rate); ?>';
-                        <?php if(App::isLocale('en')): ?> {
-                                var contentString = "<div style='padding:0;width:100%;margin:0;overflow: hidden;'> \
-                                                        <img src='" + data.data[key][0].cover_photo + "' height='200px' style='filter:brightness(50%);width:100%;background-image: linear-gradient(180deg, rgba(0, 0, 0, .5) 0, transparent 25%, transparent 50%, rgba(0, 0, 0, .7));'>\
-                                                        <div class='maptitle'>" + data.data[key][0].name_en + "</div>\
-                                                        <span class='mapstar'>" + star + "</span>\
-                                                        <div class='mapprice'>" + numeral(lowest / rating).format('0,0.00') + "$</div>\
-                                                     </div>";
-                                                                
-                                var contentString1 = "<div style='padding:0;margin:0;overflow: hidden;'> \
-                                                          <img src='" + data.data[key][0].cover_photo + "' height='200px' style='filter:brightness(50%);width:100%;background-image: linear-gradient(180deg, rgba(0, 0, 0, .5) 0, transparent 25%, transparent 50%, rgba(0, 0, 0, .7));'>\
-                                                          <div class='maptitle'>" + data.data[key][0].name_en + "</div>\
-                                                          <div class='mapprice'>" + numeral(lowest / rating ).format('0,0.00') + "$</div>\
-                                                          <span class='mapstar'>" + star + "</span>\
-                                                          <a href='" + url + "' target='_blank'>\<button class='ui button mapbutton' style='background-color:#2185D0;color:white'><?php echo e(__('messages.Read More')); ?></button></a>\
-                                                      </div>";
+                    })(marker));
+
+                    google.maps.event.addListener(marker, 'click', (function (marker, contentString1, infowindow1, infowindow) {
+                        return function () {
+                            clicked = true;
+                            infowindow.close();
+                            infowindow1.open(map, marker);
+                            marker.setIcon(image2);
+                        };
+                    })(marker, contentString1, infowindow1, infowindow));
+
+                    $('.list-item').mouseover(function(){
+                        for(var i = 0; i < markers.length; i++){
+                        if($(this).data('id') == markers[i].id){
+                                markers[i].setIcon(image2);
+                                break;
                         }
-                        <?php elseif(App::isLocale('mn')): ?> {
-                                var contentString = "<div style='padding:0;width:100%;margin:0;overflow: hidden;'> \
-                                                            <img src='" + data.data[key][0].cover_photo + "' height='200px' style='filter:brightness(50%);width:100%;background-image: linear-gradient(180deg, rgba(0, 0, 0, .5) 0, transparent 25%, transparent 50%, rgba(0, 0, 0, .7));'>\
-                                                            <div class='maptitle'>" + data.data[key][0].name + "</div>\
-                                                            <span class='mapstar'>" + star + "</span>\
-                                                            <div class='mapprice'>" + numeral(lowest).format('0,0') + "₮</div>\
-                                                     </div>";
-
-                                var contentString1 = "<div style='padding:0;margin:0;overflow: hidden;'> \
-                                                             <img src='" + data.data[key][0].cover_photo + "' height='200px' style='filter:brightness(50%);width:100%;background-image: linear-gradient(180deg, rgba(0, 0, 0, .5) 0, transparent 25%, transparent 50%, rgba(0, 0, 0, .7));'>\
-                                                             <div class='maptitle'>" + data.data[key][0].name + "</div>\
-                                                             <div class='mapprice'>" + numeral(lowest).format('0,0') + "₮</div>\
-                                                             <span class='mapstar'>" + star + "</span>\
-                                                             <a href='" + url + "' target='_blank'>\<button class='ui button mapbutton' style='background-color:#2185D0;color:white'><?php echo e(__('messages.Read More')); ?></button></a>\
-                                                      </div>";
                         }
-                        <?php endif; ?>
-
-            var infowindow = new google.maps.InfoWindow({
-                content: contentString,
-                maxWidth: 250,
-                zIndex: 10,
-            });
-            var infowindow1 = new google.maps.InfoWindow({
-                content: contentString1,
-                maxWidth: 250,
-                zIndex: 10,
-            });
-
-            var image = "<?php echo e(asset('/img/mapicon/villa.png')); ?>";
-            var image2 = "<?php echo e(asset('/img/mapicon2/villa.png')); ?>";
-
-            // for(var i=0; i < data.allhotels.length; i++){
-            //                 var marker = new google.maps.Marker({
-            //                     map: map,
-            //                     draggable: false,
-            //                     id: data.allhotels[i].id,
-            //                     animation: google.maps.Animation.DROP,
-            //                     position: { lat: parseFloat(JSON.parse(data.allhotels[i].location)[0]), lng: parseFloat(JSON.parse(data.allhotels[i].location)[1]) },
-            //                     icon: image,
-            //                 });
-            //                 if(data.allhotels[i].id != data.data[key][0].id){
-            //                     marker.setIcon(image2);
-            //                 }
-            //                 markers.push(marker);
-            //             }
-            var marker = new google.maps.Marker({
-                map: map,
-                draggable: false,
-                id: data.data[key][0].id,
-                animation: google.maps.Animation.DROP,
-                position: { lat: parseFloat(JSON.parse(data.data[key][0].location)[0]), lng: parseFloat(JSON.parse(data.data[key][0].location)[1]) },
-                icon: image,
-            });
-
-            markers.push(marker);
-          
-            var clicked = false;
-            google.maps.event.addListener(marker, 'mouseover', (function (marker, contentString, infowindow) {
-                return function () {
-                    if (!clicked) {
-                        infowindow.open(map, marker);
-                        marker.setIcon(image2);
-                        $('#' + marker.id).find('.img.left').addClass('hover');
+                    }).mouseout(function(){
+                        for(var i = 0; i < markers.length; i++){
+                            if($(this).data('id') == markers[i].id){
+                                markers[i].setIcon(image);
+                                break;
+                            }
+                        }
+                    })
+                
+                    $("#loader").removeClass("active");
+                    $('.ui.dropdown').dropdown({
+                        on: 'click'
+                    });
                     }
-                };
-            })(marker, contentString, infowindow));
-            google.maps.event.addListener(marker, 'mouseout', (function (marker, contentString, infowindow, infowindow1) {
-                return function () {
-                    if (!clicked) {
-                        infowindow.close();
-                        infowindow1.close();
-                        marker.setIcon(image);
-                        $('#' + marker.id).find('.img.left').removeClass('hover');
-                    }
-                };
-            })(marker, contentString, infowindow, infowindow1));
+
+                    var icon1 =  new google.maps.Circle({
+                                    path: google.maps.SymbolPath.CIRCLE,
+                                    fillColor : "#1972AA",
+                                    strokeColor: "white",
+                                    strokeWeight: 1,
+                                    scale: 5,
+                                    strokeOpacity: 1,
+                                    fillOpacity: 1,
+                                });
+
+                    var icon2 =  new google.maps.Circle({
+                                    path: google.maps.SymbolPath.CIRCLE,
+                                    fillColor : "#FD8A00",
+                                    strokeColor: "white",
+                                    strokeWeight: 1,
+                                    scale: 5,
+                                    strokeOpacity: 1,
+                                    fillOpacity: 1,
+                                })
+
+                    allHotels.map(function (el) {
+                        var found = false;
+                        markers.map(function (data) {
+                            if(data.id == el.id){
+                                found = true;
+                            }
+                        });
+                        if(!found){
+                            marker = new google.maps.Marker({
+                                map: map,
+                                draggable: false,
+                                id: el.id,
+                                animation: google.maps.Animation.DROP,
+                                position: { lat: parseFloat(JSON.parse(el.location)[0]), lng: parseFloat(JSON.parse(el.location)[1]) },
+                                icon: icon1,
+                                optimized: false,
+                                zIndex:80
+                            });
+                            var star = "";
+                            var times = el.star;
+                            for(var i=0; i < times; i++){
+                                    star += "<i class='icon yellow star'></i>";
+                            }
+                            var lowest = el.rooms[0].price;
+                            var saledprice;
+                            for(var i=0; i < el.rooms.length; i++){
+                                tmp = el.rooms[i].price;
+                                if(el.rooms[i].sales.length > 0){
+                                        tmp = el.rooms[i].sales[0].price;
+                                }
+                                if (parseFloat(tmp) < parseFloat(lowest)) {
+                                	lowest = tmp;
+                                }
+                            }
+                            var url = '<?php echo e(route("search.hotel", "id")); ?>';
+                            url = url.replace('id', el.id);
+                            var rating = '<?php echo e($rate); ?>';
+                            <?php if(App::isLocale('en')): ?> {
+                            var contentString = "<div setyle='padding:0;width:100%;margin:0;overflow: hidden;'> \
+                                                    <img src='" + el.cover_photo + "' height='200px' style='filter:brightness(50%);width:100%;background-image: linear-gradient(180deg, rgba(0, 0, 0, .5) 0, transparent 25%, transparent 50%, rgba(0, 0, 0, .7));'>\
+                                                    <div class='maptitle'>" + el.name_en + "</div>\
+                                                    <span class='mapstar'>" + star + "</span>\
+                                                    <div class='mapprice'>" + numeral(lowest / rating).format('0,0.00') + "$</div>\
+                                                </div>";
+                                                        
+                            var contentString1 = "<div style='padding:0;margin:0;overflow: hidden;'> \
+                                                    <img src='" + el.cover_photo + "' height='200px' style='filter:brightness(50%);width:100%;background-image: linear-gradient(180deg, rgba(0, 0, 0, .5) 0, transparent 25%, transparent 50%, rgba(0, 0, 0, .7));'>\
+                                                    <div class='maptitle'>" + el.name_en + "</div>\
+                                                    <div class='mapprice'>" + numeral(lowest / rating ).format('0,0.00') + "$</div>\
+                                                    <span class='mapstar'>" + star + "</span>\
+                                                    <a href='" + url + "' target='_blank'>\<button class='ui button mapbutton' style='background-color:#2185D0;color:white'><?php echo e(__('messages.Read More')); ?></button></a>\
+                                                </div>";
+                            }
+                            <?php elseif(App::isLocale('mn')): ?> {
+                            var contentString = "<div style='padding:0;width:100%;margin:0;overflow: hidden;'> \
+                                                    <img src='" + el.cover_photo + "' height='200px' style='filter:brightness(50%);width:100%;background-image: linear-gradient(180deg, rgba(0, 0, 0, .5) 0, transparent 25%, transparent 50%, rgba(0, 0, 0, .7));'>\
+                                                    <div class='maptitle'>" + el.name + "</div>\
+                                                    <span class='mapstar'>" + star + "</span>\
+                                                    <div class='mapprice'>" + numeral(lowest).format('0,0') + "₮</div>\
+                                                </div>";
+
+                            var contentString1 = "<div style='padding:0;margin:0;overflow: hidden;'> \
+                                                    <img src='" + el.cover_photo + "' height='200px' style='filter:brightness(50%);width:100%;background-image: linear-gradient(180deg, rgba(0, 0, 0, .5) 0, transparent 25%, transparent 50%, rgba(0, 0, 0, .7));'>\
+                                                    <div class='maptitle'>" + el.name + "</div>\
+                                                    <div class='mapprice'>" + numeral(lowest).format('0,0') + "₮</div>\
+                                                    <span class='mapstar'>" + star + "</span>\
+                                                    <a href='" + url + "' target='_blank'>\<button class='ui button mapbutton' style='background-color:#2185D0;color:white'><?php echo e(__('messages.Read More')); ?></button></a>\
+                                                </div>";
+                            }
+                            <?php endif; ?>
+
+                            var infowindow = new google.maps.InfoWindow({
+                                content: contentString,
+                                maxWidth: 250,
+                                zIndex: 10,
+                            });
+                            var infowindow1 = new google.maps.InfoWindow({
+                                content: contentString1,
+                                maxWidth: 250,
+                                zIndex: 10,
+                            });
+
+                            var clicked = false;
+                            google.maps.event.addListener(marker, 'mouseover', (function (marker, contentString, infowindow) {
+                                return function () {
+                                    if (!clicked) {
+                                        infowindow.open(map, marker);
+                                        marker.setIcon(icon2);
+                                        $('#' + marker.id).find('.img.left').addClass('hover');
+                                    }
+                                };
+                            })(marker, contentString, infowindow));
+                            google.maps.event.addListener(marker, 'mouseout', (function (marker, contentString, infowindow, infowindow1) {
+                                return function () {
+                                    if (!clicked) {
+                                        infowindow.close();
+                                        infowindow1.close();
+                                        marker.setIcon(icon1);
+                                        $('#' + marker.id).find('.img.left').removeClass('hover');
+                                    }
+                                };
+                            })(marker, contentString, infowindow, infowindow1));
 
 
-            google.maps.event.addListener(infowindow1, 'closeclick', (function (marker) {
-                return function(){
-                     clicked = false;
-                     marker.setIcon(image);
-                     $('#' + marker.id).find('.img.left').removeClass('hover');
-                }
-            })(marker));
+                            google.maps.event.addListener(infowindow1, 'closeclick', (function (marker) {
+                                return function(){
+                                    clicked = false;
+                                    marker.setIcon(icon1);
+                                    $('#' + marker.id).find('.img.left').removeClass('hover');
+                                }
+                            })(marker));
 
-            google.maps.event.addListener(marker, 'click', (function (marker, contentString1, infowindow1, infowindow) {
-                return function () {
-                    clicked = true;
-                    infowindow.close();
-                    infowindow1.open(map, marker);
-                    marker.setIcon(image2);
-                };
-            })(marker, contentString1, infowindow1, infowindow));
-
-            var star_class = '';
-            if (data.data[key][0].star == 1) {
-                star_class = 'onestar';
-            } else if (data.data[key][0].star == 2) {
-                star_class = 'twostar';
-            } else if (data.data[key][0].star == 3) {
-                star_class = 'threestar';
-            } else if (data.data[key][0].star == 4) {
-                star_class = 'fourstar';
-            } else if (data.data[key][0].star == 5) {
-                star_class = 'fivestar';
-            }
-            var likedString;
-            if($.inArray(data.data[key][0].id,data.favorites) != -1){
-                likedString = "<a href='#' class='favorite-btn' data-id="+data.data[key][0].id+"><i class='icon heart'></i></a>"; 
-            }else{
-                likedString = "<a href='#' class='favorite-btn' data-id="+data.data[key][0].id+"><i class='icon empty heart'></i></a>"; 
-            }
-            <?php if(App::isLocale('en')): ?> {
-                textToInsert = "<div class='list-item box' id='"+ data.data[key][0].id +"' data-id='"+ data.data[key][0].id +"'> \
-                                                <div class='img left'> \
-                                                    <a href='" + url + "' style='color:white' target='_blank'>\
-                                                    <div class='box-border'></div>\
-                                                    <img class='ui fluid image' style='max-width:100%;max-height:100%' src='" + data.data[key][0].cover_photo + "'/> \
-                                                    </a>\
-                                                </div>\
-                                                <div class='block left'>\
-                                                    <div class='like-heart'>\
-                                                       "+likedString+"\
-                                                    </div>\
-                                                    <div class='review'>\
-                                                        <h4><a href='#'>" + finalrating + "</a></h4>\
-                                                    </div>\
-                                                </div>\
-                                                <div class='block right'>\
-                                                    <div class='price'>\
-                                                        <h4>" + numeral(lowest/rating).format('0,0.00') + "$</h4>\
-                                                    </div>\
-                                                    <div class='room-name' >\
-                                                        <a href='" + url + "' style='color:white' target='_blank'>\
-                                                        <h4>" + data.data[key][0].name_en + "</h4>\
-                                                        </a>\
-                                                    </div>\
-                                                </div>\
-                                                <p class='theme'>\
-                                                    <span class='" + star_class + "'>\
-                                                        " + star + "\
-                                                    </span>\
-                                                </p>\
-                                                <div class='room-button'>\
-                                                	<a href='" + url + "' target='_blank' class='ui blue button'><?php echo e(__('messages.Book now')); ?></a>\
-                                                </div>\
-                                            </div>";
-            }
-            <?php elseif(App::isLocale('mn')): ?> {
-                textToInsert = "<div class='list-item box' id='"+ data.data[key][0].id +"' data-id='"+ data.data[key][0].id +"'> \
-                                                <div class='img left'> \
-                                                    <a href='" + url + "' style='color:white' target='_blank'>\
-                                                     <div class='box-border'></div>\
-                                                    <img class='ui fluid image' style='max-width:100%;max-height:100%' src='" + data.data[key][0].cover_photo + "'/> \
-                                                    </a>\
-                                                </div>\
-                                                <div class='block left'>\
-                                                 <div class='like-heart'>\
-                                                        "+likedString+"\
-                                                     </div>\
-                                                    <div class='review'>\
-                                                        <h4><a href='#'>" + finalrating + "</a></h4>\
-                                                    </div>\
-                                                </div>\
-                                                <div class='block right'>\
-                                                    <div class='price'>\
-                                                        <h4>" + numeral(lowest).format('0,0') + "₮</h4>\
-                                                    </div>\
-                                                    <div class='room-name' >\
-                                                        <a href='" + url + "' style='color:white' target='_blank'>\
-                                                        <h4>" + data.data[key][0].name + "</h4>\
-                                                        </a>\
-                                                    </div>\
-                                                </div>\
-                                                <p class='theme'>\
-                                                    <span class='" + star_class + "'>\
-                                                        " + star + "\
-                                                    </span>\
-                                                </p>\
-                                                <div class='room-button'>\
-                                                	<a href='" + url + "' target='_blank' class='ui blue button'><?php echo e(__('messages.Book now')); ?></a>\
-                                                </div>\
-                                            </div>";
-            }
-            <?php endif; ?>
-        }
-        $('#searchResult').append(textToInsert);
-        $('.list-item').mouseover(function(){
-             for(var i = 0; i < markers.length; i++){
-                if($(this).data('id') == markers[i].id){
-                     markers[i].setIcon(image2);
-                     break;
-                }
-             }
-            }).mouseout(function(){
-                for(var i = 0; i < markers.length; i++){
-                    if($(this).data('id') == markers[i].id){
-                        markers[i].setIcon(image);
-                        break;
-                    }
-                }
-            })
-        
-        
-        $("#loader").removeClass("active");
-        $('.ui.dropdown')
-            .dropdown({
-                on: 'click'
-            });
-        }
-            })
-            .error(function(jqXHR, textStatus, errorThrown) { 
-                $("#loader").removeClass("active");
-                $('.searchResult').empty();
-                $("#errorresult").css("display", "");
-                $('#pagination').css('display','none');
-                if (textStatus == 'timeout'){
-                    $('#errorresult .header').html('The server is not responding');
-                }
-                if (textStatus == 'error'){
-                    $('#errorresult .header').html(errorThrown);
-                }
-            });
-        }
+                            google.maps.event.addListener(marker, 'click', (function (marker, contentString1, infowindow1, infowindow) {
+                                return function () {
+                                    clicked = true;
+                                    infowindow.close();
+                                    infowindow1.open(map, marker);
+                                    marker.setIcon(icon2);
+                                };
+                            })(marker, contentString1, infowindow1, infowindow));
+                            markers.push(marker);
+                        }
+                    })
+                    })
+                    .error(function(jqXHR, textStatus, errorThrown) { 
+                        $("#loader").removeClass("active");
+                        $('.searchResult').empty();
+                        $("#errorresult").css("display", "");
+                        $('#pagination').css('display','none');
+                        if (textStatus == 'timeout'){
+                            $('#errorresult .header').html('The server is not responding');
+                        }
+                        if (textStatus == 'error'){
+                            $('#errorresult .header').html(errorThrown);
+                        }
+                    });
+    }
 
     // =============================================================================
     //  - Show price range slider 
@@ -899,13 +1025,6 @@
         });
     });
 
-    $(document).ready(function () {
-        setTimeout(function() {
-            if('<?php echo e($hotel_id); ?>'){
-                $('#drop'+'<?php echo e($hotel_id); ?>').dropdown('set selected', '1');
-            }
-        }, 500)
-    });
     $(document).on('click', '.favorite-btn', function(e) {
         var btn = $(this);
         var id = $(this).data('id');
