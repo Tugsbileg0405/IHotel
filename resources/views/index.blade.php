@@ -542,7 +542,16 @@
 					}
 				});
 			@elseif (App::isLocale('en')) 
-				window.location = "{{URL::to('aspac2017')}}";
+				$.get('search?roomnumber=' + roomNumber + '&peoplenumber=' + people + '&startdate=' + startDate + '&enddate=' + endDate + '&place=' + searchPlace)
+				.success(function (data) {
+					window.location = "{{URL::to('aspac2017')}}";
+				})
+				.error(function(jqXHR, textStatus, errorThrown){
+					if (textStatus == 'error'){
+							alert(errorThrown);
+					}
+				});
+				
 			@endif
 		});
 

@@ -137,22 +137,22 @@ class SearchController extends Controller
 
     public function check(Request $request)
     {
-         $rate = Option::find(7)->value;
-         $roomnumber = $request->session()->get('roomnumber');
-         $startDate = $request->session()->get('startDate');
-         $endDate = $request->session()->get('endDate');
-         $peoplenumber = $request->session()->get('peoplenumber');
-         $page = $request->page;
+        $rate = Option::find(7)->value;
+        $roomnumber = $request->session()->get('roomnumber');
+        $startDate = $request->session()->get('startDate');
+        $endDate = $request->session()->get('endDate');
+        $peoplenumber = $request->session()->get('peoplenumber');
+        $page = $request->page;
         if ($page == null) {
             $page = 1;
         }
         
-         $filter = $request->filterstar;
-         $filterprice1 = $request->filterprice1;
-         $filterprice2 = $request->filterprice2;
-         $rating1 = $request->rating1;
-         $rating2 = $request->rating2;
-         $totalpeople = $peoplenumber * $roomnumber;
+        $filter = $request->filterstar;
+        $filterprice1 = $request->filterprice1;
+        $filterprice2 = $request->filterprice2;
+        $rating1 = $request->rating1;
+        $rating2 = $request->rating2;
+        $totalpeople = $peoplenumber * $roomnumber;
 
         if(\App::isLocale('mn')){
             $collection = Hotel::where('published', true)
@@ -160,7 +160,7 @@ class SearchController extends Controller
                 ->where('total_people', '>=', $totalpeople)
                 ->with(['rooms.sales' => function ($query) use ($startDate,$endDate) {
                     $query->where('startdate', '<=' , Carbon::parse($startDate)->format('Y-m-d H:i:s'))
-                          ->where('enddate', '>=', Carbon::parse($endDate)->format('Y-m-d H:i:s'));
+                            ->where('enddate', '>=', Carbon::parse($endDate)->format('Y-m-d H:i:s'));
                 }])
                 ->orderBy('priority','desc')
                 ->with('rates')->get();
@@ -274,12 +274,12 @@ class SearchController extends Controller
         if (\App::isLocale('en')) {
 
         $collection = Hotel::where('name_en', '!=', null)
-            ->where('published',true)->where('room_number', '>=', $roomnumber)
-            ->where('total_people', '>=', $totalpeople)
-            ->with(['rooms.sales' => function ($query) use ($startDate,$endDate) {
-                    $query->where('startdate', '<=' , Carbon::parse($startDate)->format('Y-m-d H:i:s'))
-                          ->where('enddate', '>=', Carbon::parse($endDate)->format('Y-m-d H:i:s'));
-                }])
+                ->where('published',true)->where('room_number', '>=', $roomnumber)
+                ->where('total_people', '>=', $totalpeople)
+                ->with(['rooms.sales' => function ($query) use ($startDate,$endDate) {
+                        $query->where('startdate', '<=' , Carbon::parse($startDate)->format('Y-m-d H:i:s'))
+                            ->where('enddate', '>=', Carbon::parse($endDate)->format('Y-m-d H:i:s'));
+                    }])
                 ->orderBy('priority')
                 ->with('rates')->get();
 
@@ -403,12 +403,12 @@ class SearchController extends Controller
 
         $grouped = $collection->groupBy('id');
         $allresultlenth = $grouped->count();
-        $chunk = $grouped->forPage($page, 10);
+        $paged_hotels = $grouped->forPage($page, 10);
         $favorites = [];
         if($request->user()){
            $favorites = $request->user()->favorites()->pluck('hotel_id')->toArray();
         }
-        return response()->json(array('success' => true, 'data' => $chunk, 'result' => $allresultlenth,'favorites' => $favorites, 'allhotels' => $collection));
+        return response()->json(array('success' => true, 'data' => $paged_hotels, 'result' => $allresultlenth,'favorites' => $favorites, 'allhotels' => $collection));
     }
 
     public function likeHotel(Request $request){

@@ -253,7 +253,6 @@
     }else{
         roomNumber = $('.selectedRoom option:selected').val();
     }
-    
 	
 	var plus = $('#plus');
 	var minus = $('#minus');
@@ -283,9 +282,6 @@
 		}
 		e.preventDefault();
 	});
-
-  
-   
 
 	var plus1 = $('#plus1');
 	var minus1 = $('#minus1');
@@ -390,7 +386,6 @@
         // =============================================================================
         //  - Search by star of hotels
         // =============================================================================
-         
 
         $(".star-filter").change(function (value) {
             star = $('.star-filter').dropdown('get value');
@@ -415,7 +410,6 @@
         //  - Search by price range 
         // =============================================================================
 
-        
         var maxprice = '{{$maxprice}}';
         var maxpricebydollar = numeral(maxprice/'{{$rate}}').format('0');
         var snapSlider = document.getElementById('slider-snap');
@@ -498,7 +492,6 @@
             $('#pagination').bootpag({ page: 1 });
         });
 
-
         snapSlider1.noUiSlider.on('update', function (values, handle) {
             $('#user-rating-value').html('{{ __("messages.User Rating")}}: ' + parseFloat(values[0]).toFixed(1) + "-" + parseFloat(values[1]).toFixed(1));
         });
@@ -506,6 +499,7 @@
         // =============================================================================
         //  - Pagination function
         // =============================================================================
+
         $('#pagination').hide();
         $('#pagination').bootpag({
             total: Math.ceil('{{$count}}'),
@@ -538,7 +532,6 @@
         //  - Show the results on google map
         // =============================================================================        
         
-
         function loadData(page, star, first, last, rating1, rating2) {
             for (i = 0; i < markers.length; i++) {
                     markers[i].setMap(null);
@@ -593,10 +586,10 @@
                     var rating = '{{ $rate }}';
                     @if (App::isLocale('en')) {
                     var contentString = "<div style='padding:0;width:100%;margin:0;overflow: hidden;'> \
-                                        <img src='" + data.data[key][0].cover_photo + "' height='200px' style='filter:brightness(50%);width:100%;background-image: linear-gradient(180deg, rgba(0, 0, 0, .5) 0, transparent 25%, transparent 50%, rgba(0, 0, 0, .7));'>\
-                                        <div class='maptitle'>" + data.data[key][0].name_en + "</div>\
-                                        <span class='mapstar'>" + star + "</span>\
-                                        <div class='mapprice'>" + numeral(lowest / rating).format('0,0.00') + "$</div>\
+                                            <img src='" + data.data[key][0].cover_photo + "' height='200px' style='filter:brightness(50%);width:100%;background-image: linear-gradient(180deg, rgba(0, 0, 0, .5) 0, transparent 25%, transparent 50%, rgba(0, 0, 0, .7));'>\
+                                            <div class='maptitle'>" + data.data[key][0].name_en + "</div>\
+                                            <span class='mapstar'>" + star + "</span>\
+                                            <div class='mapprice'>" + numeral(lowest / rating).format('0,0.00') + "$</div>\
                                         </div>";
                                                 
                     var contentString1 = "<div style='padding:0;margin:0;overflow: hidden;'> \
@@ -616,11 +609,11 @@
                                         </div>";
 
                     var contentString1 = "<div style='padding:0;margin:0;overflow: hidden;'> \
-                                                <img src='" + data.data[key][0].cover_photo + "' height='200px' style='filter:brightness(50%);width:100%;background-image: linear-gradient(180deg, rgba(0, 0, 0, .5) 0, transparent 25%, transparent 50%, rgba(0, 0, 0, .7));'>\
-                                                <div class='maptitle'>" + data.data[key][0].name + "</div>\
-                                                <div class='mapprice'>" + numeral(lowest).format('0,0') + "₮</div>\
-                                                <span class='mapstar'>" + star + "</span>\
-                                                <a href='" + url + "' target='_blank'>\<button class='ui button mapbutton' style='background-color:#2185D0;color:white'>{{ __('messages.Read More') }}</button></a>\
+                                            <img src='" + data.data[key][0].cover_photo + "' height='200px' style='filter:brightness(50%);width:100%;background-image: linear-gradient(180deg, rgba(0, 0, 0, .5) 0, transparent 25%, transparent 50%, rgba(0, 0, 0, .7));'>\
+                                            <div class='maptitle'>" + data.data[key][0].name + "</div>\
+                                            <div class='mapprice'>" + numeral(lowest).format('0,0') + "₮</div>\
+                                            <span class='mapstar'>" + star + "</span>\
+                                            <a href='" + url + "' target='_blank'>\<button class='ui button mapbutton' style='background-color:#2185D0;color:white'>{{ __('messages.Read More') }}</button></a>\
                                         </div>";
                     }
                     @endif
@@ -671,7 +664,6 @@
                             }
                         };
                     })(marker, contentString, infowindow, infowindow1));
-
 
                     google.maps.event.addListener(infowindow1, 'closeclick', (function (marker) {
                         return function(){
@@ -799,7 +791,6 @@
                         }
                     })
                 
-                
                     $("#loader").removeClass("active");
                     $('.ui.dropdown').dropdown({
                         on: 'click'
@@ -864,10 +855,10 @@
                             var rating = '{{ $rate }}';
                             @if (App::isLocale('en')) {
                             var contentString = "<div style='padding:0;width:100%;margin:0;overflow: hidden;'> \
-                                                <img src='" + el.cover_photo + "' height='200px' style='filter:brightness(50%);width:100%;background-image: linear-gradient(180deg, rgba(0, 0, 0, .5) 0, transparent 25%, transparent 50%, rgba(0, 0, 0, .7));'>\
-                                                <div class='maptitle'>" + el.name_en + "</div>\
-                                                <span class='mapstar'>" + star + "</span>\
-                                                <div class='mapprice'>" + numeral(lowest / rating).format('0,0.00') + "$</div>\
+                                                    <img src='" + el.cover_photo + "' height='200px' style='filter:brightness(50%);width:100%;background-image: linear-gradient(180deg, rgba(0, 0, 0, .5) 0, transparent 25%, transparent 50%, rgba(0, 0, 0, .7));'>\
+                                                    <div class='maptitle'>" + el.name_en + "</div>\
+                                                    <span class='mapstar'>" + star + "</span>\
+                                                    <div class='mapprice'>" + numeral(lowest / rating).format('0,0.00') + "$</div>\
                                                 </div>";
                                                         
                             var contentString1 = "<div style='padding:0;margin:0;overflow: hidden;'> \
@@ -887,11 +878,11 @@
                                                 </div>";
 
                             var contentString1 = "<div style='padding:0;margin:0;overflow: hidden;'> \
-                                                        <img src='" + el.cover_photo + "' height='200px' style='filter:brightness(50%);width:100%;background-image: linear-gradient(180deg, rgba(0, 0, 0, .5) 0, transparent 25%, transparent 50%, rgba(0, 0, 0, .7));'>\
-                                                        <div class='maptitle'>" + el.name + "</div>\
-                                                        <div class='mapprice'>" + numeral(lowest).format('0,0') + "₮</div>\
-                                                        <span class='mapstar'>" + star + "</span>\
-                                                        <a href='" + url + "' target='_blank'>\<button class='ui button mapbutton' style='background-color:#2185D0;color:white'>{{ __('messages.Read More') }}</button></a>\
+                                                    <img src='" + el.cover_photo + "' height='200px' style='filter:brightness(50%);width:100%;background-image: linear-gradient(180deg, rgba(0, 0, 0, .5) 0, transparent 25%, transparent 50%, rgba(0, 0, 0, .7));'>\
+                                                    <div class='maptitle'>" + el.name + "</div>\
+                                                    <div class='mapprice'>" + numeral(lowest).format('0,0') + "₮</div>\
+                                                    <span class='mapstar'>" + star + "</span>\
+                                                    <a href='" + url + "' target='_blank'>\<button class='ui button mapbutton' style='background-color:#2185D0;color:white'>{{ __('messages.Read More') }}</button></a>\
                                                 </div>";
                             }
                             @endif
@@ -948,8 +939,6 @@
                             markers.push(marker);
                         }
                     })
-
-
                     })
                     .error(function(jqXHR, textStatus, errorThrown) { 
                         $("#loader").removeClass("active");
@@ -1028,13 +1017,6 @@
         });
     });
 
-    $(document).ready(function () {
-        setTimeout(function() {
-            if('{{ $hotel_id }}'){
-                $('#drop'+'{{ $hotel_id }}').dropdown('set selected', '1');
-            }
-        }, 500)
-    });
     $(document).on('click', '.favorite-btn', function(e) {
         var btn = $(this);
         var id = $(this).data('id');
