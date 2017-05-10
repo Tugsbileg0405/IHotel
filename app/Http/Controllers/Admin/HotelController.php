@@ -85,7 +85,7 @@ class HotelController extends Controller
         $hotel->sale = $request->get('sale');
         $hotel->save();
 
-        return redirect('profile/hotel');
+        return back();
     }
 
     /**
@@ -107,7 +107,7 @@ class HotelController extends Controller
         $hotel->rooms()->delete();
         $hotel->delete();
 
-        return redirect('profile/hotel');
+        return back();
     }
 
     public function search(Request $request)
