@@ -281,7 +281,8 @@ class SearchController extends Controller
         if (\App::isLocale('en')) {
 
         $collection = Hotel::where('name_en', '!=', null)
-                ->where('published',true)->where('room_number', '>=', $roomnumber)
+                ->where('published',true)
+                ->where('is_active', true)->where('room_number', '>=', $roomnumber)
                 ->where('total_people', '>=', $totalpeople)
                 ->with(['rooms.sales' => function ($query) use ($startDate,$endDate) {
                         $query->where('startdate', '<=' , Carbon::parse($startDate)->format('Y-m-d H:i:s'))
@@ -292,7 +293,8 @@ class SearchController extends Controller
 
         if ($filter !== null && $filterprice1 == null && $filterprice2 == null && $rating1 == null && $rating2 == null) {
             $collection = Hotel::where('name_en', '!=', null)
-                ->where('published',true)->where('room_number', '>=', $roomnumber)
+                ->where('published',true)
+                ->where('is_active', true)->where('room_number', '>=', $roomnumber)
                 ->where('total_people', '>=', $totalpeople)
                 ->where('star', $filter)
                 ->with(['rooms.sales' => function ($query) use ($startDate,$endDate) {
@@ -341,6 +343,7 @@ class SearchController extends Controller
             $filterprice2 = $filterprice2 * $rate;
             $collection = Hotel::where('name_en', '!=', null)
                 ->where('published',true)
+                ->where('is_active', true)
                 ->where('room_number', '>=', $roomnumber)
                 ->whereBetween('rating', [ $rating1 , $rating2])
                 ->where('total_people', '>=', $totalpeople)
@@ -413,13 +416,15 @@ class SearchController extends Controller
         }
         }
 
-        $grouped = $collection->groupBy('id');
-        $allresultlenth = $grouped->count();
-        $paged_hotels = $grouped->forPage($page, 10);
+
+        $allresultlenth = $collection->count();
+        $paged_hotels = $collection->forPage($page, 10);
+
         $favorites = [];
         if($request->user()){
            $favorites = $request->user()->favorites()->pluck('hotel_id')->toArray();
         }
+
         return response()->json(array('success' => true, 'data' => $paged_hotels, 'result' => $allresultlenth,'favorites' => $favorites, 'allhotels' => $collection));
     }
 

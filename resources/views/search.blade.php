@@ -562,8 +562,8 @@
                     if (data.data.hasOwnProperty(key)) {
                     var rating = 0;
                     var finalrating = 0;
-                    if (data.data[key][0].rating != 0) {
-                        finalrating = '<i class="icon thumbs up"></i>' + parseFloat(data.data[key][0].rating).toFixed(1);
+                    if (data.data[key].rating != 0) {
+                        finalrating = '<i class="icon thumbs up"></i>' + parseFloat(data.data[key].rating).toFixed(1);
                     }
                     else {
                         finalrating = '';
@@ -571,52 +571,52 @@
 
                     var star = "";
 
-                    var times = data.data[key][0].star;
+                    var times = data.data[key].star;
                     for(var i=0; i < times; i++){
                             star += "<i class='icon yellow star'></i>";
                     }
-                    var lowest = data.data[key][0].rooms[0].price;
+                    var lowest = data.data[key].rooms[0].price;
                     var saledprice;
-                    for(var i=0; i < data.data[key][0].rooms.length; i++){
-                        tmp = data.data[key][0].rooms[i].price;
-                        if (data.data[key][0].rooms[i].sales.length > 0) {
-                            tmp = data.data[key][0].rooms[i].sales[0].price;
+                    for(var i=0; i < data.data[key].rooms.length; i++){
+                        tmp = data.data[key].rooms[i].price;
+                        if (data.data[key].rooms[i].sales.length > 0) {
+                            tmp = data.data[key].rooms[i].sales[0].price;
                         }
                         if (parseFloat(tmp) < parseFloat(lowest)) {
                         	lowest = tmp;
                         }
                     }
                     var url = '{{ route("search.hotel", "id") }}';
-                    url = url.replace('id', data.data[key][0].id);
+                    url = url.replace('id', data.data[key].id);
                     var rating = '{{ $rate }}';
                     
 
                     var star_class = '';
-                    if (data.data[key][0].star == 1) {
+                    if (data.data[key].star == 1) {
                         star_class = 'onestar';
-                    } else if (data.data[key][0].star == 2) {
+                    } else if (data.data[key].star == 2) {
                         star_class = 'twostar';
-                    } else if (data.data[key][0].star == 3) {
+                    } else if (data.data[key].star == 3) {
                         star_class = 'threestar';
-                    } else if (data.data[key][0].star == 4) {
+                    } else if (data.data[key].star == 4) {
                         star_class = 'fourstar';
-                    } else if (data.data[key][0].star == 5) {
+                    } else if (data.data[key].star == 5) {
                         star_class = 'fivestar';
                     }
                     var likedString="";
                     if('{{ Auth::check() }}'){
-                        if($.inArray(data.data[key][0].id,data.favorites) != -1){
-                            likedString = "<div class='like-heart'><a href='#' class='favorite-btn' data-id="+data.data[key][0].id+"><i class='icon heart'></i></a></div>"; 
+                        if($.inArray(data.data[key].id,data.favorites) != -1){
+                            likedString = "<div class='like-heart'><a href='#' class='favorite-btn' data-id="+data.data[key].id+"><i class='icon heart'></i></a></div>"; 
                         }else{
-                            likedString = "<div class='like-heart'><a href='#' class='favorite-btn' data-id="+data.data[key][0].id+"><i class='icon empty heart'></i></a></div>"; 
+                            likedString = "<div class='like-heart'><a href='#' class='favorite-btn' data-id="+data.data[key].id+"><i class='icon empty heart'></i></a></div>"; 
                         }
                     }
                     @if (App::isLocale('en')) {
-                    textToInsert = "<div class='list-item box' id='"+ data.data[key][0].id +"' data-id='"+ data.data[key][0].id +"'> \
+                    textToInsert = "<div class='list-item box' id='"+ data.data[key].id +"' data-id='"+ data.data[key].id +"'> \
                                         <div class='img left'> \
                                             <a href='" + url + "' style='color:white' target='_blank'>\
                                             <div class='box-border'></div>\
-                                            <img class='ui fluid image' style='max-width:100%;max-height:100%' src='" + data.data[key][0].cover_photo + "'/> \
+                                            <img class='ui fluid image' style='max-width:100%;max-height:100%' src='" + data.data[key].cover_photo + "'/> \
                                             </a>\
                                         </div>\
                                         <div class='block left'>\
@@ -631,7 +631,7 @@
                                             </div>\
                                             <div class='room-name' >\
                                                 <a href='" + url + "' style='color:white' target='_blank'>\
-                                                <h4>" + data.data[key][0].name_en + "</h4>\
+                                                <h4>" + data.data[key].name_en + "</h4>\
                                                 </a>\
                                             </div>\
                                         </div>\
@@ -646,11 +646,11 @@
                                     </div>";
                     }
                     @elseif(App::isLocale('mn')) {
-                    textToInsert = "<div class='list-item box' id='"+ data.data[key][0].id +"' data-id='"+ data.data[key][0].id +"'> \
+                    textToInsert = "<div class='list-item box' id='"+ data.data[key].id +"' data-id='"+ data.data[key].id +"'> \
                                         <div class='img left'> \
                                             <a href='" + url + "' style='color:white' target='_blank'>\
                                                 <div class='box-border'></div>\
-                                            <img class='ui fluid image' style='max-width:100%;max-height:100%' src='" + data.data[key][0].cover_photo + "'/> \
+                                            <img class='ui fluid image' style='max-width:100%;max-height:100%' src='" + data.data[key].cover_photo + "'/> \
                                             </a>\
                                         </div>\
                                         <div class='block left'>\
@@ -665,7 +665,7 @@
                                             </div>\
                                             <div class='room-name' >\
                                                 <a href='" + url + "' style='color:white' target='_blank'>\
-                                                <h4>" + data.data[key][0].name + "</h4>\
+                                                <h4>" + data.data[key].name + "</h4>\
                                                 </a>\
                                             </div>\
                                         </div>\
@@ -686,15 +686,15 @@
 
                     @if (App::isLocale('en')) {
                     var contentString = "<div style='padding:0;width:100%;margin:0;overflow: hidden;'> \
-                                            <img src='" + data.data[key][0].cover_photo + "' height='200px' style='filter:brightness(50%);width:100%;background-image: linear-gradient(180deg, rgba(0, 0, 0, .5) 0, transparent 25%, transparent 50%, rgba(0, 0, 0, .7));'>\
-                                            <div class='maptitle'>" + data.data[key][0].name_en + "</div>\
+                                            <img src='" + data.data[key].cover_photo + "' height='200px' style='filter:brightness(50%);width:100%;background-image: linear-gradient(180deg, rgba(0, 0, 0, .5) 0, transparent 25%, transparent 50%, rgba(0, 0, 0, .7));'>\
+                                            <div class='maptitle'>" + data.data[key].name_en + "</div>\
                                             <span class='mapstar'>" + star + "</span>\
                                             <div class='mapprice'>" + numeral(lowest / rating).format('0,0.00') + "$</div>\
                                         </div>";
                                                 
                     var contentString1 = "<div style='padding:0;margin:0;overflow: hidden;'> \
-                                            <img src='" + data.data[key][0].cover_photo + "' height='200px' style='filter:brightness(50%);width:100%;background-image: linear-gradient(180deg, rgba(0, 0, 0, .5) 0, transparent 25%, transparent 50%, rgba(0, 0, 0, .7));'>\
-                                            <div class='maptitle'>" + data.data[key][0].name_en + "</div>\
+                                            <img src='" + data.data[key].cover_photo + "' height='200px' style='filter:brightness(50%);width:100%;background-image: linear-gradient(180deg, rgba(0, 0, 0, .5) 0, transparent 25%, transparent 50%, rgba(0, 0, 0, .7));'>\
+                                            <div class='maptitle'>" + data.data[key].name_en + "</div>\
                                             <div class='mapprice'>" + numeral(lowest / rating ).format('0,0.00') + "$</div>\
                                             <span class='mapstar'>" + star + "</span>\
                                             <a href='" + url + "' target='_blank'>\<button class='ui button mapbutton' style='background-color:#2185D0;color:white'>{{ __('messages.Read More') }}</button></a>\
@@ -702,15 +702,15 @@
                     }
                     @elseif(App::isLocale('mn')) {
                     var contentString = "<div style='padding:0;width:100%;margin:0;overflow: hidden;'> \
-                                            <img src='" + data.data[key][0].cover_photo + "' height='200px' style='filter:brightness(50%);width:100%;background-image: linear-gradient(180deg, rgba(0, 0, 0, .5) 0, transparent 25%, transparent 50%, rgba(0, 0, 0, .7));'>\
-                                            <div class='maptitle'>" + data.data[key][0].name + "</div>\
+                                            <img src='" + data.data[key].cover_photo + "' height='200px' style='filter:brightness(50%);width:100%;background-image: linear-gradient(180deg, rgba(0, 0, 0, .5) 0, transparent 25%, transparent 50%, rgba(0, 0, 0, .7));'>\
+                                            <div class='maptitle'>" + data.data[key].name + "</div>\
                                             <span class='mapstar'>" + star + "</span>\
                                             <div class='mapprice'>" + numeral(lowest).format('0,0') + "₮</div>\
                                         </div>";
 
                     var contentString1 = "<div style='padding:0;margin:0;overflow: hidden;'> \
-                                            <img src='" + data.data[key][0].cover_photo + "' height='200px' style='filter:brightness(50%);width:100%;background-image: linear-gradient(180deg, rgba(0, 0, 0, .5) 0, transparent 25%, transparent 50%, rgba(0, 0, 0, .7));'>\
-                                            <div class='maptitle'>" + data.data[key][0].name + "</div>\
+                                            <img src='" + data.data[key].cover_photo + "' height='200px' style='filter:brightness(50%);width:100%;background-image: linear-gradient(180deg, rgba(0, 0, 0, .5) 0, transparent 25%, transparent 50%, rgba(0, 0, 0, .7));'>\
+                                            <div class='maptitle'>" + data.data[key].name + "</div>\
                                             <div class='mapprice'>" + numeral(lowest).format('0,0') + "₮</div>\
                                             <span class='mapstar'>" + star + "</span>\
                                             <a href='" + url + "' target='_blank'>\<button class='ui button mapbutton' style='background-color:#2185D0;color:white'>{{ __('messages.Read More') }}</button></a>\
@@ -735,9 +735,9 @@
                     var marker = new google.maps.Marker({
                         map: map,
                         draggable: false,
-                        id: data.data[key][0].id,
+                        id: data.data[key].id,
                         animation: google.maps.Animation.DROP,
-                        position: { lat: parseFloat(JSON.parse(data.data[key][0].location)[0]), lng: parseFloat(JSON.parse(data.data[key][0].location)[1]) },
+                        position: { lat: parseFloat(JSON.parse(data.data[key].location)[0]), lng: parseFloat(JSON.parse(data.data[key].location)[1]) },
                         icon: image,
                         optimized: false,
                         zIndex:100
