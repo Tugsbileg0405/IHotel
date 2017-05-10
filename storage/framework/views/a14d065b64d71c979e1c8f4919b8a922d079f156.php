@@ -588,6 +588,101 @@
                     var url = '<?php echo e(route("search.hotel", "id")); ?>';
                     url = url.replace('id', data.data[key][0].id);
                     var rating = '<?php echo e($rate); ?>';
+                    
+
+                    var star_class = '';
+                    if (data.data[key][0].star == 1) {
+                        star_class = 'onestar';
+                    } else if (data.data[key][0].star == 2) {
+                        star_class = 'twostar';
+                    } else if (data.data[key][0].star == 3) {
+                        star_class = 'threestar';
+                    } else if (data.data[key][0].star == 4) {
+                        star_class = 'fourstar';
+                    } else if (data.data[key][0].star == 5) {
+                        star_class = 'fivestar';
+                    }
+                    var likedString="";
+                    if('<?php echo e(Auth::check()); ?>'){
+                        if($.inArray(data.data[key][0].id,data.favorites) != -1){
+                            likedString = "<div class='like-heart'><a href='#' class='favorite-btn' data-id="+data.data[key][0].id+"><i class='icon heart'></i></a></div>"; 
+                        }else{
+                            likedString = "<div class='like-heart'><a href='#' class='favorite-btn' data-id="+data.data[key][0].id+"><i class='icon empty heart'></i></a></div>"; 
+                        }
+                    }
+                    <?php if(App::isLocale('en')): ?> {
+                    textToInsert = "<div class='list-item box' id='"+ data.data[key][0].id +"' data-id='"+ data.data[key][0].id +"'> \
+                                        <div class='img left'> \
+                                            <a href='" + url + "' style='color:white' target='_blank'>\
+                                            <div class='box-border'></div>\
+                                            <img class='ui fluid image' style='max-width:100%;max-height:100%' src='" + data.data[key][0].cover_photo + "'/> \
+                                            </a>\
+                                        </div>\
+                                        <div class='block left'>\
+                                            "+likedString+"\
+                                            <div class='review'>\
+                                                <h4><a href='#'>" + finalrating + "</a></h4>\
+                                            </div>\
+                                        </div>\
+                                        <div class='block right'>\
+                                            <div class='price'>\
+                                                <h4>" + numeral(lowest/rating).format('0,0.00') + "$</h4>\
+                                            </div>\
+                                            <div class='room-name' >\
+                                                <a href='" + url + "' style='color:white' target='_blank'>\
+                                                <h4>" + data.data[key][0].name_en + "</h4>\
+                                                </a>\
+                                            </div>\
+                                        </div>\
+                                        <p class='theme'>\
+                                            <span class='" + star_class + "'>\
+                                                " + star + "\
+                                            </span>\
+                                        </p>\
+                                        <div class='room-button'>\
+                                            <a href='" + url + "' target='_blank' class='ui blue button'><?php echo e(__('messages.Book now')); ?></a>\
+                                        </div>\
+                                    </div>";
+                    }
+                    <?php elseif(App::isLocale('mn')): ?> {
+                    textToInsert = "<div class='list-item box' id='"+ data.data[key][0].id +"' data-id='"+ data.data[key][0].id +"'> \
+                                        <div class='img left'> \
+                                            <a href='" + url + "' style='color:white' target='_blank'>\
+                                                <div class='box-border'></div>\
+                                            <img class='ui fluid image' style='max-width:100%;max-height:100%' src='" + data.data[key][0].cover_photo + "'/> \
+                                            </a>\
+                                        </div>\
+                                        <div class='block left'>\
+                                            "+likedString+"\
+                                            <div class='review'>\
+                                                <h4><a href='#'>" + finalrating + "</a></h4>\
+                                            </div>\
+                                        </div>\
+                                        <div class='block right'>\
+                                            <div class='price'>\
+                                                <h4>" + numeral(lowest).format('0,0') + "₮</h4>\
+                                            </div>\
+                                            <div class='room-name' >\
+                                                <a href='" + url + "' style='color:white' target='_blank'>\
+                                                <h4>" + data.data[key][0].name + "</h4>\
+                                                </a>\
+                                            </div>\
+                                        </div>\
+                                        <p class='theme'>\
+                                            <span class='" + star_class + "'>\
+                                                " + star + "\
+                                            </span>\
+                                        </p>\
+                                        <div class='room-button'>\
+                                            <a href='" + url + "' target='_blank' class='ui blue button'><?php echo e(__('messages.Book now')); ?></a>\
+                                        </div>\
+                                    </div>";
+                    }
+                    <?php endif; ?>
+                    }
+                    $('#searchResult').append(textToInsert);
+
+
                     <?php if(App::isLocale('en')): ?> {
                     var contentString = "<div style='padding:0;width:100%;margin:0;overflow: hidden;'> \
                                             <img src='" + data.data[key][0].cover_photo + "' height='200px' style='filter:brightness(50%);width:100%;background-image: linear-gradient(180deg, rgba(0, 0, 0, .5) 0, transparent 25%, transparent 50%, rgba(0, 0, 0, .7));'>\
@@ -686,97 +781,6 @@
                         };
                     })(marker, contentString1, infowindow1, infowindow));
 
-                    var star_class = '';
-                    if (data.data[key][0].star == 1) {
-                        star_class = 'onestar';
-                    } else if (data.data[key][0].star == 2) {
-                        star_class = 'twostar';
-                    } else if (data.data[key][0].star == 3) {
-                        star_class = 'threestar';
-                    } else if (data.data[key][0].star == 4) {
-                        star_class = 'fourstar';
-                    } else if (data.data[key][0].star == 5) {
-                        star_class = 'fivestar';
-                    }
-                    var likedString="";
-                    if('<?php echo e(Auth::check()); ?>'){
-                        if($.inArray(data.data[key][0].id,data.favorites) != -1){
-                            likedString = "<div class='like-heart'><a href='#' class='favorite-btn' data-id="+data.data[key][0].id+"><i class='icon heart'></i></a></div>"; 
-                        }else{
-                            likedString = "<div class='like-heart'><a href='#' class='favorite-btn' data-id="+data.data[key][0].id+"><i class='icon empty heart'></i></a></div>"; 
-                        }
-                    }
-                    <?php if(App::isLocale('en')): ?> {
-                    textToInsert = "<div class='list-item box' id='"+ data.data[key][0].id +"' data-id='"+ data.data[key][0].id +"'> \
-                                        <div class='img left'> \
-                                            <a href='" + url + "' style='color:white' target='_blank'>\
-                                            <div class='box-border'></div>\
-                                            <img class='ui fluid image' style='max-width:100%;max-height:100%' src='" + data.data[key][0].cover_photo + "'/> \
-                                            </a>\
-                                        </div>\
-                                        <div class='block left'>\
-                                            "+likedString+"\
-                                            <div class='review'>\
-                                                <h4><a href='#'>" + finalrating + "</a></h4>\
-                                            </div>\
-                                        </div>\
-                                        <div class='block right'>\
-                                            <div class='price'>\
-                                                <h4>" + numeral(lowest/rating).format('0,0.00') + "$</h4>\
-                                            </div>\
-                                            <div class='room-name' >\
-                                                <a href='" + url + "' style='color:white' target='_blank'>\
-                                                <h4>" + data.data[key][0].name_en + "</h4>\
-                                                </a>\
-                                            </div>\
-                                        </div>\
-                                        <p class='theme'>\
-                                            <span class='" + star_class + "'>\
-                                                " + star + "\
-                                            </span>\
-                                        </p>\
-                                        <div class='room-button'>\
-                                            <a href='" + url + "' target='_blank' class='ui blue button'><?php echo e(__('messages.Book now')); ?></a>\
-                                        </div>\
-                                    </div>";
-                    }
-                    <?php elseif(App::isLocale('mn')): ?> {
-                    textToInsert = "<div class='list-item box' id='"+ data.data[key][0].id +"' data-id='"+ data.data[key][0].id +"'> \
-                                        <div class='img left'> \
-                                            <a href='" + url + "' style='color:white' target='_blank'>\
-                                                <div class='box-border'></div>\
-                                            <img class='ui fluid image' style='max-width:100%;max-height:100%' src='" + data.data[key][0].cover_photo + "'/> \
-                                            </a>\
-                                        </div>\
-                                        <div class='block left'>\
-                                            "+likedString+"\
-                                            <div class='review'>\
-                                                <h4><a href='#'>" + finalrating + "</a></h4>\
-                                            </div>\
-                                        </div>\
-                                        <div class='block right'>\
-                                            <div class='price'>\
-                                                <h4>" + numeral(lowest).format('0,0') + "₮</h4>\
-                                            </div>\
-                                            <div class='room-name' >\
-                                                <a href='" + url + "' style='color:white' target='_blank'>\
-                                                <h4>" + data.data[key][0].name + "</h4>\
-                                                </a>\
-                                            </div>\
-                                        </div>\
-                                        <p class='theme'>\
-                                            <span class='" + star_class + "'>\
-                                                " + star + "\
-                                            </span>\
-                                        </p>\
-                                        <div class='room-button'>\
-                                            <a href='" + url + "' target='_blank' class='ui blue button'><?php echo e(__('messages.Book now')); ?></a>\
-                                        </div>\
-                                    </div>";
-                    }
-                    <?php endif; ?>
-                    }
-                    $('#searchResult').append(textToInsert);
                     $('.list-item').mouseover(function(){
                         for(var i = 0; i < markers.length; i++){
                         if($(this).data('id') == markers[i].id){
