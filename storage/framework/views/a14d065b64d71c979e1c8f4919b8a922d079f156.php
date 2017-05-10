@@ -14,7 +14,11 @@
 								<div class="local example">
 									<div class="ui search searhlocation">
 										<div class="ui fluid left icon input datalocation">
+                                            <?php if(App::isLocale('mn')): ?>
 											<input class="prompt" type="text" id="searchplace" data-content="<?php echo e(__('messages.Write your destination of travel')); ?>" placeholder="<?php echo e(__('messages.Destination')); ?>">
+                                            <?php else: ?>
+                                            <input class="prompt" disabled type="text" placeholder="<?php echo e(__('messages.Destination')); ?>">
+                                            <?php endif; ?>
 											<i class="marker icon"></i>
 										</div>
 										<div class="results"></div>

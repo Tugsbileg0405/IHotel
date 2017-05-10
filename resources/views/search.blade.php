@@ -14,7 +14,11 @@
 								<div class="local example">
 									<div class="ui search searhlocation">
 										<div class="ui fluid left icon input datalocation">
+                                            @If(App::isLocale('mn'))
 											<input class="prompt" type="text" id="searchplace" data-content="{{ __('messages.Write your destination of travel') }}" placeholder="{{ __('messages.Destination') }}">
+                                            @else
+                                            <input class="prompt" disabled type="text" placeholder="{{ __('messages.Destination') }}">
+                                            @endif
 											<i class="marker icon"></i>
 										</div>
 										<div class="results"></div>
