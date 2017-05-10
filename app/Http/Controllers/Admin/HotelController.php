@@ -81,7 +81,7 @@ class HotelController extends Controller
     {
         $hotel = \App\Hotel::findOrFail($id);
         $hotel->priority = $request->get('priority');
-        $hotel->published = $request->get('published');
+        $hotel->is_active = $request->get('is_active');
         $hotel->sale = $request->get('sale');
         $hotel->save();
 

@@ -41,6 +41,7 @@
 							<th>Өрөөний тоо</th>
 							<th>Од</th>
 							<th>Эрэмбэ</th>
+							<th>Идэвхитэй эсэх</th>
 							<th></th>
 							<th></th>
 							<th></th>
@@ -59,6 +60,7 @@
 									<?php endfor; ?>
 								</td>
 								<td><?php echo e($hotel->priority); ?></td>
+								<td><?php echo e($hotel->is_active ? 'Тийм' : 'Үгүй'); ?></td>
 								<td>
 									<a class="ui icon button open-EditModal" data-key="<?php echo e($key); ?>">
 										<i class="pencil icon"></i>
@@ -118,7 +120,7 @@
 			</div>
 		    <div class="required field">
 		    	<label>Идэвхитэй эсэх</label>
-				<select class="ui dropdown" name="published">
+				<select class="ui dropdown" name="is_active">
 					<option value="1">Тийм</option>
 					<option value="0">Үгүй</option>
 				</select>
@@ -147,11 +149,11 @@
 		$('#edit-hotel-form').find('.ui.header').html(hotels.data[key].name);
 		$('#edit-hotel-form').attr('action', '<?php echo e(url("profile/hotel")); ?>/' + hotels.data[key].id);
 		$('#edit-hotel-form').find('[name=priority]').val(hotels.data[key].priority);
-		if (hotels.data[key].published == 1) {
-			$('#edit-hotel-form').find('[name=published]').dropdown('set selected', '1');
+		if (hotels.data[key].is_active == 1) {
+			$('#edit-hotel-form').find('[name=is_active]').dropdown('set selected', '1');
 		}
 		else {
-			$('#edit-hotel-form').find('[name=published]').dropdown('set selected', '0');
+			$('#edit-hotel-form').find('[name=is_active]').dropdown('set selected', '0');
 		}
 		if (hotels.data[key].sale == 1) {
 			$('#edit-hotel-form').find('[name=sale]').dropdown('set selected', '1');
@@ -186,31 +188,29 @@
 	    	$('.ui.form button').addClass('loading disabled');
 	    }
 	});
-	$(document).ready(function() {
-	    $('#search-form').submit(function(e) {
-			$('#search-form button').addClass('loading disabled');
-	        $.ajax({
-	            url: $(this).attr('action'),
-	            type: $(this).attr('method'),
-	            data: $(this).serialize(),
-	        }).done(function(data) {
-				$('#search-form button').removeClass('loading disabled');
-	            $('#result').html(data);
-	        }).fail(function() {
-				$('#search-form button').removeClass('loading disabled');
-	            $('#result').html('<div class="ui warning message">Алдаа гарлаа</div>');
-	        });
-	        e.preventDefault(); 
-	    });
-	    $('#result').on('click', '.open-DeleteModal', function() {
-			var id = $(this).data('id');
-			$('#delete-modal').modal({
-				onApprove : function() {
-					$('#delete-modal').find('form').attr('action', "<?php echo e(url('profile/hotel')); ?>/" + id);
-					$('#delete-modal').find('form').submit();
-				}
-			}).modal('show');
-		});
+    $('#search-form').submit(function(e) {
+		$('#search-form button').addClass('loading disabled');
+        $.ajax({
+            url: $(this).attr('action'),
+            type: $(this).attr('method'),
+            data: $(this).serialize(),
+        }).done(function(data) {
+			$('#search-form button').removeClass('loading disabled');
+            $('#result').html(data);
+        }).fail(function() {
+			$('#search-form button').removeClass('loading disabled');
+            $('#result').html('<div class="ui warning message">Алдаа гарлаа</div>');
+        });
+        e.preventDefault(); 
+    });
+    $('#result').on('click', '.open-DeleteModal', function() {
+		var id = $(this).data('id');
+		$('#delete-modal').modal({
+			onApprove : function() {
+				$('#delete-modal').find('form').attr('action', "<?php echo e(url('profile/hotel')); ?>/" + id);
+				$('#delete-modal').find('form').submit();
+			}
+		}).modal('show');
 	});
 </script>
 <?php $__env->stopPush(); ?>

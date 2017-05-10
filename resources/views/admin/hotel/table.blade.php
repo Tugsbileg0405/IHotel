@@ -41,6 +41,7 @@
 							<th>Өрөөний тоо</th>
 							<th>Од</th>
 							<th>Эрэмбэ</th>
+							<th>Идэвхитэй эсэх</th>
 							<th></th>
 							<th></th>
 							<th></th>
@@ -59,6 +60,7 @@
 									@endfor
 								</td>
 								<td>{{ $hotel->priority }}</td>
+								<td>{{ $hotel->is_active ? 'Тийм' : 'Үгүй' }}</td>
 								<td>
 									<a class="ui icon button open-EditModal" data-key="{{ $key }}">
 										<i class="pencil icon"></i>
@@ -113,7 +115,7 @@
 			</div>
 		    <div class="required field">
 		    	<label>Идэвхитэй эсэх</label>
-				<select class="ui dropdown" name="published">
+				<select class="ui dropdown" name="is_active">
 					<option value="1">Тийм</option>
 					<option value="0">Үгүй</option>
 				</select>
@@ -142,11 +144,11 @@
 		$('#edit-hotel-form').find('.ui.header').html(hotels.data[key].name);
 		$('#edit-hotel-form').attr('action', '{{ url("profile/hotel") }}/' + hotels.data[key].id);
 		$('#edit-hotel-form').find('[name=priority]').val(hotels.data[key].priority);
-		if (hotels.data[key].published == 1) {
-			$('#edit-hotel-form').find('[name=published]').dropdown('set selected', '1');
+		if (hotels.data[key].is_active == 1) {
+			$('#edit-hotel-form').find('[name=is_active]').dropdown('set selected', '1');
 		}
 		else {
-			$('#edit-hotel-form').find('[name=published]').dropdown('set selected', '0');
+			$('#edit-hotel-form').find('[name=is_active]').dropdown('set selected', '0');
 		}
 		if (hotels.data[key].sale == 1) {
 			$('#edit-hotel-form').find('[name=sale]').dropdown('set selected', '1');

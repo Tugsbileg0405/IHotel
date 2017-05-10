@@ -76,6 +76,13 @@ class HotelController extends Controller
         if ($hotel->step < 2) {
             $hotel->step = 2;
         }
+        else {
+            if ($hotel->step > 4) {
+                if ($hotel->rooms->count() != $hotel->room_number) {
+                    $hotel->step = 4;
+                }
+            }
+        }
         $hotel->save();
 
         if ($hotel->published) {
@@ -410,6 +417,7 @@ class HotelController extends Controller
         }
         return redirect('hotel/contract/'.$hotel->id);
     }
+
     public function createContract($id)
     {
         $terms = \App\Term::get();

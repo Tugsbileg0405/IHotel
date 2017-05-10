@@ -20,7 +20,6 @@ class SearchController extends Controller
     // =========================================================================
     public function index(Request $request)
     {
-        $input = $request->all();
         $roomnumber = $request->roomnumber;
         $startDate = $request->startdate;
         $endDate = $request->enddate;
@@ -31,6 +30,7 @@ class SearchController extends Controller
         $request->session()->put('endDate', $endDate);
         $request->session()->put('peoplenumber', $peoplenumber);
         $request->session()->put('place', $place);
+        
         return 'success';
     }
 
@@ -71,7 +71,7 @@ class SearchController extends Controller
             'maxprice' => $rooms,
             'hotels' => $hotels,
             'rate' => $rate,
-            ]);
+        ]);
     }
 
     // =========================================================================

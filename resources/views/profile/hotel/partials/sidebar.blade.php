@@ -33,7 +33,7 @@
 		<a class="item" href="{{ url('hotel/contract', $hotel->id) }}">
 	        Гэрээ хийх
 	    </a>
-    @elseif (!$hotel->co_day)
+    @elseif (!$hotel->co_day AND !$hotel->published)
 		<a class="item disabled">
 	        Гэрээ хийх
 	    </a>
