@@ -8,8 +8,15 @@
 			</div>
 			<nav class="main-nav cd-main-nav-wrapper">
 				<ul class="cd-main-nav">
+					<?php if(Auth::user()->isAdmin()): ?>
+						<li>
+							<a href="<?php echo e(url('profile/hotel')); ?>">
+								<i class="chevron left icon"></i>Буудлын жагсаалт
+							</a>
+						</li>
+					<?php endif; ?>
 					<li>
-						<a href="#">
+						<a href="<?php echo e(url('admin/hotel', $hotel->id)); ?>">
 							<i class="user icon"></i><?php echo e($hotel->name); ?>
 
 						</a>

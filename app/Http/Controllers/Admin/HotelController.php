@@ -67,11 +67,7 @@ class HotelController extends Controller
      */
     public function edit($id)
     {
-        $hotel = \App\Hotel::findOrFail($id);
-
-        return view('admin.hotel.update', [
-            'hotel' => $hotel,
-        ]);
+        //
     }
 
     /**

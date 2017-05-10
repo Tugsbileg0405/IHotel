@@ -8,8 +8,15 @@
 			</div>
 			<nav class="main-nav cd-main-nav-wrapper">
 				<ul class="cd-main-nav">
+					@if (Auth::user()->isAdmin())
+						<li>
+							<a href="{{ url('profile/hotel') }}">
+								<i class="chevron left icon"></i>Буудлын жагсаалт
+							</a>
+						</li>
+					@endif
 					<li>
-						<a href="#">
+						<a href="{{ url('admin/hotel', $hotel->id) }}">
 							<i class="user icon"></i>{{ $hotel->name }}
 						</a>
 					</li>

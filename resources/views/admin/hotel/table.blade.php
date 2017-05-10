@@ -47,7 +47,7 @@
 						</tr>
 					</thead>
 					<tbody>
-						@foreach ($hotels as $hotel)
+						@foreach ($hotels as $key => $hotel)
 							<tr>
 								<td>{{ $hotel->id }}</td>
 								<td>{{ $hotel->name }}</td>
@@ -60,7 +60,7 @@
 								</td>
 								<td>{{ $hotel->priority }}</td>
 								<td>
-									<a class="ui icon button" href="{{ url('profile/hotel/'.$hotel->id.'/edit') }}">
+									<a class="ui icon button open-EditModal" data-key="{{ $key }}">
 										<i class="pencil icon"></i>
 									</a>
 								</td>
@@ -81,28 +81,106 @@
 				{{ $hotels->links() }}
 			</div>
 		</div>
-		<div id="delete-modal" class="ui modal">
-			<div class="header">Устгах</div>
-			<div class="content">
-				<p>Та үүнийг устгахыг зөвшөөрч байна уу?</p>
+	</div>
+</div>
+<div id="delete-modal" class="ui modal">
+	<div class="header">Устгах</div>
+	<div class="content">
+		<p>Та үүнийг устгахыг зөвшөөрч байна уу?</p>
+	</div>
+	<div class="actions">
+		<a class="ui red negative button">Үгүй</a>
+		<a class="ui positive right labeled icon button">
+			<i class="checkmark icon"></i>Тийм
+		</a>
+		<form action="" method="POST">
+			{{ csrf_field() }}
+			{{ method_field('DELETE') }}
+		</form>
+	</div>
+</div>
+<div id="edit-modal" class="ui modal">
+	<div class="header">Буудал засах</div>
+	<div class="content">
+		<form class="ui form" id="edit-hotel-form" action="" method="POST">
+			{{ csrf_field() }}
+			{{ method_field('PUT') }}
+			<h4 class="ui header">Буудал засах</h4>
+			<div class="ui divider"></div>
+		    <div class="required field">
+		    	<label>Эрэмбэ</label>
+				<input type="text" name="priority">
 			</div>
-			<div class="actions">
-				<a class="ui red negative button">Үгүй</a>
-				<a class="ui positive right labeled icon button">
-					<i class="checkmark icon"></i>Тийм
-				</a>
-				<form action="" method="POST">
-					{{ csrf_field() }}
-					{{ method_field('DELETE') }}
-				</form>
+		    <div class="required field">
+		    	<label>Идэвхитэй эсэх</label>
+				<select class="ui dropdown" name="published">
+					<option value="1">Тийм</option>
+					<option value="0">Үгүй</option>
+				</select>
 			</div>
-		</div>
+		    <div class="required field">
+		    	<label>Хямдралтай эсэх</label>
+				<select class="ui dropdown" name="sale">
+					<option value="1">Тийм</option>
+					<option value="0">Үгүй</option>
+				</select>
+			</div>
+			<div class="field">
+				<button class="ui button primary" type="submit">Хадгалах</button>
+			</div>
+		</form>
 	</div>
 </div>
 @endsection
 
 @push('script')
 <script type="text/javascript">
+	$('.open-EditModal').click(function(e) {
+		var hotels = <?php echo json_encode($hotels) ?>;
+		var key = $(this).data('key');
+		$('#edit-modal').modal('show');
+		$('#edit-hotel-form').find('.ui.header').html(hotels.data[key].name);
+		$('#edit-hotel-form').attr('action', '{{ url("profile/hotel") }}/' + hotels.data[key].id);
+		$('#edit-hotel-form').find('[name=priority]').val(hotels.data[key].priority);
+		if (hotels.data[key].published) {
+			$('#edit-hotel-form').find('[name=published]').dropdown('set selected', '1');
+		}
+		else {
+			$('#edit-hotel-form').find('[name=published]').dropdown('set selected', '0');
+		}
+		if (hotels.data[key].sale) {
+			$('#edit-hotel-form').find('[name=sale]').dropdown('set selected', '1');
+		}
+		else {
+			$('#edit-hotel-form').find('[name=sale]').dropdown('set selected', '0');
+		}
+		e.preventDefault();
+	});
+	$('#edit-hotel-form').form({
+	    inline: true,
+	    fields: {
+	        priority: {
+	            identifier: 'priority',
+	            rules: [
+	                {
+		                type   : 'empty',
+		                prompt : 'Эрэмбэ оруулна уу'
+	                },
+	                {
+		                type   : 'integer',
+		                prompt : 'Эрэмбэ зөвхөн тоо оруулна уу'
+	                },
+	                {
+	                    type   : 'maxLength[10]',
+	                    prompt : 'Хэтэрхий олон тэмдэгт оруулсан байана'
+	                }
+	            ]
+	        },
+	    },
+	    onSuccess: function() {
+	    	$('.ui.form button').addClass('loading disabled');
+	    }
+	});
 	$(document).ready(function() {
 	    $('#search-form').submit(function(e) {
 			$('#search-form button').addClass('loading disabled');

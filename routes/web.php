@@ -158,7 +158,7 @@ Route::group(['middleware' => 'locale'], function() {
 		Route::put('option', 'OptionController@update');
 
 		Route::resource('hotel', 'HotelController', ['only' => [
-			'index', 'destroy', 'edit', 'update',
+			'index', 'destroy', 'update',
 		]]);
 		Route::resource('order', 'OrderController', ['except' => [
 			'create', 'store', 'show',
