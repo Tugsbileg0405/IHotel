@@ -89,6 +89,7 @@ class PostController extends Controller
     public function destroy($id)
     {
         $post = Post::findOrFail($id);
+        $post->comments()->delete();
         $post->delete();
 
         return redirect('profile/post');

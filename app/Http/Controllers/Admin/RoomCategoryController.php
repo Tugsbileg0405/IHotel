@@ -101,7 +101,6 @@ class RoomCategoryController extends Controller
     public function destroy($id)
     {
         $category = RoomCategory::findOrFail($id);
-        $category->rooms()->delete();
         $category->delete();
 
         return redirect('profile/roomcategory');

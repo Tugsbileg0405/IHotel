@@ -80,10 +80,7 @@
 		<div class="required field">
 			<label>3 үгт хаяг (what3words)</label>
 			<input type="text" value="{{ $hotel->what3words }}" name="what3words" id="what3words">
-		</div>
-		<div class="required field">
-			<label>3 үгт хаяг (what3words english)</label>
-			<input type="text" value="saving.masts.pile" name="what3words_en" id="what3words_en">
+			<input type="hidden" value="saving.masts.pile" name="what3words_en" id="what3words_en">
 		</div>
 		<div class="ui right floated buttons">
 			<button class="ui primary button" type="submit">

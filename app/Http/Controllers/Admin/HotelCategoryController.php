@@ -101,7 +101,6 @@ class HotelCategoryController extends Controller
     public function destroy($id)
     {
         $category = HotelCategory::findOrFail($id);
-        $category->hotels()->delete();
         $category->delete();
 
         return redirect('profile/hotelcategory');
