@@ -254,6 +254,7 @@
 		},
 		submitHandler: function(form) {
 			$('#submitOrder').addClass('loading disabled');
+			var isValid = false;
 			$('.my-custom-class').validateCreditCard(function(result) {
 				var myCard = $('#my-card');
 				var expiryMonth = myCard.CardJs('expiryMonth');
@@ -271,9 +272,12 @@
 					$('.error-msg').html('');
 					$('.expired_year').val(expiryYear);
 					$('.expired_month').val(expiryMonth);
-					form.submit();
+					isValid = true;
 				}
 			});
+			if (isValid) {
+				form.submit();
+			}
 		}
 	});
 	if($('#terms').is(':checked')){
