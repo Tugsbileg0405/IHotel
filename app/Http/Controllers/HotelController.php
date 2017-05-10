@@ -207,14 +207,12 @@ class HotelController extends Controller
         $room->bed_number = $request->get('bed_number');
         $room->people_number = $request->get('people_number');
         $room->price = $request->get('price');
-        $room->size = $request->get('size');
-        $room->introduction = $request->get('introduction');
-        $room->photos = serialize($request->get('photos'));
         $room->total_people = $request->get('people_number') * $request->get('number');
         $hotel = \App\Hotel::findorfail($id);
         $hotel->rooms()->save($room);
         $hotel->total_people += $room->total_people;
         $hotel->save();
+        
         return back();
     }
 
@@ -229,9 +227,6 @@ class HotelController extends Controller
         $room->bed_number = $request->get('bed_number');
         $room->people_number = $request->get('people_number');
         $room->price = $request->get('price');
-        $room->size = $request->get('size');
-        $room->introduction = $request->get('introduction');
-        $room->photos = serialize($request->get('photos'));
         $room->total_people = $request->get('people_number') * $request->get('number');
         $room->save();
 
