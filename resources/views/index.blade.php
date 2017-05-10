@@ -21,13 +21,13 @@
 				<a class="item active" data-tab="hotel">
 					<i class="hotel icon"></i>{{ __('messages.Hotel') }}
 				</a>
-				<a href="{{ url('aspac2017') }}" class="item tab-aspac">
+				<a href="{{ url('aspac2017') }}" class="item tab-travel">
 					<i class="world icon"></i>JCI ASPAC {{ date('Y') }}
 				</a>
 				<a href="https://www.sixt.com/php/reservation" target="_blance" class="item">
 					<i class="car icon"></i>{{ __('messages.Rent a car') }}
 				</a>
-				<a href="{{ url('posts') }}" class="item tab-travel">
+				<a href="{{ url('posts') }}" class="item tab-aspac">
 					<i class="plane icon"></i>{{ __('messages.Travel Inspiration') }}
 				</a>
 			</div>
