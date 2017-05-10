@@ -694,11 +694,13 @@
                     } else if (data.data[key][0].star == 5) {
                         star_class = 'fivestar';
                     }
-                    var likedString;
-                    if($.inArray(data.data[key][0].id,data.favorites) != -1){
-                        likedString = "<a href='#' class='favorite-btn' data-id="+data.data[key][0].id+"><i class='icon heart'></i></a>"; 
-                    }else{
-                        likedString = "<a href='#' class='favorite-btn' data-id="+data.data[key][0].id+"><i class='icon empty heart'></i></a>"; 
+                    var likedString="";
+                    if('{{ Auth::check() }}'){
+                        if($.inArray(data.data[key][0].id,data.favorites) != -1){
+                            likedString = "<div class='like-heart'><a href='#' class='favorite-btn' data-id="+data.data[key][0].id+"><i class='icon heart'></i></a></div>"; 
+                        }else{
+                            likedString = "<div class='like-heart'><a href='#' class='favorite-btn' data-id="+data.data[key][0].id+"><i class='icon empty heart'></i></a></div>"; 
+                        }
                     }
                     @if (App::isLocale('en')) {
                     textToInsert = "<div class='list-item box' id='"+ data.data[key][0].id +"' data-id='"+ data.data[key][0].id +"'> \
@@ -709,9 +711,7 @@
                                             </a>\
                                         </div>\
                                         <div class='block left'>\
-                                            <div class='like-heart'>\
-                                                "+likedString+"\
-                                            </div>\
+                                            "+likedString+"\
                                             <div class='review'>\
                                                 <h4><a href='#'>" + finalrating + "</a></h4>\
                                             </div>\
@@ -745,9 +745,7 @@
                                             </a>\
                                         </div>\
                                         <div class='block left'>\
-                                            <div class='like-heart'>\
-                                                "+likedString+"\
-                                                </div>\
+                                            "+likedString+"\
                                             <div class='review'>\
                                                 <h4><a href='#'>" + finalrating + "</a></h4>\
                                             </div>\
@@ -854,7 +852,7 @@
                             url = url.replace('id', el.id);
                             var rating = '{{ $rate }}';
                             @if (App::isLocale('en')) {
-                            var contentString = "<div style='padding:0;width:100%;margin:0;overflow: hidden;'> \
+                            var contentString = "<div setyle='padding:0;width:100%;margin:0;overflow: hidden;'> \
                                                     <img src='" + el.cover_photo + "' height='200px' style='filter:brightness(50%);width:100%;background-image: linear-gradient(180deg, rgba(0, 0, 0, .5) 0, transparent 25%, transparent 50%, rgba(0, 0, 0, .7));'>\
                                                     <div class='maptitle'>" + el.name_en + "</div>\
                                                     <span class='mapstar'>" + star + "</span>\

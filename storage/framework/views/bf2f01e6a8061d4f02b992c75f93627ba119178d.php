@@ -20,7 +20,7 @@
 					<i class="hotel icon"></i><?php echo e(__('messages.Hotel')); ?>
 
 				</a>
-				<a href="<?php echo e(url('aspac2017')); ?>" class="item tab-aspac">
+				<a href="<?php echo e(url('aspac2017')); ?>" class="item tab-travel">
 					<i class="world icon"></i>JCI ASPAC <?php echo e(date('Y')); ?>
 
 				</a>
@@ -28,7 +28,7 @@
 					<i class="car icon"></i><?php echo e(__('messages.Rent a car')); ?>
 
 				</a>
-				<a href="<?php echo e(url('posts')); ?>" class="item tab-travel">
+				<a href="<?php echo e(url('posts')); ?>" class="item tab-aspac">
 					<i class="plane icon"></i><?php echo e(__('messages.Travel Inspiration')); ?>
 
 				</a>
@@ -556,7 +556,16 @@
 					}
 				});
 			<?php elseif(App::isLocale('en')): ?> 
-				window.location = "<?php echo e(URL::to('aspac2017')); ?>";
+				$.get('search?roomnumber=' + roomNumber + '&peoplenumber=' + people + '&startdate=' + startDate + '&enddate=' + endDate + '&place=' + searchPlace)
+				.success(function (data) {
+					window.location = "<?php echo e(URL::to('aspac2017')); ?>";
+				})
+				.error(function(jqXHR, textStatus, errorThrown){
+					if (textStatus == 'error'){
+							alert(errorThrown);
+					}
+				});
+				
 			<?php endif; ?>
 		});
 
