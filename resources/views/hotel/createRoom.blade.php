@@ -12,7 +12,7 @@
 				{{ csrf_field() }}
 				<h6 class="ui horizontal header divider ihotel-title">Өрөөний товч мэдээлэл</h6>
 				@if ($total_room_number > $room_number)
-					<div class="ui yellow message">Та {{ $total_room_number -  $room_number }} өрөө бүртгэх боломжтой байна</div>
+					<div class="ui yellow message">Та {{ $total_room_number -  $room_number }} өрөө бүртгэх шаарлагатай</div>
 				@elseif ($total_room_number < $room_number)
 					<div class="ui yellow message">Та {{ $room_number - $total_room_number }} өрөө илүү бүртгэсэн байна</div>
 				@endif
