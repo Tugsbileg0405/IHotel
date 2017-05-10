@@ -217,7 +217,7 @@
                 var limit = $('#result').height() - $('.search-result').offset().top ;
                 return limit;
             },
-            zIndex: 999,
+            zIndex: 10,
         });
         $('.search-google-map').trigger('resize');
     });
@@ -575,15 +575,16 @@
                     for(var i=0; i < times; i++){
                             star += "<i class='icon yellow star'></i>";
                     }
-                    var lowest = Number.POSITIVE_INFINITY;
+                    var lowest = data.data[key][0].rooms[0].price;
                     var saledprice;
                     for(var i=0; i < data.data[key][0].rooms.length; i++){
                         tmp = data.data[key][0].rooms[i].price;
-                        if(data.data[key][0].rooms[i].sales.length > 0){
-                                saledprice = data.data[key][0].rooms[i].sales[0].price;
-                                lowest = saledprice;
+                        if (data.data[key][0].rooms[i].sales.length > 0) {
+                            tmp = data.data[key][0].rooms[i].sales[0].price;
                         }
-                        if (tmp < lowest) lowest = tmp;
+                        if (parseFloat(tmp) < parseFloat(lowest)) {
+                        	lowest = tmp;
+                        }
                     }
                     var url = '<?php echo e(route("search.hotel", "id")); ?>';
                     url = url.replace('id', data.data[key][0].id);
@@ -846,15 +847,16 @@
                             for(var i=0; i < times; i++){
                                     star += "<i class='icon yellow star'></i>";
                             }
-                            var lowest = Number.POSITIVE_INFINITY;
+                            var lowest = el.rooms[0].price;
                             var saledprice;
                             for(var i=0; i < el.rooms.length; i++){
                                 tmp = el.rooms[i].price;
                                 if(el.rooms[i].sales.length > 0){
-                                        saledprice = el.rooms[i].sales[0].price;
-                                        lowest = saledprice;
+                                        tmp = el.rooms[i].sales[0].price;
                                 }
-                                if (tmp < lowest) lowest = tmp;
+                                if (parseFloat(tmp) < parseFloat(lowest)) {
+                                	lowest = tmp;
+                                }
                             }
                             var url = '<?php echo e(route("search.hotel", "id")); ?>';
                             url = url.replace('id', el.id);

@@ -4868,12 +4868,11 @@ h6.ui.right.floated.header {
 .price {
     position: relative;
     bottom: 255px;
-    width: 100px;
     margin-left: 10px;
     text-align: center;
     background: #d01919;
     padding: 10px;
-    max-width: 100px;
+    max-width: 130px;
 }
 
 .review {

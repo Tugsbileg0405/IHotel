@@ -522,37 +522,24 @@
 	
 		$("#searchButton").click(function(){
 			$('#searchButton').addClass('loading');
-			@if (App::isLocale('mn')) 
-				if(!people){
-					people = 2;
+			if(!people){
+				people = 2;
+			}
+			$.ajaxSetup({
+			headers: {
+				'X-CSRF-TOKEN': $('meta[name="_token"]').attr('content')
+			}
+			})
+			searchPlace = $('#searchplace').val();
+			$.get('search?roomnumber=' + roomNumber + '&peoplenumber=' + people + '&startdate=' + startDate + '&enddate=' + endDate + '&place=' + searchPlace)
+			.success(function (data) {
+				window.location = "{{URL::to('searchresult')}}";
+			})
+			.error(function(jqXHR, textStatus, errorThrown){
+				if (textStatus == 'error'){
+						alert(errorThrown);
 				}
-				$.ajaxSetup({
-				headers: {
-					'X-CSRF-TOKEN': $('meta[name="_token"]').attr('content')
-				}
-				})
-				searchPlace = $('#searchplace').val();
-				$.get('search?roomnumber=' + roomNumber + '&peoplenumber=' + people + '&startdate=' + startDate + '&enddate=' + endDate + '&place=' + searchPlace)
-				.success(function (data) {
-					window.location = "{{URL::to('searchresult')}}";
-				})
-				.error(function(jqXHR, textStatus, errorThrown){
-					if (textStatus == 'error'){
-							alert(errorThrown);
-					}
-				});
-			@elseif (App::isLocale('en')) 
-				$.get('search?roomnumber=' + roomNumber + '&peoplenumber=' + people + '&startdate=' + startDate + '&enddate=' + endDate + '&place=' + searchPlace)
-				.success(function (data) {
-					window.location = "{{URL::to('aspac2017')}}";
-				})
-				.error(function(jqXHR, textStatus, errorThrown){
-					if (textStatus == 'error'){
-							alert(errorThrown);
-					}
-				});
-				
-			@endif
+			});
 		});
 
     

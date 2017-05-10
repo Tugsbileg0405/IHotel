@@ -280,11 +280,17 @@ class AppController extends Controller
     {
         \Session::put('locale', 'en');
         \App::setLocale('en');
+        
         $startDate = Carbon::parse('2017-06-08')->format('m/d/Y');
         $endDate = Carbon::parse('2017-06-12')->format('m/d/Y');
 		$s_roNum = 1;
         $p_Num = 1;
 		$place = $request->session()->get('place');
+        $request->session()->put('roomnumber', $s_roNum);
+        $request->session()->put('startDate', $startDate);
+        $request->session()->put('endDate', $endDate);
+        $request->session()->put('peoplenumber', $p_Num);
+        $request->session()->put('place', $place);
         $hotels = Hotel::with('rooms')->get();
         $hotel_id = $request->session()->get('hotel_id');
         $rate = Option::find(7)->value;
