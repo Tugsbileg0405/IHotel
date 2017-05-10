@@ -135,7 +135,6 @@
 
 @push('script')
 <script type="text/javascript">
-
     $('#result').on('click', '.open-EditModal', function(e) {
 		var hotels = <?php echo json_encode($hotels) ?>;
 		var key = $(this).data('key');
@@ -182,31 +181,29 @@
 	    	$('.ui.form button').addClass('loading disabled');
 	    }
 	});
-	$(document).ready(function() {
-	    $('#search-form').submit(function(e) {
-			$('#search-form button').addClass('loading disabled');
-	        $.ajax({
-	            url: $(this).attr('action'),
-	            type: $(this).attr('method'),
-	            data: $(this).serialize(),
-	        }).done(function(data) {
-				$('#search-form button').removeClass('loading disabled');
-	            $('#result').html(data);
-	        }).fail(function() {
-				$('#search-form button').removeClass('loading disabled');
-	            $('#result').html('<div class="ui warning message">Алдаа гарлаа</div>');
-	        });
-	        e.preventDefault(); 
-	    });
-	    $('#result').on('click', '.open-DeleteModal', function() {
-			var id = $(this).data('id');
-			$('#delete-modal').modal({
-				onApprove : function() {
-					$('#delete-modal').find('form').attr('action', "{{ url('profile/hotel')}}/" + id);
-					$('#delete-modal').find('form').submit();
-				}
-			}).modal('show');
-		});
+    $('#search-form').submit(function(e) {
+		$('#search-form button').addClass('loading disabled');
+        $.ajax({
+            url: $(this).attr('action'),
+            type: $(this).attr('method'),
+            data: $(this).serialize(),
+        }).done(function(data) {
+			$('#search-form button').removeClass('loading disabled');
+            $('#result').html(data);
+        }).fail(function() {
+			$('#search-form button').removeClass('loading disabled');
+            $('#result').html('<div class="ui warning message">Алдаа гарлаа</div>');
+        });
+        e.preventDefault(); 
+    });
+    $('#result').on('click', '.open-DeleteModal', function() {
+		var id = $(this).data('id');
+		$('#delete-modal').modal({
+			onApprove : function() {
+				$('#delete-modal').find('form').attr('action', "{{ url('profile/hotel')}}/" + id);
+				$('#delete-modal').find('form').submit();
+			}
+		}).modal('show');
 	});
 </script>
 @endpush
