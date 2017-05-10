@@ -135,20 +135,21 @@
 
 @push('script')
 <script type="text/javascript">
-	$('.open-EditModal').click(function(e) {
+
+    $('#result').on('click', '.open-EditModal', function(e) {
 		var hotels = <?php echo json_encode($hotels) ?>;
 		var key = $(this).data('key');
 		$('#edit-modal').modal('show');
 		$('#edit-hotel-form').find('.ui.header').html(hotels.data[key].name);
 		$('#edit-hotel-form').attr('action', '{{ url("profile/hotel") }}/' + hotels.data[key].id);
 		$('#edit-hotel-form').find('[name=priority]').val(hotels.data[key].priority);
-		if (hotels.data[key].published) {
+		if (hotels.data[key].published == 1) {
 			$('#edit-hotel-form').find('[name=published]').dropdown('set selected', '1');
 		}
 		else {
 			$('#edit-hotel-form').find('[name=published]').dropdown('set selected', '0');
 		}
-		if (hotels.data[key].sale) {
+		if (hotels.data[key].sale == 1) {
 			$('#edit-hotel-form').find('[name=sale]').dropdown('set selected', '1');
 		}
 		else {

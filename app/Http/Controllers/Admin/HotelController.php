@@ -114,7 +114,7 @@ class HotelController extends Controller
     {
         $search = $request->get('search');
         $hotels = \App\Hotel::where('name', 'LIKE', '%' . $search . '%')
-            ->orderby('name', 'asc')
+            ->orderby('priority', 'desc')
             ->paginate(20);
 
         return response()->view('admin.hotel.search', [

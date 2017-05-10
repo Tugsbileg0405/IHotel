@@ -14,7 +14,7 @@
 			</tr>
 		</thead>
 		<tbody>
-			@foreach ($hotels as $hotel)
+			@foreach ($hotels as $key => $hotel)
 				<tr>
 					<td>{{ $hotel->id }}</td>
 					<td>{{ $hotel->name }}</td>
@@ -27,7 +27,7 @@
 					</td>
 					<td>{{ $hotel->priority }}</td>
 					<td>
-						<a class="ui icon button" href="{{ url('profile/hotel/'.$hotel->id.'/edit') }}">
+						<a class="ui icon button open-EditModal" data-key="{{ $key }}">
 							<i class="pencil icon"></i>
 						</a>
 					</td>
