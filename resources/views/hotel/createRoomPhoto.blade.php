@@ -17,17 +17,19 @@
 				  		</a>
 						<input type="file" name="photo-{{ $room->id }}" data-id="{{ $room->id }}" style="display: none">
 				  		<div class="upload-zone">
-				  			@if (count(unserialize($room->photos)) > 0)
-				  				@foreach (unserialize($room->photos) as $photo)
-									<div class="upload-zone-item">
-										<img class="ui rounded image" src="{{ asset($photo) }}">
-										<input type="text" name="photos-{{ $room->id }}[]" value="{{ $photo }}" style="display: none;">
-										<a class="upload-zone-button">
-											<i class="close icon"></i>
-										</a>
-									</div>
-								@endforeach
-				  			@endif
+				  			@if ($room->photos)
+					  			@if (count(unserialize($room->photos)) > 0)
+					  				@foreach (unserialize($room->photos) as $photo)
+										<div class="upload-zone-item">
+											<img class="ui rounded image" src="{{ asset($photo) }}">
+											<input type="text" name="photos-{{ $room->id }}[]" value="{{ $photo }}" style="display: none;">
+											<a class="upload-zone-button">
+												<i class="close icon"></i>
+											</a>
+										</div>
+									@endforeach
+					  			@endif
+					  		@endif
 				  		</div>
 					</div>
 				</div>
