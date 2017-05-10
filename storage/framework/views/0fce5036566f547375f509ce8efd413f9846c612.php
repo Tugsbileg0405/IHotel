@@ -65,7 +65,12 @@
                                                 <?php endif; ?>
                                             </div>
                                             <div class="field<?php echo e($errors->has('country') ? ' error' : ''); ?>">
-                                                <input type="text" name="country" placeholder="<?php echo e(__('messages.Country')); ?>" value="<?php echo e(old('country')); ?>">
+                                                <select class="ui dropdown" name="country">
+                                                    <option value=""><?php echo e(__('messages.Country')); ?></option>
+                                                    <?php $__currentLoopData = $countries; $__env->addLoop($__currentLoopData); foreach($__currentLoopData as $country): $__env->incrementLoopIndices(); $loop = $__env->getLastLoop(); ?>
+                                                        <option value="<?php echo e($country); ?>" <?php echo e(old('country') == $country ? 'selected' : ''); ?>><?php echo e($country); ?></option>
+                                                    <?php endforeach; $__env->popLoop(); $loop = $__env->getLastLoop(); ?>
+                                                </select>
                                                 <?php if($errors->has('country')): ?>
                                                     <div class="ui basic red pointing prompt label transition visible">
                                                         <?php echo e($errors->first('country')); ?>
@@ -156,12 +161,8 @@
                 rules: [
                     {
                         type: 'empty',
-                        prompt: '<?php echo e(__("form.Please enter your country")); ?>'
+                        prompt: '<?php echo e(__("form.Please select a country")); ?>'
                     },
-                    {
-                        type   : 'maxLength[191]',
-                        prompt : '<?php echo e(__("form.Please enter at most 191 characters")); ?>'
-                    }
                 ]
             },
             password: {

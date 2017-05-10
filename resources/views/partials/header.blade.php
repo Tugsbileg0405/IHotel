@@ -103,6 +103,14 @@
                         <input type="email" name="email" placeholder="{{ __('messages.Email') }}">
                     </div>
                     <div class="field">
+                        <select class="ui dropdown" name="country">
+                            <option value="">{{ __('messages.Country') }}</option>
+                            @foreach ($countries as $country)
+                                <option value="{{ $country }}">{{ $country }}</option>
+                            @endforeach
+                        </select>
+                    </div>
+                    <div class="field">
                         <input type="password" name="password" placeholder="{{ __('messages.Password') }}">
                     </div>
                     <div class="field">
@@ -216,6 +224,15 @@
                         type   : 'maxLength[191]',
                         prompt : '{{ __("form.Please enter at most 191 characters") }}'
                     }
+                ]
+            },
+            country: {
+                identifier: 'country',
+                rules: [
+                    {
+                        type: 'empty',
+                        prompt: '{{ __("form.Please select a country") }}'
+                    },
                 ]
             },
             password: {

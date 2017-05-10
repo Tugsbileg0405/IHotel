@@ -62,6 +62,19 @@
                                                     </div>
                                                 @endif
                                             </div>
+                                            <div class="field{{ $errors->has('country') ? ' error' : '' }}">
+                                                <select class="ui dropdown" name="country">
+                                                    <option value="">{{ __('messages.Country') }}</option>
+                                                    @foreach ($countries as $country)
+                                                        <option value="{{ $country }}" {{ old('country') == $country ? 'selected' : '' }}>{{ $country }}</option>
+                                                    @endforeach
+                                                </select>
+                                                @if ($errors->has('country'))
+                                                    <div class="ui basic red pointing prompt label transition visible">
+                                                        {{ $errors->first('country') }}
+                                                    </div>
+                                                @endif
+                                            </div>
                                             <div class="field{{ $errors->has('password') ? ' error' : '' }}">
                                                 <input type="password" name="password" placeholder="{{ __('messages.Password') }}">
                                                 @if ($errors->has('password'))
@@ -137,6 +150,15 @@
                         type   : 'maxLength[191]',
                         prompt : '{{ __("form.Please enter at most 191 characters") }}'
                     }
+                ]
+            },
+            country: {
+                identifier: 'country',
+                rules: [
+                    {
+                        type: 'empty',
+                        prompt: '{{ __("form.Please select a country") }}'
+                    },
                 ]
             },
             password: {

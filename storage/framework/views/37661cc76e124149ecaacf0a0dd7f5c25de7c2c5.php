@@ -110,6 +110,14 @@
                         <input type="email" name="email" placeholder="<?php echo e(__('messages.Email')); ?>">
                     </div>
                     <div class="field">
+                        <select class="ui dropdown" name="country">
+                            <option value=""><?php echo e(__('messages.Country')); ?></option>
+                            <?php $__currentLoopData = $countries; $__env->addLoop($__currentLoopData); foreach($__currentLoopData as $country): $__env->incrementLoopIndices(); $loop = $__env->getLastLoop(); ?>
+                                <option value="<?php echo e($country); ?>"><?php echo e($country); ?></option>
+                            <?php endforeach; $__env->popLoop(); $loop = $__env->getLastLoop(); ?>
+                        </select>
+                    </div>
+                    <div class="field">
                         <input type="password" name="password" placeholder="<?php echo e(__('messages.Password')); ?>">
                     </div>
                     <div class="field">
@@ -224,6 +232,15 @@
                         type   : 'maxLength[191]',
                         prompt : '<?php echo e(__("form.Please enter at most 191 characters")); ?>'
                     }
+                ]
+            },
+            country: {
+                identifier: 'country',
+                rules: [
+                    {
+                        type: 'empty',
+                        prompt: '<?php echo e(__("form.Please select a country")); ?>'
+                    },
                 ]
             },
             password: {

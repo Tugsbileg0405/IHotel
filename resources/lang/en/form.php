@@ -4,7 +4,7 @@ return [
 
     'Please enter your name' => 'Please enter your name',
     'Please enter your surname' => 'Please enter your surname',
-    'Please enter your country' => 'Please enter your country',
+    'Please select a country' => 'Please select a country',
     'Please enter at most 191 characters' => 'Please enter at most 191 characters',
     'Please enter your email' => 'Please enter your email',
     'Please enter a message' => 'Please enter a message',
