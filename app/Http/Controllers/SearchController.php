@@ -176,7 +176,7 @@ class SearchController extends Controller
                     $query->where('startdate', '<=' , Carbon::parse($startDate)->format('Y-m-d H:i:s'))
                           ->where('enddate', '>=', Carbon::parse($endDate)->format('Y-m-d H:i:s'));
                 }])
-                ->orderBy('priority', 'desc')
+                ->orderBy('priority', 'asc')
                 ->with('rates')->get();
         }
 
@@ -191,7 +191,7 @@ class SearchController extends Controller
                     $query->where('startdate', '<=' , Carbon::parse($startDate)->format('Y-m-d H:i:s'))
                           ->where('enddate', '>=', Carbon::parse($endDate)->format('Y-m-d H:i:s'));
                 }])
-                ->orderBy('priority', 'desc')
+                ->orderBy('priority', 'asc')
                 ->with('rates')->get();
         }
 
@@ -205,7 +205,7 @@ class SearchController extends Controller
                     $query->where('startdate', '<=' , Carbon::parse($startDate)->format('Y-m-d H:i:s'))
                           ->where('enddate', '>=', Carbon::parse($endDate)->format('Y-m-d H:i:s'));
                 }])
-                ->orderBy('priority', 'desc')
+                ->orderBy('priority', 'asc')
                 ->with('rates')->get();
         }
 
@@ -222,7 +222,7 @@ class SearchController extends Controller
                     $query->where('startdate', '<=' , Carbon::parse($startDate)->format('Y-m-d H:i:s'))
                           ->where('enddate', '>=', Carbon::parse($endDate)->format('Y-m-d H:i:s'));
                 }])
-                ->orderBy('priority', 'desc')
+                ->orderBy('priority', 'asc')
                 ->with('rates')->get();
         }
 
@@ -237,7 +237,7 @@ class SearchController extends Controller
                     $query->where('startdate', '<=' , Carbon::parse($startDate)->format('Y-m-d H:i:s'))
                           ->where('enddate', '>=', Carbon::parse($endDate)->format('Y-m-d H:i:s'));
                 }])
-                ->orderBy('priority', 'desc')
+                ->orderBy('priority', 'asc')
                 ->with('rates')->get();
         }
 
@@ -254,7 +254,7 @@ class SearchController extends Controller
                     $query->where('startdate', '<=' , Carbon::parse($startDate)->format('Y-m-d H:i:s'))
                           ->where('enddate', '>=', Carbon::parse($endDate)->format('Y-m-d H:i:s'));
                 }])
-                ->orderBy('priority', 'desc')
+                ->orderBy('priority', 'asc')
                 ->with('rates')->get();
         }
 
@@ -272,7 +272,7 @@ class SearchController extends Controller
                     $query->where('startdate', '<=' , Carbon::parse($startDate)->format('Y-m-d H:i:s'))
                           ->where('enddate', '>=', Carbon::parse($endDate)->format('Y-m-d H:i:s'));
                 }])
-                ->orderBy('priority', 'desc')
+                ->orderBy('priority', 'asc')
                 ->with('rates')->get();
         }
         }
@@ -288,7 +288,7 @@ class SearchController extends Controller
                         $query->where('startdate', '<=' , Carbon::parse($startDate)->format('Y-m-d H:i:s'))
                             ->where('enddate', '>=', Carbon::parse($endDate)->format('Y-m-d H:i:s'));
                     }])
-                ->orderBy('priority', 'desc')
+                ->orderBy('priority', 'asc')
                 ->with('rates')->get();
 
         if ($filter !== null && $filterprice1 == null && $filterprice2 == null && $rating1 == null && $rating2 == null) {
@@ -301,7 +301,7 @@ class SearchController extends Controller
                     $query->where('startdate', '<=' , Carbon::parse($startDate)->format('Y-m-d H:i:s'))
                           ->where('enddate', '>=', Carbon::parse($endDate)->format('Y-m-d H:i:s'));
                 }])
-                ->orderBy('priority', 'desc')
+                ->orderBy('priority', 'asc')
                 ->with('rates')->get();
         }
 
@@ -319,7 +319,7 @@ class SearchController extends Controller
                     $query->where('startdate', '<=' , Carbon::parse($startDate)->format('Y-m-d H:i:s'))
                           ->where('enddate', '>=', Carbon::parse($endDate)->format('Y-m-d H:i:s'));
                 }])
-                ->orderBy('priority', 'desc')
+                ->orderBy('priority', 'asc')
                 ->with('rates')->get();
         }
 
@@ -334,7 +334,7 @@ class SearchController extends Controller
                     $query->where('startdate', '<=' , Carbon::parse($startDate)->format('Y-m-d H:i:s'))
                           ->where('enddate', '>=', Carbon::parse($endDate)->format('Y-m-d H:i:s'));
                 }])
-                ->orderBy('priority', 'desc')
+                ->orderBy('priority', 'asc')
                 ->with('rates')->get();
         }
 
@@ -354,7 +354,7 @@ class SearchController extends Controller
                     $query->where('startdate', '<=' , Carbon::parse($startDate)->format('Y-m-d H:i:s'))
                           ->where('enddate', '>=', Carbon::parse($endDate)->format('Y-m-d H:i:s'));
                 }])
-                ->orderBy('priority', 'desc')
+                ->orderBy('priority', 'asc')
                 ->with('rates')->get();
         }
 
@@ -370,7 +370,7 @@ class SearchController extends Controller
                     $query->where('startdate', '<=' , Carbon::parse($startDate)->format('Y-m-d H:i:s'))
                           ->where('enddate', '>=', Carbon::parse($endDate)->format('Y-m-d H:i:s'));
                 }])
-                ->orderBy('priority', 'desc')
+                ->orderBy('priority', 'asc')
                 ->with('rates')->get();
         }
 
@@ -391,7 +391,7 @@ class SearchController extends Controller
                     $query->where('startdate', '<=' , Carbon::parse($startDate)->format('Y-m-d H:i:s'))
                           ->where('enddate', '>=', Carbon::parse($endDate)->format('Y-m-d H:i:s'));
                 }])
-                ->orderBy('priority', 'desc')
+                ->orderBy('priority', 'asc')
                 ->with('rates')->get();
         }
 
@@ -411,7 +411,7 @@ class SearchController extends Controller
                     $query->where('startdate', '<=' , Carbon::parse($startDate)->format('Y-m-d H:i:s'))
                           ->where('enddate', '>=', Carbon::parse($endDate)->format('Y-m-d H:i:s'));
                 }])
-                ->orderBy('priority', 'desc')
+                ->orderBy('priority', 'asc')
                 ->with('rates')->get();
         }
         }
