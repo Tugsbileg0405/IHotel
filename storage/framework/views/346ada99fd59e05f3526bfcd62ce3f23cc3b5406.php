@@ -631,7 +631,7 @@
                                         </div>\
                                         <div class='block right'>\
                                             <div class='price'>\
-                                                <h4>" + numeral(lowest/rating).format('0,0.00') + "$</h4>\
+                                                <h4>" + numeral(lowest/rating).format('0,0') + "$</h4>\
                                             </div>\
                                             <div class='room-name' >\
                                                 <a href='" + url + "' style='color:white' target='_blank'>\
@@ -693,13 +693,13 @@
                                             <img src='" + data.data[key].cover_photo + "' height='200px' style='filter:brightness(50%);width:100%;background-image: linear-gradient(180deg, rgba(0, 0, 0, .5) 0, transparent 25%, transparent 50%, rgba(0, 0, 0, .7));'>\
                                             <div class='maptitle'>" + data.data[key].name_en + "</div>\
                                             <span class='mapstar'>" + star + "</span>\
-                                            <div class='mapprice'>" + numeral(lowest / rating).format('0,0.00') + "$</div>\
+                                            <div class='mapprice'>" + numeral(lowest / rating).format('0,0') + "$</div>\
                                         </div>";
                                                 
                     var contentString1 = "<div style='padding:0;margin:0;overflow: hidden;'> \
                                             <img src='" + data.data[key].cover_photo + "' height='200px' style='filter:brightness(50%);width:100%;background-image: linear-gradient(180deg, rgba(0, 0, 0, .5) 0, transparent 25%, transparent 50%, rgba(0, 0, 0, .7));'>\
                                             <div class='maptitle'>" + data.data[key].name_en + "</div>\
-                                            <div class='mapprice'>" + numeral(lowest / rating ).format('0,0.00') + "$</div>\
+                                            <div class='mapprice'>" + numeral(lowest / rating ).format('0,0') + "$</div>\
                                             <span class='mapstar'>" + star + "</span>\
                                             <a href='" + url + "' target='_blank'>\<button class='ui button mapbutton' style='background-color:#2185D0;color:white'><?php echo e(__('messages.Read More')); ?></button></a>\
                                         </div>";
@@ -870,13 +870,13 @@
                                                     <img src='" + el.cover_photo + "' height='200px' style='filter:brightness(50%);width:100%;background-image: linear-gradient(180deg, rgba(0, 0, 0, .5) 0, transparent 25%, transparent 50%, rgba(0, 0, 0, .7));'>\
                                                     <div class='maptitle'>" + el.name_en + "</div>\
                                                     <span class='mapstar'>" + star + "</span>\
-                                                    <div class='mapprice'>" + numeral(lowest / rating).format('0,0.00') + "$</div>\
+                                                    <div class='mapprice'>" + numeral(lowest / rating).format('0,0') + "$</div>\
                                                 </div>";
                                                         
                             var contentString1 = "<div style='padding:0;margin:0;overflow: hidden;'> \
                                                     <img src='" + el.cover_photo + "' height='200px' style='filter:brightness(50%);width:100%;background-image: linear-gradient(180deg, rgba(0, 0, 0, .5) 0, transparent 25%, transparent 50%, rgba(0, 0, 0, .7));'>\
                                                     <div class='maptitle'>" + el.name_en + "</div>\
-                                                    <div class='mapprice'>" + numeral(lowest / rating ).format('0,0.00') + "$</div>\
+                                                    <div class='mapprice'>" + numeral(lowest / rating ).format('0,0') + "$</div>\
                                                     <span class='mapstar'>" + star + "</span>\
                                                     <a href='" + url + "' target='_blank'>\<button class='ui button mapbutton' style='background-color:#2185D0;color:white'><?php echo e(__('messages.Read More')); ?></button></a>\
                                                 </div>";

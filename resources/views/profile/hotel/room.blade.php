@@ -81,20 +81,23 @@
 																	<input type="hidden" name="enddate">
 																</div>
 															</div>
-															@if ($room->price_op)
-																<div class="two fields">
-																	<div class="field" id="checked-input-{{ $room->id }}">
+															<div id="checked-input-{{ $room->id }}">
+																@if ($room->price_op)
+																	<div class="two fields">
+																		<div class="field">
+																			<input type="text" name="price" placeholder="Үнэ (₮)" disabled="true">
+																		</div>
+																		<div class="field">
+																			<input type="text" name="price_op" placeholder="Үнэ - 1 Хүний (₮)" disabled="true">
+																		</div>
+																	</div>
+																@else
+																	<div class="field">
 																		<input type="text" name="price" placeholder="Үнэ (₮)" disabled="true">
 																	</div>
-																	<div class="field" id="checked-input-{{ $room->id }}">
-																		<input type="text" name="price_op" placeholder="Үнэ - 1 Хүний (₮)" disabled="true">
-																	</div>
-																</div>
-															@else
-																<div class="field" id="checked-input-{{ $room->id }}">
-																	<input type="text" name="price" placeholder="Үнэ (₮)" disabled="true">
-																</div>
-															@endif
+																	<div></div>
+																@endif
+															</div>
 															<div class="field">
 																<button class="ui red button" type="submit">Хадгалах</button>
 															</div>
@@ -137,6 +140,9 @@
 															<thead>
 																<tr>
 																	<th>Өрөөний үнэ</th>
+																	@if ($room->price_op)
+																		<th>Өрөөний үнэ (1 хүний)</th>
+																	@endif
 																	<th>Эхлэх өдөр</th>
 																	<th>Дуусах өдөр</th>
 																	<th></th>
@@ -146,6 +152,9 @@
 																@foreach ($room->sales as $sale)
 																	<tr>
 																		<td>{{ $sale->price }}₮</td>
+																		@if ($room->price_op)
+																			<td>{{ $sale->price_op }}₮</td>
+																		@endif
 																		<td>{{ $sale->startdate }}</td>
 																		<td>{{ $sale->enddate }}</td>
 																		<td>
@@ -273,6 +282,7 @@
 		           	data: $(this).serialize(),
 	            	context: this,
 		           	success: function(data) {
+		           		$(this).form('clear');
 		           		$(this).closest('.ui.grid').siblings('.closedRooms').html(data);
 		    			$(this).find('button').removeClass('loading disabled');
 		       		},
@@ -288,6 +298,19 @@
 		    fields: {
 		        price: {
 		            identifier: 'price',
+		            rules: [
+		                {
+		                    type   : 'empty',
+		                    prompt : 'Өрөөний үнэ оруулна уу'
+		                },
+		                {
+		                    type   : 'number',
+		                    prompt : 'Өрөөний үнэ оруулна уу'
+		                }
+		            ]
+		        },
+		        price_op: {
+		            identifier: 'price_op',
 		            rules: [
 		                {
 		                    type   : 'empty',
@@ -317,6 +340,7 @@
 		           	data: $(this).serialize(),
 	            	context: this,
 		           	success: function(data) {
+		           		$(this).form('clear');
 		           		$(this).closest('.ui.grid').siblings('.saledRooms').html(data);
 		    			$(this).find('button').removeClass('loading disabled');
 		       		},

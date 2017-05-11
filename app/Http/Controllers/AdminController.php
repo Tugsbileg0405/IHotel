@@ -164,6 +164,7 @@ class AdminController extends Controller
 
 			return response()->view('profile.hotel.partials.sales', [
 				'sales' => $sales,
+				'room' => $room,
 			], 200);
 		}
 
@@ -180,6 +181,7 @@ class AdminController extends Controller
 
 			return response()->view('profile.hotel.partials.sales', [
 				'sales' => $sales,
+				'room' => $room,
 			], 200);
 		}
 
@@ -205,6 +207,7 @@ class AdminController extends Controller
 
 		return response()->view('profile.hotel.partials.input', [
 			'available' => $available,
+			'room' => $room,
 		], 200);
 	}
 

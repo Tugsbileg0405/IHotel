@@ -82,20 +82,23 @@
 																	<input type="hidden" name="enddate">
 																</div>
 															</div>
-															<?php if($room->price_op): ?>
-																<div class="two fields">
-																	<div class="field" id="checked-input-<?php echo e($room->id); ?>">
+															<div id="checked-input-<?php echo e($room->id); ?>">
+																<?php if($room->price_op): ?>
+																	<div class="two fields">
+																		<div class="field">
+																			<input type="text" name="price" placeholder="Үнэ (₮)" disabled="true">
+																		</div>
+																		<div class="field">
+																			<input type="text" name="price_op" placeholder="Үнэ - 1 Хүний (₮)" disabled="true">
+																		</div>
+																	</div>
+																<?php else: ?>
+																	<div class="field">
 																		<input type="text" name="price" placeholder="Үнэ (₮)" disabled="true">
 																	</div>
-																	<div class="field" id="checked-input-<?php echo e($room->id); ?>">
-																		<input type="text" name="price_op" placeholder="Үнэ - 1 Хүний (₮)" disabled="true">
-																	</div>
-																</div>
-															<?php else: ?>
-																<div class="field" id="checked-input-<?php echo e($room->id); ?>">
-																	<input type="text" name="price" placeholder="Үнэ (₮)" disabled="true">
-																</div>
-															<?php endif; ?>
+																	<div></div>
+																<?php endif; ?>
+															</div>
 															<div class="field">
 																<button class="ui red button" type="submit">Хадгалах</button>
 															</div>
@@ -138,6 +141,9 @@
 															<thead>
 																<tr>
 																	<th>Өрөөний үнэ</th>
+																	<?php if($room->price_op): ?>
+																		<th>Өрөөний үнэ (1 хүний)</th>
+																	<?php endif; ?>
 																	<th>Эхлэх өдөр</th>
 																	<th>Дуусах өдөр</th>
 																	<th></th>
@@ -147,6 +153,9 @@
 																<?php $__currentLoopData = $room->sales; $__env->addLoop($__currentLoopData); foreach($__currentLoopData as $sale): $__env->incrementLoopIndices(); $loop = $__env->getLastLoop(); ?>
 																	<tr>
 																		<td><?php echo e($sale->price); ?>₮</td>
+																		<?php if($room->price_op): ?>
+																			<td><?php echo e($sale->price_op); ?>₮</td>
+																		<?php endif; ?>
 																		<td><?php echo e($sale->startdate); ?></td>
 																		<td><?php echo e($sale->enddate); ?></td>
 																		<td>
@@ -276,6 +285,7 @@
 		           	data: $(this).serialize(),
 	            	context: this,
 		           	success: function(data) {
+		           		$(this).form('clear');
 		           		$(this).closest('.ui.grid').siblings('.closedRooms').html(data);
 		    			$(this).find('button').removeClass('loading disabled');
 		       		},
@@ -291,6 +301,19 @@
 		    fields: {
 		        price: {
 		            identifier: 'price',
+		            rules: [
+		                {
+		                    type   : 'empty',
+		                    prompt : 'Өрөөний үнэ оруулна уу'
+		                },
+		                {
+		                    type   : 'number',
+		                    prompt : 'Өрөөний үнэ оруулна уу'
+		                }
+		            ]
+		        },
+		        price_op: {
+		            identifier: 'price_op',
 		            rules: [
 		                {
 		                    type   : 'empty',
@@ -320,6 +343,7 @@
 		           	data: $(this).serialize(),
 	            	context: this,
 		           	success: function(data) {
+		           		$(this).form('clear');
 		           		$(this).closest('.ui.grid').siblings('.saledRooms').html(data);
 		    			$(this).find('button').removeClass('loading disabled');
 		       		},

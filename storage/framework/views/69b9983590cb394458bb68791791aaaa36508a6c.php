@@ -1,5 +1,5 @@
-@if ($available)
-	@if ($room->price_op)
+<?php if($available): ?>
+	<?php if($room->price_op): ?>
 		<div class="two fields">
 			<div class="field">
 				<input type="text" name="price" placeholder="Үнэ (₮)">
@@ -8,14 +8,14 @@
 				<input type="text" name="price_op" placeholder="Үнэ - 1 Хүний (₮)">
 			</div>
 		</div>
-	@else
+	<?php else: ?>
 		<div class="field">
 			<input type="text" name="price" placeholder="Үнэ (₮)">
 		</div>
 		<div></div>
-	@endif
-@else
-	@if ($room->price_op)
+	<?php endif; ?>
+<?php else: ?>
+	<?php if($room->price_op): ?>
 		<div class="two fields">
 			<div class="field">
 				<input type="text" name="price" placeholder="Үнэ (₮)" disabled="true">
@@ -27,12 +27,12 @@
 		<div class="ui visible warning message">
 			<p>Сонгосон өдөр өрөөний үнийг өөрчилсөн байна</p>
 		</div><br>
-	@else
+	<?php else: ?>
 		<div class="field">
 			<input type="text" name="price" placeholder="Үнэ (₮)" disabled="true">
 		</div>
 		<div class="ui visible warning message">
 			<p>Сонгосон өдөр өрөөний үнийг өөрчилсөн байна</p>
 		</div><br>
-	@endif
-@endif
+	<?php endif; ?>
+<?php endif; ?>
