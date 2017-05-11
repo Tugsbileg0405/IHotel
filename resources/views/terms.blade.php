@@ -11,7 +11,7 @@
 			</div>
 			<div class="right aligned ten wide column">
 				<div class="ui breadcrumb">
-					<a class="section">{{ __('messages.Home') }}</a>
+					<a class="section" href="{{ url('/') }}">{{ __('messages.Home') }}</a>
 					<span class="divider">/</span>
 					<div class="active section">{{ __('messages.Terms of service') }}</div>
 				</div>
