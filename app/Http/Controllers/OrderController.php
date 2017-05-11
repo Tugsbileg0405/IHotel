@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
+use App\Http\Requests\OrderRequest;
 use Illuminate\Support\Facades\Auth;
 use App\Mail\Order;
 use Carbon\Carbon;
@@ -114,7 +115,7 @@ class OrderController extends Controller
 	//  - Send email information of order to user
  	// ============================================================================
 
-	public function storeCard(Request $request)
+	public function storeCard(OrderRequest $request)
 	{
 		$user = \App\User::find(Auth::user()->id);
 		$user->name = $request->get('name');

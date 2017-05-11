@@ -41,14 +41,25 @@
                     <input type="file" name="photo" style="display: none">
                 </div>
             </div>
-		    <div class="field">
-		    	<label><?php echo e(__('messages.Sex')); ?></label>
-		    	<select class="ui fluid dropdown" name="gender">
-		    		<option value=""><?php echo e(__('messages.Choose a sex')); ?>!</option>
-	    			<option value="female" <?php echo e(Auth::user()->gender == 'female' ? 'selected':''); ?>><?php echo e(__('messages.Female')); ?></option>
-	    			<option value="male" <?php echo e(Auth::user()->gender == 'male' ? 'selected':''); ?>><?php echo e(__('messages.Male')); ?></option>
-		    	</select>
-			</div>
+            <div class="two fields">
+    		    <div class="field">
+    		    	<label><?php echo e(__('messages.Sex')); ?></label>
+    		    	<select class="ui fluid dropdown" name="gender">
+    		    		<option value=""><?php echo e(__('messages.Choose a sex')); ?>!</option>
+    	    			<option value="female" <?php echo e(Auth::user()->gender == 'female' ? 'selected':''); ?>><?php echo e(__('messages.Female')); ?></option>
+    	    			<option value="male" <?php echo e(Auth::user()->gender == 'male' ? 'selected':''); ?>><?php echo e(__('messages.Male')); ?></option>
+    		    	</select>
+    			</div>
+                <div class="field">
+                    <label>Country</label>
+                    <select class="ui fluid dropdown" name="country">
+                            <option value="">Select country</option>
+                            <?php $__currentLoopData = $countries; $__env->addLoop($__currentLoopData); foreach($__currentLoopData as $country): $__env->incrementLoopIndices(); $loop = $__env->getLastLoop(); ?>
+                                <option value="<?php echo e($country); ?>" <?php echo e(Auth::user()->country == $country ? 'selected' : ''); ?>><?php echo e($country); ?></option>
+                            <?php endforeach; $__env->popLoop(); $loop = $__env->getLastLoop(); ?>
+                    </select>
+                </div>
+            </div>
 			<div class="two fields">
 				<div class="field">
 					<label><?php echo e(__('messages.Phone')); ?></label>
@@ -122,15 +133,6 @@
                         type: 'email',
                         prompt: '<?php echo e(__("form.Please enter your email")); ?>'
                     },
-                    {
-                        type   : 'maxLength[191]',
-                        prompt : '<?php echo e(__("form.Please enter at most 191 characters")); ?>'
-                    }
-                ]
-            },
-            country: {
-                identifier: 'country',
-                rules: [
                     {
                         type   : 'maxLength[191]',
                         prompt : '<?php echo e(__("form.Please enter at most 191 characters")); ?>'

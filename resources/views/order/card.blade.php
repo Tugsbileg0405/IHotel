@@ -403,7 +403,7 @@
         onSuccess: function() {
         	var value = $('#request').val();
         	$('#card-form').find('[name=request]').val(value);
-			$('#submitOrder').addClass('loading disabled');
+			$('#card-form').find('button[type=submit]').addClass('loading disabled');
         }
     });
 </script>

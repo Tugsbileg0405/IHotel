@@ -119,8 +119,8 @@
         .table td {
             border: 1px solid #000;
         }
-        .table tr:nth-of-type(1),
-        .table tr:nth-of-type(1) td {
+        .table .hidden,
+        .table .hidden td {
             border: 0;
         }
         .table td {
@@ -139,12 +139,12 @@
                 <tr>
                     <td>
                         <div class="pull-left">
-                            <img src="{{ asset('logo.png') }}" style="height: 60px;">
+                            <img src="{{ asset('img/logo.png') }}" style="height: 60px;">
                         </div>
                     </td>
                     <td>
                         <div class="pull-right">
-                            <img src="{{ asset('aspac_logo.png') }}" style="height: 80px;">
+                            <img src="{{ asset('img/aspac_logo.png') }}" style="height: 80px;">
                         </div>
                     </td>
                 </tr>
@@ -152,7 +152,7 @@
         </table>
         <table class="table">
             <tbody>
-                <tr>
+                <tr class="hidden">
                     <td></td><td></td><td></td><td></td>
                     <td></td><td></td><td></td><td></td>
                 </tr>
@@ -182,10 +182,10 @@
                         <div class="text-center">
                             <h4 class="text-uppercase">Check-In</h4>
                             <h1>
-                                <strong>{{ date('d', strtotime($order->startdate) }}</strong>
+                                <strong>{{ date('j', strtotime($order->startdate)) }}</strong>
                             </h1>
                             <p>
-                                <strong>{{ date('F', strtotime($order->startdate) }}</strong>
+                                <strong>{{ date('F', strtotime($order->startdate)) }}</strong>
                             </p>
                             <p>from 14:00</p>
                         </div>
@@ -194,10 +194,10 @@
                         <div class="text-center">
                             <h4 class="text-uppercase">Check-Out</h4>
                             <h1>
-                                <strong>{{ date('d', strtotime($order->enddate) }}</strong>
+                                <strong>{{ date('j', strtotime($order->enddate)) }}</strong>
                             </h1>
                             <p>
-                                <strong>{{ date('F', strtotime($order->enddate) }}</strong>
+                                <strong>{{ date('F', strtotime($order->enddate)) }}</strong>
                             </p>
                             <p>until 12:00</p>
                         </div>
@@ -244,7 +244,7 @@
                     <tr>
                         <td colspan="5">
                             <p>
-                                <strong>Guest name:</strong> {{ $order->user->name }}
+                                <strong>Guest name:</strong> {{ $order->user->name }} {{ $order->user->surname }}
                             </p>
                             <p>
                                 <strong>Room:</strong> {{ $room->name }}

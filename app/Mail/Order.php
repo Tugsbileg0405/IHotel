@@ -34,12 +34,11 @@ class Order extends Mailable
      */
     public function build()
     {
-        return $this->from(env('MAIL_FROM_ADDRESS'))
-            ->subject('Захиалгын мэдээлэл')->view('order.email')->with([
-                'order' => $this->order,
-                'rooms' => $this->rooms,
-                'price' => $this->price,
-                'user' => $this->user,
-            ]);
+        return $this->subject('Захиалгын мэдээлэл')->view('order.email')->with([
+            'order' => $this->order,
+            'rooms' => $this->rooms,
+            'price' => $this->price,
+            'user' => $this->user,
+        ]);
     }
 }
