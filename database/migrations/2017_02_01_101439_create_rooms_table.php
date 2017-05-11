@@ -22,6 +22,7 @@ class CreateRoomsTable extends Migration
             $table->integer('bed_number');
             $table->integer('people_number');
             $table->integer('price');
+            $table->integer('price_op')->nullable()->default(null);
             $table->integer('total_people')->nullable()->default(null);
             $table->integer('size')->nullable()->default(null);
             $table->text('introduction')->nullable()->default(null);

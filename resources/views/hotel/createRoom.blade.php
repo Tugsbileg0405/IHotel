@@ -19,11 +19,11 @@
 				<div class="two fields">
 					<div class="required field">
 						<label>Өрөөний төрөл</label>
-						<input type="text" name="name" min="1">
+						<input type="text" name="name">
 					</div>
 					<div class="required field">
 						<label>Өрөөний тоо</label>
-						<input type="number" name="number" min="1">
+						<input type="text" name="number">
 					</div>
 				</div>
 				<div class="two fields">
@@ -38,17 +38,23 @@
 					</div>
 					<div class="required field">
 						<label>Орны тоо</label>
-						<input type="number" name="bed_number" min="1">
+						<input type="text" name="bed_number">
 					</div>
 				</div>
 				<div class="two fields">
-					<div class="requried field">
-						<label>Хүний тоо</label>
-						<input type="number" name="people_number" min="1">
-					</div>
 					<div class="required field">
-						<label>Өрөөний үнэ</label>
-						<input type="number" name="price" placeholder="₮" min="1">
+						<label>Хүний тоо</label>
+						<input type="text" name="people_number">
+					</div>
+					<div class="two fields">
+						<div class="required field">
+							<label>Өрөөний үнэ</label>
+							<input type="text" name="price" placeholder="₮">
+						</div>
+						<div class="field">
+							<label>Өрөөний үнэ (1 хүний)</label>
+							<input type="text" name="price_op" placeholder="₮">
+						</div>
 					</div>
 				</div>
 				<div class="ui right floated buttons">
@@ -118,50 +124,44 @@
 		<form class="ui form" id="edit-room-form" action="" method="POST">
 			{{ csrf_field() }}
 			{{ method_field('PUT') }}
-			<div class="field">
-				<div class="fields">
-					<div class="eight wide field">
-						<div class="required field">
-							<label>Өрөөний төрөл</label>
-							<input type="text" name="name" min="1">
-						</div>
-					</div>
-					<div class="eight wide required field">
-						<label>Өрөөний тоо</label>
-						<input type="number" name="number" min="1">
-					</div>
+			<div class="two fields">
+				<div class="required field">
+					<label>Өрөөний төрөл</label>
+					<input type="text" name="name">
+				</div>
+				<div class="required field">
+					<label>Өрөөний тоо</label>
+					<input type="text" name="number">
 				</div>
 			</div>
-			<div class="field">
-				<div class="fields">
-					<div class="eight wide field">
-						<div class="required field">
-							<label>Орны төрөл</label>
-							<select name="category" class="ui fluid dropdown">
-								<option value="">Ороо сонгоно уу</option>
-								@foreach ($categories as $category)
-									<option value="{{ $category->id }}">{{ $category->name }}</option>
-								@endforeach
-							</select>
-						</div>
-					</div>
-					<div class="eight wide required field">
-						<label>Орны тоо</label>
-						<input type="number" name="bed_number" min="1">
-					</div>
+			<div class="two fields">
+				<div class="required field">
+					<label>Орны төрөл</label>
+					<select name="category" class="ui fluid dropdown">
+						<option value="">Ороо сонгоно уу</option>
+						@foreach ($categories as $category)
+							<option value="{{ $category->id }}">{{ $category->name }}</option>
+						@endforeach
+					</select>
+				</div>
+				<div class="required field">
+					<label>Орны тоо</label>
+					<input type="text" name="bed_number">
 				</div>
 			</div>
-			<div class="field">
-				<div class="fields">
-					<div class="eight wide field">
-						<div class="required field">
-							<label>Хүний тоо</label>
-							<input type="number" name="people_number" min="1">
-						</div>
-					</div>
-					<div class="eight wide required field">
+			<div class="two fields">
+				<div class="required field">
+					<label>Хүний тоо</label>
+					<input type="text" name="people_number">
+				</div>
+				<div class="two fields">
+					<div class="required field">
 						<label>Өрөөний үнэ</label>
-						<input type="number" name="price" placeholder="₮" min="1">
+						<input type="text" name="price" placeholder="₮">
+					</div>
+					<div class="field">
+						<label>Өрөөний үнэ (1 хүний)</label>
+						<input type="text" name="price_op" placeholder="₮">
 					</div>
 				</div>
 			</div>
@@ -186,6 +186,7 @@
 		$('#edit-room-form').find('[name=bed_number]').val(rooms[key].bed_number);
 		$('#edit-room-form').find('[name=people_number]').val(rooms[key].people_number);
 		$('#edit-room-form').find('[name=price]').val(rooms[key].price);
+		$('#edit-room-form').find('[name=price_op]').val(rooms[key].price_op);
 		e.preventDefault();
 	});
 	$('#create-room-form').form({
@@ -212,7 +213,7 @@
 		                prompt : 'Өрөөний тоо оруулна уу'
 	                },
 	                {
-		                type   : 'integer',
+		                type   : 'integer[1..9999999999]',
 		                prompt : 'Өрөөний тоо оруулна уу'
 	                },
 	                {
@@ -238,7 +239,7 @@
 		                prompt : 'Орны тоо оруулна уу'
 	                },
 	                {
-		                type   : 'integer',
+		                type   : 'integer[1..9999999999]',
 		                prompt : 'Орны тоо оруулна уу'
 	                },
 	                {
@@ -255,7 +256,7 @@
 		                prompt : 'Хүний тоо оруулна уу'
 	                },
 	                {
-		                type   : 'integer',
+		                type   : 'integer[1..9999999999]',
 		                prompt : 'Хүний тоо оруулна уу'
 	                },
 	                {
@@ -269,6 +270,23 @@
 	            rules: [
 	                {
 		                type   : 'empty',
+		                prompt : 'Өрөөний үнэ оруулна уу'
+	                },
+	                {
+		                type   : 'integer[1..9999999999]',
+		                prompt : 'Өрөөний үнэ оруулна уу'
+	                },
+	                {
+	                    type   : 'maxLength[10]',
+	                    prompt : 'Хэтэрхий олон тэмдэгт оруулсан байана'
+	                }
+	            ]
+	        },
+	        price_op: {
+	            identifier: 'price_op',
+	            rules: [
+	                {
+		                type   : 'integer[1..9999999999]',
 		                prompt : 'Өрөөний үнэ оруулна уу'
 	                },
 	                {
@@ -322,7 +340,7 @@
 		                prompt : 'Өрөөний тоо оруулна уу'
 	                },
 	                {
-		                type   : 'integer',
+		                type   : 'integer[1..9999999999]',
 		                prompt : 'Өрөөний тоо оруулна уу'
 	                },
 	                {
@@ -348,7 +366,7 @@
 		                prompt : 'Орны тоо оруулна уу'
 	                },
 	                {
-		                type   : 'integer',
+		                type   : 'integer[1..9999999999]',
 		                prompt : 'Орны тоо оруулна уу'
 	                },
 	                {
@@ -365,7 +383,7 @@
 		                prompt : 'Хүний тоо оруулна уу'
 	                },
 	                {
-		                type   : 'integer',
+		                type   : 'integer[1..9999999999]',
 		                prompt : 'Хүний тоо оруулна уу'
 	                },
 	                {
@@ -379,6 +397,19 @@
 	            rules: [
 	                {
 		                type   : 'empty',
+		                prompt : 'Өрөөний үнэ оруулна уу'
+	                },
+	                {
+	                    type   : 'maxLength[10]',
+	                    prompt : 'Хэтэрхий олон тэмдэгт оруулсан байана'
+	                }
+	            ]
+	        },
+	        price_op: {
+	            identifier: 'price_op',
+	            rules: [
+	                {
+		                type   : 'integer[1..9999999999]',
 		                prompt : 'Өрөөний үнэ оруулна уу'
 	                },
 	                {

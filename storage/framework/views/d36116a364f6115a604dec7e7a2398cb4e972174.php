@@ -14,7 +14,7 @@
 					<div class="required field">
 						<label><?php echo e($room->name); ?></label>
 						<div class="ui right labeled input">
-							<input type="number" name="room-size-<?php echo e($room->id); ?>" min="1" value="<?php echo e($room->size); ?>">
+							<input type="text" name="room-size-<?php echo e($room->id); ?>" value="<?php echo e($room->size); ?>">
 							<div class="ui basic label">m2</div>
 						</div>
 					</div>
@@ -79,7 +79,7 @@
 		                    prompt : 'Хэмжээ оруулна уу'
 		                },
 		                {
-			                type   : 'integer',
+			                type   : 'integer[1..9999999999]',
 		                    prompt : 'Хэмжээ оруулна уу'
 		                },
 		                {

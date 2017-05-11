@@ -214,6 +214,12 @@ class HotelController extends Controller
         $room->bed_number = $request->get('bed_number');
         $room->people_number = $request->get('people_number');
         $room->price = $request->get('price');
+        if ($request->get('people_number') > 1) {
+            $room->price_op = $request->get('price_op');
+        }
+        else {
+            $room->price_op = NULL;
+        }
         $room->total_people = $request->get('people_number') * $request->get('number');
         $hotel = \App\Hotel::findorfail($id);
         $hotel->rooms()->save($room);
@@ -234,6 +240,12 @@ class HotelController extends Controller
         $room->bed_number = $request->get('bed_number');
         $room->people_number = $request->get('people_number');
         $room->price = $request->get('price');
+        if ($request->get('people_number') > 1) {
+            $room->price_op = $request->get('price_op');
+        }
+        else {
+            $room->price_op = NULL;
+        }
         $room->total_people = $request->get('people_number') * $request->get('number');
         $room->save();
 
