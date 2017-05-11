@@ -205,4 +205,5 @@ return [
     'Are you sure to cancel the order?' => 'Та захиалга цуцлахыг зөвшөөрч байна уу?',
     'You havent ordered yet' => 'Та одоогоор захиалга хийгээгүй байна',
     'Book now' => 'Захиалах',
+    "Sorry, we couldn't find that page" => "Таны хайсан хуудас олдсонгүй",
 ];

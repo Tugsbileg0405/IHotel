@@ -207,4 +207,5 @@ return [
     'Are you sure to cancel the order?' => 'Are you sure to cancel the order?',
     'You havent ordered yet' => "You haven't ordered yet",
     'Book now' => 'Book now',
+    "Sorry, we couldn't find that page" => "Sorry, we couldn't find that page",
 ];
