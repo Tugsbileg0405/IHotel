@@ -12,7 +12,7 @@
                 <i class="check icon"></i>{{ session('status') }}
             </div>
         @endif
-    	<form class="ui form" action="{{ url('profile/password') }}" method="POST">
+    	<form class="ui form" id="password-reset-form" action="{{ url('profile/password') }}" method="POST">
     		{{ csrf_field() }}
             {{ method_field('PUT') }}
     		<div class="two fields">
@@ -32,7 +32,7 @@
 
 @push('script')
 <script type="text/javascript">
-    $('.ui.form').form({
+    $('#password-reset-form').form({
         inline : true,
         fields: {
             password: {
@@ -40,7 +40,6 @@
                 rules: [
                     {
                         type   : 'empty',
-                        prompt : 'Нууц үг оруулна уу'
                         prompt : '{{ __("form.Please enter your password") }}'
                     },
                     {
@@ -58,7 +57,6 @@
                 rules: [
                     {
                         type   : 'match[password]',
-                        prompt : 'Нууц үг буруу байна'
                         prompt : '{{ __("form.Password doesnt match") }}'
 
                     }

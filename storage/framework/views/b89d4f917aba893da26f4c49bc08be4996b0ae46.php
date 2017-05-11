@@ -11,7 +11,7 @@
 
             </div>
         <?php endif; ?>
-    	<form class="ui form" action="<?php echo e(url('profile/password')); ?>" method="POST">
+    	<form class="ui form" id="password-reset-form" action="<?php echo e(url('profile/password')); ?>" method="POST">
     		<?php echo e(csrf_field()); ?>
 
             <?php echo e(method_field('PUT')); ?>
@@ -33,7 +33,7 @@
 
 <?php $__env->startPush('script'); ?>
 <script type="text/javascript">
-    $('.ui.form').form({
+    $('#password-reset-form').form({
         inline : true,
         fields: {
             password: {
@@ -41,7 +41,6 @@
                 rules: [
                     {
                         type   : 'empty',
-                        prompt : 'Нууц үг оруулна уу'
                         prompt : '<?php echo e(__("form.Please enter your password")); ?>'
                     },
                     {
@@ -59,7 +58,6 @@
                 rules: [
                     {
                         type   : 'match[password]',
-                        prompt : 'Нууц үг буруу байна'
                         prompt : '<?php echo e(__("form.Password doesnt match")); ?>'
 
                     }
