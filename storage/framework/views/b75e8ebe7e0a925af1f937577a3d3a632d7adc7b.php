@@ -223,7 +223,7 @@
 
 						</h4>
 						<div class="ui special raised link cards">
-							<div class="card">
+							<div class="ui fluid card">
 								<div class="blurring dimmable image">
 									<div class="ui inverted dimmer">
 										<div class="content">
@@ -255,7 +255,7 @@
 
 						</h4>
 						<div class="ui special raised link cards">
-							<div class="card">
+							<div class="ui fluid card">
 								<div class="blurring dimmable image">
 									<div class="ui inverted dimmer">
 										<div class="content">
@@ -287,7 +287,7 @@
 
 						</h4>
 						<div class="ui special raised link cards">
-							<div class="card">
+							<div class="ui fluid card">
 								<div class="blurring dimmable image">
 									<div class="ui inverted dimmer">
 										<div class="content">
