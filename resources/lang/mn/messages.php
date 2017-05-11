@@ -1,6 +1,8 @@
 <?php
 
 return [
+    'Hello' => 'Сайн байна уу?',
+    'You are receiving this email because we received a password reset request for your account' => 'Таны хүсэлтийн дагуу нууц үг шинэчлэх холбоосыг илгээлээ.',
     'Our team' => 'Хамт олон',
     'Blog' => 'Блог',
     'Home' =>'Эхлэл',

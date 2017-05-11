@@ -69,10 +69,8 @@ $style = [
                 <table width="100%" cellpadding="0" cellspacing="0">
                     <!-- Logo -->
                     <tr>
-                        <td style="{{ $style['email-masthead'] }}">
-                            <a style="{{ $fontFamily }} {{ $style['email-masthead_name'] }}" href="{{ url('/') }}" target="_blank">
-                                iHotel
-                            </a>
+                        <td>
+                            <img src="{{ asset('img/logo.png') }}" style="height: 60px;">
                         </td>
                     </tr>
 
@@ -84,13 +82,13 @@ $style = [
                                     <td style="{{ $fontFamily }} {{ $style['email-body_cell'] }}">
                                         <!-- Greeting -->
                                         <h1 style="{{ $style['header-1'] }}">
-                                            Сайн байна уу?
+                                            {{ __('messages.Hello') }}
                                         </h1>
 
                                         <!-- Intro -->
                                         @foreach ($introLines as $line)
                                             <p style="{{ $style['paragraph'] }}">
-                                                Таны хүсэлтийн дагуу нууц үг шинэчлэх холбоосыг илгээлээ.
+                                                {{ __('messages.You are receiving this email because we received a password reset request for your account') }}
                                             </p>
                                         @endforeach
 
@@ -116,52 +114,12 @@ $style = [
                                                             style="{{ $fontFamily }} {{ $style['button'] }} {{ $style[$actionColor] }}"
                                                             class="button"
                                                             target="_blank">
-                                                            Нууц үг шинэчлэх
+                                                            {{ __('messages.Reset password') }}
                                                         </a>
                                                     </td>
                                                 </tr>
                                             </table>
                                         @endif
-
-                                        <!-- Salutation -->
-                                        <p style="{{ $style['paragraph'] }}">
-                                            <br>iHotel
-                                        </p>
-
-                                        <!-- Sub Copy -->
-                                        @if (isset($actionText))
-                                            <table style="{{ $style['body_sub'] }}">
-                                                <tr>
-                                                    <td style="{{ $fontFamily }}">
-                                                        <p style="{{ $style['paragraph-sub'] }}">
-                                                            Хэрвээ "Нууц үг шинэчлэх" товч ажиллахгүй байвал та доорх холбоосыг ашиглана уу:
-                                                        </p>
-
-                                                        <p style="{{ $style['paragraph-sub'] }}">
-                                                            <a style="{{ $style['anchor'] }}" href="{{ $actionUrl }}" target="_blank">
-                                                                {{ $actionUrl }}
-                                                            </a>
-                                                        </p>
-                                                    </td>
-                                                </tr>
-                                            </table>
-                                        @endif
-                                    </td>
-                                </tr>
-                            </table>
-                        </td>
-                    </tr>
-
-                    <!-- Footer -->
-                    <tr>
-                        <td>
-                            <table style="{{ $style['email-footer'] }}" align="center" width="570" cellpadding="0" cellspacing="0">
-                                <tr>
-                                    <td style="{{ $fontFamily }} {{ $style['email-footer_cell'] }}">
-                                        <p style="{{ $style['paragraph-sub'] }}">
-                                            <a style="{{ $style['anchor'] }}" href="{{ url('/') }}" target="_blank">iHotel</a>
-                                            &copy; {{ date('Y') }}
-                                        </p>
                                     </td>
                                 </tr>
                             </table>
