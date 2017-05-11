@@ -45,9 +45,11 @@
 						<label>Хүний тоо</label>
 						<input type="text" name="people_number">
 					</div>
-					<div class="required field">
-						<label>Өрөөний үнэ</label>
-						<input type="text" name="price" placeholder="₮">
+					<div class="field">
+						<div class="required field">
+							<label>Өрөөний үнэ</label>
+							<input type="text" name="price" placeholder="₮">
+						</div>
 						<div class="disabled field">
 							<label>Өрөөний үнэ (1 хүний)</label>
 							<input type="text" name="price_op" placeholder="₮">
@@ -155,7 +157,7 @@
 					<label>Хүний тоо</label>
 					<input type="text" name="people_number">
 				</div>
-				<div class="two fields">
+				<div class="field">
 					<div class="required field">
 						<label>Өрөөний үнэ</label>
 						<input type="text" name="price" placeholder="₮">
@@ -188,6 +190,9 @@
 		var rooms = <?php echo json_encode($rooms) ?>;
 		var key = $(this).data('key');
 		$('#editModal').modal('show');
+		if (rooms[key].people_number <= 1) {
+			$('#edit-room-form').find('[name=price_op]').closest('.field').addClass('disabled');
+		}
 		$('#edit-room-form').attr('action', '<?php echo e(url("hotel/room")); ?>/' + rooms[key].id + '/<?php echo e($hotel->id); ?>');
 		$('#edit-room-form').find('[name=name]').val(rooms[key].name);
 		$('#edit-room-form').find('[name=number]').val(rooms[key].number);
@@ -198,6 +203,17 @@
 		$('#edit-room-form').find('[name=price_op]').val(rooms[key].price_op);
 		e.preventDefault();
 	});
+	$.fn.form.settings.rules.positive = function(value) {
+		if (value == '') {
+			return true;
+		}
+		else {
+			if (value > 0) {
+				return true;
+			}
+			return false;
+		}
+	}
 	$('#create-room-form').form({
 	    inline : true,
 	    fields: {
@@ -222,7 +238,7 @@
 		                prompt : 'Өрөөний тоо оруулна уу'
 	                },
 	                {
-		                type   : 'integer[1..9999999999]',
+		                type   : 'positive',
 		                prompt : 'Өрөөний тоо оруулна уу'
 	                },
 	                {
@@ -248,7 +264,7 @@
 		                prompt : 'Орны тоо оруулна уу'
 	                },
 	                {
-		                type   : 'integer[1..9999999999]',
+		                type   : 'positive',
 		                prompt : 'Орны тоо оруулна уу'
 	                },
 	                {
@@ -265,7 +281,7 @@
 		                prompt : 'Хүний тоо оруулна уу'
 	                },
 	                {
-		                type   : 'integer[1..9999999999]',
+		                type   : 'positive',
 		                prompt : 'Хүний тоо оруулна уу'
 	                },
 	                {
@@ -282,7 +298,7 @@
 		                prompt : 'Өрөөний үнэ оруулна уу'
 	                },
 	                {
-		                type   : 'integer[1..9999999999]',
+		                type   : 'positive',
 		                prompt : 'Өрөөний үнэ оруулна уу'
 	                },
 	                {
@@ -295,7 +311,11 @@
 	            identifier: 'price_op',
 	            rules: [
 	                {
-		                type   : 'integer[1..9999999999]',
+		                type   : 'number',
+		                prompt : 'Өрөөний үнэ оруулна уу'
+	                },
+	                {
+		                type   : 'positive',
 		                prompt : 'Өрөөний үнэ оруулна уу'
 	                },
 	                {
@@ -349,7 +369,7 @@
 		                prompt : 'Өрөөний тоо оруулна уу'
 	                },
 	                {
-		                type   : 'integer[1..9999999999]',
+		                type   : 'positive',
 		                prompt : 'Өрөөний тоо оруулна уу'
 	                },
 	                {
@@ -375,7 +395,7 @@
 		                prompt : 'Орны тоо оруулна уу'
 	                },
 	                {
-		                type   : 'integer[1..9999999999]',
+		                type   : 'positive',
 		                prompt : 'Орны тоо оруулна уу'
 	                },
 	                {
@@ -392,7 +412,7 @@
 		                prompt : 'Хүний тоо оруулна уу'
 	                },
 	                {
-		                type   : 'integer[1..9999999999]',
+		                type   : 'positive',
 		                prompt : 'Хүний тоо оруулна уу'
 	                },
 	                {
@@ -418,7 +438,7 @@
 	            identifier: 'price_op',
 	            rules: [
 	                {
-		                type   : 'integer[1..9999999999]',
+		                type   : 'positive',
 		                prompt : 'Өрөөний үнэ оруулна уу'
 	                },
 	                {
