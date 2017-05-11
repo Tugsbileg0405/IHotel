@@ -159,7 +159,17 @@
                 <tr>
                     <td colspan="5">
                         <h4 class="text-uppercase">
-                            <strong>{{ $order->hotel->name }}</strong>
+                            <strong>
+                                @if (App::isLocale('mn')) 
+                                    {{ $order->hotel->name }}
+                                @elseif (App::isLocale('en'))
+                                    @if($order->hotel->name_en)
+                                        {{ $order->hotel->name_en }}
+                                    @else
+                                        {{$order->hotel->name}}
+                                    @endif
+                                @endif
+                            </strong>
                         </h4>
                         <p>
                             <strong>Address:</strong> {{ $order->hotel->address }}
@@ -240,6 +250,31 @@
                         </p>
                     </td>
                 </tr>
+                @if (unserialize($order->pickup))
+                    <tr>
+                        <td colspan="5">
+                            <p>
+                                <strong>Pickup Service:</strong> 
+                                @if (App::isLocale('mn'))
+                                    {{ unserialize($order->pickup)['name'] }}
+                                @elseif (App::isLocale('en'))
+                                    {{ unserialize($order->pickup)['name_en'] }}
+                                @endif
+                            </p>
+                        </td>
+                        <td colspan="3">
+                            <p>
+                                <strong>Contact us</strong>
+                            </p>
+                            <p>
+                                <strong>Phone:</strong> +976 99066350
+                            </p>
+                            <p>
+                                <strong>Email:</strong> aspac@ihotel.mn
+                            </p>
+                        </td>
+                    </tr>
+                @endif
                 @foreach ($rooms as $room)
                     <tr>
                         <td colspan="5">
@@ -251,6 +286,9 @@
                             </p>
                             <p>
                                 <strong>Bed Sizes:</strong> {{ $room->category->name }}
+                            </p>
+                            <p>
+                                <strong>Number:</strong> {{ $room->ordered_number }}
                             </p>
                         </td>
                         <td colspan="3">

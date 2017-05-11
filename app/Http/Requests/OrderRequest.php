@@ -26,7 +26,6 @@ class OrderRequest extends FormRequest
         return [
             'name' => 'required',
             'surname' => 'required',
-            'lastname' => 'required',
             'country' => 'required',
             'phone_number' => 'nullable',
             'card_number' => 'required|numeric',

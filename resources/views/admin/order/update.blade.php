@@ -14,9 +14,23 @@
 					<td>{{ $order->user->name }}</td>
 				</tr>
 				<tr>
+					<td>Захиалагчийн овог</td>
+					<td>{{ $order->user->surname }}</td>
+				</tr>
+				<tr>
+					<td>Захиалагчийн улс</td>
+					<td>{{ $order->user->country }}</td>
+				</tr>
+				<tr>
 					<td>Захиалагчийн и-мэйл</td>
 					<td>{{ $order->user->email }}</td>
 				</tr>
+				@if ($order->user->phone_number)
+					<tr>
+						<td>Захиалагчийн утас</td>
+						<td>{{ $order->user->phone_number }}</td>
+					</tr>
+				@endif
 				<tr>
 					<td>Буудлын нэр</td>
 					<td>{{ $order->hotel_name }}</td>
