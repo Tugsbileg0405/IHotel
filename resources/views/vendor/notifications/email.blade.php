@@ -68,9 +68,9 @@ $style = [
             <td style="{{ $style['email-wrapper'] }}" align="center">
                 <table width="100%" cellpadding="0" cellspacing="0">
                     <!-- Logo -->
-                    <tr>
-                        <td>
-                            <img src="{{ asset('img/logo.png') }}" style="height: 60px;">
+                    <tr style="background-color:#fff;border:0">
+                        <td style="background-color:#fff;border:0;text-align:center;">
+                            <img src="{{ asset('img/logo.png') }}" style="display:inline-block;height: 60px;">
                         </td>
                     </tr>
 

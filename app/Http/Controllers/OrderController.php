@@ -191,6 +191,7 @@ class OrderController extends Controller
 		$order->save();
 
 		$rooms = [];
+		$order->total_room_number = 0;
 		foreach ($roomdatas as $roomdata)
 		{
 			$room = \App\Room::findOrFail($roomdata['room_id']);
@@ -203,6 +204,7 @@ class OrderController extends Controller
 				$room->saled_room = $sale;
 			}
             $room->ordered_number = $roomdata['room_number'];
+            $order->total_room_number += $room->ordered_number;
 
 			$rooms[] = $room;
 

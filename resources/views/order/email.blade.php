@@ -216,7 +216,7 @@
                         <div class="text-center">
                             <h4 class="text-uppercase">Rooms</h4>
                             <h1>
-                                <strong>1</strong>
+                                <strong>{{ $order->total_room_number }}</strong>
                             </h1>
                         </div>
                     </td>
