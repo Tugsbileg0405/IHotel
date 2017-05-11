@@ -85,32 +85,6 @@
     $('#register').form({
         inline: true,
         fields: {
-            name: {
-                identifier: 'name',
-                rules: [
-                    {
-                        type: 'empty',
-                        prompt: '<?php echo e(__("form.Please enter your name")); ?>'
-                    },
-                    {
-                        type   : 'maxLength[191]',
-                        prompt : '<?php echo e(__("form.Please enter at most 191 characters")); ?>'
-                    }
-                ]
-            },
-            surname: {
-                identifier: 'surname',
-                rules: [
-                    {
-                        type: 'empty',
-                        prompt: '<?php echo e(__("form.Please enter your surname")); ?>'
-                    },
-                    {
-                        type   : 'maxLength[191]',
-                        prompt : '<?php echo e(__("form.Please enter at most 191 characters")); ?>'
-                    }
-                ]
-            },
             email: {
                 identifier: 'email',
                 rules: [
@@ -122,15 +96,6 @@
                         type   : 'maxLength[191]',
                         prompt : '<?php echo e(__("form.Please enter at most 191 characters")); ?>'
                     }
-                ]
-            },
-            country: {
-                identifier: 'country',
-                rules: [
-                    {
-                        type: 'empty',
-                        prompt: '<?php echo e(__("form.Please select a country")); ?>'
-                    },
                 ]
             },
             password: {

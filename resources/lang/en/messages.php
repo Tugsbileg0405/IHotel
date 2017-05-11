@@ -208,4 +208,7 @@ return [
     'You havent ordered yet' => "You haven't ordered yet",
     'Book now' => 'Book now',
     "Sorry, we couldn't find that page" => "Sorry, we couldn't find that page",
+    'Special requests' => 'Special requests',
+    'Please write your requests in English' => 'Please write your requests in English',
+    'Personal information' => 'Personal information',
 ];

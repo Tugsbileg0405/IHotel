@@ -56,7 +56,7 @@
 													</div>
 													<div class="meta">
 														<div class="ui header">
-															<i class="icon location arrow"></i>
+															<i class="icon marker"></i>
 															@if (App::isLocale('mn')) 
 																{{ $hotel->address }}
 															@elseif (App::isLocale('en'))
@@ -162,50 +162,101 @@
 												</tbody>
 											</table>
 										</div>
+										<div class="ui form">
+											<h4 class="ui header">{{ __('messages.Special requests') }}</h4>
+											<div class="ui divider"></div>
+											<div class="field">
+												<label>{{ __('messages.Please write your requests in English') }}</label>
+												<textarea id="request"></textarea>
+											</div>
+										</div>
 									</div>
 								</div>
 								<div class="six wide column">
 									<div class="ui segment">
-										<form class="ui form">
+										<form id="card-form" class="ui form" action="{{ url('order/card/store') }}" method="POST">
 											{{ csrf_field() }}
+											<h4 class="ui header">{{ __('messages.Personal information') }}</h4>
+											<div class="ui divider"></div>
+											<div class="two fields">
+												<div class="required field">
+													<label>{{ __('messages.Name') }}</label>
+													<input type="text" name="name" placeholder="{{ __('messages.Name') }}" value="{{ Auth::user()->name }}">
+												</div>
+												<div class="required field">
+													<label>{{ __('messages.Surname') }}</label>
+													<input type="text" name="surname" placeholder="{{ __('messages.Surname') }}" value="{{ Auth::user()->surname }}">
+												</div>
+											</div>
+											<div class="two fields">
+												<div class="required field">
+													<label>{{ __('messages.Country') }}</label>
+													<select class="ui fluid dropdown" name="country">
+															<option value="">{{ __('messages.Country') }}</option>
+															@foreach($countries as $country)
+																<option value="{{ $country }}" {{ Auth::user()->country == $country ? 'selected' : '' }}>{{ $country }}</option>
+															@endforeach
+													</select>
+												</div>
+												<div class="field">
+													<label>{{ __('messages.Phone') }}</label>
+													<input type="text" name="phone_number" placeholder="{{ __('messages.Phone') }}" value="{{ Auth::user()->phone_number }}">
+												</div>
+											</div>
 											<h4 class="ui header">{{ __('messages.Credit card information') }}</h4>
 											<div class="ui divider"></div>
-											<div class="sixteen wide field">
+											<div class="field">
+												<label>{{ __('messages.Total Price') }}</label>
+												@if (App::isLocale('mn')) 
+													<input type="text" name="total" value="{{ number_format($price) }} ₮" disabled="">
+												@elseif (App::isLocale('en'))
+													<input type="text" name="total" value="{{ number_format($price/$rate,2) }} $" disabled="">
+												@endif
+											</div>
+											<div class="field">
+												<div class="ui left icon input">
+													<input name="card_number" placeholder="Card number">
+													<i class="blue credit card alternative icon"></i>
+												</div>
+											</div>
+											<div class="field">
+												<div class="ui left icon input">
+													<input name="card_holders_name" placeholder="Name on card">
+													<i class="blue user icon"></i>
+												</div>
+											</div>
+											<div class="two fields">
 												<div class="field">
-													<label>Нийт дүн / Total Price</label>
+													<div class="ui left icon input">
+														<input name="expired_month" placeholder="MM">
+														<i class="blue calendar icon"></i>
+													</div>
+												</div>
+												<div class="field">
+													<div class="ui left icon input">
+														<input name="expired_year" placeholder="YY">
+														<i class="blue calendar icon"></i>
+													</div>
+												</div>
+											</div>
+											<div class="field">
+												<div class="ui left icon input">
+													<input name="cvc" placeholder="CVC">
+													<i class="blue lock icon"></i>
+												</div>
+											</div>
+											<div class="field">
+												<div class="ui checkbox">
+													<input type="checkbox" name="terms">
 													@if (App::isLocale('mn')) 
-														<input type="text" name="total" value="{{ number_format($price) }} ₮" disabled="">
-														<input type="hidden" name="price" value="{{ number_format($price) }}">
-													@elseif (App::isLocale('en'))
-														<input type="text" name="total" value="{{ number_format($price/$rate,2) }} $" disabled="">
-														<input type="hidden" name="price" value="{{ number_format($price/$rate,2) }}">
+														<label><a href="{{ url('/terms') }}" onClick="check()" target="_blank">Үйлчилгээний нөхцөл</a> зөвшөөрөх</label>
+													@elseif (App::isLocale('en')) 
+														<label>I agree to<a href="{{ url('/terms') }}" onClick="check()" target="_blank"> terms and condition</a></label>
 													@endif
 												</div>
 											</div>
-										</form><br>
-										<form id="card-form" action="{{ url('order/card/store') }}" method="POST" >
-											{{ csrf_field() }}
-											<div class="card-js" id="my-card" data-capture-name="true"  data-icon-colour="#158CBA">>
-												<input class="card-number my-custom-class" data-rule-required="true" name="card_number">
-												<input class="name" id="the-card-name-id" data-rule-required="true" name="card_holders_name" placeholder="Name on card">
-												<input class="expiry-month" data-rule-required="true" name="expiry_month">
-												<input class="expiry-year" data-rule-required="true" name="expiry_year">
-												<input class="cvc" data-rule-required="true" name="cvc">
-											</div><br>
-											<div class="ui checkbox">
-												<input type="checkbox" name="terms" id="terms">
-												@if (App::isLocale('mn')) 
-													<label><a href="{{ url('/terms') }}" onClick="check()" target="_blank">Үйлчилгээний нөхцөл</a> зөвшөөрөх</label>
-												@elseif (App::isLocale('en')) 
-													<label>I agree to<a href="{{ url('/terms') }}" onClick="check()" target="_blank"> terms and condition</a></label>
-												@endif
-											</div>
-											<div class="sixteen wide field">
-												<span class="error-msg"></span><br>
-											</div>
-											<input type="hidden" class="expired_year" name="expired_year">
-											<input type="hidden" class="expired_month" name="expired_month">
-											<button type="submit" id="submitOrder" class="ui primary fluid submit button">{{ __('messages.Order') }}</button>
+											<input type="hidden" name="request">
+											<button type="submit" class="ui primary fluid button">{{ __('messages.Order') }}</button>
 										</form>
 									</div>
 								</div>
@@ -220,73 +271,140 @@
 @endsection
 
 @push('script')
-<script src="{{ asset('js/jquery.validate.min.js') }}"></script>
-<script src="{{ asset('js/card-js.min.js') }}"></script>
-<script src="{{ asset('js/jquery.creditCardValidator.js') }}"></script>
 <script type="text/javascript">
-	$("#card-form").validate({
-		errorClass: "my-error-class",
-		validClass: "my-valid-class",
-		messages: {
-			card_number: {
-				required: '*{{ __("form.Please enter a value") }}'
-			},
-			card_holders_name: {
-				required: '*{{ __("form.Please enter a value") }}'
-			},
-			expiry_month: {
-				required: '*{{ __("form.Please enter a value") }}'
-			},
-			expiry_year: {
-				required: '*{{ __("form.Please enter a value") }}'
-			},
-			cvc: {
-				required: '*{{ __("form.Please enter a value") }}'
-			},
-		},
-		submitHandler: function(form) {
-			$('#submitOrder').addClass('loading disabled');
-			var isValid = false;
-			$('.my-custom-class').validateCreditCard(function(result) {
-				var myCard = $('#my-card');
-				var expiryMonth = myCard.CardJs('expiryMonth');
-				var expiryYear = myCard.CardJs('expiryYear');
-				var valid = CardJs.isExpiryValid(expiryMonth, expiryYear);
-				if(result.valid == false){
-					$('#submitOrder').removeClass('loading disabled');
-					$('.error-msg').html('*{{ __("form.Card number is wrong")}}');
-				}
-				else if(valid == false){
-					$('#submitOrder').removeClass('loading disabled');
-					$('.error-msg').html('*{{ __("form.Please enter a valid expiry date")}}');
-				}
-				else {
-					$('.error-msg').html('');
-					$('.expired_year').val(expiryYear);
-					$('.expired_month').val(expiryMonth);
-					isValid = true;
-				}
-			});
-			if (isValid) {
-				form.submit();
+	$.fn.form.settings.rules.month = function(value) {
+		var year = $('[name="expired_year"]').val();
+		if (year == '{{ date("y") }}') {
+			if (value >= '{{ date("m") }}' && value <= 12) {
+				return true;
+			}
+			else {
+				return false;
 			}
 		}
-	});
-	if($('#terms').is(':checked')){
-		$('#submitOrder').removeClass('disabled');
-	}else{
-		$('#submitOrder').addClass('disabled');
-	}
-	$('#terms').change(function() {
-		if($(this).is(":checked")) {
-			$('#submitOrder').removeClass('disabled');
-		}else{
-			$('#submitOrder').addClass('disabled');
+		else {
+			if (value >= 1 && value <= 12) {
+				return true;
+			}
+			else {
+				return false;
+			}
 		}
-	});
-	function check(){
-		$("#terms").prop('checked', true);
-		$('#submitOrder').removeClass('disabled');
 	}
+    $('#card-form').form({
+        inline : true,
+        fields: {
+            name: {
+                identifier: 'name',
+                rules: [
+                    {
+                        type   : 'empty',
+                        prompt : '{{ __("form.Please enter your name") }}'
+                    },
+                    {
+                        type   : 'maxLength[191]',
+                        prompt : '{{ __("form.Please enter at most 191 characters") }}'
+                    }
+                ]
+            },
+            surname: {
+                identifier: 'surname',
+                rules: [
+                    {
+                        type   : 'empty',
+                        prompt : '{{ __("form.Please enter your surname") }}'
+                    },
+                    {
+                        type   : 'maxLength[191]',
+                        prompt : '{{ __("form.Please enter at most 191 characters") }}'
+                    }
+                ]
+            },
+            country: {
+                identifier: 'country',
+                rules: [
+                    {
+                        type   : 'empty',
+                        prompt : '{{ __("form.Please select a country") }}'
+                    }
+                ]
+            },
+            terms: {
+                identifier: 'terms',
+                rules: [
+                    {
+                        type   : 'checked',
+                        prompt : '{{ __("form.Please agree terms of service") }}'
+                    }
+                ]
+            },
+            card_number: {
+            	identifier: 'card_number',
+            	rules: [
+            		{
+            			type   : 'creditCard',
+            			prompt : '{{ __("form.Card number is wrong") }}'
+            		}
+            	]
+            },
+            card_holders_name: {
+                identifier: 'card_holders_name',
+                rules: [
+                    {
+                        type   : 'empty',
+                        prompt : '{{ __("form.Please enter a value") }}'
+                    },
+                    {
+                        type   : 'maxLength[191]',
+                        prompt : '{{ __("form.Please enter at most 191 characters") }}'
+                    }
+                ]
+            },
+            expired_month: {
+                identifier: 'expired_month',
+                rules: [
+                    {
+                        type   : 'month',
+                        prompt : '{{ __("form.Please enter a valid expiry date") }}',
+                    },
+                    {
+                        type   : 'exactLength[2]',
+                        prompt : '{{ __("form.Please enter a valid expiry date") }}'
+                    },
+                ]
+            },
+            expired_year: {
+                identifier: 'expired_year',
+                rules: [
+                    {
+                        type   : 'integer[{{ date("y") }}..99]',
+                        prompt : '{{ __("form.Please enter a valid expiry date") }}'
+                    },
+                    {
+                        type   : 'exactLength[2]',
+                        prompt : '{{ __("form.Please enter a valid expiry date") }}'
+                    },
+                ]
+            },
+            cvc: {
+                identifier: 'cvc',
+                rules: [
+                    {
+                        type   : 'number',
+                        prompt : '{{ __("form.Please enter a valid CVC") }}'
+                    },
+                    {
+                        type   : 'exactLength[3]',
+                        prompt : '{{ __("form.Please enter a valid CVC") }}'
+                    },
+                ]
+            },
+        },
+        onSuccess: function() {
+        	var value = $('#request').val();
+        	$('#card-form').find('[name=request]').val(value);
+			$('#submitOrder').addClass('loading disabled');
+        }
+    });
 </script>
 @endpush

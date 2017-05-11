@@ -15,5 +15,6 @@ return [
     'Password doesnt match' => 'Password doesnt match',
     'Please select a score' => 'Please select a score',
     'Card number is wrong' => 'Card number is wrong',
-    'Please enter a valid expiry date' => 'Please enter a valid expiry date'
+    'Please enter a valid expiry date' => 'Please enter a valid expiry date',
+    'Please enter a valid CVC' => 'Please enter a valid CVC',
 ];

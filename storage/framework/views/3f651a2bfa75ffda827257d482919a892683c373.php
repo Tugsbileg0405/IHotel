@@ -57,7 +57,7 @@
 													</div>
 													<div class="meta">
 														<div class="ui header">
-															<i class="icon location arrow"></i>
+															<i class="icon marker"></i>
 															<?php if(App::isLocale('mn')): ?> 
 																<?php echo e($hotel->address); ?>
 
@@ -168,52 +168,102 @@
 												</tbody>
 											</table>
 										</div>
+										<div class="ui form">
+											<h4 class="ui header">Special requests</h4>
+											<div class="ui divider"></div>
+											<div class="field">
+												<label>Please write your requests in English</label>
+												<textarea id="request"></textarea>
+											</div>
+										</div>
 									</div>
 								</div>
 								<div class="six wide column">
 									<div class="ui segment">
-										<form class="ui form">
+										<form id="card-form" class="ui form" action="<?php echo e(url('order/card/store')); ?>" method="POST">
 											<?php echo e(csrf_field()); ?>
 
+											<h4 class="ui header">Хувийн мэдээлэл</h4>
+											<div class="ui divider"></div>
+											<div class="two fields">
+												<div class="required field">
+													<label>Name</label>
+													<input type="text" name="name" placeholder="Name" value="<?php echo e(Auth::user()->name); ?>">
+												</div>
+												<div class="required field">
+													<label>Surname</label>
+													<input type="text" name="surname" placeholder="Surname" value="<?php echo e(Auth::user()->surname); ?>">
+												</div>
+											</div>
+											<div class="two fields">
+												<div class="required field">
+													<label>Country</label>
+													<select class="ui fluid dropdown" name="country">
+															<option value="">Select country</option>
+															<?php $__currentLoopData = $countries; $__env->addLoop($__currentLoopData); foreach($__currentLoopData as $country): $__env->incrementLoopIndices(); $loop = $__env->getLastLoop(); ?>
+																<option value="<?php echo e($country); ?>" <?php echo e(Auth::user()->country == $country ? 'selected' : ''); ?>><?php echo e($country); ?></option>
+															<?php endforeach; $__env->popLoop(); $loop = $__env->getLastLoop(); ?>
+													</select>
+												</div>
+												<div class="field">
+													<label>Phone</label>
+													<input type="text" name="phone_number" placeholder="Phone" value="<?php echo e(Auth::user()->phone_number); ?>">
+												</div>
+											</div>
 											<h4 class="ui header"><?php echo e(__('messages.Credit card information')); ?></h4>
 											<div class="ui divider"></div>
-											<div class="sixteen wide field">
+											<div class="field">
+												<label>Нийт дүн / Total Price</label>
+												<?php if(App::isLocale('mn')): ?> 
+													<input type="text" name="total" value="<?php echo e(number_format($price)); ?> ₮" disabled="">
+												<?php elseif(App::isLocale('en')): ?>
+													<input type="text" name="total" value="<?php echo e(number_format($price/$rate,2)); ?> $" disabled="">
+												<?php endif; ?>
+											</div>
+											<div class="field">
+												<div class="ui left icon input">
+													<input name="card_number" placeholder="Card number">
+													<i class="blue credit card alternative icon"></i>
+												</div>
+											</div>
+											<div class="field">
+												<div class="ui left icon input">
+													<input name="card_holders_name" placeholder="Name on card">
+													<i class="blue user icon"></i>
+												</div>
+											</div>
+											<div class="two fields">
 												<div class="field">
-													<label>Нийт дүн / Total Price</label>
+													<div class="ui left icon input">
+														<input name="expired_month" placeholder="MM">
+														<i class="blue calendar icon"></i>
+													</div>
+												</div>
+												<div class="field">
+													<div class="ui left icon input">
+														<input name="expired_year" placeholder="YY">
+														<i class="blue calendar icon"></i>
+													</div>
+												</div>
+											</div>
+											<div class="field">
+												<div class="ui left icon input">
+													<input name="cvc" placeholder="CVC">
+													<i class="blue lock icon"></i>
+												</div>
+											</div>
+											<div class="field">
+												<div class="ui checkbox">
+													<input type="checkbox" name="terms">
 													<?php if(App::isLocale('mn')): ?> 
-														<input type="text" name="total" value="<?php echo e(number_format($price)); ?> ₮" disabled="">
-														<input type="hidden" name="price" value="<?php echo e(number_format($price)); ?>">
-													<?php elseif(App::isLocale('en')): ?>
-														<input type="text" name="total" value="<?php echo e(number_format($price/$rate,2)); ?> $" disabled="">
-														<input type="hidden" name="price" value="<?php echo e(number_format($price/$rate,2)); ?>">
+														<label><a href="<?php echo e(url('/terms')); ?>" onClick="check()" target="_blank">Үйлчилгээний нөхцөл</a> зөвшөөрөх</label>
+													<?php elseif(App::isLocale('en')): ?> 
+														<label>I agree to<a href="<?php echo e(url('/terms')); ?>" onClick="check()" target="_blank"> terms and condition</a></label>
 													<?php endif; ?>
 												</div>
 											</div>
-										</form><br>
-										<form id="card-form" action="<?php echo e(url('order/card/store')); ?>" method="POST" >
-											<?php echo e(csrf_field()); ?>
-
-											<div class="card-js" id="my-card" data-capture-name="true"  data-icon-colour="#158CBA">>
-												<input class="card-number my-custom-class" data-rule-required="true" name="card_number">
-												<input class="name" id="the-card-name-id" data-rule-required="true" name="card_holders_name" placeholder="Name on card">
-												<input class="expiry-month" data-rule-required="true" name="expiry_month">
-												<input class="expiry-year" data-rule-required="true" name="expiry_year">
-												<input class="cvc" data-rule-required="true" name="cvc">
-											</div><br>
-											<div class="ui checkbox">
-												<input type="checkbox" name="terms" id="terms">
-												<?php if(App::isLocale('mn')): ?> 
-													<label><a href="<?php echo e(url('/terms')); ?>" onClick="check()" target="_blank">Үйлчилгээний нөхцөл</a> зөвшөөрөх</label>
-												<?php elseif(App::isLocale('en')): ?> 
-													<label>I agree to<a href="<?php echo e(url('/terms')); ?>" onClick="check()" target="_blank"> terms and condition</a></label>
-												<?php endif; ?>
-											</div>
-											<div class="sixteen wide field">
-												<span class="error-msg"></span><br>
-											</div>
-											<input type="hidden" class="expired_year" name="expired_year">
-											<input type="hidden" class="expired_month" name="expired_month">
-											<button type="submit" id="submitOrder" class="ui primary fluid submit button"><?php echo e(__('messages.Order')); ?></button>
+											<input type="hidden" name="request">
+											<button type="submit" class="ui primary fluid button"><?php echo e(__('messages.Order')); ?></button>
 										</form>
 									</div>
 								</div>
@@ -228,74 +278,141 @@
 <?php $__env->stopSection(); ?>
 
 <?php $__env->startPush('script'); ?>
-<script src="<?php echo e(asset('js/jquery.validate.min.js')); ?>"></script>
-<script src="<?php echo e(asset('js/card-js.min.js')); ?>"></script>
-<script src="<?php echo e(asset('js/jquery.creditCardValidator.js')); ?>"></script>
 <script type="text/javascript">
-	$("#card-form").validate({
-		errorClass: "my-error-class",
-		validClass: "my-valid-class",
-		messages: {
-			card_number: {
-				required: '*<?php echo e(__("form.Please enter a value")); ?>'
-			},
-			card_holders_name: {
-				required: '*<?php echo e(__("form.Please enter a value")); ?>'
-			},
-			expiry_month: {
-				required: '*<?php echo e(__("form.Please enter a value")); ?>'
-			},
-			expiry_year: {
-				required: '*<?php echo e(__("form.Please enter a value")); ?>'
-			},
-			cvc: {
-				required: '*<?php echo e(__("form.Please enter a value")); ?>'
-			},
-		},
-		submitHandler: function(form) {
-			$('#submitOrder').addClass('loading disabled');
-			var isValid = false;
-			$('.my-custom-class').validateCreditCard(function(result) {
-				var myCard = $('#my-card');
-				var expiryMonth = myCard.CardJs('expiryMonth');
-				var expiryYear = myCard.CardJs('expiryYear');
-				var valid = CardJs.isExpiryValid(expiryMonth, expiryYear);
-				if(result.valid == false){
-					$('#submitOrder').removeClass('loading disabled');
-					$('.error-msg').html('*<?php echo e(__("form.Card number is wrong")); ?>');
-				}
-				else if(valid == false){
-					$('#submitOrder').removeClass('loading disabled');
-					$('.error-msg').html('*<?php echo e(__("form.Please enter a valid expiry date")); ?>');
-				}
-				else {
-					$('.error-msg').html('');
-					$('.expired_year').val(expiryYear);
-					$('.expired_month').val(expiryMonth);
-					isValid = true;
-				}
-			});
-			if (isValid) {
-				form.submit();
+	$.fn.form.settings.rules.month = function(value) {
+		var year = $('[name="expired_year"]').val();
+		if (year == '<?php echo e(date("y")); ?>') {
+			if (value >= '<?php echo e(date("m")); ?>' && value <= 12) {
+				return true;
+			}
+			else {
+				return false;
 			}
 		}
-	});
-	if($('#terms').is(':checked')){
-		$('#submitOrder').removeClass('disabled');
-	}else{
-		$('#submitOrder').addClass('disabled');
-	}
-	$('#terms').change(function() {
-		if($(this).is(":checked")) {
-			$('#submitOrder').removeClass('disabled');
-		}else{
-			$('#submitOrder').addClass('disabled');
+		else {
+			if (value >= 1 && value <= 12) {
+				return true;
+			}
+			else {
+				return false;
+			}
 		}
-	});
-	function check(){
-		$("#terms").prop('checked', true);
-		$('#submitOrder').removeClass('disabled');
 	}
+    $('#card-form').form({
+        inline : true,
+        fields: {
+            name: {
+                identifier: 'name',
+                rules: [
+                    {
+                        type   : 'empty',
+                        prompt : '<?php echo e(__("form.Please enter your name")); ?>'
+                    },
+                    {
+                        type   : 'maxLength[191]',
+                        prompt : '<?php echo e(__("form.Please enter at most 191 characters")); ?>'
+                    }
+                ]
+            },
+            surname: {
+                identifier: 'surname',
+                rules: [
+                    {
+                        type   : 'empty',
+                        prompt : '<?php echo e(__("form.Please enter your surname")); ?>'
+                    },
+                    {
+                        type   : 'maxLength[191]',
+                        prompt : '<?php echo e(__("form.Please enter at most 191 characters")); ?>'
+                    }
+                ]
+            },
+            country: {
+                identifier: 'country',
+                rules: [
+                    {
+                        type   : 'empty',
+                        prompt : '<?php echo e(__("form.Please select a country")); ?>'
+                    }
+                ]
+            },
+            terms: {
+                identifier: 'terms',
+                rules: [
+                    {
+                        type   : 'checked',
+                        prompt : '<?php echo e(__("form.Please agree terms of service")); ?>'
+                    }
+                ]
+            },
+            card_number: {
+            	identifier: 'card_number',
+            	rules: [
+            		{
+            			type   : 'creditCard',
+            			prompt : '<?php echo e(__("form.Card number is wrong")); ?>'
+            		}
+            	]
+            },
+            card_holders_name: {
+                identifier: 'card_holders_name',
+                rules: [
+                    {
+                        type   : 'empty',
+                        prompt : '<?php echo e(__("form.Please enter a value")); ?>'
+                    },
+                    {
+                        type   : 'maxLength[191]',
+                        prompt : '<?php echo e(__("form.Please enter at most 191 characters")); ?>'
+                    }
+                ]
+            },
+            expired_month: {
+                identifier: 'expired_month',
+                rules: [
+                    {
+                        type   : 'month',
+                        prompt : '<?php echo e(__("form.Please enter a valid expiry date")); ?>',
+                    },
+                    {
+                        type   : 'exactLength[2]',
+                        prompt : '<?php echo e(__("form.Please enter a valid expiry date")); ?>'
+                    },
+                ]
+            },
+            expired_year: {
+                identifier: 'expired_year',
+                rules: [
+                    {
+                        type   : 'integer[<?php echo e(date("y")); ?>..99]',
+                        prompt : '<?php echo e(__("form.Please enter a valid expiry date")); ?>'
+                    },
+                    {
+                        type   : 'exactLength[2]',
+                        prompt : '<?php echo e(__("form.Please enter a valid expiry date")); ?>'
+                    },
+                ]
+            },
+            cvc: {
+                identifier: 'cvc',
+                rules: [
+                    {
+                        type   : 'number',
+                        prompt : '<?php echo e(__("form.Please enter a valid CVC")); ?>'
+                    },
+                    {
+                        type   : 'exactLength[3]',
+                        prompt : '<?php echo e(__("form.Please enter a valid CVC")); ?>'
+                    },
+                ]
+            },
+        },
+        onSuccess: function() {
+        	var value = $('#request').val();
+        	$('#card-form').find('[name=request]').val(value);
+			$('#submitOrder').addClass('loading disabled');
+        }
+    });
 </script>
 <?php $__env->stopPush(); ?>
 <?php echo $__env->make('layouts.app', array_except(get_defined_vars(), array('__data', '__path')))->render(); ?>

@@ -206,4 +206,7 @@ return [
     'You havent ordered yet' => 'Та одоогоор захиалга хийгээгүй байна',
     'Book now' => 'Захиалах',
     "Sorry, we couldn't find that page" => "Таны хайсан хуудас олдсонгүй",
+    'Special requests' => 'Хүсэлт',
+    'Please write your requests in English' => 'Захиалгын хүсэлтээ энд бичнэ үү',
+    'Personal information' => 'Хувийн мэдээлэл',
 ];

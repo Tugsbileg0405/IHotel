@@ -95,7 +95,7 @@
 }
 
 .card-js .expiry-wrapper .expiry {
-    padding-left: 38px
+    padding-left: 38px !important
 }
 
 .card-js .icon {
@@ -217,7 +217,7 @@
 .card-js input.card-number,
 .card-js input.cvc,
 .card-js input.name {
-    padding-left: 38px;
+    padding-left: 38px !important;
     width: 100%
 }
 

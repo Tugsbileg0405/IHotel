@@ -40,14 +40,25 @@
                     <input type="file" name="photo" style="display: none">
                 </div>
             </div>
-		    <div class="field">
-		    	<label>{{ __('messages.Sex') }}</label>
-		    	<select class="ui fluid dropdown" name="gender">
-		    		<option value="">{{ __('messages.Choose a sex') }}!</option>
-	    			<option value="female" {{ Auth::user()->gender == 'female' ? 'selected':'' }}>{{ __('messages.Female') }}</option>
-	    			<option value="male" {{ Auth::user()->gender == 'male' ? 'selected':'' }}>{{ __('messages.Male') }}</option>
-		    	</select>
-			</div>
+            <div class="two fields">
+    		    <div class="field">
+    		    	<label>{{ __('messages.Sex') }}</label>
+    		    	<select class="ui fluid dropdown" name="gender">
+    		    		<option value="">{{ __('messages.Choose a sex') }}!</option>
+    	    			<option value="female" {{ Auth::user()->gender == 'female' ? 'selected':'' }}>{{ __('messages.Female') }}</option>
+    	    			<option value="male" {{ Auth::user()->gender == 'male' ? 'selected':'' }}>{{ __('messages.Male') }}</option>
+    		    	</select>
+    			</div>
+                <div class="field">
+                    <label>Country</label>
+                    <select class="ui fluid dropdown" name="country">
+                            <option value="">Select country</option>
+                            @foreach($countries as $country)
+                                <option value="{{ $country }}" {{ Auth::user()->country == $country ? 'selected' : '' }}>{{ $country }}</option>
+                            @endforeach
+                    </select>
+                </div>
+            </div>
 			<div class="two fields">
 				<div class="field">
 					<label>{{ __('messages.Phone') }}</label>
@@ -121,15 +132,6 @@
                         type: 'email',
                         prompt: '{{ __("form.Please enter your email") }}'
                     },
-                    {
-                        type   : 'maxLength[191]',
-                        prompt : '{{ __("form.Please enter at most 191 characters") }}'
-                    }
-                ]
-            },
-            country: {
-                identifier: 'country',
-                rules: [
                     {
                         type   : 'maxLength[191]',
                         prompt : '{{ __("form.Please enter at most 191 characters") }}'

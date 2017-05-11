@@ -16,4 +16,5 @@ return [
     'Please select a score' => 'Оноо сонгоно уу',
     'Card number is wrong' => 'Картын дугаар буруу байна.',
     'Please enter a valid expiry date' => 'Картын хугацаа дууссан байна.',
+    'Please enter a valid CVC' => 'CVC буруу байна',
 ];
