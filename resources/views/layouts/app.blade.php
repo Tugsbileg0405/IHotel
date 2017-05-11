@@ -21,7 +21,6 @@
     <link rel="stylesheet" href="{{ asset('css/jssocials-theme-flat.css') }}">
     <link rel="stylesheet" href="{{ asset('css/lightgallery.min.css') }}">
     <link rel="stylesheet" href="{{ asset('css/magnific-popup.css') }}">
-    <link rel="stylesheet" href="{{ asset('css/card-js.min.css') }}">
     <script src="{{ asset('js/jquery-2.1.4.min.js') }}"></script>
     <script src="{{ asset('dist/semantic.min.js') }}"></script>
     <script>
@@ -46,7 +45,6 @@
     <script src="{{ asset('js/iframe-content.js') }}"></script>
     <script src="{{ asset('js/main.js') }}"></script>
     <script src="{{ asset('js/app.js') }}"></script>
-    <script src="{{ asset('js/card.js') }}"></script>
     <script src="{{ asset('js/chosen.jquery.js') }}"></script>
     <script src="{{ asset('js/nouislider.min.js') }}"></script>
     <script src="{{ asset('js/lodash.js') }}"></script>

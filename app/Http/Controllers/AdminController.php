@@ -153,6 +153,9 @@ class AdminController extends Controller
 		if (\Auth::user()->hotels->contains($room->hotel_id) OR \Auth::user()->isAdmin()) {
 			$sale = new \App\Sale;
 			$sale->price = $request->get('price');
+			if ($room->people_number > 1) {
+				$sale->price_op = $request->get('price_op');
+			}
 			$sale->startdate = $request->get('startdate');
 			$sale->enddate = $request->get('enddate');
 			$room->sales()->save($sale);

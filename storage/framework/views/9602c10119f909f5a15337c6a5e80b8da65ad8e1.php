@@ -82,9 +82,20 @@
 																	<input type="hidden" name="enddate">
 																</div>
 															</div>
-															<div class="field" id="checked-input-<?php echo e($room->id); ?>">
-																<input type="text" name="price" placeholder="Үнэ (₮)" disabled="true">
-															</div>
+															<?php if($room->price_op): ?>
+																<div class="two fields">
+																	<div class="field" id="checked-input-<?php echo e($room->id); ?>">
+																		<input type="text" name="price" placeholder="Үнэ (₮)" disabled="true">
+																	</div>
+																	<div class="field" id="checked-input-<?php echo e($room->id); ?>">
+																		<input type="text" name="price_op" placeholder="Үнэ - 1 Хүний (₮)" disabled="true">
+																	</div>
+																</div>
+															<?php else: ?>
+																<div class="field" id="checked-input-<?php echo e($room->id); ?>">
+																	<input type="text" name="price" placeholder="Үнэ (₮)" disabled="true">
+																</div>
+															<?php endif; ?>
 															<div class="field">
 																<button class="ui red button" type="submit">Хадгалах</button>
 															</div>

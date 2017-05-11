@@ -46,12 +46,10 @@
 						<label>Хүний тоо</label>
 						<input type="text" name="people_number">
 					</div>
-					<div class="two fields">
-						<div class="required field">
-							<label>Өрөөний үнэ</label>
-							<input type="text" name="price" placeholder="₮">
-						</div>
-						<div class="field">
+					<div class="required field">
+						<label>Өрөөний үнэ</label>
+						<input type="text" name="price" placeholder="₮">
+						<div class="disabled field">
 							<label>Өрөөний үнэ (1 хүний)</label>
 							<input type="text" name="price_op" placeholder="₮">
 						</div>
@@ -175,6 +173,14 @@
 
 @push('script')
 <script type="text/javascript">
+	$('[name=people_number]').keyup(function() {
+		if ($(this).val() > 1) {
+			$('[name=price_op]').closest('.field').removeClass('disabled');
+		}
+		else {
+			$('[name=price_op]').closest('.field').addClass('disabled');
+		}
+	});
 	$('.open-EditModal').click(function(e) {
 		var rooms = <?php echo json_encode($rooms) ?>;
 		var key = $(this).data('key');

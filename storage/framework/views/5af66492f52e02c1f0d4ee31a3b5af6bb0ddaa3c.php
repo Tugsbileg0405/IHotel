@@ -45,12 +45,10 @@
 						<label>Хүний тоо</label>
 						<input type="text" name="people_number">
 					</div>
-					<div class="two fields">
-						<div class="required field">
-							<label>Өрөөний үнэ</label>
-							<input type="text" name="price" placeholder="₮">
-						</div>
-						<div class="field">
+					<div class="required field">
+						<label>Өрөөний үнэ</label>
+						<input type="text" name="price" placeholder="₮">
+						<div class="disabled field">
 							<label>Өрөөний үнэ (1 хүний)</label>
 							<input type="text" name="price_op" placeholder="₮">
 						</div>
@@ -178,6 +176,14 @@
 
 <?php $__env->startPush('script'); ?>
 <script type="text/javascript">
+	$('[name=people_number]').keyup(function() {
+		if ($(this).val() > 1) {
+			$('[name=price_op]').closest('.field').removeClass('disabled');
+		}
+		else {
+			$('[name=price_op]').closest('.field').addClass('disabled');
+		}
+	});
 	$('.open-EditModal').click(function(e) {
 		var rooms = <?php echo json_encode($rooms) ?>;
 		var key = $(this).data('key');
@@ -216,7 +222,7 @@
 		                prompt : 'Өрөөний тоо оруулна уу'
 	                },
 	                {
-		                type   : 'integer[1..1000000000]',
+		                type   : 'integer[1..9999999999]',
 		                prompt : 'Өрөөний тоо оруулна уу'
 	                },
 	                {
@@ -242,7 +248,7 @@
 		                prompt : 'Орны тоо оруулна уу'
 	                },
 	                {
-		                type   : 'integer[1..1000000000]',
+		                type   : 'integer[1..9999999999]',
 		                prompt : 'Орны тоо оруулна уу'
 	                },
 	                {
@@ -259,7 +265,7 @@
 		                prompt : 'Хүний тоо оруулна уу'
 	                },
 	                {
-		                type   : 'integer[1..1000000000]',
+		                type   : 'integer[1..9999999999]',
 		                prompt : 'Хүний тоо оруулна уу'
 	                },
 	                {
@@ -276,7 +282,7 @@
 		                prompt : 'Өрөөний үнэ оруулна уу'
 	                },
 	                {
-		                type   : 'integer[1..1000000000]',
+		                type   : 'integer[1..9999999999]',
 		                prompt : 'Өрөөний үнэ оруулна уу'
 	                },
 	                {
@@ -289,7 +295,7 @@
 	            identifier: 'price_op',
 	            rules: [
 	                {
-		                type   : 'integer[1..1000000000]',
+		                type   : 'integer[1..9999999999]',
 		                prompt : 'Өрөөний үнэ оруулна уу'
 	                },
 	                {
@@ -343,7 +349,7 @@
 		                prompt : 'Өрөөний тоо оруулна уу'
 	                },
 	                {
-		                type   : 'integer[1..1000000000]',
+		                type   : 'integer[1..9999999999]',
 		                prompt : 'Өрөөний тоо оруулна уу'
 	                },
 	                {
@@ -369,7 +375,7 @@
 		                prompt : 'Орны тоо оруулна уу'
 	                },
 	                {
-		                type   : 'integer[1..1000000000]',
+		                type   : 'integer[1..9999999999]',
 		                prompt : 'Орны тоо оруулна уу'
 	                },
 	                {
@@ -386,7 +392,7 @@
 		                prompt : 'Хүний тоо оруулна уу'
 	                },
 	                {
-		                type   : 'integer[1..1000000000]',
+		                type   : 'integer[1..9999999999]',
 		                prompt : 'Хүний тоо оруулна уу'
 	                },
 	                {
@@ -412,7 +418,7 @@
 	            identifier: 'price_op',
 	            rules: [
 	                {
-		                type   : 'integer[1..1000000000]',
+		                type   : 'integer[1..9999999999]',
 		                prompt : 'Өрөөний үнэ оруулна уу'
 	                },
 	                {

@@ -169,10 +169,10 @@
 											</table>
 										</div>
 										<div class="ui form">
-											<h4 class="ui header">Special requests</h4>
+											<h4 class="ui header"><?php echo e(__('messages.Special requests')); ?></h4>
 											<div class="ui divider"></div>
 											<div class="field">
-												<label>Please write your requests in English</label>
+												<label><?php echo e(__('messages.Please write your requests in English')); ?></label>
 												<textarea id="request"></textarea>
 											</div>
 										</div>
@@ -183,37 +183,37 @@
 										<form id="card-form" class="ui form" action="<?php echo e(url('order/card/store')); ?>" method="POST">
 											<?php echo e(csrf_field()); ?>
 
-											<h4 class="ui header">Хувийн мэдээлэл</h4>
+											<h4 class="ui header"><?php echo e(__('messages.Personal information')); ?></h4>
 											<div class="ui divider"></div>
 											<div class="two fields">
 												<div class="required field">
-													<label>Name</label>
-													<input type="text" name="name" placeholder="Name" value="<?php echo e(Auth::user()->name); ?>">
+													<label><?php echo e(__('messages.Name')); ?></label>
+													<input type="text" name="name" placeholder="<?php echo e(__('messages.Name')); ?>" value="<?php echo e(Auth::user()->name); ?>">
 												</div>
 												<div class="required field">
-													<label>Surname</label>
-													<input type="text" name="surname" placeholder="Surname" value="<?php echo e(Auth::user()->surname); ?>">
+													<label><?php echo e(__('messages.Surname')); ?></label>
+													<input type="text" name="surname" placeholder="<?php echo e(__('messages.Surname')); ?>" value="<?php echo e(Auth::user()->surname); ?>">
 												</div>
 											</div>
 											<div class="two fields">
 												<div class="required field">
-													<label>Country</label>
+													<label><?php echo e(__('messages.Country')); ?></label>
 													<select class="ui fluid dropdown" name="country">
-															<option value="">Select country</option>
+															<option value=""><?php echo e(__('messages.Country')); ?></option>
 															<?php $__currentLoopData = $countries; $__env->addLoop($__currentLoopData); foreach($__currentLoopData as $country): $__env->incrementLoopIndices(); $loop = $__env->getLastLoop(); ?>
 																<option value="<?php echo e($country); ?>" <?php echo e(Auth::user()->country == $country ? 'selected' : ''); ?>><?php echo e($country); ?></option>
 															<?php endforeach; $__env->popLoop(); $loop = $__env->getLastLoop(); ?>
 													</select>
 												</div>
 												<div class="field">
-													<label>Phone</label>
-													<input type="text" name="phone_number" placeholder="Phone" value="<?php echo e(Auth::user()->phone_number); ?>">
+													<label><?php echo e(__('messages.Phone')); ?></label>
+													<input type="text" name="phone_number" placeholder="<?php echo e(__('messages.Phone')); ?>" value="<?php echo e(Auth::user()->phone_number); ?>">
 												</div>
 											</div>
 											<h4 class="ui header"><?php echo e(__('messages.Credit card information')); ?></h4>
 											<div class="ui divider"></div>
 											<div class="field">
-												<label>Нийт дүн / Total Price</label>
+												<label><?php echo e(__('messages.Total Price')); ?></label>
 												<?php if(App::isLocale('mn')): ?> 
 													<input type="text" name="total" value="<?php echo e(number_format($price)); ?> ₮" disabled="">
 												<?php elseif(App::isLocale('en')): ?>
@@ -410,7 +410,7 @@
         onSuccess: function() {
         	var value = $('#request').val();
         	$('#card-form').find('[name=request]').val(value);
-			$('#submitOrder').addClass('loading disabled');
+			$('#card-form').find('button[type=submit]').addClass('loading disabled');
         }
     });
 </script>

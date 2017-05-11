@@ -70,7 +70,7 @@
 			</div>
 			<div class="required field">
 				<label>Өрөөний тоо</label>
-				<input type="number" name="room_number" min="1">
+				<input type="text" name="room_number">
 			</div>
 		</div>
 		<div class="field">
@@ -211,7 +211,7 @@
 	                    prompt : 'Өрөөний тоо оруулна уу'
 	                },
 	                {
-	                    type   : 'integer',
+	                    type   : 'integer[1..999999]',
 	                    prompt : 'Өрөөний тоо оруулна уу'
 	                },
 	                {

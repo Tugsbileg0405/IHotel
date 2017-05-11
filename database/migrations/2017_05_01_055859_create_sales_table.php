@@ -17,6 +17,7 @@ class CreateSalesTable extends Migration
             $table->increments('id');
             $table->integer('room_id');
             $table->integer('price');
+            $table->integer('price_op')->nullable()->default(null);
             $table->date('startdate');
             $table->date('enddate');
             $table->timestamps();

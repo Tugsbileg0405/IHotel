@@ -627,7 +627,7 @@
                                         </div>\
                                         <div class='block right'>\
                                             <div class='price'>\
-                                                <h4>" + numeral(lowest/rating).format('0,0.00') + "$</h4>\
+                                                <h4>" + numeral(lowest/rating).format('0,0') + "$</h4>\
                                             </div>\
                                             <div class='room-name' >\
                                                 <a href='" + url + "' style='color:white' target='_blank'>\
