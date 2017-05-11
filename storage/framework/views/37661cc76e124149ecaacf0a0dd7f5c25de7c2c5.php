@@ -22,7 +22,7 @@
                 <?php if(Auth::user()): ?>
                     <li>
                         <a href="<?php echo e(url('profile')); ?>">
-                            <i class="user icon"></i><?php echo e(Auth::user()->name); ?>
+                            <i class="user icon"></i><?php echo e(Auth::user()->name ? Auth::user()->name : Auth::user()->email); ?>
 
                         </a>
                     </li>
@@ -101,21 +101,7 @@
                     <?php echo e(csrf_field()); ?>
 
                     <div class="field">
-                        <input type="text" name="name" placeholder="<?php echo e(__('messages.Name')); ?>">
-                    </div>
-                    <div class="field">
-                        <input type="text" name="surname" placeholder="<?php echo e(__('messages.Surname')); ?>">
-                    </div>
-                    <div class="field">
                         <input type="email" name="email" placeholder="<?php echo e(__('messages.Email')); ?>">
-                    </div>
-                    <div class="field">
-                        <select class="ui dropdown" name="country">
-                            <option value=""><?php echo e(__('messages.Country')); ?></option>
-                            <?php $__currentLoopData = $countries; $__env->addLoop($__currentLoopData); foreach($__currentLoopData as $country): $__env->incrementLoopIndices(); $loop = $__env->getLastLoop(); ?>
-                                <option value="<?php echo e($country); ?>"><?php echo e($country); ?></option>
-                            <?php endforeach; $__env->popLoop(); $loop = $__env->getLastLoop(); ?>
-                        </select>
                     </div>
                     <div class="field">
                         <input type="password" name="password" placeholder="<?php echo e(__('messages.Password')); ?>">
@@ -195,32 +181,6 @@
     }).form({
         inline: true,
         fields: {
-            name: {
-                identifier: 'name',
-                rules: [
-                    {
-                        type: 'empty',
-                        prompt: '<?php echo e(__("form.Please enter your name")); ?>'
-                    },
-                    {
-                        type   : 'maxLength[191]',
-                        prompt : '<?php echo e(__("form.Please enter at most 191 characters")); ?>'
-                    }
-                ]
-            },
-            surname: {
-                identifier: 'surname',
-                rules: [
-                    {
-                        type: 'empty',
-                        prompt: '<?php echo e(__("form.Please enter your surname")); ?>'
-                    },
-                    {
-                        type   : 'maxLength[191]',
-                        prompt : '<?php echo e(__("form.Please enter at most 191 characters")); ?>'
-                    }
-                ]
-            },
             email: {
                 identifier: 'email',
                 rules: [
@@ -232,15 +192,6 @@
                         type   : 'maxLength[191]',
                         prompt : '<?php echo e(__("form.Please enter at most 191 characters")); ?>'
                     }
-                ]
-            },
-            country: {
-                identifier: 'country',
-                rules: [
-                    {
-                        type: 'empty',
-                        prompt: '<?php echo e(__("form.Please select a country")); ?>'
-                    },
                 ]
             },
             password: {

@@ -37,43 +37,11 @@
 
                                             <img class="ui centered tiny image hotel-add" src="<?php echo e(asset('img/marker.png')); ?>">
                                             <h6 class="ui horizontal header divider ihotel-title"><?php echo e(__('messages.Register')); ?></h6>
-                                            <div class="field<?php echo e($errors->has('name') ? ' error' : ''); ?>">
-                                                <input type="text" name="name" placeholder="<?php echo e(__('messages.Name')); ?>" value="<?php echo e(old('name')); ?>">
-                                                <?php if($errors->has('name')): ?>
-                                                    <div class="ui basic red pointing prompt label transition visible">
-                                                        <?php echo e($errors->first('name')); ?>
-
-                                                    </div>
-                                                <?php endif; ?>
-                                            </div>
-                                            <div class="field<?php echo e($errors->has('surname') ? ' error' : ''); ?>">
-                                                <input type="text" name="surname" placeholder="<?php echo e(__('messages.Surname')); ?>" value="<?php echo e(old('surname')); ?>">
-                                                <?php if($errors->has('surname')): ?>
-                                                    <div class="ui basic red pointing prompt label transition visible">
-                                                        <?php echo e($errors->first('surname')); ?>
-
-                                                    </div>
-                                                <?php endif; ?>
-                                            </div>
                                             <div class="field<?php echo e($errors->has('email') ? ' error' : ''); ?>">
                                                 <input type="email" name="email" placeholder="<?php echo e(__('messages.Email')); ?>" value="<?php echo e(old('email')); ?>">
                                                 <?php if($errors->has('email')): ?>
                                                     <div class="ui basic red pointing prompt label transition visible">
                                                         <?php echo e($errors->first('email')); ?>
-
-                                                    </div>
-                                                <?php endif; ?>
-                                            </div>
-                                            <div class="field<?php echo e($errors->has('country') ? ' error' : ''); ?>">
-                                                <select class="ui dropdown" name="country">
-                                                    <option value=""><?php echo e(__('messages.Country')); ?></option>
-                                                    <?php $__currentLoopData = $countries; $__env->addLoop($__currentLoopData); foreach($__currentLoopData as $country): $__env->incrementLoopIndices(); $loop = $__env->getLastLoop(); ?>
-                                                        <option value="<?php echo e($country); ?>" <?php echo e(old('country') == $country ? 'selected' : ''); ?>><?php echo e($country); ?></option>
-                                                    <?php endforeach; $__env->popLoop(); $loop = $__env->getLastLoop(); ?>
-                                                </select>
-                                                <?php if($errors->has('country')): ?>
-                                                    <div class="ui basic red pointing prompt label transition visible">
-                                                        <?php echo e($errors->first('country')); ?>
 
                                                     </div>
                                                 <?php endif; ?>

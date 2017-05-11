@@ -15,8 +15,8 @@ class CreateUsersTable extends Migration
     {
         Schema::create('users', function (Blueprint $table) {
             $table->increments('id');
-            $table->string('name');
-            $table->string('surname');
+            $table->string('name')->nullable()->default(null);
+            $table->string('surname')->nullable()->default(null);
             $table->string('email')->unique();
             $table->string('password');
             $table->boolean('is_admin')->default(false);
@@ -29,11 +29,8 @@ class CreateUsersTable extends Migration
         });
 
         \App\User::create([
-            'name' => 'Админ',
-            'surname' => 'Супер',
             'email' => 'info@ihotel.mn',
             'is_admin' => true,
-            'country' => 'Mongolia',
             'password' => bcrypt('123456'),
         ]);
 

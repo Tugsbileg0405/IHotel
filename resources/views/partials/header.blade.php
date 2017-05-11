@@ -20,7 +20,7 @@
                 @if (Auth::user())
                     <li>
                         <a href="{{ url('profile') }}">
-                            <i class="user icon"></i>{{ Auth::user()->name }}
+                            <i class="user icon"></i>{{ Auth::user()->name ? Auth::user()->name : Auth::user()->email }}
                         </a>
                     </li>
                     <li>
@@ -94,21 +94,7 @@
                 <form class="ui form" id="register-form">
                     {{ csrf_field() }}
                     <div class="field">
-                        <input type="text" name="name" placeholder="{{ __('messages.Name') }}">
-                    </div>
-                    <div class="field">
-                        <input type="text" name="surname" placeholder="{{ __('messages.Surname') }}">
-                    </div>
-                    <div class="field">
                         <input type="email" name="email" placeholder="{{ __('messages.Email') }}">
-                    </div>
-                    <div class="field">
-                        <select class="ui dropdown" name="country">
-                            <option value="">{{ __('messages.Country') }}</option>
-                            @foreach ($countries as $country)
-                                <option value="{{ $country }}">{{ $country }}</option>
-                            @endforeach
-                        </select>
                     </div>
                     <div class="field">
                         <input type="password" name="password" placeholder="{{ __('messages.Password') }}">
@@ -187,32 +173,6 @@
     }).form({
         inline: true,
         fields: {
-            name: {
-                identifier: 'name',
-                rules: [
-                    {
-                        type: 'empty',
-                        prompt: '{{ __("form.Please enter your name") }}'
-                    },
-                    {
-                        type   : 'maxLength[191]',
-                        prompt : '{{ __("form.Please enter at most 191 characters") }}'
-                    }
-                ]
-            },
-            surname: {
-                identifier: 'surname',
-                rules: [
-                    {
-                        type: 'empty',
-                        prompt: '{{ __("form.Please enter your surname") }}'
-                    },
-                    {
-                        type   : 'maxLength[191]',
-                        prompt : '{{ __("form.Please enter at most 191 characters") }}'
-                    }
-                ]
-            },
             email: {
                 identifier: 'email',
                 rules: [
@@ -224,15 +184,6 @@
                         type   : 'maxLength[191]',
                         prompt : '{{ __("form.Please enter at most 191 characters") }}'
                     }
-                ]
-            },
-            country: {
-                identifier: 'country',
-                rules: [
-                    {
-                        type: 'empty',
-                        prompt: '{{ __("form.Please select a country") }}'
-                    },
                 ]
             },
             password: {

@@ -17,11 +17,11 @@
 			<?php echo e(method_field('PUT')); ?>
 
 			<div class="two fields">
-				<div class="required field">
+				<div class="field">
 					<label><?php echo e(__('messages.Surname')); ?></label>
 					<input type="text" name="surname" placeholder="<?php echo e(__('messages.Surname')); ?>" value="<?php echo e(Auth::user()->surname); ?>">
 				</div>
-				<div class="required field">
+				<div class="field">
 					<label><?php echo e(__('messages.Name')); ?></label>
 					<input type="text" name="name" placeholder="<?php echo e(__('messages.Name')); ?>" value="<?php echo e(Auth::user()->name); ?>">
 				</div>
@@ -92,7 +92,6 @@
             $(segment).removeClass('loading disabled');
             $(this).val('');
             $('<div class="ui warning message">Алдаа гарлаа</div>').appendTo(segment);
-
         });
     });
     $('.ui.form').form({
@@ -102,10 +101,6 @@
                 identifier: 'name',
                 rules: [
                     {
-                        type: 'empty',
-                        prompt: '<?php echo e(__("form.Please enter your name")); ?>'
-                    },
-                    {
                         type   : 'maxLength[191]',
                         prompt : '<?php echo e(__("form.Please enter at most 191 characters")); ?>'
                     }
@@ -114,10 +109,6 @@
             surname: {
                 identifier: 'surname',
                 rules: [
-                    {
-                        type: 'empty',
-                        prompt: '<?php echo e(__("form.Please enter your surname")); ?>'
-                    },
                     {
                         type   : 'maxLength[191]',
                         prompt : '<?php echo e(__("form.Please enter at most 191 characters")); ?>'
@@ -141,9 +132,14 @@
                 identifier: 'country',
                 rules: [
                     {
-                        type: 'empty',
-                        prompt: '<?php echo e(__("form.Please enter your country")); ?>'
-                    },
+                        type   : 'maxLength[191]',
+                        prompt : '<?php echo e(__("form.Please enter at most 191 characters")); ?>'
+                    }
+                ]
+            },
+            phone_number: {
+                identifier: 'phone_number',
+                rules: [
                     {
                         type   : 'maxLength[191]',
                         prompt : '<?php echo e(__("form.Please enter at most 191 characters")); ?>'

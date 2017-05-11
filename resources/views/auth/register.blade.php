@@ -38,40 +38,11 @@
                                             {{ csrf_field() }}
                                             <img class="ui centered tiny image hotel-add" src="{{ asset('img/marker.png') }}">
                                             <h6 class="ui horizontal header divider ihotel-title">{{ __('messages.Register') }}</h6>
-                                            <div class="field{{ $errors->has('name') ? ' error' : '' }}">
-                                                <input type="text" name="name" placeholder="{{ __('messages.Name') }}" value="{{ old('name') }}">
-                                                @if ($errors->has('name'))
-                                                    <div class="ui basic red pointing prompt label transition visible">
-                                                        {{ $errors->first('name') }}
-                                                    </div>
-                                                @endif
-                                            </div>
-                                            <div class="field{{ $errors->has('surname') ? ' error' : '' }}">
-                                                <input type="text" name="surname" placeholder="{{ __('messages.Surname') }}" value="{{ old('surname') }}">
-                                                @if ($errors->has('surname'))
-                                                    <div class="ui basic red pointing prompt label transition visible">
-                                                        {{ $errors->first('surname') }}
-                                                    </div>
-                                                @endif
-                                            </div>
                                             <div class="field{{ $errors->has('email') ? ' error' : '' }}">
                                                 <input type="email" name="email" placeholder="{{ __('messages.Email') }}" value="{{ old('email') }}">
                                                 @if ($errors->has('email'))
                                                     <div class="ui basic red pointing prompt label transition visible">
                                                         {{ $errors->first('email') }}
-                                                    </div>
-                                                @endif
-                                            </div>
-                                            <div class="field{{ $errors->has('country') ? ' error' : '' }}">
-                                                <select class="ui dropdown" name="country">
-                                                    <option value="">{{ __('messages.Country') }}</option>
-                                                    @foreach ($countries as $country)
-                                                        <option value="{{ $country }}" {{ old('country') == $country ? 'selected' : '' }}>{{ $country }}</option>
-                                                    @endforeach
-                                                </select>
-                                                @if ($errors->has('country'))
-                                                    <div class="ui basic red pointing prompt label transition visible">
-                                                        {{ $errors->first('country') }}
                                                     </div>
                                                 @endif
                                             </div>
@@ -113,32 +84,6 @@
     $('#register').form({
         inline: true,
         fields: {
-            name: {
-                identifier: 'name',
-                rules: [
-                    {
-                        type: 'empty',
-                        prompt: '{{ __("form.Please enter your name") }}'
-                    },
-                    {
-                        type   : 'maxLength[191]',
-                        prompt : '{{ __("form.Please enter at most 191 characters") }}'
-                    }
-                ]
-            },
-            surname: {
-                identifier: 'surname',
-                rules: [
-                    {
-                        type: 'empty',
-                        prompt: '{{ __("form.Please enter your surname") }}'
-                    },
-                    {
-                        type   : 'maxLength[191]',
-                        prompt : '{{ __("form.Please enter at most 191 characters") }}'
-                    }
-                ]
-            },
             email: {
                 identifier: 'email',
                 rules: [
@@ -150,15 +95,6 @@
                         type   : 'maxLength[191]',
                         prompt : '{{ __("form.Please enter at most 191 characters") }}'
                     }
-                ]
-            },
-            country: {
-                identifier: 'country',
-                rules: [
-                    {
-                        type: 'empty',
-                        prompt: '{{ __("form.Please select a country") }}'
-                    },
                 ]
             },
             password: {

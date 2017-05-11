@@ -222,7 +222,7 @@ class UserController extends Controller
 	public function showHotels()
 	{
 		$hotels = Auth::user()->hotels()
-			->paginate(10);
+			->paginate(20);
 
 		return view('profile.showHotel', [
 			'hotels' => $hotels,
