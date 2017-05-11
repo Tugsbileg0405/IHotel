@@ -206,7 +206,8 @@ class OrderController extends Controller
 
 		$price = $request->session()->get('order_price');
 
-		Mail::to($order->user->email)->send(new Order($order,$rooms,$price,Auth::user()));
+		Mail::to($order->user->email)->cc(env('MAIL_FROM_ADDRESS'))
+			->send(new Order($order,$rooms,$price,Auth::user()));
 
 
 		$request->session()->pull('order_hotelid');

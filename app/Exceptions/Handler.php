@@ -33,7 +33,7 @@ class Handler extends ExceptionHandler
     public function report(Exception $exception)
     {
         if($exception instanceof \Illuminate\Session\TokenMismatchException){
-            abort(500);
+            return redirect('/');
         }
 
         parent::report($exception);
