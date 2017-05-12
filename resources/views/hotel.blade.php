@@ -1,5 +1,7 @@
 @extends('layouts.app') 
+
 @section('title', 'iHotel') 
+
 @section('content')
 <div class="main-breadcrumb">
 	<div class="header-search">
