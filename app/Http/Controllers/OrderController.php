@@ -40,11 +40,41 @@ class OrderController extends Controller
 				->where('enddate', '>=', Carbon::parse($request->order_startdate)->format('Y-m-d'))
 				->first();
 
-			if ($sale) {
-				$price += $sale->price * $roomdata['room_number'];
+			if ($room->people_number > 1) {
+				if ($room->price_op) {
+					if ($roomdata['person_number'] > 1) {
+						if ($sale) {
+							$price += $sale->price * $roomdata['room_number'];
+						}
+						else {
+							$price += $room->price * $roomdata['room_number'];
+						}
+					}
+					else {
+						if ($sale) {
+							$price += $sale->price_op * $roomdata['room_number'];
+						}
+						else {
+							$price += $room->price_op * $roomdata['room_number'];
+						}
+					}
+				}
+				else {
+					if ($sale) {
+						$price += $sale->price * $roomdata['room_number'];
+					}
+					else {
+						$price += $room->price * $roomdata['room_number'];
+					}
+				}
 			}
 			else {
-				$price += $room->price * $roomdata['room_number'];
+				if ($sale) {
+					$price += $sale->price * $roomdata['room_number'];
+				}
+				else {
+					$price += $room->price * $roomdata['room_number'];
+				}
 			}
 		}
 
@@ -52,7 +82,7 @@ class OrderController extends Controller
 
 		$pickup = \App\Pickup::find($request->session()->get('order_pickup'));
 
-		if($pickup){
+		if ($pickup) {
 			$price = $price + $pickup->price;
 		}
 
@@ -81,19 +111,50 @@ class OrderController extends Controller
 		$orderday = $request->session()->get('order_day');
 
 		$rooms = [];
+
 		foreach ($roomdatas as $roomdata)
 		{
 			$room = \App\Room::findOrFail($roomdata['room_id']);
-
 			$sale = $room->sales()->where('startdate', '<=', date('Y-m-d', strtotime($startdate)))
 				->where('enddate', '>=', date('Y-m-d', strtotime($startdate)))
 				->first();
-
-			if ($sale) {
-				$room->saled_room = $sale;
+			if ($room->people_number > 1) {
+				if ($room->price_op) {
+					if ($roomdata['person_number'] > 1) {
+						if ($sale) {
+							$room->price = $sale->price;
+						}
+						else {
+							$room->price = $room->price;
+						}
+					}
+					else {
+						if ($sale) {
+							$room->price = $sale->price_op;
+						}
+						else {
+							$room->price = $room->price_op;
+						}
+					}
+				}
+				else {
+					if ($sale) {
+						$room->price = $sale->price;
+					}
+					else {
+						$room->price = $room->price;
+					}
+				}
+			}
+			else {
+				if ($sale) {
+					$room->price = $sale->price;
+				}
+				else {
+					$room->price = $room->price;
+				}
 			}
             $room->ordered_number = $roomdata['room_number'];
-
 			$rooms[] = $room;
 		}
 
@@ -144,21 +205,64 @@ class OrderController extends Controller
 		$array = [];
 		foreach ($roomdatas as $roomdata) {
 			$room = \App\Room::findOrFail($roomdata['room_id']);
+			$sale = $room->sales()->where('startdate', '<=', date('Y-m-d', strtotime($startdate)))
+				->where('enddate', '>=', date('Y-m-d', strtotime($startdate)))
+				->first();
+			if ($room->people_number > 1) {
+				if ($room->price_op) {
+					if ($roomdata['person_number'] > 1) {
+						if ($sale) {
+							$room->price = $sale->price;
+						}
+						else {
+							$room->price = $room->price;
+						}
+					}
+					else {
+						if ($sale) {
+							$room->price = $sale->price_op;
+						}
+						else {
+							$room->price = $room->price_op;
+						}
+					}
+				}
+				else {
+					if ($sale) {
+						$room->price = $sale->price;
+					}
+					else {
+						$room->price = $room->price;
+					}
+				}
+			}
+			else {
+				if ($sale) {
+					$room->price = $sale->price;
+				}
+				else {
+					$room->price = $room->price;
+				}
+			}
 			
 			if (\App::isLocale('en')) {
 				$array[] = [
 					'room_id' => $room->id,
 					'room_name' => $room->name,
+					'room_category' => $room->category->name,
 					'room_number' => $roomdata['room_number'],
 					'room_price' => $room->price / $rate,
+					'person_number' => $roomdata['person_number'],
 				];
 			}
 			else {
 				$array[] = [
 					'room_id' => $room->id,
 					'room_name' => $room->name,
+					'room_category' => $room->category->name,
 					'room_number' => $roomdata['room_number'],
 					'room_price' => $room->price,
+					'person_number' => $roomdata['person_number'],
 				];
 			}
 		}
@@ -190,23 +294,10 @@ class OrderController extends Controller
 		$order->number = 'PO-'.$id;
 		$order->save();
 
-		$rooms = [];
 		$order->total_room_number = 0;
 		foreach ($roomdatas as $roomdata)
 		{
-			$room = \App\Room::findOrFail($roomdata['room_id']);
-
-			$sale = $room->sales()->where('startdate', '<=', Carbon::parse($order->startdate)->format('Y-m-d'))
-				->where('enddate', '>=', Carbon::parse($order->startdate)->format('Y-m-d'))
-				->first();
-
-			if ($sale) {
-				$room->saled_room = $sale;
-			}
-            $room->ordered_number = $roomdata['room_number'];
-            $order->total_room_number += $room->ordered_number;
-
-			$rooms[] = $room;
+            $order->total_room_number += $roomdata['room_number'];
 
 			$close = new \App\Close;
 			$close->room_id = $roomdata['room_id'];
@@ -221,8 +312,7 @@ class OrderController extends Controller
 		$price = $request->session()->get('order_price');
 
 		Mail::to($order->user->email)->bcc(env('MAIL_FROM_ADDRESS'))
-			->send(new Order($order,$rooms,$price,Auth::user()));
-
+			->send(new Order($order));
 
 		$request->session()->pull('order_hotelid');
 		$request->session()->pull('order_roomdata');

@@ -38,7 +38,7 @@ class AppController extends Controller
             ->first();
         $hotel = Hotel::where('sale', true)
             ->where('published', true)
-            ->orderby('priority', 'desc')
+            ->orderby('priority', 'asc')
             ->first();
 
         $room = '';

@@ -105,31 +105,15 @@
 															<td>{{$room->name}}</td>
 															<td>{{$room->ordered_number}}</td>
 															@if (App::isLocale('mn')) 
-																@if($room->saled_room)
-																	<td>{{number_format($room->saled_room->price)}} ₮</td>
-																@else
-																	<td>{{number_format($room->price)}} ₮</td>
-																@endif
+																<td>{{number_format($room->price)}}₮</td>
 															@elseif (App::isLocale('en'))
-																@if($room->saled_room)
-																	<td>{{number_format($room->saled_room->price/$rate,2)}} ₮</td>
-																@else
-																	<td>{{number_format($room->price/$rate,2)}} $</td>
-																@endif
+																<td>${{number_format($room->price/$rate,2)}}</td>
 															@endif
 															<td>{{ $orderday }}</td>
 															@if (App::isLocale('mn')) 
-																@if($room->saled_room)
-																	<td>{{number_format($room->saled_room->price * $room->ordered_number * $orderday)}} ₮</td>
-																@else
-																	<td>{{number_format($room->price * $room->ordered_number * $orderday)}} ₮</td>
-																@endif
+																<td>{{number_format($room->price * $room->ordered_number * $orderday)}}₮</td>
 															@elseif (App::isLocale('en'))
-																@if($room->saled_room)
-																	<td>{{number_format($room->saled_room->price * $room->ordered_number * $orderday/$rate,2)}} $</td>
-																@else
-																	<td>{{number_format($room->price * $room->ordered_number * $orderday/$rate,2)}} $</td>
-																@endif
+																<td>${{number_format($room->price * $room->ordered_number * $orderday/$rate,2)}}</td>
 															@endif
 														</tr>
 													@endforeach

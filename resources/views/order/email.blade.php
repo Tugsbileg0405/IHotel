@@ -262,7 +262,7 @@
                                 @endif
                             </p>
                         </td>
-                        <td colspan="3" rowspan="{{ count($rooms) + 1 }}">
+                        <td colspan="3" rowspan="{{ count(unserialize($order->rooms)) + 1 }}">
                             <p>
                                 <strong>Contact us</strong>
                             </p>
@@ -275,25 +275,25 @@
                         </td>
                     </tr>
                 @endif
-                @foreach ($rooms as $key => $room)
+                @foreach (unserialize($order->rooms) as $key => $room)
                     <tr>
                         <td colspan="5">
                             <p>
                                 <strong>Guest name:</strong> {{ $order->user->name }} {{ $order->user->surname }}
                             </p>
                             <p>
-                                <strong>Room:</strong> {{ $room->name }}
+                                <strong>Room:</strong> {{ $room['room_name'] }}
                             </p>
                             <p>
-                                <strong>Bed Sizes:</strong> {{ $room->category->name }}
+                                <strong>Bed Sizes:</strong> {{ $room['room_category'] }}
                             </p>
                             <p>
-                                <strong>Number:</strong> {{ $room->ordered_number }}
+                                <strong>Number:</strong> {{ $room['room_number'] }}
                             </p>
                         </td>
                         @if (!unserialize($order->pickup))
                             @if ($key == 0)
-                                <td colspan="3" rowspan="{{ count($rooms) }}">
+                                <td colspan="3" rowspan="{{ count(unserialize($order->rooms)) }}">
                                     <p>
                                         <strong>Contact us</strong>
                                     </p>

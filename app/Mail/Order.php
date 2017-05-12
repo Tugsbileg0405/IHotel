@@ -19,12 +19,9 @@ class Order extends Mailable
      *
      * @return void
      */
-    public function __construct($order,$rooms,$price,$user)
+    public function __construct($order)
     {
         $this->order = $order;
-        $this->rooms = $rooms;
-        $this->price = $price;
-        $this->user = $user;
     }
 
     /**
@@ -36,9 +33,6 @@ class Order extends Mailable
     {
         return $this->subject('iHotel reservation details')->view('order.email')->with([
             'order' => $this->order,
-            'rooms' => $this->rooms,
-            'price' => $this->price,
-            'user' => $this->user,
         ]);
     }
 }
