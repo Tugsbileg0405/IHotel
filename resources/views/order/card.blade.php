@@ -377,10 +377,6 @@
                         type   : 'number',
                         prompt : '{{ __("form.Please enter a valid CVC") }}'
                     },
-                    {
-                        type   : 'exactLength[3]',
-                        prompt : '{{ __("form.Please enter a valid CVC") }}'
-                    },
                 ]
             },
         },
