@@ -115,6 +115,8 @@ class OrderController extends Controller
         if ($order->status == 1) {
             $order->status = 3;
             $order->save();
+
+            $order->closes()->delete();
         }
 
         return back();
