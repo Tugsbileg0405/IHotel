@@ -32,7 +32,7 @@ class OrderRequest extends FormRequest
             'card_holders_name' => 'required',
             'expired_month' => 'required|numeric|digits:2',
             'expired_year' => 'required|numeric|digits:2',
-            'cvc' => 'required|numeric|digits:4',
+            'cvc' => 'required|numeric',
             'request' => 'nullable',
         ];
     }
