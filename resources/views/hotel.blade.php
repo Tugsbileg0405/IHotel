@@ -395,23 +395,22 @@
 														@foreach($room->saled_room as $sale)
 															<div class="ui large header" id="price{{$key}}" data-price="{{$sale->price}}">
 																<!--<span class="sub header" style="text-decoration: line-through">{{number_format($room->price)}}₮/{{ __('messages.per night') }}</span>-->
-																<div><i class="icon male"></i><i class="icon male"></i>{{ number_format($sale->price)}}₮/{{ __('messages.per night') }}</div>
+																<div>@if($room->price_op AND $room->people_number == 2)<i class="icon male"></i><i class="icon male"></i>@endif{{ number_format($sale->price)}}₮/{{ __('messages.per night') }}</div>
 															</div>
 														@endforeach
 													@else
-														<div class="ui large header" id="price{{$key}}" data-price="{{$room->price}}"><i class="icon male"></i><i class="icon male"></i>{{number_format($room->price)}}₮/{{ __('messages.per night') }}</div>
+														<div class="ui large header" id="price{{$key}}" data-price="{{$room->price}}">@if($room->price_op AND $room->people_number == 2)<i class="icon male"></i><i class="icon male"></i>@endif{{number_format($room->price)}}₮/{{ __('messages.per night') }}</div>
 													@endif 
 												@elseif (App::isLocale('en')) 
 													@if($room->saled_room) 
 														@foreach($room->saled_room as $sale)
 														<div class="ui large header" id="price{{$key}}" data-price="{{$sale->price}}">
 															<!--<span  class="sub header" style="text-decoration: line-through">{{number_format($room->price/$rate,2)}}$/{{ __('messages.per night') }}</span>-->
-															<div><i class="icon male"></i><i class="icon male"></i>{{ number_format($sale->price/$rate,2)}}$/{{ __('messages.per night') }}
-															</div>
+															<div>@if($room->price_op AND $room->people_number == 2)<i class="icon male"></i><i class="icon male"></i>@endif{{ number_format($sale->price/$rate,2)}}$/{{ __('messages.per night') }}</div>
 														</div>
 														@endforeach 
 													@else
-														<div class="ui large header" id="price{{$key}}" data-price="{{$room->price}}"><i class="icon male"></i><i class="icon male"></i>{{number_format($room->price/$rate,2)}}$/{{ __('messages.per night') }}</div>
+														<div class="ui large header" id="price{{$key}}" data-price="{{$room->price}}">@if($room->price_op AND $room->people_number == 2)<i class="icon male"></i><i class="icon male"></i>@endif{{number_format($room->price/$rate,2)}}$/{{ __('messages.per night') }}</div>
 													@endif 
 												@endif
 												<p class="ui justify">

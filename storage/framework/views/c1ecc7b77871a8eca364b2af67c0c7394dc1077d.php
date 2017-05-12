@@ -384,10 +384,6 @@
                         type   : 'number',
                         prompt : '<?php echo e(__("form.Please enter a valid CVC")); ?>'
                     },
-                    {
-                        type   : 'exactLength[3]',
-                        prompt : '<?php echo e(__("form.Please enter a valid CVC")); ?>'
-                    },
                 ]
             },
         },
