@@ -284,7 +284,7 @@
 		           	data: $(this).serialize(),
 	            	context: this,
 		           	success: function(data) {
-		           		$(this).form('reset');
+		           		$(this).trigger('reset');
 		           		$(this).find('.dropdown').form('clear');
 		           		$(this).closest('.ui.grid').siblings('.closedRooms').html(data);
 		    			$(this).find('button').removeClass('loading disabled');
