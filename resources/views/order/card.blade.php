@@ -206,7 +206,7 @@
 											<h4 class="ui header">{{ __('messages.Credit card information') }}</h4>
 											<div class="ui divider"></div>
 											<div class="field">
-												<label>{{ __('messages.Total Price') }}</label>
+												<label>{{ __('messages.Total price') }}</label>
 												@if (App::isLocale('mn')) 
 													<input type="text" name="total" value="{{ number_format($price) }} ₮" disabled="">
 												@elseif (App::isLocale('en'))
@@ -215,33 +215,33 @@
 											</div>
 											<div class="field">
 												<div class="ui left icon input">
-													<input name="card_number" placeholder="Card number">
+													<input type="tel" name="card_number" placeholder="Card number" maxlength="19">
 													<i class="blue credit card alternative icon"></i>
 												</div>
 											</div>
 											<div class="field">
 												<div class="ui left icon input">
-													<input name="card_holders_name" placeholder="Name on card">
+													<input type="text" name="card_holders_name" placeholder="Name on card">
 													<i class="blue user icon"></i>
 												</div>
 											</div>
 											<div class="two fields">
 												<div class="field">
 													<div class="ui left icon input">
-														<input name="expired_month" placeholder="MM">
+														<input type="text" name="expired_month" placeholder="MM" maxlength="2">
 														<i class="blue calendar icon"></i>
 													</div>
 												</div>
 												<div class="field">
 													<div class="ui left icon input">
-														<input name="expired_year" placeholder="YY">
+														<input type="text" name="expired_year" placeholder="YY" maxlength="2">
 														<i class="blue calendar icon"></i>
 													</div>
 												</div>
 											</div>
 											<div class="field">
 												<div class="ui left icon input">
-													<input name="cvc" placeholder="CVC">
+													<input type="text" name="cvc" placeholder="CVC" maxlength="4">
 													<i class="blue lock icon"></i>
 												</div>
 											</div>
@@ -404,7 +404,23 @@
         	var value = $('#request').val();
         	$('#card-form').find('[name=request]').val(value);
 			$('#card-form').find('button[type=submit]').addClass('loading disabled');
-        }
+        },
+		onFailure: function(formErrors, fields) {
+			var element;
+			$.each(fields, function(e) {
+				element = $('[name=' + e + ']');
+				if(element.closest('.field').hasClass('error')) {
+					if (element.parent().hasClass('dropdown')) {
+						$(window).scrollTop(element.parent().offset().top - $(window).height() / 2);
+					}
+					else {
+						element.focus();
+					}
+					return false;
+				}
+			});
+			return false;
+		},
     });
 </script>
 @endpush

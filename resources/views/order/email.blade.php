@@ -45,16 +45,16 @@
             margin: 0 0 10px;
         }
         h1 {
-            font-size: 28px;
-        }
-        h2 {
             font-size: 24px;
         }
-        h3 {
+        h2 {
             font-size: 20px;
         }
+        h3 {
+            font-size: 28px;
+        }
         h4 {
-            font-size: 16px;
+            font-size: 15px;
         }
         h5 {
             font-size: 14px;

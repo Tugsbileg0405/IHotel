@@ -50,7 +50,7 @@
         <div class="ui container">
             <div class="ui stackable column grid">
                 <div class="five wide column">
-                    <div class="ui card">
+                    <div class="ui fluid card">
                         <div class="content">
                             <div class="right floated meta">
                                 <h4 class="ui sub header"></h4>
@@ -75,26 +75,26 @@
 
                     </a>
                     <div class="ui fluid vertical menu">
-                        <a class="item<?php echo e(Request::is('profile') ? ' active' : ''); ?>" href="<?php echo e(url('profile')); ?>">
+                        <a class="item<?php echo e(Request::is('profile') ? ' blue active' : ''); ?>" href="<?php echo e(url('profile')); ?>">
                             <?php echo e(__('messages.My posts')); ?>
 
-                            <div class="ui label"><?php echo e($postCount); ?></div>
+                            <div class="ui label<?php echo e(Request::is('profile') ? ' blue left pointing' : ''); ?>"><?php echo e($postCount); ?></div>
                         </a>
-                        <a class="item<?php echo e(Request::is('profile/orders') ? ' active' : ''); ?>" href="<?php echo e(url('profile/orders')); ?>">
+                        <a class="item<?php echo e(Request::is('profile/orders') ? ' blue active' : ''); ?>" href="<?php echo e(url('profile/orders')); ?>">
                             <?php echo e(__('messages.My orders')); ?>
 
-                            <div class="ui label"><?php echo e($orderCount); ?></div>
+                            <div class="ui label<?php echo e(Request::is('profile/orders') ? ' blue left pointing' : ''); ?>"><?php echo e($orderCount); ?></div>
                         </a>
-                        <a class="item<?php echo e(Request::is('profile/rate') ? ' active' : ''); ?>" href="<?php echo e(url('profile/rate')); ?>">
+                        <a class="item<?php echo e(Request::is('profile/rate') ? ' blue active' : ''); ?>" href="<?php echo e(url('profile/rate')); ?>">
                             <?php echo e(__('messages.Give a rating')); ?>
 
-                            <div class="ui label"><?php echo e($rateCount); ?></div>
+                            <div class="ui label<?php echo e(Request::is('profile/rate') ? ' blue left pointing' : ''); ?>"><?php echo e($rateCount); ?></div>
                         </a>
                         <?php if(Auth::user()->isHotelAdmin()): ?>
-                            <a class="item<?php echo e(Request::is('profile/hotels') ? ' active' : ''); ?>" href="<?php echo e(url('profile/hotels')); ?>">
+                            <a class="item<?php echo e(Request::is('profile/hotels') ? ' blue active' : ''); ?>" href="<?php echo e(url('profile/hotels')); ?>">
                                  <?php echo e(__('messages.My hotels')); ?>
 
-                                <div class="ui label"><?php echo e(Auth::user()->hotels()->count()); ?></div>
+                                <div class="ui label<?php echo e(Request::is('profile/hotels') ? ' blue left pointing' : ''); ?>"><?php echo e(Auth::user()->hotels()->count()); ?></div>
                             </a>
                         <?php endif; ?>
                     </div>

@@ -50,7 +50,7 @@
         <div class="ui container">
             <div class="ui stackable column grid">
                 <div class="five wide column">
-                    <div class="ui card">
+                    <div class="ui fluid card">
                         <div class="content">
                             <div class="right floated meta">
                                 <h4 class="ui sub header"></h4>
@@ -71,22 +71,22 @@
                         <i class="plus icon"></i> {{ __('messages.Add post') }}
                     </a>
                     <div class="ui fluid vertical menu">
-                        <a class="item{{ Request::is('profile') ? ' active' : '' }}" href="{{ url('profile') }}">
+                        <a class="item{{ Request::is('profile') ? ' blue active' : '' }}" href="{{ url('profile') }}">
                             {{ __('messages.My posts') }}
-                            <div class="ui label">{{ $postCount }}</div>
+                            <div class="ui label{{ Request::is('profile') ? ' blue left pointing' : '' }}">{{ $postCount }}</div>
                         </a>
-                        <a class="item{{ Request::is('profile/orders') ? ' active' : '' }}" href="{{ url('profile/orders') }}">
+                        <a class="item{{ Request::is('profile/orders') ? ' blue active' : '' }}" href="{{ url('profile/orders') }}">
                             {{ __('messages.My orders') }}
-                            <div class="ui label">{{ $orderCount }}</div>
+                            <div class="ui label{{ Request::is('profile/orders') ? ' blue left pointing' : '' }}">{{ $orderCount }}</div>
                         </a>
-                        <a class="item{{ Request::is('profile/rate') ? ' active' : '' }}" href="{{ url('profile/rate') }}">
+                        <a class="item{{ Request::is('profile/rate') ? ' blue active' : '' }}" href="{{ url('profile/rate') }}">
                             {{ __('messages.Give a rating') }}
-                            <div class="ui label">{{ $rateCount }}</div>
+                            <div class="ui label{{ Request::is('profile/rate') ? ' blue left pointing' : '' }}">{{ $rateCount }}</div>
                         </a>
                         @if (Auth::user()->isHotelAdmin())
-                            <a class="item{{ Request::is('profile/hotels') ? ' active' : '' }}" href="{{ url('profile/hotels') }}">
+                            <a class="item{{ Request::is('profile/hotels') ? ' blue active' : '' }}" href="{{ url('profile/hotels') }}">
                                  {{ __('messages.My hotels') }}
-                                <div class="ui label">{{ Auth::user()->hotels()->count() }}</div>
+                                <div class="ui label{{ Request::is('profile/hotels') ? ' blue left pointing' : '' }}">{{ Auth::user()->hotels()->count() }}</div>
                             </a>
                         @endif
                     </div>
