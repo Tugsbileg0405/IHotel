@@ -77,7 +77,7 @@
 	@if ($mostPosts->count() > 0)
 		<h4 class="ui header">{{ __('messages.The most viewed') }}</h4>
 		@foreach ($mostPosts as $mostPost)
-			<div class="ui card">
+			<div class="ui fluid card">
 				<a class="image" href="{{ url('post', $mostPost->id) }}">
 					<img src="{{ asset(unserialize($mostPost->photos)[0]) }}">
 				</a>
