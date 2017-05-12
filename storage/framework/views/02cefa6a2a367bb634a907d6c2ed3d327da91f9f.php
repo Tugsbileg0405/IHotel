@@ -1,5 +1,7 @@
  
+
 <?php $__env->startSection('title', 'iHotel'); ?> 
+
 <?php $__env->startSection('content'); ?>
 <div class="main-breadcrumb">
 	<div class="header-search">

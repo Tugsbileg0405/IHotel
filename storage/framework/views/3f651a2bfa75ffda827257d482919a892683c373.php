@@ -111,31 +111,15 @@
 															<td><?php echo e($room->name); ?></td>
 															<td><?php echo e($room->ordered_number); ?></td>
 															<?php if(App::isLocale('mn')): ?> 
-																<?php if($room->saled_room): ?>
-																	<td><?php echo e(number_format($room->saled_room->price)); ?> ₮</td>
-																<?php else: ?>
-																	<td><?php echo e(number_format($room->price)); ?> ₮</td>
-																<?php endif; ?>
+																<td><?php echo e(number_format($room->price)); ?>₮</td>
 															<?php elseif(App::isLocale('en')): ?>
-																<?php if($room->saled_room): ?>
-																	<td><?php echo e(number_format($room->saled_room->price/$rate,2)); ?> ₮</td>
-																<?php else: ?>
-																	<td><?php echo e(number_format($room->price/$rate,2)); ?> $</td>
-																<?php endif; ?>
+																<td>$<?php echo e(number_format($room->price/$rate,2)); ?></td>
 															<?php endif; ?>
 															<td><?php echo e($orderday); ?></td>
 															<?php if(App::isLocale('mn')): ?> 
-																<?php if($room->saled_room): ?>
-																	<td><?php echo e(number_format($room->saled_room->price * $room->ordered_number * $orderday)); ?> ₮</td>
-																<?php else: ?>
-																	<td><?php echo e(number_format($room->price * $room->ordered_number * $orderday)); ?> ₮</td>
-																<?php endif; ?>
+																<td><?php echo e(number_format($room->price * $room->ordered_number * $orderday)); ?>₮</td>
 															<?php elseif(App::isLocale('en')): ?>
-																<?php if($room->saled_room): ?>
-																	<td><?php echo e(number_format($room->saled_room->price * $room->ordered_number * $orderday/$rate,2)); ?> $</td>
-																<?php else: ?>
-																	<td><?php echo e(number_format($room->price * $room->ordered_number * $orderday/$rate,2)); ?> $</td>
-																<?php endif; ?>
+																<td>$<?php echo e(number_format($room->price * $room->ordered_number * $orderday/$rate,2)); ?></td>
 															<?php endif; ?>
 														</tr>
 													<?php endforeach; $__env->popLoop(); $loop = $__env->getLastLoop(); ?>

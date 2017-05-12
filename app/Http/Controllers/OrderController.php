@@ -205,8 +205,8 @@ class OrderController extends Controller
 		$array = [];
 		foreach ($roomdatas as $roomdata) {
 			$room = \App\Room::findOrFail($roomdata['room_id']);
-			$sale = $room->sales()->where('startdate', '<=', date('Y-m-d', strtotime($startdate)))
-				->where('enddate', '>=', date('Y-m-d', strtotime($startdate)))
+			$sale = $room->sales()->where('startdate', '<=', date('Y-m-d', strtotime($request->session()->get('order_startdate'))))
+				->where('enddate', '>=', date('Y-m-d', strtotime($request->session()->get('order_startdate'))))
 				->first();
 			if ($room->people_number > 1) {
 				if ($room->price_op) {
