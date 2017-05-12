@@ -12,9 +12,23 @@
 					<td><?php echo e($order->user->name); ?></td>
 				</tr>
 				<tr>
+					<td>Захиалагчийн овог</td>
+					<td><?php echo e($order->user->surname); ?></td>
+				</tr>
+				<tr>
+					<td>Захиалагчийн улс</td>
+					<td><?php echo e($order->user->country); ?></td>
+				</tr>
+				<tr>
 					<td>Захиалагчийн и-мэйл</td>
 					<td><?php echo e($order->user->email); ?></td>
 				</tr>
+				<?php if($order->user->phone_number): ?>
+					<tr>
+						<td>Захиалагчийн утас</td>
+						<td><?php echo e($order->user->phone_number); ?></td>
+					</tr>
+				<?php endif; ?>
 				<tr>
 					<td>Буудлын нэр</td>
 					<td><?php echo e($order->hotel_name); ?></td>
@@ -60,6 +74,7 @@
 				<tr>
 					<th>Өрөө</th>
 					<th>Өрөөний тоо</th>
+					<th>Хүний тоо</th>
 					<th>Өрөөний үнэ/хоног</th>
 				</tr>
 			</thead>
@@ -68,6 +83,7 @@
 					<tr>
 						<td><?php echo e($room['room_name']); ?></td>
 						<td><?php echo e($room['room_number']); ?></td>
+						<td><?php echo e($room['person_number']); ?></td>
 						<?php if($order->price_dollar): ?>
 							<td><?php echo e(number_format($room['room_price'])); ?>$</td>
 						<?php else: ?>

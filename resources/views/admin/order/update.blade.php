@@ -76,6 +76,7 @@
 				<tr>
 					<th>Өрөө</th>
 					<th>Өрөөний тоо</th>
+					<th>Хүний тоо</th>
 					<th>Өрөөний үнэ/хоног</th>
 				</tr>
 			</thead>
@@ -84,6 +85,7 @@
 					<tr>
 						<td>{{ $room['room_name'] }}</td>
 						<td>{{ $room['room_number'] }}</td>
+						<td>{{ $room['person_number'] }}</td>
 						@if ($order->price_dollar)
 							<td>{{ number_format($room['room_price']) }}$</td>
 						@else
