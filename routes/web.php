@@ -10,8 +10,6 @@
 | contains the "web" middleware group. Now create something great!
 |
 */
-Route::get('lol', 'AppController@lol');
-Route::get('lolorder', 'AppController@lolorder');
 Route::get('change/{locale}', function($locale) {
 	Session::put('locale', $locale);
 	return back();
