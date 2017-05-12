@@ -344,7 +344,6 @@
 	            	context: this,
 		           	success: function(data) {
 		           		$(this).form('reset');
-		           		$(this).find('.dropdown').form('clear');
 		           		$(this).closest('.ui.grid').siblings('.saledRooms').html(data);
 		    			$(this).find('button').removeClass('loading disabled');
 		       		},
