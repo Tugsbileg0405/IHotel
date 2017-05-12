@@ -401,7 +401,7 @@
 														@endforeach
 													@else
 														<div class="ui large header" id="price{{$key}}" data-price="{{$room->price}}">
-															<@if($room->price_op)<i class="icon couple"></i>@endif{{number_format($room->price)}}₮/{{ __('messages.per night') }}
+															@if($room->price_op)<i class="icon couple"></i>@endif{{number_format($room->price)}}₮/{{ __('messages.per night') }}
 														</div>
 													@endif 
 												@elseif (App::isLocale('en')) 
@@ -593,7 +593,8 @@
             var nuat = 0;
             var rating = "{{$rate}}";
             var perprice;
-            if ((selectedval == 'selected' && selectedval2 == 'selected') || (selectedval == 'selected' && selectedval2 == null) || (selectedval == null && selectedval2 == 'selected')) {
+			
+            if ((selectedval == null && selectedval2 == null) || (selectedval == 'selected' && selectedval2 == 'selected') || (selectedval == 'selected' && selectedval2 == null) || (selectedval == null && selectedval2 == 'selected')) {
                 removeRow(index);
             }
             else {
@@ -764,7 +765,6 @@
                 Totalsum += pickup_price;
                 // nuat = parseFloat(Totalsum * 0.1).toFixed(2);
                 var finalprice = parseFloat(Totalsum);
-                console.log(finalprice);
                 @if (App::isLocale('mn')) 
                 // $('#nuat').html(numeral(nuat).format('0,0') + ' ₮');
                 $('#totalPrice').html(numeral(finalprice).format('0,0') + ' ₮');
