@@ -34,7 +34,7 @@ class Order extends Mailable
      */
     public function build()
     {
-        return $this->subject('Захиалгын мэдээлэл')->view('order.email')->with([
+        return $this->subject('iHotel reservation details')->view('order.email')->with([
             'order' => $this->order,
             'rooms' => $this->rooms,
             'price' => $this->price,

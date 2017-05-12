@@ -45,16 +45,16 @@
             margin: 0 0 10px;
         }
         h1 {
-            font-size: 36px;
+            font-size: 28px;
         }
         h2 {
-            font-size: 30px;
-        }
-        h3 {
             font-size: 24px;
         }
+        h3 {
+            font-size: 20px;
+        }
         h4 {
-            font-size: 18px;
+            font-size: 16px;
         }
         h5 {
             font-size: 14px;
@@ -243,7 +243,7 @@
                         <p>5% Property service charge is included.</p>
                         <p>1% City tax is included.</p>
                         <p>
-                            <strong>Prepayment:</strong> Payment will anytime automatically withdraw after booking.
+                            <strong>Prepayment:</strong> Payment will be withdrawn any time after booking.
                         </p>
                         <p>
                             <strong>Cancellation cost:</strong> No cancellation
@@ -262,7 +262,7 @@
                                 @endif
                             </p>
                         </td>
-                        <td colspan="3">
+                        <td colspan="3" rowspan="{{ count($rooms) + 1 }}">
                             <p>
                                 <strong>Contact us</strong>
                             </p>
@@ -275,7 +275,7 @@
                         </td>
                     </tr>
                 @endif
-                @foreach ($rooms as $room)
+                @foreach ($rooms as $key => $room)
                     <tr>
                         <td colspan="5">
                             <p>
@@ -291,17 +291,21 @@
                                 <strong>Number:</strong> {{ $room->ordered_number }}
                             </p>
                         </td>
-                        <td colspan="3">
-                            <p>
-                                <strong>Contact us</strong>
-                            </p>
-                            <p>
-                                <strong>Phone:</strong> +976 99066350
-                            </p>
-                            <p>
-                                <strong>Email:</strong> aspac@ihotel.mn
-                            </p>
-                        </td>
+                        @if (!unserialize($order->pickup))
+                            @if ($key == 0)
+                                <td colspan="3" rowspan="{{ count($rooms) }}">
+                                    <p>
+                                        <strong>Contact us</strong>
+                                    </p>
+                                    <p>
+                                        <strong>Phone:</strong> +976 99066350
+                                    </p>
+                                    <p>
+                                        <strong>Email:</strong> aspac@ihotel.mn
+                                    </p>
+                                </td>
+                            @endif
+                        @endif
                     </tr>
                 @endforeach
                 @if ($order->request)
