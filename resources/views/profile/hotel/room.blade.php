@@ -343,7 +343,7 @@
 		           	data: $(this).serialize(),
 	            	context: this,
 		           	success: function(data) {
-		           		$(this).form('reset');
+		           		$(this).trigger('reset');
 		           		$(this).closest('.ui.grid').siblings('.saledRooms').html(data);
 		    			$(this).find('button').removeClass('loading disabled');
 		       		},
