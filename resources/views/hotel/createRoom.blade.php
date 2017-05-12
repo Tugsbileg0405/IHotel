@@ -190,6 +190,9 @@
 		if (rooms[key].people_number <= 1) {
 			$('#edit-room-form').find('[name=price_op]').closest('.field').addClass('disabled');
 		}
+		else {
+			$('#edit-room-form').find('[name=price_op]').closest('.field').removeClass('disabled');
+		}
 		$('#edit-room-form').attr('action', '{{ url("hotel/room") }}/' + rooms[key].id + '/{{ $hotel->id }}');
 		$('#edit-room-form').find('[name=name]').val(rooms[key].name);
 		$('#edit-room-form').find('[name=number]').val(rooms[key].number);

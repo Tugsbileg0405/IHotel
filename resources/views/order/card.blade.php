@@ -377,6 +377,14 @@
                         type   : 'number',
                         prompt : '{{ __("form.Please enter a valid CVC") }}'
                     },
+                    {
+                        type   : 'minLength[3]',
+                        prompt : '{{ __("form.Please enter a valid CVC") }}'
+                    },
+                    {
+                        type   : 'maxLength[4]',
+                        prompt : '{{ __("form.Please enter a valid CVC") }}'
+                    },
                 ]
             },
         },

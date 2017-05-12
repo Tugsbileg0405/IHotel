@@ -225,10 +225,11 @@
 				method: 'POST',
 				url: '{{ url("admin/hotel/room/close/check") }}/' + id,
 				data: $(this).closest('form').serialize(),
+				context: this,
 			}).done(function(data) {
 				$('#checked-select-' + id).html(data);
 				$('.ui.dropdown').dropdown('refresh');
-				$('.ui.form').form('refresh');
+				$(this).closest('form').form('refresh');
 			}).fail(function() {
 				$('#checked-select-' + id).append('<div class="ui visible warning message"><p>Алдаа гарлаа</p></div>');
 			});
@@ -245,9 +246,10 @@
 				method: 'POST',
 				url: '{{ url("admin/hotel/room/sale/check") }}/' + id,
 				data: $(this).closest('form').serialize(),
+				context: this,
 			}).done(function(data) {
 				$('#checked-input-' + id).html(data);
-				$('.ui.form').form('refresh');
+				$(this).closest('form').form('refresh');
 			}).fail(function() {
 				$('#checked-input-' + id).append('<div class="ui visible warning message"><p>Алдаа гарлаа</p></div>');
 			});
@@ -282,7 +284,8 @@
 		           	data: $(this).serialize(),
 	            	context: this,
 		           	success: function(data) {
-		           		$(this).form('clear');
+		           		$(this).form('reset');
+		           		$(this).find('.dropdown').form('clear');
 		           		$(this).closest('.ui.grid').siblings('.closedRooms').html(data);
 		    			$(this).find('button').removeClass('loading disabled');
 		       		},
@@ -340,7 +343,8 @@
 		           	data: $(this).serialize(),
 	            	context: this,
 		           	success: function(data) {
-		           		$(this).form('clear');
+		           		$(this).form('reset');
+		           		$(this).find('.dropdown').form('clear');
 		           		$(this).closest('.ui.grid').siblings('.saledRooms').html(data);
 		    			$(this).find('button').removeClass('loading disabled');
 		       		},
