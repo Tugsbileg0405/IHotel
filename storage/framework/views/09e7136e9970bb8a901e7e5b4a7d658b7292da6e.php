@@ -16,13 +16,10 @@
     <link rel="stylesheet" href="<?php echo e(asset('css/reset.css')); ?>">
     <link rel="stylesheet" href="<?php echo e(asset('css/style.css')); ?>">
     <link rel="stylesheet" href="<?php echo e(asset('css/responsive.css')); ?>">
-    <link rel="stylesheet" href="<?php echo e(asset('css/nouislider.min.css')); ?>">
-    <link rel="stylesheet" href="<?php echo e(asset('css/jssocials.css')); ?>">
-    <link rel="stylesheet" href="<?php echo e(asset('css/jssocials-theme-flat.css')); ?>">
-    <link rel="stylesheet" href="<?php echo e(asset('css/lightgallery.min.css')); ?>">
-    <link rel="stylesheet" href="<?php echo e(asset('css/magnific-popup.css')); ?>">
-    <script src="<?php echo e(asset('js/jquery-2.1.4.min.js')); ?>"></script>
+
+    <script src="<?php echo e(asset('js/jquery-3.1.1.min.js')); ?>"></script>
     <script src="<?php echo e(asset('dist/semantic.min.js')); ?>"></script>
+
     <script>
         window.Laravel = <?php echo json_encode([
             'csrfToken' => csrf_token(),
@@ -32,12 +29,40 @@
 <body>
     <?php echo $__env->make('partials.header', array_except(get_defined_vars(), array('__data', '__path')))->render(); ?>
 
-    <?php echo $__env->yieldContent('content'); ?>
+    <div class="main-breadcrumb">
+        <div class="ui container">
+            <div class="ui stackable column grid">
+                <div class="six wide column">
+                    <h3 class="ui header">Буудал нэмэх</h3>
+                </div>
+                <div class="right aligned ten wide column">
+                    <div class="ui breadcrumb">
+                        <a class="section">Эхлэл</a>
+                        <span class="divider">/</span>
+                        <div class="active section">Буудал нэмэх</div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="silver-back">
+        <div class="main-page">
+            <div class="ui fluid stackable container">
+                <div class="ui stackable column grid">
+                    <div class="sixteen wide column">
+                        <div class="ui container">
+                            <div class="ui stackable grid">
+                                <?php echo $__env->yieldContent('content'); ?>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
 
-    <?php if(!Request::is('aspac2017') && !Request::is('searchresult')): ?>
-        <?php echo $__env->make('partials.footer', array_except(get_defined_vars(), array('__data', '__path')))->render(); ?>
-    <?php endif; ?>
-    
+    <?php echo $__env->make('partials.footer', array_except(get_defined_vars(), array('__data', '__path')))->render(); ?>
+
     <script src="<?php echo e(asset('js/modernizr.js')); ?>"></script>
     <script src="<?php echo e(asset('dist/components/popup.js')); ?>"></script>
     <script src="<?php echo e(asset('dist/components/dropdown.js')); ?>"></script>
@@ -45,14 +70,6 @@
     <script src="<?php echo e(asset('js/iframe-content.js')); ?>"></script>
     <script src="<?php echo e(asset('js/main.js')); ?>"></script>
     <script src="<?php echo e(asset('js/app.js')); ?>"></script>
-    <script src="<?php echo e(asset('js/chosen.jquery.js')); ?>"></script>
-    <script src="<?php echo e(asset('js/nouislider.min.js')); ?>"></script>
-    <script src="<?php echo e(asset('js/lodash.js')); ?>"></script>
-    <script src="<?php echo e(asset('js/jssocials.min.js')); ?>"></script>
-    <script src="<?php echo e(asset('js/numeral.min.js')); ?>"></script>
-    <script src="<?php echo e(asset('js/lightgallery.min.js')); ?>"></script>
-    <script src="<?php echo e(asset('js/jquery.magnific-popup.min.js')); ?>"></script>
-    <script src="<?php echo e(asset('js/jquery-scrolltofixed-min.js')); ?>"></script>
     <?php echo $__env->yieldPushContent('script'); ?>
 </body>
 </html>

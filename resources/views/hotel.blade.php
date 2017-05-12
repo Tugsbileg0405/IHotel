@@ -395,23 +395,23 @@
 														@foreach($room->saled_room as $sale)
 															<div class="ui large header" id="price{{$key}}" data-price="{{$sale->price}}">
 																<!--<span class="sub header" style="text-decoration: line-through">{{number_format($room->price)}}₮/{{ __('messages.per night') }}</span>-->
-																<div>{{ number_format($sale->price)}}₮/{{ __('messages.per night') }}</div>
+																<div><i class="icon male"></i><i class="icon male"></i>{{ number_format($sale->price)}}₮/{{ __('messages.per night') }}</div>
 															</div>
 														@endforeach
 													@else
-														<div class="ui large header" id="price{{$key}}" data-price="{{$room->price}}">{{number_format($room->price)}}₮/{{ __('messages.per night') }}</div>
+														<div class="ui large header" id="price{{$key}}" data-price="{{$room->price}}"><i class="icon male"></i><i class="icon male"></i>{{number_format($room->price)}}₮/{{ __('messages.per night') }}</div>
 													@endif 
 												@elseif (App::isLocale('en')) 
 													@if($room->saled_room) 
 														@foreach($room->saled_room as $sale)
 														<div class="ui large header" id="price{{$key}}" data-price="{{$sale->price}}">
 															<!--<span  class="sub header" style="text-decoration: line-through">{{number_format($room->price/$rate,2)}}$/{{ __('messages.per night') }}</span>-->
-															<div>{{ number_format($sale->price/$rate,2)}}$/{{ __('messages.per night') }}
+															<div><i class="icon male"></i><i class="icon male"></i>{{ number_format($sale->price/$rate,2)}}$/{{ __('messages.per night') }}
 															</div>
 														</div>
 														@endforeach 
 													@else
-														<div class="ui large header" id="price{{$key}}" data-price="{{$room->price}}">{{number_format($room->price/$rate,2)}}$/{{ __('messages.per night') }}</div>
+														<div class="ui large header" id="price{{$key}}" data-price="{{$room->price}}"><i class="icon male"></i><i class="icon male"></i>{{number_format($room->price/$rate,2)}}$/{{ __('messages.per night') }}</div>
 													@endif 
 												@endif
 												<p class="ui justify">
@@ -444,6 +444,62 @@
 														</select> 
 													@endif
 												</p>
+												@if($room->price_op)
+													@if (App::isLocale('mn')) 
+														@if($room->saled_room) 
+															@foreach($room->saled_room as $sale)
+																<div class="ui large header" id="price_op{{$key}}" data-price="{{$sale->price_op}}">
+																	<!--<span class="sub header" style="text-decoration: line-through">{{number_format($room->price)}}₮/{{ __('messages.per night') }}</span>-->
+																	<div><i class="icon male"></i>{{ number_format($sale->price_op)}}₮/{{ __('messages.per night') }}</div>
+																</div>
+															@endforeach
+														@else
+															<div class="ui large header" id="price_op{{$key}}" data-price="{{$room->price_op}}"><i class="icon male"></i>{{number_format($room->price_op)}}₮/{{ __('messages.per night') }}</div>
+														@endif 
+													@elseif (App::isLocale('en')) 
+														@if($room->saled_room) 
+															@foreach($room->saled_room as $sale)
+															<div class="ui large header" id="price_op{{$key}}" data-price="{{$sale->price_op}}">
+																<!--<span  class="sub header" style="text-decoration: line-through">{{number_format($room->price/$rate,2)}}$/{{ __('messages.per night') }}</span>-->
+																<div><i class="icon male"></i>{{ number_format($sale->price_op/$rate,2)}}$/{{ __('messages.per night') }}
+																</div>
+															</div>
+															@endforeach 
+														@else
+															<div class="ui large header" id="price_op{{$key}}" data-price="{{$room->price_op}}"><i class="icon male"></i>{{number_format($room->price_op/$rate,2)}}$/{{ __('messages.per night') }}</div>
+														@endif 
+													@endif
+													<p class="ui justify">
+														@if($room->number < 1)
+															<select class="ui fluid search dropdown disabled">
+																<option value="disabled" >{{ __('messages.No rooms available') }}</option>
+															</select> 
+														@else
+															<select class="ui fluid search dropdown" id="night_op{{$key}}">
+																<option value="selected" >{{ __('messages.Choose a room') }}</option>
+																@for ($i = 1; $i <= $room->number; $i++)
+																	@if (App::isLocale('mn'))
+																		@if($room->saled_room)
+																			@foreach($room->saled_room as $sale)
+																				<option value="{{$i}}">{{$i}} {{ __('messages.room') }} - {{number_format($sale->price_op * $i)}}₮</option>
+																			@endforeach
+																		@else
+																			<option value="{{$i}}">{{$i}} {{ __('messages.room') }} - {{number_format($room->price_op * $i)}}₮</option>
+																		@endif 
+																	@elseif (App::isLocale('en'))
+																		@if($room->saled_room)
+																			@foreach($room->saled_room as $sale)
+																				<option value="{{$i}}">{{$i}} {{ __('messages.room') }} - {{number_format($sale->price_op * $i/$rate,2)}}$</option>
+																			@endforeach
+																		@else
+																			<option value="{{$i}}">{{$i}} {{ __('messages.room') }} - {{number_format($room->price_op * $i/$rate,2)}}$</option>
+																		@endif  
+																	@endif
+																@endfor
+															</select> 
+														@endif
+													</p>
+												@endif
 											</div>
 										</div>
 									</div>
@@ -506,539 +562,739 @@
 	// =============================================================================
 	// - Remove information of room from order section 
 	// =============================================================================
-
+	var checkReset = true;
+	var checkReset2 = true;
 	var Totalsum = 0;
 	var pickup = {};
 	var pickup_price = 0;
 	var array = [];
 	var orderData = [];
 	array = <?php echo json_encode($rooms);?>;
-	var pickups = [];
-	pickups = <?php echo json_encode($pickups); ?>;
-	$(document).ready(function () {
-		$.each(array, function (index, value) {
-			var selectedval = $('#night' + index).find(":selected").val();
-			var sum = 0;
-			var string = '';
-			var defaultID = '.nightRoom0';
-			var counter = 0;
-			var defaultclass = '';
-			var totalprice = 0;
-			var nuat = 0;
-			var rating = "{{$rate}}";
-			var perprice = $('#price' + index).data('price');
-			if (selectedval == 'selected' || selectedval == null) {
-				removeRow(index);
-			}
-			else {
-				Totalsum = 0;
-				var dayprice = perprice * selectedval;
-				$('#nullRoom').hide();
-				@if (App::isLocale('mn')) 
-				string = '<div class="item nightRoom' + index + '" id="#nightRoom' + index + '">\
-						<div class="right floated content " >\
-							<button class="small ui button" onclick="removeRow('+ index + ');" id="removeRoom">\
-							{{__("messages.remove")}}\
-							</button>\
-						</div>\
-						<div class="content">\
-							<h2 class="ui sub header" >\
-							'+ value.name + '\
-							</h2>\
-							<span class="perprice">'+ selectedval + ' {{__("messages.room")}} - ' + numeral(perprice * selectedval).format('0,0') + '₮</span>\
-							<span class="price" style="display:none">'+ plus * perprice * selectedval + '</span>\
-						</div>\
-						</div>';
-				@elseif(App::isLocale('en'))
-				string = '<div class="item nightRoom' + index + '" id="#nightRoom' + index + '">\
-						<div class="right floated content " >\
-							<button class="small ui button" onclick="removeRow('+ index + ');" id="removeRoom">\
-							{{__("messages.remove")}}\
-							</button>\
-						</div>\
-						<div class="content">\
-							<h2 class="ui sub header" >\
-							'+ value.name + '\
-							</h2>\
-							<span class="perprice">'+ selectedval + ' {{__("messages.room")}} - ' + numeral(perprice * selectedval / rating).format('0,0.00') + '$</span>\
-							<span class="price" style="display:none">'+ parseFloat(plus * perprice * selectedval / rating).toFixed(2) + '</span>\
-						</div>\
-						</div>';
-				@endif
-				var className = '.nightRoom';
-				var final = className.concat(index);
-				if (final == defaultID) {
-					defaultclass = 'nightRoom';
-					var concatted = defaultclass.concat(index);
-					defaultID = final;
-					var val = $("div").hasClass(concatted);
-				if (val == true) {
-					changeDesc(index, selectedval);
-					$("#order").removeClass("disabled");
-					@if (App::isLocale('mn')) 
-						$("#roomtype").find(final).find('.price').text(plus * perprice * selectedval);
-						$("#roomtype").find(final).find('.perprice').text(this.value + ' {{__("messages.room")}} - ' + numeral(perprice * selectedval).format('0,0') + '₮');
-					@elseif(App::isLocale('en'))
-						$("#roomtype").find(final).find('.price').text(plus * perprice * selectedval / rating);
-						$("#roomtype").find(final).find('.perprice').text(selectedval + ' {{__("messages.room")}} - ' + numeral(perprice * selectedval / rating).format('0,0.00') + '$');
-					@endif
-                }
-                else {
-					$("#order").removeClass("disabled");
-					orderData.push({ id: index, room_number: selectedval, room_id: value.id });
-					$('#roomtype').prepend(string);
-				}
+    var pickups = [];
+    pickups = <?php echo json_encode($pickups); ?>;
+    $(document).ready(function () {
+        $.each(array, function (index, value) {
+            var selectedval = $('#night' + index).find(":selected").val();
+            var selectedval2 = $('#night_op' + index).find(":selected").val();
+            var sum = 0;
+            var string = '';
+            var defaultID = '.nightRoom0';
+            var counter = 0;
+            var defaultclass = '';
+            var totalprice = 0;
+            var nuat = 0;
+            var rating = "{{$rate}}";
+            var perprice;
+            if ((selectedval == 'selected' && selectedval2 == 'selected') || (selectedval == 'selected' && selectedval2 == null) || (selectedval == null && selectedval2 == 'selected')) {
+                removeRow(index);
             }
             else {
-				defaultID = final;
-				counter++;
-				if ($(final).length > 0) {
-					changeDesc(index, selectedval);
-					$("#order").removeClass("disabled");
-					@if (App::isLocale('mn')) 
-					$("#roomtype").find(final).find('.price').text(plus * perprice * selectedval);
-					$("#roomtype").find(final).find('.perprice').text(selectedval + ' {{__("messages.room")}} - ' + numeral(perprice * selectedval).format('0,0') + '₮');
-					@elseif(App::isLocale('en'))
-					$("#roomtype").find(final).find('.price').text(plus * perprice * selectedval / rating);
-					$("#roomtype").find(final).find('.perprice').text(selectedval + ' {{__("messages.room")}} - ' + numeral(perprice * selectedval / rating).format('0,0.00') + '$');
-					@endif
-				} else {
-					if (counter < array.length) {
-						$("#order").removeClass("disabled");
-						orderData.push({ id: index, room_number: selectedval, room_id: value.id });
-						$('#roomtype').prepend(string);
-					}
-				}
-			}
-			$('.price').each(function () {
+                if((selectedval && selectedval2 == null) || (selectedval && selectedval2 == 'selected')){
+                    perprice  = $('#price' + index).data('price');
+                    Totalsum = 0;
+                    $('#nullRoom').hide();
+                    @if (App::isLocale('mn')) 
+                    string = '<div class="item nightRoom' + index + '" id="#nightRoom' + index + '">\
+                            <div class="right floated content " >\
+                                <button class="small ui button" onclick="removeRow('+ index + ');" id="removeRoom">\
+                                {{__("messages.remove")}}\
+                                </button>\
+                            </div>\
+                            <div class="content">\
+                                <h2 class="ui sub header" >\
+                                '+ value.name + '\
+                                </h2>\
+                                <span class="perprice">'+ selectedval + ' {{__("messages.room")}} - ' + numeral(perprice * selectedval).format('0,0') + '₮</span>\
+                                <span class="price" style="display:none">'+ plus * perprice * selectedval + '</span>\
+                            </div>\
+                            </div>';
+                    @elseif(App::isLocale('en'))
+                    string = '<div class="item nightRoom' + index + '" id="#nightRoom' + index + '">\
+                            <div class="right floated content " >\
+                                <button class="small ui button" onclick="removeRow('+ index + ');" id="removeRoom">\
+                                {{__("messages.remove")}}\
+                                </button>\
+                            </div>\
+                            <div class="content">\
+                                <h2 class="ui sub header" >\
+                                '+ value.name + '\
+                                </h2>\
+                                <span class="perprice">'+ selectedval + ' {{__("messages.room")}} - ' + numeral(perprice * selectedval / rating).format('0,0.00') + '$</span>\
+                                <span class="price" style="display:none">'+ parseFloat(plus * perprice * selectedval / rating).toFixed(2) + '</span>\
+                            </div>\
+                            </div>';
+                    @endif
+                    var className = '.nightRoom';
+                    var final = className.concat(index);
+                    if (final == defaultID) {
+                        defaultclass = 'nightRoom';
+                        var concatted = defaultclass.concat(index);
+                        defaultID = final;
+                        var val = $("div").hasClass(concatted);
+                    if (val == true) {
+                        changeDesc(index, selectedval);
+                        $("#order").removeClass("disabled");
+                        @if (App::isLocale('mn')) 
+                            $("#roomtype").find(final).find('.price').text(plus * perprice * selectedval);
+                            $("#roomtype").find(final).find('.perprice').text(this.value + ' {{__("messages.room")}} - ' + numeral(perprice * selectedval).format('0,0') + '₮');
+                        @elseif(App::isLocale('en'))
+                            $("#roomtype").find(final).find('.price').text(plus * perprice * selectedval / rating);
+                            $("#roomtype").find(final).find('.perprice').text(selectedval + ' {{__("messages.room")}} - ' + numeral(perprice * selectedval / rating).format('0,0.00') + '$');
+                        @endif
+                    }
+                    else {
+                        $("#order").removeClass("disabled");
+                        orderData.push({ id: index, room_number: selectedval, room_id: value.id,person_number: 2 });
+                        $('#roomtype').prepend(string);
+                    }
+                    }
+                    else {
+                    defaultID = final;
+                    counter++;
+                    if ($(final).length > 0) {
+                        changeDesc(index, selectedval);
+                        $("#order").removeClass("disabled");
+                        @if (App::isLocale('mn')) 
+                        $("#roomtype").find(final).find('.price').text(plus * perprice * selectedval);
+                        $("#roomtype").find(final).find('.perprice').text(selectedval + ' {{__("messages.room")}} - ' + numeral(perprice * selectedval).format('0,0') + '₮');
+                        @elseif(App::isLocale('en'))
+                        $("#roomtype").find(final).find('.price').text(plus * perprice * selectedval / rating);
+                        $("#roomtype").find(final).find('.perprice').text(selectedval + ' {{__("messages.room")}} - ' + numeral(perprice * selectedval / rating).format('0,0.00') + '$');
+                        @endif
+                    } else {
+                        if (counter < array.length) {
+                            $("#order").removeClass("disabled");
+                            orderData.push({ id: index, room_number: selectedval, room_id: value.id,person_number: 2 });
+                            $('#roomtype').prepend(string);
+                        }
+                    }
+                    }
+                }else{
+                    perprice  = $('#price_op' + index).data('price');
+                    Totalsum = 0;
+                    $('#nullRoom').hide();
+                    @if (App::isLocale('mn')) 
+                    string = '<div class="item nightRoom' + index + '" id="#nightRoom' + index + '">\
+                            <div class="right floated content " >\
+                                <button class="small ui button" onclick="removeRow('+ index + ');" id="removeRoom">\
+                                {{__("messages.remove")}}\
+                                </button>\
+                            </div>\
+                            <div class="content">\
+                                <h2 class="ui sub header" >\
+                                '+ value.name + '\
+                                </h2>\
+                                <span class="perprice">'+ selectedval2 + ' {{__("messages.room")}} - ' + numeral(perprice * selectedval2).format('0,0') + '₮</span>\
+                                <span class="price" style="display:none">'+ plus * perprice * selectedval2 + '</span>\
+                            </div>\
+                            </div>';
+                    @elseif(App::isLocale('en'))
+                    string = '<div class="item nightRoom' + index + '" id="#nightRoom' + index + '">\
+                            <div class="right floated content " >\
+                                <button class="small ui button" onclick="removeRow('+ index + ');" id="removeRoom">\
+                                {{__("messages.remove")}}\
+                                </button>\
+                            </div>\
+                            <div class="content">\
+                                <h2 class="ui sub header" >\
+                                '+ value.name + '\
+                                </h2>\
+                                <span class="perprice">'+ selectedval2 + ' {{__("messages.room")}} - ' + numeral(perprice * selectedval2 / rating).format('0,0.00') + '$</span>\
+                                <span class="price" style="display:none">'+ parseFloat(plus * perprice * selectedval2 / rating).toFixed(2) + '</span>\
+                            </div>\
+                            </div>';
+                    @endif
+                    var className = '.nightRoom';
+                    var final = className.concat(index);
+                    if (final == defaultID) {
+                        defaultclass = 'nightRoom';
+                        var concatted = defaultclass.concat(index);
+                        defaultID = final;
+                        var val = $("div").hasClass(concatted);
+                    if (val == true) {
+                        changeDesc(index, selectedval2);
+                        $("#order").removeClass("disabled");
+                        @if (App::isLocale('mn')) 
+                            $("#roomtype").find(final).find('.price').text(plus * perprice * selectedval2);
+                            $("#roomtype").find(final).find('.perprice').text(this.value + ' {{__("messages.room")}} - ' + numeral(perprice * selectedval2).format('0,0') + '₮');
+                        @elseif(App::isLocale('en'))
+                            $("#roomtype").find(final).find('.price').text(plus * perprice * selectedval2 / rating);
+                            $("#roomtype").find(final).find('.perprice').text(selectedval2 + ' {{__("messages.room")}} - ' + numeral(perprice * selectedval2 / rating).format('0,0.00') + '$');
+                        @endif
+                    }
+                    else {
+                        $("#order").removeClass("disabled");
+                        orderData.push({ id: index, room_number: selectedval2, room_id: value.id,person_number: 1 });
+                        $('#roomtype').prepend(string);
+                    }
+                    }
+                    else {
+                    defaultID = final;
+                    counter++;
+                    if ($(final).length > 0) {
+                        changeDesc(index, selectedval2);
+                        $("#order").removeClass("disabled");
+                        @if (App::isLocale('mn')) 
+                        $("#roomtype").find(final).find('.price').text(plus * perprice * selectedval2);
+                        $("#roomtype").find(final).find('.perprice').text(selectedval + ' {{__("messages.room")}} - ' + numeral(perprice * selectedval2).format('0,0') + '₮');
+                        @elseif(App::isLocale('en'))
+                        $("#roomtype").find(final).find('.price').text(plus * perprice * selectedval2 / rating);
+                        $("#roomtype").find(final).find('.perprice').text(selectedval2 + ' {{__("messages.room")}} - ' + numeral(perprice * selectedval2 / rating).format('0,0.00') + '$');
+                        @endif
+                    } else {
+                        if (counter < array.length) {
+                            $("#order").removeClass("disabled");
+                            orderData.push({ id: index, room_number: selectedval2, room_id: value.id, person_number:1 });
+                            $('#roomtype').prepend(string);
+                        }
+                    }
+                    }
+                }
+				$('.price').each(function () {
 				Totalsum += parseFloat($(this).text());
-			});
-			Totalsum += pickup_price;
-			// nuat = parseFloat(Totalsum * 0.1).toFixed(2);
-			var finalprice = parseFloat(Totalsum);
-			@if (App::isLocale('mn')) 
-				// $('#nuat').html(numeral(nuat).format('0,0') + ' ₮');
-				$('#totalPrice').html(numeral(finalprice).format('0,0') + ' ₮');
-			@elseif(App::isLocale('en'))
-				// $('#nuat').html(parseFloat(nuat /'{{ $rate }}').toFixed(2) + ' $');
-				$('#totalPrice').html(parseFloat(finalprice/'{{ $rate }}').toFixed(2) + ' $');
-			@endif
-            }
-		})
-	
-	$.each($('#pickups').find('.pickup'), function(index,value){
-		if($(this).is(":checked")){
-			pickup.value = $(this).data('id');
-			@if(App::isLocale('mn'))
-				pickup.price =  $(this).data('price');
-			@else
-				pickup.price = $(this).data('price')/'{{$rate}}';
-			@endif
-			pickup_price += pickup.price;
-			Totalsum += pickup_price;
-			// var nuat = parseFloat(Totalsum * 0.1).toFixed(2);
-			var finalprice = parseFloat(Totalsum);
-			@if (App::isLocale('mn')) 
-				// $('#nuat').html(numeral(nuat).format('0,0') + ' ₮');
-				$('#totalPrice').html(numeral(finalprice).format('0,0') + ' ₮');
-			@elseif(App::isLocale('en'))
-				// $('#nuat').html( parseFloat(nuat).toFixed(2) + ' $');
-				$('#totalPrice').html(parseFloat(finalprice).toFixed(2) + ' $');
-			@endif
-		}
-	})
-	})
-	
-
-	$.each(pickups, function (index, value) {
-		$('#carrent'+value.id).change(function () {
-			pickup.value = $(this).data('id');
-			@if(App::isLocale('mn'))
-				pickup.price =  $(this).data('price');
-			@else
-				pickup.price = $(this).data('price')/'{{$rate}}';
-			@endif
-			if ($(this).is(":checked")) {
-				$.each($('#pickups').find('.pickup'),function(index,data){
-					if($(data).data('id') != pickup.value){
-						if ($('#carrent'+$(data).data('id')).is(":checked")) {
-							$('#carrent'+$(data).data('id')).attr('checked', false);
-							Totalsum -= pickup_price;
-							@if(App::isLocale('mn'))
-								pickup_price -= $(data).data('price');
-							@else
-								pickup.price -= $(data).data('price')/'{{$rate}}';
-							@endif
-						}
-					}
-				})
-				pickup_price += pickup.price;
+				});
 				Totalsum += pickup_price;
-			} else {
-				Totalsum -= pickup_price;
-				pickup_price -= pickup.price;
-				pickup = {};
-			}
-			// var nuat = parseFloat(Totalsum * 0.1).toFixed(2);
-			var finalprice = parseFloat(Totalsum);
-			@if (App::isLocale('mn')) 
+				// nuat = parseFloat(Totalsum * 0.1).toFixed(2);
+				var finalprice = parseFloat(Totalsum);
+				console.log(finalprice);
+				@if (App::isLocale('mn')) 
 				// $('#nuat').html(numeral(nuat).format('0,0') + ' ₮');
 				$('#totalPrice').html(numeral(finalprice).format('0,0') + ' ₮');
-			@elseif(App::isLocale('en'))
-				// $('#nuat').html( parseFloat(nuat).toFixed(2) + ' $');
-				$('#totalPrice').html( parseFloat(finalprice).toFixed(2) + ' $');
-			@endif
-		});
-	});
-
-	function removeRow(index) {
-		Totalsum = 0;
-		var string = '.nightRoom';
-		string = string.concat(index);
-		var val = $("#roomtype .perprice").length;
-		if (val == 0) {
-			$('#nullRoom').show();
-			$("#order").addClass("disabled");
-		}
-		$('#roomtype').find(string).remove();
-		$('.price').each(function () {
-			Totalsum += parseFloat($(this).text());
-		});
-		for (var i = 0; i < orderData.length; i++) {
-			if (orderData[i].id == index) {
-				orderData.splice(i, 1);
-			}
-		}
-		Totalsum += pickup_price;
-		// nuat = parseFloat(Totalsum * 0.1).toFixed(2);
-		var finalprice = parseFloat(Totalsum);
-		@if (App::isLocale('mn')) 
-			// $('#nuat').html(numeral(nuat).format('0,0') + ' ₮');
-			$('#totalPrice').html(numeral(finalprice).format('0,0') + ' ₮');
-		@elseif(App::isLocale('en'))
-			// $('#nuat').html(parseFloat(nuat).toFixed(2) + ' $');
-			$('#totalPrice').html(parseFloat(finalprice).toFixed(2) + ' $');
-		@endif
-		$('#night' + index).dropdown('set selected', 'selected');
-	}
-
-	function changeDesc(value, desc) {
-		for (var i in orderData) {
-			if (orderData[i].id == value) {
-				orderData[i].room_number = desc;
-				break;
-			}
-		}
-	}
-
-	// =============================================================================
-	// - When choose the room information, show information of room in order section
-	// =============================================================================
-
-	$.each(array, function (index, value) {
-		var sum = 0;
-		var string = '';
-		var defaultID = '.nightRoom0';
-		var counter = 0;
-		var defaultclass = '';
-		var totalprice = 0;
-		var nuat = 0;
-		var rating = "{{$rate}}";
-		$("#order").addClass("disabled");
-		var perprice = $('#price' + index).data('price');
-		$('#night' + index).on('change', function () {
-			if (this.value == 'selected') {
-				removeRow(index);
-			}
-			else {
-				Totalsum = 0;
-				var dayprice = perprice * this.value;
-				$('#nullRoom').hide();
-				@if (App::isLocale('mn')) 
-					string = '<div class="item nightRoom' + index + '" id="#nightRoom' + index + '">\
-							<div class="right floated content " >\
-								<button class="small ui button" onclick="removeRow('+ index + ');" id="removeRoom">\
-								{{__("messages.remove")}}\
-								</button>\
-							</div>\
-							<div class="content">\
-								<h2 class="ui sub header" >\
-								'+ value.name + '\
-								</h2>\
-								<span class="perprice">'+ this.value + ' {{__("messages.room")}} - ' + numeral(perprice * this.value).format('0,0') + '₮</span>\
-								<span class="price" style="display:none">'+ plus * perprice * this.value + '</span>\
-							</div>\
-							</div>';
 				@elseif(App::isLocale('en'))
-					string = '<div class="item nightRoom' + index + '" id="#nightRoom' + index + '">\
-							<div class="right floated content " >\
-								<button class="small ui button" onclick="removeRow('+ index + ');" id="removeRoom">\
-								{{__("messages.remove")}}\
-								</button>\
-							</div>\
-							<div class="content">\
-								<h2 class="ui sub header" >\
-								'+ value.name + '\
-								</h2>\
-								<span class="perprice">'+ this.value + ' {{__("messages.room")}} - ' + numeral(perprice * this.value / rating).format('0,0.00') + '$</span>\
-								<span class="price" style="display:none">'+ parseFloat(plus * perprice * this.value / rating).toFixed(2) + '</span>\
-							</div>\
-							</div>';
+				// $('#nuat').html(parseFloat(nuat /'{{ $rate }}').toFixed(2) + ' $');
+				$('#totalPrice').html(parseFloat(finalprice).toFixed(2) + ' $');
 				@endif
-		var className = '.nightRoom';
-		var final = className.concat(index);
-		if (final == defaultID) {
-			defaultclass = 'nightRoom';
-			var concatted = defaultclass.concat(index);
-			defaultID = final;
-			var val = $("div").hasClass(concatted);
-			if (val == true) {
-				changeDesc(index, this.value);
-				$("#order").removeClass("disabled");
-				@if (App::isLocale('mn')) 
-					$("#roomtype").find(final).find('.price').text(plus * perprice * this.value);
-					$("#roomtype").find(final).find('.perprice').text(this.value + ' {{__("messages.room")}} - ' + numeral(perprice * this.value).format('0,0') + '₮');
-				@elseif(App::isLocale('en'))
-					$("#roomtype").find(final).find('.price').text(plus * perprice * this.value / rating);
-					$("#roomtype").find(final).find('.perprice').text(this.value + ' {{__("messages.room")}} - ' + numeral(perprice * this.value / rating).format('0,0.00') + '$');
-				@endif
-                }
-                else {
-					$("#order").removeClass("disabled");
-					orderData.push({ id: index, room_number: this.value, room_id: value.id });
-					$('#roomtype').prepend(string);
-				}
             }
-            else {
-				defaultID = final;
-				counter++;
-				if ($(final).length > 0) {
-					changeDesc(index, this.value);
-					$("#order").removeClass("disabled");
-					@if (App::isLocale('mn')) 
-						$("#roomtype").find(final).find('.price').text(plus * perprice * this.value);
-						$("#roomtype").find(final).find('.perprice').text(this.value + ' {{__("messages.room")}} - ' + numeral(perprice * this.value).format('0,0') + '₮');
-					@elseif(App::isLocale('en'))
-						$("#roomtype").find(final).find('.price').text(plus * perprice * this.value / rating);
-						$("#roomtype").find(final).find('.perprice').text(this.value + ' {{__("messages.room")}} - ' + numeral(perprice * this.value / rating).format('0,0.00') + '$');
-					@endif
-				} else {
-					if (counter < array.length) {
-						$("#order").removeClass("disabled");
-						orderData.push({ id: index, room_number: this.value, room_id: value.id });
-						$('#roomtype').prepend(string);
-					}
-				}
-			}
-	$('.price').each(function () {
-		Totalsum += parseFloat($(this).text());
-	});
-	Totalsum += pickup_price;
-	// nuat = parseFloat(Totalsum * 0.1).toFixed(2);
-	var finalprice = parseFloat(Totalsum);
-	@if (App::isLocale('mn')) 
-		// $('#nuat').html(numeral(nuat).format('0,0') + ' ₮');
-		$('#totalPrice').html(numeral(finalprice).format('0,0') + ' ₮');
-	@elseif(App::isLocale('en'))
-		// $('#nuat').html(parseFloat(nuat).toFixed(2) + ' $');
-		$('#totalPrice').html(parseFloat(finalprice).toFixed(2) + ' $');
-	@endif
+        })
+    
+        $.each($('#pickups').find('.pickup'), function(index,value){
+            if($(this).is(":checked")){
+                pickup.value = $(this).data('id');
+                @if(App::isLocale('mn'))
+                    pickup.price =  $(this).data('price');
+                @else
+                    pickup.price = $(this).data('price')/'{{$rate}}';
+                @endif
+                pickup_price += pickup.price;
+                Totalsum += pickup_price;
+                // var nuat = parseFloat(Totalsum * 0.1).toFixed(2);
+                var finalprice = parseFloat(Totalsum);
+                @if (App::isLocale('mn')) 
+                    // $('#nuat').html(numeral(nuat).format('0,0') + ' ₮');
+                    $('#totalPrice').html(numeral(finalprice).format('0,0') + ' ₮');
+                @elseif(App::isLocale('en'))
+                    // $('#nuat').html( parseFloat(nuat).toFixed(2) + ' $');
+                    $('#totalPrice').html(parseFloat(finalprice).toFixed(2) + ' $');
+                @endif
             }
         })
     })
+    
 
-	// =============================================================================
-	//  - Get data of search 
-	// =============================================================================
+    $.each(pickups, function (index, value) {
+        $('#carrent'+value.id).change(function () {
+            pickup.value = $(this).data('id');
+            @if(App::isLocale('mn'))
+                pickup.price =  $(this).data('price');
+            @else
+                pickup.price = $(this).data('price')/'{{$rate}}';
+            @endif
+            if ($(this).is(":checked")) {
+                $.each($('#pickups').find('.pickup'),function(index,data){
+                    if($(data).data('id') != pickup.value){
+                        if ($('#carrent'+$(data).data('id')).is(":checked")) {
+                            $('#carrent'+$(data).data('id')).attr('checked', false);
+                            Totalsum -= pickup_price;
+                            @if(App::isLocale('mn'))
+                                pickup_price -= $(data).data('price');
+                            @else
+                                pickup.price -= $(data).data('price')/'{{$rate}}';
+                            @endif
+                        }
+                    }
+                })
+                pickup_price += pickup.price;
+                Totalsum += pickup_price;
+            } else {
+                Totalsum -= pickup_price;
+                pickup_price -= pickup.price;
+                pickup = {};
+            }
+            // var nuat = parseFloat(Totalsum * 0.1).toFixed(2);
+            var finalprice = parseFloat(Totalsum);
+            @if (App::isLocale('mn')) 
+                // $('#nuat').html(numeral(nuat).format('0,0') + ' ₮');
+                $('#totalPrice').html(numeral(finalprice).format('0,0') + ' ₮');
+            @elseif(App::isLocale('en'))
+                // $('#nuat').html( parseFloat(nuat).toFixed(2) + ' $');
+                $('#totalPrice').html( parseFloat(finalprice).toFixed(2) + ' $');
+            @endif
+        });
+    });
 
-	var roomNumber;
-	var people;
-	var startDate;
-	var endDate;
-	var searchPlace;
+    function removeRow(index) {
+        Totalsum = 0;
+        var string = '.nightRoom';
+        string = string.concat(index);
+        $('#roomtype').find(string).remove();
+		var val = $("#roomtype .perprice").length;
+        if (val == 0) {
+            $('#nullRoom').show();
+            $("#order").addClass("disabled");
+        }
+        $('.price').each(function () {
+            Totalsum += parseFloat($(this).text());
+        });
+        for (var i = 0; i < orderData.length; i++) {
+            if (orderData[i].id == index) {
+                orderData.splice(i, 1);
+            }
+        }
+        Totalsum += pickup_price;
+        // nuat = parseFloat(Totalsum * 0.1).toFixed(2);
+        var finalprice = parseFloat(Totalsum);
+        @if (App::isLocale('mn')) 
+            // $('#nuat').html(numeral(nuat).format('0,0') + ' ₮');
+            $('#totalPrice').html(numeral(finalprice).format('0,0') + ' ₮');
+        @elseif(App::isLocale('en'))
+            // $('#nuat').html(parseFloat(nuat).toFixed(2) + ' $');
+            $('#totalPrice').html(parseFloat(finalprice).toFixed(2) + ' $');
+        @endif
+        checkReset = false;
+        checkReset2 = false;
+        $('#night' + index).dropdown('set selected', 'selected');
+        $('#night_op' + index).dropdown('set selected', 'selected');
+        checkReset = true;
+        checkReset2 = true;
+    }
 
-	searchPlace = '{{$place}}';
-	if (searchPlace == 'undefined' || !searchPlace) {
-		$('.datalocation input').val('Ulaanbaatar, Mongolia');
-	}
-	else {
-		$('.datalocation input').val(searchPlace);
-	}
+    function changeDesc(value, desc) {
+        for (var i in orderData) {
+            if (orderData[i].id == value) {
+                orderData[i].room_number = desc;
+                break;
+            }
+        }
+    }
+
+    // =============================================================================
+    // - When choose the room information, show information of room in order section
+    // =============================================================================
+
+    $.each(array, function (index, value) {
+        var sum = 0;
+        var string = '';
+        var defaultID = '.nightRoom0';
+        var counter = 0;
+        var defaultclass = '';
+        var totalprice = 0;
+        var nuat = 0;
+        var rating = "{{$rate}}";
+        $("#order").addClass("disabled");
+        var perprice;
+        $('#night_op' + index).on('change',function(){
+            checkReset = false;
+            if(checkReset2 == true){
+                $('#night'+index).dropdown('set selected','selected');
+                perprice = $('#price_op' + index).data('price');
+                if (this.value == 'selected') {
+                    removeRow(index);
+                }
+                else {
+                    Totalsum = 0;
+                    $('#nullRoom').hide();
+                    @if (App::isLocale('mn')) 
+                        string = '<div class="item nightRoom' + index + '" id="#nightRoom' + index + '">\
+                                <div class="right floated content " >\
+                                    <button class="small ui button" onclick="removeRow('+ index + ');" id="removeRoom">\
+                                    {{__("messages.remove")}}\
+                                    </button>\
+                                </div>\
+                                <div class="content">\
+                                    <h2 class="ui sub header" >\
+                                    '+ value.name + '\
+                                    </h2>\
+                                    <span class="perprice">'+ this.value + ' {{__("messages.room")}} - ' + numeral(perprice * this.value).format('0,0') + '₮</span>\
+                                    <span class="price" style="display:none">'+ plus * perprice * this.value + '</span>\
+                                </div>\
+                                </div>';
+                    @elseif(App::isLocale('en'))
+                        string = '<div class="item nightRoom' + index + '" id="#nightRoom' + index + '">\
+                                <div class="right floated content " >\
+                                    <button class="small ui button" onclick="removeRow('+ index + ');" id="removeRoom">\
+                                    {{__("messages.remove")}}\
+                                    </button>\
+                                </div>\
+                                <div class="content">\
+                                    <h2 class="ui sub header" >\
+                                    '+ value.name + '\
+                                    </h2>\
+                                    <span class="perprice">'+ this.value + ' {{__("messages.room")}} - ' + numeral(perprice * this.value / rating).format('0,0.00') + '$</span>\
+                                    <span class="price" style="display:none">'+ parseFloat(plus * perprice * this.value / rating).toFixed(2) + '</span>\
+                                </div>\
+                                </div>';
+                    @endif
+                    var className = '.nightRoom';
+                    var final = className.concat(index);
+                    if (final == defaultID) {
+                        defaultclass = 'nightRoom';
+                        var concatted = defaultclass.concat(index);
+                        defaultID = final;
+                        var val = $("div").hasClass(concatted);
+                        if (val == true) {
+                            changeDesc(index, this.value);
+                            $("#order").removeClass("disabled");
+                            @if (App::isLocale('mn')) 
+                                $("#roomtype").find(final).find('.price').text(plus * perprice * this.value);
+                                $("#roomtype").find(final).find('.perprice').text(this.value + ' {{__("messages.room")}} - ' + numeral(perprice * this.value).format('0,0') + '₮');
+                            @elseif(App::isLocale('en'))
+                                $("#roomtype").find(final).find('.price').text(plus * perprice * this.value / rating);
+                                $("#roomtype").find(final).find('.perprice').text(this.value + ' {{__("messages.room")}} - ' + numeral(perprice * this.value / rating).format('0,0.00') + '$');
+                            @endif
+                            }
+                            else {
+                                $("#order").removeClass("disabled");
+                                orderData.push({ id: index, room_number: this.value, room_id: value.id, person_number : 1 });
+                                $('#roomtype').prepend(string);
+                            }
+                        }
+                        else {
+                            defaultID = final;
+                            counter++;
+                            if ($(final).length > 0) {
+                                changeDesc(index, this.value);
+                                $("#order").removeClass("disabled");
+                                @if (App::isLocale('mn')) 
+                                    $("#roomtype").find(final).find('.price').text(plus * perprice * this.value);
+                                    $("#roomtype").find(final).find('.perprice').text(this.value + ' {{__("messages.room")}} - ' + numeral(perprice * this.value).format('0,0') + '₮');
+                                @elseif(App::isLocale('en'))
+                                    $("#roomtype").find(final).find('.price').text(plus * perprice * this.value / rating);
+                                    $("#roomtype").find(final).find('.perprice').text(this.value + ' {{__("messages.room")}} - ' + numeral(perprice * this.value / rating).format('0,0.00') + '$');
+                                @endif
+                            } else {
+                                if (counter < array.length) {
+                                    $("#order").removeClass("disabled");
+                                    orderData.push({ id: index, room_number: this.value, room_id: value.id, person_number : 1 });
+                                    $('#roomtype').prepend(string);
+                                }
+                            }
+                        }
+                        $('.price').each(function () {
+                            Totalsum += parseFloat($(this).text());
+                        });
+                        Totalsum += pickup_price;
+                        // nuat = parseFloat(Totalsum * 0.1).toFixed(2);
+                        var finalprice = parseFloat(Totalsum);
+                        @if (App::isLocale('mn')) 
+                            // $('#nuat').html(numeral(nuat).format('0,0') + ' ₮');
+                            $('#totalPrice').html(numeral(finalprice).format('0,0') + ' ₮');
+                        @elseif(App::isLocale('en'))
+                            // $('#nuat').html(parseFloat(nuat).toFixed(2) + ' $');
+                            $('#totalPrice').html(parseFloat(finalprice).toFixed(2) + ' $');
+                        @endif
+                }
+            }
+            checkReset = true;
+        })
+
+        $('#night' + index).on('change', function () {
+            checkReset2 = false;
+            if(checkReset == true){
+                $('#night_op'+index).dropdown('set selected','selected');
+                perprice = $('#price' + index).data('price');
+                if (this.value == 'selected') {
+                    removeRow(index);
+                }
+                else {
+                    Totalsum = 0;
+                    $('#nullRoom').hide();
+                    @if (App::isLocale('mn')) 
+                        string = '<div class="item nightRoom' + index + '" id="#nightRoom' + index + '">\
+                                <div class="right floated content " >\
+                                    <button class="small ui button" onclick="removeRow('+ index + ');" id="removeRoom">\
+                                    {{__("messages.remove")}}\
+                                    </button>\
+                                </div>\
+                                <div class="content">\
+                                    <h2 class="ui sub header" >\
+                                    '+ value.name + '\
+                                    </h2>\
+                                    <span class="perprice">'+ this.value + ' {{__("messages.room")}} - ' + numeral(perprice * this.value).format('0,0') + '₮</span>\
+                                    <span class="price" style="display:none">'+ plus * perprice * this.value + '</span>\
+                                </div>\
+                                </div>';
+                    @elseif(App::isLocale('en'))
+                        string = '<div class="item nightRoom' + index + '" id="#nightRoom' + index + '">\
+                                <div class="right floated content " >\
+                                    <button class="small ui button" onclick="removeRow('+ index + ');" id="removeRoom">\
+                                    {{__("messages.remove")}}\
+                                    </button>\
+                                </div>\
+                                <div class="content">\
+                                    <h2 class="ui sub header" >\
+                                    '+ value.name + '\
+                                    </h2>\
+                                    <span class="perprice">'+ this.value + ' {{__("messages.room")}} - ' + numeral(perprice * this.value / rating).format('0,0.00') + '$</span>\
+                                    <span class="price" style="display:none">'+ parseFloat(plus * perprice * this.value / rating).toFixed(2) + '</span>\
+                                </div>\
+                                </div>';
+                    @endif
+                    var className = '.nightRoom';
+                    var final = className.concat(index);
+                    if (final == defaultID) {
+                        defaultclass = 'nightRoom';
+                        var concatted = defaultclass.concat(index);
+                        defaultID = final;
+                        var val = $("div").hasClass(concatted);
+                        if (val == true) {
+                            changeDesc(index, this.value);
+                            $("#order").removeClass("disabled");
+                            @if (App::isLocale('mn')) 
+                                $("#roomtype").find(final).find('.price').text(plus * perprice * this.value);
+                                $("#roomtype").find(final).find('.perprice').text(this.value + ' {{__("messages.room")}} - ' + numeral(perprice * this.value).format('0,0') + '₮');
+                            @elseif(App::isLocale('en'))
+                                $("#roomtype").find(final).find('.price').text(plus * perprice * this.value / rating);
+                                $("#roomtype").find(final).find('.perprice').text(this.value + ' {{__("messages.room")}} - ' + numeral(perprice * this.value / rating).format('0,0.00') + '$');
+                            @endif
+                            }
+                            else {
+                                $("#order").removeClass("disabled");
+                                orderData.push({ id: index, room_number: this.value, room_id: value.id, person_number : 2 });
+                                $('#roomtype').prepend(string);
+                            }
+                        }
+                        else {
+                            defaultID = final;
+                            counter++;
+                            if ($(final).length > 0) {
+                                changeDesc(index, this.value);
+                                $("#order").removeClass("disabled");
+                                @if (App::isLocale('mn')) 
+                                    $("#roomtype").find(final).find('.price').text(plus * perprice * this.value);
+                                    $("#roomtype").find(final).find('.perprice').text(this.value + ' {{__("messages.room")}} - ' + numeral(perprice * this.value).format('0,0') + '₮');
+                                @elseif(App::isLocale('en'))
+                                    $("#roomtype").find(final).find('.price').text(plus * perprice * this.value / rating);
+                                    $("#roomtype").find(final).find('.perprice').text(this.value + ' {{__("messages.room")}} - ' + numeral(perprice * this.value / rating).format('0,0.00') + '$');
+                                @endif
+                            } else {
+                                if (counter < array.length) {
+                                    $("#order").removeClass("disabled");
+                                    orderData.push({ id: index, room_number: this.value, room_id: value.id, person_number : 2 });
+                                    $('#roomtype').prepend(string);
+                                }
+                            }
+                        }
+                        $('.price').each(function () {
+                            Totalsum += parseFloat($(this).text());
+                        });
+                        Totalsum += pickup_price;
+                        // nuat = parseFloat(Totalsum * 0.1).toFixed(2);
+                        var finalprice = parseFloat(Totalsum);
+                        @if (App::isLocale('mn')) 
+                            // $('#nuat').html(numeral(nuat).format('0,0') + ' ₮');
+                            $('#totalPrice').html(numeral(finalprice).format('0,0') + ' ₮');
+                        @elseif(App::isLocale('en'))
+                            // $('#nuat').html(parseFloat(nuat).toFixed(2) + ' $');
+                            $('#totalPrice').html(parseFloat(finalprice).toFixed(2) + ' $');
+                        @endif
+                }
+            }
+            checkReset2 = true;
+        })
+    })
+
+    // =============================================================================
+    //  - Get data of search 
+    // =============================================================================
+
+    var roomNumber;
+    var people;
+    var startDate;
+    var endDate;
+    var searchPlace;
+
+    searchPlace = '{{$place}}';
+    if (searchPlace == 'undefined' || !searchPlace) {
+        $('.datalocation input').val('Ulaanbaatar, Mongolia');
+    }
+    else {
+        $('.datalocation input').val(searchPlace);
+    }
 
 
-	endDate = moment('{{  $enddate  }}').format('L');
-	startDate = moment('{{  $startdate  }}').format('L');
-	var plus = moment.duration(moment(endDate).diff(moment(startDate))).days();;
-	$('#difference').html(plus);
+    endDate = moment('{{  $enddate  }}').format('L');
+    startDate = moment('{{  $startdate  }}').format('L');
+    var plus = moment.duration(moment(endDate).diff(moment(startDate))).days();;
+    $('#difference').html(plus);
 
-	if ('{{ $peoplenumber }}' >= 15) {
-		people = $('#selectedPeople').val();
-	} else {
-		people = $('.selectedPeople option:selected').val();
-	}
+    if ('{{ $peoplenumber }}' >= 15) {
+        people = $('#selectedPeople').val();
+    } else {
+        people = $('.selectedPeople option:selected').val();
+    }
 
-	if ('{{ $roomnumber }}' >= 15) {
-		roomNumber = $('#selectedRoom').val();
-	} else {
-		roomNumber = $('.selectedRoom option:selected').val();
-	}
+    if ('{{ $roomnumber }}' >= 15) {
+        roomNumber = $('#selectedRoom').val();
+    } else {
+        roomNumber = $('.selectedRoom option:selected').val();
+    }
 
-	var plus0 = $('#plus0');
-	var minus0 = $('#minus0');
-	var selectedRoom = $('#selectedRoom');
-	plus0.click(function (e) {
-		var value = parseFloat(selectedRoom.val());
-		if (!value) {
-			value = 0;
-		}
-		value = value + 1;
-		selectedRoom.val(value);
-		roomNumber = value;
-		e.preventDefault();
-	});
-	minus0.click(function (e) {
-		var value = parseFloat(selectedRoom.val());
-		if (value < 16) {
-			$('.selectedRoom').dropdown('set selected', 14);
-			$('.selectedRoom').css("display", "");
-			$('.people').css("display", "none");
-		} else {
-			if (value > 1) {
-				value = value - 1;
-			}
-			selectedRoom.val(value);
-			roomNumber = value;
-		}
-		e.preventDefault();
-	});
+    var plus0 = $('#plus0');
+    var minus0 = $('#minus0');
+    var selectedRoom = $('#selectedRoom');
+    plus0.click(function (e) {
+        var value = parseFloat(selectedRoom.val());
+        if (!value) {
+            value = 0;
+        }
+        value = value + 1;
+        selectedRoom.val(value);
+        roomNumber = value;
+        e.preventDefault();
+    });
+    minus0.click(function (e) {
+        var value = parseFloat(selectedRoom.val());
+        if (value < 16) {
+            $('.selectedRoom').dropdown('set selected', 14);
+            $('.selectedRoom').css("display", "");
+            $('.people').css("display", "none");
+        } else {
+            if (value > 1) {
+                value = value - 1;
+            }
+            selectedRoom.val(value);
+            roomNumber = value;
+        }
+        e.preventDefault();
+    });
 
-	var plus1 = $('#plus1');
-	var minus1 = $('#minus1');
-	var selectedPeople = $('#selectedPeople');
-	plus1.click(function (e) {
-		var value = parseFloat(selectedPeople.val());
-		if (!value) {
-			value = 0;
-		}
-		value = value + 1;
-		selectedPeople.val(value);
-		people = value;
-		e.preventDefault();
-	});
-	minus1.click(function (e) {
-		var value = parseFloat(selectedPeople.val());
-		if (value < 16) {
-			$('.selectedPeople').dropdown('set selected', 14);
-			$('.selectedPeople').css("display", "");
-			$('.room').css("display", "none");
-		} else {
-			if (value > 1) {
-				value = value - 1;
-			}
-			selectedPeople.val(value);
-			people = value;
-		}
-		e.preventDefault();
-	});
+    var plus1 = $('#plus1');
+    var minus1 = $('#minus1');
+    var selectedPeople = $('#selectedPeople');
+    plus1.click(function (e) {
+        var value = parseFloat(selectedPeople.val());
+        if (!value) {
+            value = 0;
+        }
+        value = value + 1;
+        selectedPeople.val(value);
+        people = value;
+        e.preventDefault();
+    });
+    minus1.click(function (e) {
+        var value = parseFloat(selectedPeople.val());
+        if (value < 16) {
+            $('.selectedPeople').dropdown('set selected', 14);
+            $('.selectedPeople').css("display", "");
+            $('.room').css("display", "none");
+        } else {
+            if (value > 1) {
+                value = value - 1;
+            }
+            selectedPeople.val(value);
+            people = value;
+        }
+        e.preventDefault();
+    });
 
-	$("#selectedRoom").keyup(function () {
-		var value = $(this).val();
-		roomNumber = value;
-	});
+    $("#selectedRoom").keyup(function () {
+        var value = $(this).val();
+        roomNumber = value;
+    });
 
-	$("#selectedPeople").keyup(function () {
-		var value = $(this).val();
-		people = value;
-	});
+    $("#selectedPeople").keyup(function () {
+        var value = $(this).val();
+        people = value;
+    });
 
-	$(".selectedPeople").change(function () {
-		if ($(this).val() === "more") {
-			$('.selectedPeople').css("display", "none");
-			$('.room').css("display", "");
-			$('#selectedPeople').val(15);
-			people = 15;
-		} else {
-			people = $(this).val();
-		}
-	});
+    $(".selectedPeople").change(function () {
+        if ($(this).val() === "more") {
+            $('.selectedPeople').css("display", "none");
+            $('.room').css("display", "");
+            $('#selectedPeople').val(15);
+            people = 15;
+        } else {
+            people = $(this).val();
+        }
+    });
 
-	$(".selectedRoom").change(function () {
-		if ($(this).val() === "more") {
-			$('.selectedRoom').css("display", "none");
-			$('#selectedRoom').val(15);
-			$('.people').css("display", "");
-			roomNumber = 15;
-		} else {
-			roomNumber = $(this).val();
-		}
-	});
-	$('#reservation').daterangepicker({
-		"autoApply": true,
-		minDate: '<?php echo date("m/d/Y") ?>',
-		endDate: endDate,
-		dateLimitMin: {
-			days: 1
-		},
-		startDate: startDate,
-		"showCustomRangeLabel": true,
-		"alwaysShowCalendars": true,
-		"opens": "center"
-	}, function (start, end, label) {
-		startDate = start.format('L');
-		endDate = end.format('L');
-	});
-	roomNumber = '{{$roomnumber}}';
+    $(".selectedRoom").change(function () {
+        if ($(this).val() === "more") {
+            $('.selectedRoom').css("display", "none");
+            $('#selectedRoom').val(15);
+            $('.people').css("display", "");
+            roomNumber = 15;
+        } else {
+            roomNumber = $(this).val();
+        }
+    });
+    $('#reservation').daterangepicker({
+        "autoApply": true,
+        minDate: '<?php echo date("m/d/Y") ?>',
+        endDate: endDate,
+        dateLimitMin: {
+            days: 1
+        },
+        startDate: startDate,
+        "showCustomRangeLabel": true,
+        "alwaysShowCalendars": true,
+        "opens": "center"
+    }, function (start, end, label) {
+        startDate = start.format('L');
+        endDate = end.format('L');
+    });
+    roomNumber = '{{$roomnumber}}';
 
-	var perNum = '{{$peoplenumber}}';
-	$('#selectedPeople option').each(function () {
-		if ($(this).val() == perNum) {
-			$(this).prop("selected", true);
-			people = perNum
-		}
-	});
+    var perNum = '{{$peoplenumber}}';
+    $('#selectedPeople option').each(function () {
+        if ($(this).val() == perNum) {
+            $(this).prop("selected", true);
+            people = perNum
+        }
+    });
 
-	// =============================================================================
-	//  - Pass data of result to search function in SearchController
-	// =============================================================================
+    // =============================================================================
+    //  - Pass data of result to search function in SearchController
+    // =============================================================================
 
-	$("#searchButton").click(function () {
-		$('#searchButton').addClass('loading');
-		if (!people) {
-			people = 2;
-		}
-		$.ajaxSetup({
-			headers: {
-				'X-CSRF-TOKEN': $('meta[name="_token"]').attr('content')
-			}
-		})
-		searchPlace = $('#searchplace').val();
-		$.get('search?roomnumber=' + roomNumber + '&peoplenumber=' + people + '&startdate=' + startDate + '&enddate=' + endDate + '&place=' + searchPlace)
-			.success(function (data) {
-				window.location = "{{URL::to('searchresult')}}";
-			})
-			.error(function (jqXHR, textStatus, errorThrown) {
-				if (textStatus == 'error') {
-					alert(errorThrown);
-				}
-			});
-	});
+    $("#searchButton").click(function () {
+        $('#searchButton').addClass('loading');
+        if (!people) {
+            people = 2;
+        }
+        $.ajaxSetup({
+            headers: {
+                'X-CSRF-TOKEN': $('meta[name="_token"]').attr('content')
+            }
+        })
+        searchPlace = $('#searchplace').val();
+        $.get('search?roomnumber=' + roomNumber + '&peoplenumber=' + people + '&startdate=' + startDate + '&enddate=' + endDate + '&place=' + searchPlace)
+            .success(function (data) {
+                window.location = "{{URL::to('searchresult')}}";
+            })
+            .error(function (jqXHR, textStatus, errorThrown) {
+                if (textStatus == 'error') {
+                    alert(errorThrown);
+                }
+            });
+    });
 
-	// =============================================================================
-	//  - Pass data of order to save order function in OrderController
-	// =============================================================================
+    // =============================================================================
+    //  - Pass data of order to save order function in OrderController
+    // =============================================================================
 
-	$("#order").click(function () {
-		$('#order').addClass('loading disabled');
-		$.ajax({
-			type: 'POST',
-			url: '{{ url("order") }}',
-			data: { 'order_pickup': pickup.value, 'order_startdate': moment(startDate).format('YYYY-MM-DD'), 'order_enddate': moment(endDate).format('YYYY-MM-DD'), 'order_hotelid': '{{$hotel->id}}', 'order_roomdata': orderData, '_token': '{{ csrf_token() }}' },
-		}).done(function (data) {
-			if (data.success == true) {
-				window.location = "{{ url('order/card')}}";
-			}
-		});
-	});
+    $("#order").click(function () {
+        $('#order').addClass('loading disabled');
+        $.ajax({
+            type: 'POST',
+            url: '{{ url("order") }}',
+            data: { 'order_pickup': pickup.value, 'order_startdate': moment(startDate).format('YYYY-MM-DD'), 'order_enddate': moment(endDate).format('YYYY-MM-DD'), 'order_hotelid': '{{$hotel->id}}', 'order_roomdata': orderData, '_token': '{{ csrf_token() }}' },
+        }).done(function (data) {
+            if (data.success == true) {
+                window.location = "{{ url('order/card')}}";
+            }
+        });
+    });
 
 </script>
 @endpush
