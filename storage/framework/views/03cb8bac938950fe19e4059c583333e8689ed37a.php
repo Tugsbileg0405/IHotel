@@ -360,7 +360,7 @@
 												<img class="ui image" src="<?php echo e(asset(unserialize($room->photos)[0])); ?>" />
 											<?php endif; ?>
 											</div>
-											<div class="eight wide column">
+											<div class="seven wide column">
 												<div class="ui large header"><?php echo e($room->name); ?></div>
 												<p class="ui justify">
 													<?php if(App::isLocale('mn')): ?> 
@@ -402,21 +402,20 @@
 													<?php endif; ?>
 												</div>
 											</div>
-											<div class="four wide column">
+									
+											<div class="five wide column">
 												<?php if(App::isLocale('mn')): ?> 
 													<?php if($room->saled_room): ?> 
 														<?php $__currentLoopData = $room->saled_room; $__env->addLoop($__currentLoopData); foreach($__currentLoopData as $sale): $__env->incrementLoopIndices(); $loop = $__env->getLastLoop(); ?>
 															<div class="ui large header" id="price<?php echo e($key); ?>" data-price="<?php echo e($sale->price); ?>">
 																<!--<span class="sub header" style="text-decoration: line-through"><?php echo e(number_format($room->price)); ?>₮/<?php echo e(__('messages.per night')); ?></span>-->
-																<div><?php echo e(number_format($sale->price)); ?>₮/<?php echo e(__('messages.per night')); ?></div>
-																<?php if($room->price_op AND $room->people_number == 2): ?><span class="sub header"><i class="icon male"></i> 2 хүн</span><?php endif; ?>
+																<div><?php if($room->price_op): ?><i class="icon couple"></i><?php endif; ?><?php echo e(number_format($sale->price)); ?>₮/<?php echo e(__('messages.per night')); ?></div>
 															</div>
 														<?php endforeach; $__env->popLoop(); $loop = $__env->getLastLoop(); ?>
 													<?php else: ?>
 														<div class="ui large header" id="price<?php echo e($key); ?>" data-price="<?php echo e($room->price); ?>">
-															<?php echo e(number_format($room->price)); ?>₮/<?php echo e(__('messages.per night')); ?>
+															<<?php if($room->price_op): ?><i class="icon couple"></i><?php endif; ?><?php echo e(number_format($room->price)); ?>₮/<?php echo e(__('messages.per night')); ?>
 
-															<?php if($room->price_op AND $room->people_number == 2): ?><span class="sub header"><i class="icon male"></i> 2 people</span><?php endif; ?>
 														</div>
 													<?php endif; ?> 
 												<?php elseif(App::isLocale('en')): ?> 
@@ -424,12 +423,14 @@
 														<?php $__currentLoopData = $room->saled_room; $__env->addLoop($__currentLoopData); foreach($__currentLoopData as $sale): $__env->incrementLoopIndices(); $loop = $__env->getLastLoop(); ?>
 														<div class="ui large header" id="price<?php echo e($key); ?>" data-price="<?php echo e($sale->price); ?>">
 															<!--<span  class="sub header" style="text-decoration: line-through"><?php echo e(number_format($room->price/$rate,2)); ?>$/<?php echo e(__('messages.per night')); ?></span>-->
-															<div><?php echo e(number_format($sale->price/$rate,2)); ?>$/<?php echo e(__('messages.per night')); ?></div>
-															<?php if($room->price_op AND $room->people_number == 2): ?><span class="sub header"><i class="icon male"></i> 2 people</span><?php endif; ?>
+															<div><?php if($room->price_op): ?><i class="icon couple"></i><?php endif; ?><?php echo e(number_format($sale->price/$rate,2)); ?>$/<?php echo e(__('messages.per night')); ?></div>
 														</div>
 														<?php endforeach; $__env->popLoop(); $loop = $__env->getLastLoop(); ?> 
 													<?php else: ?>
-														<div class="ui large header" id="price<?php echo e($key); ?>" data-price="<?php echo e($room->price); ?>"><?php if($room->price_op AND $room->people_number == 2): ?><i class="icon male"></i><i class="icon male"></i><?php endif; ?><?php echo e(number_format($room->price/$rate,2)); ?>$/<?php echo e(__('messages.per night')); ?></div>
+														<div class="ui large header" id="price<?php echo e($key); ?>" data-price="<?php echo e($room->price); ?>">
+															<?php if($room->price_op): ?><i class="icon couple"></i><?php endif; ?><?php echo e(number_format($room->price/$rate,2)); ?>$/<?php echo e(__('messages.per night')); ?>
+
+														</div>
 													<?php endif; ?> 
 												<?php endif; ?>
 												<p class="ui justify">
@@ -468,15 +469,13 @@
 															<?php $__currentLoopData = $room->saled_room; $__env->addLoop($__currentLoopData); foreach($__currentLoopData as $sale): $__env->incrementLoopIndices(); $loop = $__env->getLastLoop(); ?>
 																<div class="ui large header" id="price_op<?php echo e($key); ?>" data-price="<?php echo e($sale->price_op); ?>">
 																	<!--<span class="sub header" style="text-decoration: line-through"><?php echo e(number_format($room->price)); ?>₮/<?php echo e(__('messages.per night')); ?></span>-->
-																	<div><?php echo e(number_format($sale->price_op)); ?>₮/<?php echo e(__('messages.per night')); ?></div>
-																	<span class="sub header"><i class="icon male"></i> 1 хүн</span>
+																	<div><i class="icon male"></i><?php echo e(number_format($sale->price_op)); ?>₮/<?php echo e(__('messages.per night')); ?></div>
 																</div>
 															<?php endforeach; $__env->popLoop(); $loop = $__env->getLastLoop(); ?>
 														<?php else: ?>
 															<div class="ui large header" id="price_op<?php echo e($key); ?>" data-price="<?php echo e($room->price_op); ?>">
-																<?php echo e(number_format($room->price_op)); ?>₮/<?php echo e(__('messages.per night')); ?>
+																<i class="icon male"></i><?php echo e(number_format($room->price_op)); ?>₮/<?php echo e(__('messages.per night')); ?>
 
-																<span class="sub header"><i class="icon male"></i> 1 people</span>
 															</div>
 														<?php endif; ?> 
 													<?php elseif(App::isLocale('en')): ?> 
@@ -484,17 +483,15 @@
 															<?php $__currentLoopData = $room->saled_room; $__env->addLoop($__currentLoopData); foreach($__currentLoopData as $sale): $__env->incrementLoopIndices(); $loop = $__env->getLastLoop(); ?>
 															<div class="ui large header" id="price_op<?php echo e($key); ?>" data-price="<?php echo e($sale->price_op); ?>">
 																<!--<span  class="sub header" style="text-decoration: line-through"><?php echo e(number_format($room->price/$rate,2)); ?>$/<?php echo e(__('messages.per night')); ?></span>-->
-																<div><?php echo e(number_format($sale->price_op/$rate,2)); ?>$/<?php echo e(__('messages.per night')); ?>
+																<div><i class="icon male"></i><?php echo e(number_format($sale->price_op/$rate,2)); ?>$/<?php echo e(__('messages.per night')); ?>
 
 																</div>
-																<span class="sub header"><i class="icon male"></i> 1 people</span>
 															</div>
 															<?php endforeach; $__env->popLoop(); $loop = $__env->getLastLoop(); ?> 
 														<?php else: ?>
 															<div class="ui large header" id="price_op<?php echo e($key); ?>" data-price="<?php echo e($room->price_op); ?>">
-																<?php echo e(number_format($room->price_op/$rate,2)); ?>$/<?php echo e(__('messages.per night')); ?>
+																<i class="icon male"></i><?php echo e(number_format($room->price_op/$rate,2)); ?>$/<?php echo e(__('messages.per night')); ?>
 
-																<span class="sub header"><i class="icon male"></i> 1 хүн</span>
 															</div>
 														<?php endif; ?> 
 													<?php endif; ?>
@@ -779,20 +776,20 @@
                     }
                     }
                 }
-				$('.price').each(function () {
-				Totalsum += parseFloat($(this).text());
-				});
-				Totalsum += pickup_price;
-				// nuat = parseFloat(Totalsum * 0.1).toFixed(2);
-				var finalprice = parseFloat(Totalsum);
-				console.log(finalprice);
-				<?php if(App::isLocale('mn')): ?> 
-				// $('#nuat').html(numeral(nuat).format('0,0') + ' ₮');
-				$('#totalPrice').html(numeral(finalprice).format('0,0') + ' ₮');
-				<?php elseif(App::isLocale('en')): ?>
-				// $('#nuat').html(parseFloat(nuat /'<?php echo e($rate); ?>').toFixed(2) + ' $');
-				$('#totalPrice').html(parseFloat(finalprice).toFixed(2) + ' $');
-				<?php endif; ?>
+                $('.price').each(function () {
+                Totalsum += parseFloat($(this).text());
+                });
+                Totalsum += pickup_price;
+                // nuat = parseFloat(Totalsum * 0.1).toFixed(2);
+                var finalprice = parseFloat(Totalsum);
+                console.log(finalprice);
+                <?php if(App::isLocale('mn')): ?> 
+                // $('#nuat').html(numeral(nuat).format('0,0') + ' ₮');
+                $('#totalPrice').html(numeral(finalprice).format('0,0') + ' ₮');
+                <?php elseif(App::isLocale('en')): ?>
+                // $('#nuat').html(parseFloat(nuat /'<?php echo e($rate); ?>').toFixed(2) + ' $');
+                $('#totalPrice').html(parseFloat(finalprice).toFixed(2) + ' $');
+                <?php endif; ?>
             }
         })
     
@@ -866,7 +863,7 @@
         var string = '.nightRoom';
         string = string.concat(index);
         $('#roomtype').find(string).remove();
-		var val = $("#roomtype .perprice").length;
+        var val = $("#roomtype .perprice").length;
         if (val == 0) {
             $('#nullRoom').show();
             $("#order").addClass("disabled");

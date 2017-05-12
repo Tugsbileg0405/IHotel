@@ -349,7 +349,7 @@
 												<img class="ui image" src="{{ asset(unserialize($room->photos)[0]) }}" />
 											@endif
 											</div>
-											<div class="eight wide column">
+											<div class="seven wide column">
 												<div class="ui large header">{{$room->name}}</div>
 												<p class="ui justify">
 													@if (App::isLocale('mn')) 
@@ -389,20 +389,19 @@
 													@endif
 												</div>
 											</div>
-											<div class="four wide column">
+									
+											<div class="five wide column">
 												@if (App::isLocale('mn')) 
 													@if($room->saled_room) 
 														@foreach($room->saled_room as $sale)
 															<div class="ui large header" id="price{{$key}}" data-price="{{$sale->price}}">
 																<!--<span class="sub header" style="text-decoration: line-through">{{number_format($room->price)}}₮/{{ __('messages.per night') }}</span>-->
-																<div>{{ number_format($sale->price)}}₮/{{ __('messages.per night') }}</div>
-																@if($room->price_op AND $room->people_number == 2)<span class="sub header"><i class="icon male"></i> 2 хүн</span>@endif
+																<div>@if($room->price_op)<i class="icon couple"></i>@endif{{ number_format($sale->price)}}₮/{{ __('messages.per night') }}</div>
 															</div>
 														@endforeach
 													@else
 														<div class="ui large header" id="price{{$key}}" data-price="{{$room->price}}">
-															{{number_format($room->price)}}₮/{{ __('messages.per night') }}
-															@if($room->price_op AND $room->people_number == 2)<span class="sub header"><i class="icon male"></i> 2 people</span>@endif
+															<@if($room->price_op)<i class="icon couple"></i>@endif{{number_format($room->price)}}₮/{{ __('messages.per night') }}
 														</div>
 													@endif 
 												@elseif (App::isLocale('en')) 
@@ -410,12 +409,13 @@
 														@foreach($room->saled_room as $sale)
 														<div class="ui large header" id="price{{$key}}" data-price="{{$sale->price}}">
 															<!--<span  class="sub header" style="text-decoration: line-through">{{number_format($room->price/$rate,2)}}$/{{ __('messages.per night') }}</span>-->
-															<div>{{ number_format($sale->price/$rate,2)}}$/{{ __('messages.per night') }}</div>
-															@if($room->price_op AND $room->people_number == 2)<span class="sub header"><i class="icon male"></i> 2 people</span>@endif
+															<div>@if($room->price_op)<i class="icon couple"></i>@endif{{ number_format($sale->price/$rate,2)}}$/{{ __('messages.per night') }}</div>
 														</div>
 														@endforeach 
 													@else
-														<div class="ui large header" id="price{{$key}}" data-price="{{$room->price}}">@if($room->price_op AND $room->people_number == 2)<i class="icon male"></i><i class="icon male"></i>@endif{{number_format($room->price/$rate,2)}}$/{{ __('messages.per night') }}</div>
+														<div class="ui large header" id="price{{$key}}" data-price="{{$room->price}}">
+															@if($room->price_op)<i class="icon couple"></i>@endif{{number_format($room->price/$rate,2)}}$/{{ __('messages.per night') }}
+														</div>
 													@endif 
 												@endif
 												<p class="ui justify">
@@ -454,14 +454,12 @@
 															@foreach($room->saled_room as $sale)
 																<div class="ui large header" id="price_op{{$key}}" data-price="{{$sale->price_op}}">
 																	<!--<span class="sub header" style="text-decoration: line-through">{{number_format($room->price)}}₮/{{ __('messages.per night') }}</span>-->
-																	<div>{{ number_format($sale->price_op)}}₮/{{ __('messages.per night') }}</div>
-																	<span class="sub header"><i class="icon male"></i> 1 хүн</span>
+																	<div><i class="icon male"></i>{{ number_format($sale->price_op)}}₮/{{ __('messages.per night') }}</div>
 																</div>
 															@endforeach
 														@else
 															<div class="ui large header" id="price_op{{$key}}" data-price="{{$room->price_op}}">
-																{{number_format($room->price_op)}}₮/{{ __('messages.per night') }}
-																<span class="sub header"><i class="icon male"></i> 1 people</span>
+																<i class="icon male"></i>{{number_format($room->price_op)}}₮/{{ __('messages.per night') }}
 															</div>
 														@endif 
 													@elseif (App::isLocale('en')) 
@@ -469,15 +467,13 @@
 															@foreach($room->saled_room as $sale)
 															<div class="ui large header" id="price_op{{$key}}" data-price="{{$sale->price_op}}">
 																<!--<span  class="sub header" style="text-decoration: line-through">{{number_format($room->price/$rate,2)}}$/{{ __('messages.per night') }}</span>-->
-																<div>{{ number_format($sale->price_op/$rate,2)}}$/{{ __('messages.per night') }}
+																<div><i class="icon male"></i>{{ number_format($sale->price_op/$rate,2)}}$/{{ __('messages.per night') }}
 																</div>
-																<span class="sub header"><i class="icon male"></i> 1 people</span>
 															</div>
 															@endforeach 
 														@else
 															<div class="ui large header" id="price_op{{$key}}" data-price="{{$room->price_op}}">
-																{{number_format($room->price_op/$rate,2)}}$/{{ __('messages.per night') }}
-																<span class="sub header"><i class="icon male"></i> 1 хүн</span>
+																<i class="icon male"></i>{{number_format($room->price_op/$rate,2)}}$/{{ __('messages.per night') }}
 															</div>
 														@endif 
 													@endif
@@ -762,20 +758,20 @@
                     }
                     }
                 }
-				$('.price').each(function () {
-				Totalsum += parseFloat($(this).text());
-				});
-				Totalsum += pickup_price;
-				// nuat = parseFloat(Totalsum * 0.1).toFixed(2);
-				var finalprice = parseFloat(Totalsum);
-				console.log(finalprice);
-				@if (App::isLocale('mn')) 
-				// $('#nuat').html(numeral(nuat).format('0,0') + ' ₮');
-				$('#totalPrice').html(numeral(finalprice).format('0,0') + ' ₮');
-				@elseif(App::isLocale('en'))
-				// $('#nuat').html(parseFloat(nuat /'{{ $rate }}').toFixed(2) + ' $');
-				$('#totalPrice').html(parseFloat(finalprice).toFixed(2) + ' $');
-				@endif
+                $('.price').each(function () {
+                Totalsum += parseFloat($(this).text());
+                });
+                Totalsum += pickup_price;
+                // nuat = parseFloat(Totalsum * 0.1).toFixed(2);
+                var finalprice = parseFloat(Totalsum);
+                console.log(finalprice);
+                @if (App::isLocale('mn')) 
+                // $('#nuat').html(numeral(nuat).format('0,0') + ' ₮');
+                $('#totalPrice').html(numeral(finalprice).format('0,0') + ' ₮');
+                @elseif(App::isLocale('en'))
+                // $('#nuat').html(parseFloat(nuat /'{{ $rate }}').toFixed(2) + ' $');
+                $('#totalPrice').html(parseFloat(finalprice).toFixed(2) + ' $');
+                @endif
             }
         })
     
@@ -849,7 +845,7 @@
         var string = '.nightRoom';
         string = string.concat(index);
         $('#roomtype').find(string).remove();
-		var val = $("#roomtype .perprice").length;
+        var val = $("#roomtype .perprice").length;
         if (val == 0) {
             $('#nullRoom').show();
             $("#order").addClass("disabled");

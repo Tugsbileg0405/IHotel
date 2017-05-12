@@ -17,7 +17,7 @@ return [
     'Name' => 'Name',
     'Surname' => 'Surname',
     'Country' => 'Country',
-    'per night' => 'per night',
+    'per night' => 'night',
     'Message' => 'Message',
     'Send' => 'Send',
     'Destination' => 'Destination',

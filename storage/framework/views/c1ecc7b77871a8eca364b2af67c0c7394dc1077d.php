@@ -384,6 +384,14 @@
                         type   : 'number',
                         prompt : '<?php echo e(__("form.Please enter a valid CVC")); ?>'
                     },
+                    {
+                        type   : 'minLength[3]',
+                        prompt : '<?php echo e(__("form.Please enter a valid CVC")); ?>'
+                    },
+                    {
+                        type   : 'maxLength[4]',
+                        prompt : '<?php echo e(__("form.Please enter a valid CVC")); ?>'
+                    },
                 ]
             },
         },
