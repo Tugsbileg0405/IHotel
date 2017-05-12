@@ -414,7 +414,7 @@
 														<?php endforeach; $__env->popLoop(); $loop = $__env->getLastLoop(); ?>
 													<?php else: ?>
 														<div class="ui large header" id="price<?php echo e($key); ?>" data-price="<?php echo e($room->price); ?>">
-															<<?php if($room->price_op): ?><i class="icon couple"></i><?php endif; ?><?php echo e(number_format($room->price)); ?>₮/<?php echo e(__('messages.per night')); ?>
+															<?php if($room->price_op): ?><i class="icon couple"></i><?php endif; ?><?php echo e(number_format($room->price)); ?>₮/<?php echo e(__('messages.per night')); ?>
 
 														</div>
 													<?php endif; ?> 
@@ -611,7 +611,8 @@
             var nuat = 0;
             var rating = "<?php echo e($rate); ?>";
             var perprice;
-            if ((selectedval == 'selected' && selectedval2 == 'selected') || (selectedval == 'selected' && selectedval2 == null) || (selectedval == null && selectedval2 == 'selected')) {
+			
+            if ((selectedval == null && selectedval2 == null) || (selectedval == 'selected' && selectedval2 == 'selected') || (selectedval == 'selected' && selectedval2 == null) || (selectedval == null && selectedval2 == 'selected')) {
                 removeRow(index);
             }
             else {
@@ -782,7 +783,6 @@
                 Totalsum += pickup_price;
                 // nuat = parseFloat(Totalsum * 0.1).toFixed(2);
                 var finalprice = parseFloat(Totalsum);
-                console.log(finalprice);
                 <?php if(App::isLocale('mn')): ?> 
                 // $('#nuat').html(numeral(nuat).format('0,0') + ' ₮');
                 $('#totalPrice').html(numeral(finalprice).format('0,0') + ' ₮');
