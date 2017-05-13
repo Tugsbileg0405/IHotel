@@ -45,7 +45,7 @@
 					<span>{{ $options[4]->value_en }}</span>
 				@endif
 			</div>
-			<div class="six wide column">
+			<div class="six wide column" >
 				<form class="ui form segment" id="contact-form">
 					{{ csrf_field() }}
 				 	<h6 class="ui horizontal header center aligned">

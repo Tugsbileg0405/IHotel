@@ -12,6 +12,7 @@ use Carbon\Carbon;
 use Swap;
 use App\Option;
 use App\Pickup;
+
 class SearchController extends Controller
 {
     // =========================================================================
@@ -55,10 +56,31 @@ class SearchController extends Controller
         $hotels = Hotel::with('rooms')->get();
         $hotel_id = $request->session()->get('hotel_id');
         $rate = Option::find(7)->value;
-        $rooms = Room::max('price');
-        if ($rooms == null) {
-            $rooms = 100000;
+        $maxprice = Room::max('price');
+        $active_rooms = Room::whereHas('hotel', function ($query) {
+                    $query->where('published', true)
+                          ->where('is_active', true);
+        })->with('sales')->get();
+
+        $minprice = $active_rooms->min('price');
+        foreach ($active_rooms as $rooms) {
+            foreach ($rooms->sales as $sale) {
+                if ((strtotime($startDate) >= strtotime($sale->startdate)) && (strtotime($startDate) <= strtotime($sale->enddate))) {
+                    if ($sale->price < $minprice) {
+                        $minprice = $sale->price;
+                    }
+                }
+            }
         }
+        
+        if ($maxprice == null) {
+            $maxprice = 100000;
+        }
+
+        if ($minprice == null) {
+            $maxprice = 0;
+        }
+
         $count =  collect($hotels)->count();
         return view('search', [
             'roomnumber' => $s_roNum,
@@ -68,7 +90,8 @@ class SearchController extends Controller
             'place' => $place,
             'count' => $count/10,
             'hotel_id' => $hotel_id,
-            'maxprice' => $rooms,
+            'maxprice' => $maxprice,
+            'minprice' => $minprice,
             'hotels' => $hotels,
             'rate' => $rate,
         ]);
@@ -97,6 +120,8 @@ class SearchController extends Controller
         $rooms = $hotel->rooms;
         $rate = Option::find(7)->value;
         $pickups = Pickup::all();
+        $minprice = $rooms->min('price');
+        $minprice_saled = 0;
         foreach ($rooms as $room) {
             $saled_room = [];
             foreach ($room->closes as $close) {
@@ -114,7 +139,10 @@ class SearchController extends Controller
                 if ((strtotime($startDate) >= strtotime($sale->startdate)) && (strtotime($startDate) <= strtotime($sale->enddate))) {
                     $saled_room[] = $sale;
                     $room->saled_room = $saled_room;
-                 }
+                    if ($sale->price < $minprice) {
+                        $minprice_saled = $sale->price;
+                    }
+                }
             }
         }
 
@@ -154,63 +182,63 @@ class SearchController extends Controller
         $rating2 = $request->rating2;
         $totalpeople = $peoplenumber * $roomnumber;
 
-        if(\App::isLocale('mn')){
+        if (\App::isLocale('mn')) {
             $collection = Hotel::where('published', true)
                 ->where('is_active', true)
                 ->where('room_number', '>=', $roomnumber)
                 ->where('total_people', '>=', $totalpeople)
-                ->with(['rooms.sales' => function ($query) use ($startDate,$endDate) {
-                    $query->where('startdate', '<=' , Carbon::parse($startDate)->format('Y-m-d H:i:s'))
+                ->with(['rooms.sales' => function ($query) use ($startDate, $endDate) {
+                    $query->where('startdate', '<=', Carbon::parse($startDate)->format('Y-m-d H:i:s'))
                             ->where('enddate', '>=', Carbon::parse($endDate)->format('Y-m-d H:i:s'));
                 }])
-                ->orderBy('priority','asc')
+                ->orderBy('priority', 'asc')
                 ->with('rates')->get();
 
-        if ($filter !== null && $filterprice1 == null && $filterprice2 == null && $rating1 == null && $rating2 == null) {
-            $collection = Hotel::where('published', true)
+            if ($filter !== null && $filterprice1 == null && $filterprice2 == null && $rating1 == null && $rating2 == null) {
+                $collection = Hotel::where('published', true)
                 ->where('is_active', true)
                 ->where('room_number', '>=', $roomnumber)
                 ->where('total_people', '>=', $totalpeople)
                 ->where('star', $filter)
-                ->with(['rooms.sales' => function ($query) use ($startDate,$endDate) {
-                    $query->where('startdate', '<=' , Carbon::parse($startDate)->format('Y-m-d H:i:s'))
+                ->with(['rooms.sales' => function ($query) use ($startDate, $endDate) {
+                    $query->where('startdate', '<=', Carbon::parse($startDate)->format('Y-m-d H:i:s'))
                           ->where('enddate', '>=', Carbon::parse($endDate)->format('Y-m-d H:i:s'));
                 }])
-                ->orderBy('priority', 'asc')
-                ->with('rates')->get();
-        }
+                    ->orderBy('priority', 'asc')
+                    ->with('rates')->get();
+            }
 
-        if ($filterprice1 !== null && $filterprice2 !== null && $rating1 == null && $rating2 == null && $filter == null) {
-            $collection = Hotel::where('published',true)
+            if ($filterprice1 !== null && $filterprice2 !== null && $rating1 == null && $rating2 == null && $filter == null) {
+                $collection = Hotel::where('published', true)
                 ->where('room_number', '>=', $roomnumber)
                 ->where('total_people', '>=', $totalpeople)
                 ->whereHas('rooms', function ($query) use ($filterprice1, $filterprice2, $totalpeople) {
                     $query->whereBetween('price', [$filterprice1,$filterprice2]);
                 })
-                ->with(['rooms.sales' => function ($query) use ($startDate,$endDate) {
-                    $query->where('startdate', '<=' , Carbon::parse($startDate)->format('Y-m-d H:i:s'))
+                    ->with(['rooms.sales' => function ($query) use ($startDate, $endDate) {
+                        $query->where('startdate', '<=', Carbon::parse($startDate)->format('Y-m-d H:i:s'))
                           ->where('enddate', '>=', Carbon::parse($endDate)->format('Y-m-d H:i:s'));
-                }])
-                ->orderBy('priority', 'asc')
-                ->with('rates')->get();
-        }
+                    }])
+                    ->orderBy('priority', 'asc')
+                    ->with('rates')->get();
+            }
 
-        if ($rating1 !== null && $rating2 !== null && $filterprice1 == null && $filterprice2 == null && $filter == null) {
-            $collection = Hotel::where('published', true)
+            if ($rating1 !== null && $rating2 !== null && $filterprice1 == null && $filterprice2 == null && $filter == null) {
+                $collection = Hotel::where('published', true)
                 ->where('is_active', true)
                 ->where('room_number', '>=', $roomnumber)
                 ->whereBetween('rating', [ $rating1 , $rating2])
                 ->where('total_people', '>=', $totalpeople)
-                ->with(['rooms.sales' => function ($query) use ($startDate,$endDate) {
-                    $query->where('startdate', '<=' , Carbon::parse($startDate)->format('Y-m-d H:i:s'))
+                ->with(['rooms.sales' => function ($query) use ($startDate, $endDate) {
+                    $query->where('startdate', '<=', Carbon::parse($startDate)->format('Y-m-d H:i:s'))
                           ->where('enddate', '>=', Carbon::parse($endDate)->format('Y-m-d H:i:s'));
                 }])
-                ->orderBy('priority', 'asc')
-                ->with('rates')->get();
-        }
+                    ->orderBy('priority', 'asc')
+                    ->with('rates')->get();
+            }
 
-        if ($filterprice1 !== null && $filterprice2 !== null && $rating1 !== null && $rating2 !== null && $filter == null) {
-            $collection = Hotel::where('published', true)
+            if ($filterprice1 !== null && $filterprice2 !== null && $rating1 !== null && $rating2 !== null && $filter == null) {
+                $collection = Hotel::where('published', true)
                 ->where('is_active', true)
                 ->where('room_number', '>=', $roomnumber)
                 ->whereBetween('rating', [ $rating1 , $rating2])
@@ -218,31 +246,31 @@ class SearchController extends Controller
                 ->whereHas('rooms', function ($query) use ($filterprice1, $filterprice2, $totalpeople) {
                     $query->whereBetween('price', [$filterprice1,$filterprice2]);
                 })
-                ->with(['rooms.sales' => function ($query) use ($startDate,$endDate) {
-                    $query->where('startdate', '<=' , Carbon::parse($startDate)->format('Y-m-d H:i:s'))
+                    ->with(['rooms.sales' => function ($query) use ($startDate, $endDate) {
+                        $query->where('startdate', '<=', Carbon::parse($startDate)->format('Y-m-d H:i:s'))
                           ->where('enddate', '>=', Carbon::parse($endDate)->format('Y-m-d H:i:s'));
-                }])
-                ->orderBy('priority', 'asc')
-                ->with('rates')->get();
-        }
+                    }])
+                    ->orderBy('priority', 'asc')
+                    ->with('rates')->get();
+            }
 
-        if ($rating1 !== null && $rating2 !== null && $filter !== null && $filterprice1 == null && $filterprice2 == null) {
-            $collection = Hotel::where('published', true)
+            if ($rating1 !== null && $rating2 !== null && $filter !== null && $filterprice1 == null && $filterprice2 == null) {
+                $collection = Hotel::where('published', true)
                 ->where('is_active', true)
                 ->where('room_number', '>=', $roomnumber)
                 ->where('total_people', '>=', $totalpeople)
                 ->whereBetween('rating', [$rating1 , $rating2])
                 ->where('star', $filter)
-                ->with(['rooms.sales' => function ($query) use ($startDate,$endDate) {
-                    $query->where('startdate', '<=' , Carbon::parse($startDate)->format('Y-m-d H:i:s'))
+                ->with(['rooms.sales' => function ($query) use ($startDate, $endDate) {
+                    $query->where('startdate', '<=', Carbon::parse($startDate)->format('Y-m-d H:i:s'))
                           ->where('enddate', '>=', Carbon::parse($endDate)->format('Y-m-d H:i:s'));
                 }])
-                ->orderBy('priority', 'asc')
-                ->with('rates')->get();
-        }
+                    ->orderBy('priority', 'asc')
+                    ->with('rates')->get();
+            }
 
-        if ($filterprice1 !== null && $filterprice2 !== null && $filter !== null && $rating2 == null && $rating1 == null) {
-            $collection = Hotel::where('published', true)
+            if ($filterprice1 !== null && $filterprice2 !== null && $filter !== null && $rating2 == null && $rating1 == null) {
+                $collection = Hotel::where('published', true)
                 ->where('is_active', true)
                 ->where('total_people', '>=', $totalpeople)
                 ->where('room_number', '>=', $roomnumber)
@@ -250,16 +278,16 @@ class SearchController extends Controller
                 ->whereHas('rooms', function ($query) use ($filterprice1, $filterprice2, $totalpeople) {
                     $query->whereBetween('price', [$filterprice1,$filterprice2]);
                 })
-                ->with(['rooms.sales' => function ($query) use ($startDate,$endDate) {
-                    $query->where('startdate', '<=' , Carbon::parse($startDate)->format('Y-m-d H:i:s'))
+                    ->with(['rooms.sales' => function ($query) use ($startDate, $endDate) {
+                        $query->where('startdate', '<=', Carbon::parse($startDate)->format('Y-m-d H:i:s'))
                           ->where('enddate', '>=', Carbon::parse($endDate)->format('Y-m-d H:i:s'));
-                }])
-                ->orderBy('priority', 'asc')
-                ->with('rates')->get();
-        }
+                    }])
+                    ->orderBy('priority', 'asc')
+                    ->with('rates')->get();
+            }
 
-        if ($filterprice1 !== null && $filterprice2 !== null && $rating1 !== null && $rating2 !== null && $filter !== null) {
-            $collection = Hotel::where('published', true)
+            if ($filterprice1 !== null && $filterprice2 !== null && $rating1 !== null && $rating2 !== null && $filter !== null) {
+                $collection = Hotel::where('published', true)
                 ->where('is_active', true)
                 ->where('room_number', '>=', $roomnumber)
                 ->whereBetween('rating', [ $rating1 , $rating2])
@@ -267,82 +295,81 @@ class SearchController extends Controller
                 ->whereHas('rooms', function ($query) use ($filterprice1, $filterprice2, $totalpeople) {
                     $query->whereBetween('price', [$filterprice1,$filterprice2]);
                 })
-                ->where('star', $filter)
-                ->with(['rooms.sales' => function ($query) use ($startDate,$endDate) {
-                    $query->where('startdate', '<=' , Carbon::parse($startDate)->format('Y-m-d H:i:s'))
+                    ->where('star', $filter)
+                    ->with(['rooms.sales' => function ($query) use ($startDate, $endDate) {
+                        $query->where('startdate', '<=', Carbon::parse($startDate)->format('Y-m-d H:i:s'))
                           ->where('enddate', '>=', Carbon::parse($endDate)->format('Y-m-d H:i:s'));
-                }])
-                ->orderBy('priority', 'asc')
-                ->with('rates')->get();
-        }
+                    }])
+                    ->orderBy('priority', 'asc')
+                    ->with('rates')->get();
+            }
         }
 
 
         if (\App::isLocale('en')) {
-
-        $collection = Hotel::where('name_en', '!=', null)
-                ->where('published',true)
-                ->where('is_active', true)->where('room_number', '>=', $roomnumber)
-                ->where('total_people', '>=', $totalpeople)
-                ->with(['rooms.sales' => function ($query) use ($startDate,$endDate) {
-                        $query->where('startdate', '<=' , Carbon::parse($startDate)->format('Y-m-d H:i:s'))
-                            ->where('enddate', '>=', Carbon::parse($endDate)->format('Y-m-d H:i:s'));
-                    }])
-                ->orderBy('priority', 'asc')
-                ->with('rates')->get();
-
-        if ($filter !== null && $filterprice1 == null && $filterprice2 == null && $rating1 == null && $rating2 == null) {
             $collection = Hotel::where('name_en', '!=', null)
-                ->where('published',true)
+                ->where('published', true)
                 ->where('is_active', true)->where('room_number', '>=', $roomnumber)
                 ->where('total_people', '>=', $totalpeople)
-                ->where('star', $filter)
-                ->with(['rooms.sales' => function ($query) use ($startDate,$endDate) {
-                    $query->where('startdate', '<=' , Carbon::parse($startDate)->format('Y-m-d H:i:s'))
-                          ->where('enddate', '>=', Carbon::parse($endDate)->format('Y-m-d H:i:s'));
+                ->with(['rooms.sales' => function ($query) use ($startDate, $endDate) {
+                        $query->where('startdate', '<=', Carbon::parse($startDate)->format('Y-m-d H:i:s'))
+                            ->where('enddate', '>=', Carbon::parse($endDate)->format('Y-m-d H:i:s'));
                 }])
                 ->orderBy('priority', 'asc')
                 ->with('rates')->get();
-        }
 
-        if ($filterprice1 !== null && $filterprice2 !== null && $rating1 == null && $rating2 == null && $filter == null) {
-            $filterprice1 = $filterprice1 * $rate;
-            $filterprice2 = $filterprice2 * $rate;
-            $collection = Hotel::where('name_en', '!=', null)
+            if ($filter !== null && $filterprice1 == null && $filterprice2 == null && $rating1 == null && $rating2 == null) {
+                $collection = Hotel::where('name_en', '!=', null)
+                ->where('published', true)
+                ->where('is_active', true)->where('room_number', '>=', $roomnumber)
+                ->where('total_people', '>=', $totalpeople)
+                ->where('star', $filter)
+                ->with(['rooms.sales' => function ($query) use ($startDate, $endDate) {
+                    $query->where('startdate', '<=', Carbon::parse($startDate)->format('Y-m-d H:i:s'))
+                          ->where('enddate', '>=', Carbon::parse($endDate)->format('Y-m-d H:i:s'));
+                }])
+                    ->orderBy('priority', 'asc')
+                    ->with('rates')->get();
+            }
+
+            if ($filterprice1 !== null && $filterprice2 !== null && $rating1 == null && $rating2 == null && $filter == null) {
+                $filterprice1 = $filterprice1 * $rate;
+                $filterprice2 = $filterprice2 * $rate;
+                $collection = Hotel::where('name_en', '!=', null)
                 ->where('published', true)
                     ->where('is_active', true)->where('room_number', '>=', $roomnumber)
                 ->where('total_people', '>=', $totalpeople)
                 ->whereHas('rooms', function ($query) use ($filterprice1, $filterprice2, $totalpeople) {
                     $query->whereBetween('price', [$filterprice1,$filterprice2]);
                 })
-                ->with(['rooms.sales' => function ($query) use ($startDate,$endDate) {
-                    $query->where('startdate', '<=' , Carbon::parse($startDate)->format('Y-m-d H:i:s'))
+                    ->with(['rooms.sales' => function ($query) use ($startDate, $endDate) {
+                        $query->where('startdate', '<=', Carbon::parse($startDate)->format('Y-m-d H:i:s'))
                           ->where('enddate', '>=', Carbon::parse($endDate)->format('Y-m-d H:i:s'));
-                }])
-                ->orderBy('priority', 'asc')
-                ->with('rates')->get();
-        }
+                    }])
+                    ->orderBy('priority', 'asc')
+                    ->with('rates')->get();
+            }
 
-        if ($rating1 !== null && $rating2 !== null && $filterprice1 == null && $filterprice2 == null && $filter == null) {
-            $collection = Hotel::where('name_en', '!=', null)
+            if ($rating1 !== null && $rating2 !== null && $filterprice1 == null && $filterprice2 == null && $filter == null) {
+                $collection = Hotel::where('name_en', '!=', null)
                 ->where('published', true)
                     ->where('is_active', true)
                 ->where('room_number', '>=', $roomnumber)
                 ->whereBetween('rating', [ $rating1 , $rating2])
                 ->where('total_people', '>=', $totalpeople)
-                ->with(['rooms.sales' => function ($query) use ($startDate,$endDate) {
-                    $query->where('startdate', '<=' , Carbon::parse($startDate)->format('Y-m-d H:i:s'))
+                ->with(['rooms.sales' => function ($query) use ($startDate, $endDate) {
+                    $query->where('startdate', '<=', Carbon::parse($startDate)->format('Y-m-d H:i:s'))
                           ->where('enddate', '>=', Carbon::parse($endDate)->format('Y-m-d H:i:s'));
                 }])
-                ->orderBy('priority', 'asc')
-                ->with('rates')->get();
-        }
+                    ->orderBy('priority', 'asc')
+                    ->with('rates')->get();
+            }
 
-        if ($filterprice1 !== null && $filterprice2 !== null && $rating1 !== null && $rating2 !== null) {
-            $filterprice1 = $filterprice1 * $rate;
-            $filterprice2 = $filterprice2 * $rate;
-            $collection = Hotel::where('name_en', '!=', null)
-                ->where('published',true)
+            if ($filterprice1 !== null && $filterprice2 !== null && $rating1 !== null && $rating2 !== null) {
+                $filterprice1 = $filterprice1 * $rate;
+                $filterprice2 = $filterprice2 * $rate;
+                $collection = Hotel::where('name_en', '!=', null)
+                ->where('published', true)
                 ->where('is_active', true)
                 ->where('room_number', '>=', $roomnumber)
                 ->whereBetween('rating', [ $rating1 , $rating2])
@@ -350,34 +377,34 @@ class SearchController extends Controller
                 ->whereHas('rooms', function ($query) use ($filterprice1, $filterprice2, $totalpeople) {
                     $query->whereBetween('price', [$filterprice1,$filterprice2]);
                 })
-                ->with(['rooms.sales' => function ($query) use ($startDate,$endDate) {
-                    $query->where('startdate', '<=' , Carbon::parse($startDate)->format('Y-m-d H:i:s'))
+                    ->with(['rooms.sales' => function ($query) use ($startDate, $endDate) {
+                        $query->where('startdate', '<=', Carbon::parse($startDate)->format('Y-m-d H:i:s'))
                           ->where('enddate', '>=', Carbon::parse($endDate)->format('Y-m-d H:i:s'));
-                }])
-                ->orderBy('priority', 'asc')
-                ->with('rates')->get();
-        }
+                    }])
+                    ->orderBy('priority', 'asc')
+                    ->with('rates')->get();
+            }
 
-        if ($rating1 !== null && $rating2 !== null && $filter !== null && $filterprice1 == null && $filterprice2 == null) {
-            $collection = Hotel::where('name_en', '!=', null)
+            if ($rating1 !== null && $rating2 !== null && $filter !== null && $filterprice1 == null && $filterprice2 == null) {
+                $collection = Hotel::where('name_en', '!=', null)
                 ->where('published', true)
                     ->where('is_active', true)
                 ->where('room_number', '>=', $roomnumber)
                 ->where('total_people', '>=', $totalpeople)
                 ->whereBetween('rating', [ $rating1 , $rating2])
                 ->where('star', $filter)
-                ->with(['rooms.sales' => function ($query) use ($startDate,$endDate) {
-                    $query->where('startdate', '<=' , Carbon::parse($startDate)->format('Y-m-d H:i:s'))
+                ->with(['rooms.sales' => function ($query) use ($startDate, $endDate) {
+                    $query->where('startdate', '<=', Carbon::parse($startDate)->format('Y-m-d H:i:s'))
                           ->where('enddate', '>=', Carbon::parse($endDate)->format('Y-m-d H:i:s'));
                 }])
-                ->orderBy('priority', 'asc')
-                ->with('rates')->get();
-        }
+                    ->orderBy('priority', 'asc')
+                    ->with('rates')->get();
+            }
 
-        if ($filterprice1 !== null && $filterprice2 !== null && $rating1 !== null && $rating2 !== null && $filter !== null) {
-            $filterprice1 = $filterprice1 * $rate;
-            $filterprice2 = $filterprice2 * $rate;
-            $collection = Hotel::where('name_en', '!=', null)
+            if ($filterprice1 !== null && $filterprice2 !== null && $rating1 !== null && $rating2 !== null && $filter !== null) {
+                $filterprice1 = $filterprice1 * $rate;
+                $filterprice2 = $filterprice2 * $rate;
+                $collection = Hotel::where('name_en', '!=', null)
                 ->where('published', true)
                     ->where('is_active', true)
                 ->where('room_number', '>=', $roomnumber)
@@ -387,18 +414,18 @@ class SearchController extends Controller
                 ->whereHas('rooms', function ($query) use ($filterprice1, $filterprice2, $totalpeople) {
                     $query->whereBetween('price', [$filterprice1,$filterprice2]);
                 })
-                ->with(['rooms.sales' => function ($query) use ($startDate,$endDate) {
-                    $query->where('startdate', '<=' , Carbon::parse($startDate)->format('Y-m-d H:i:s'))
+                    ->with(['rooms.sales' => function ($query) use ($startDate, $endDate) {
+                        $query->where('startdate', '<=', Carbon::parse($startDate)->format('Y-m-d H:i:s'))
                           ->where('enddate', '>=', Carbon::parse($endDate)->format('Y-m-d H:i:s'));
-                }])
-                ->orderBy('priority', 'asc')
-                ->with('rates')->get();
-        }
+                    }])
+                    ->orderBy('priority', 'asc')
+                    ->with('rates')->get();
+            }
 
-        if ($filterprice1 !== null && $filterprice2 !== null && $filter !== null && $rating1 == null && $rating2 == null) {
-            $filterprice1 = $filterprice1 * $rate;
-            $filterprice2 = $filterprice2 * $rate;
-            $collection = Hotel::where('name_en', '!=', null)
+            if ($filterprice1 !== null && $filterprice2 !== null && $filter !== null && $rating1 == null && $rating2 == null) {
+                $filterprice1 = $filterprice1 * $rate;
+                $filterprice2 = $filterprice2 * $rate;
+                $collection = Hotel::where('name_en', '!=', null)
                 ->where('published', true)
                     ->where('is_active', true)
                 ->where('room_number', '>=', $roomnumber)
@@ -407,37 +434,37 @@ class SearchController extends Controller
                 ->whereHas('rooms', function ($query) use ($filterprice1, $filterprice2, $totalpeople) {
                     $query->whereBetween('price', [$filterprice1,$filterprice2]);
                 })
-                ->with(['rooms.sales' => function ($query) use ($startDate,$endDate) {
-                    $query->where('startdate', '<=' , Carbon::parse($startDate)->format('Y-m-d H:i:s'))
+                    ->with(['rooms.sales' => function ($query) use ($startDate, $endDate) {
+                        $query->where('startdate', '<=', Carbon::parse($startDate)->format('Y-m-d H:i:s'))
                           ->where('enddate', '>=', Carbon::parse($endDate)->format('Y-m-d H:i:s'));
-                }])
-                ->orderBy('priority', 'asc')
-                ->with('rates')->get();
-        }
+                    }])
+                    ->orderBy('priority', 'asc')
+                    ->with('rates')->get();
+            }
         }
 
-
+        
         $allresultlenth = $collection->count();
         $paged_hotels = $collection->forPage($page, 10);
 
         $favorites = [];
-        if($request->user()){
-           $favorites = $request->user()->favorites()->pluck('hotel_id')->toArray();
+        if ($request->user()) {
+            $favorites = $request->user()->favorites()->pluck('hotel_id')->toArray();
         }
 
         return response()->json(array('success' => true, 'data' => $paged_hotels, 'result' => $allresultlenth,'favorites' => $favorites, 'allhotels' => $collection));
     }
 
-    public function likeHotel(Request $request){
-        if($request->user()){
+    public function likeHotel(Request $request)
+    {
+        if ($request->user()) {
             $hotel_id = $request->get('hotel_id');
             $favorites = $request->user()->favorites()->pluck('hotel_id')->toArray();
             
             if (collect($favorites)->contains($hotel_id)) {
                 $request->user()->favorites()->detach($hotel_id);
                 $favorited = false;
-            }
-            else {
+            } else {
                 $request->user()->favorites()->attach($hotel_id);
                 $favorited = true;
             }

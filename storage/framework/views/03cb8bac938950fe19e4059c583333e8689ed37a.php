@@ -352,7 +352,7 @@
 										</p>
 									</div>
 									<div class="ui large header"><?php echo e(__('messages.Rooms')); ?></div>
-									<?php $__currentLoopData = $rooms; $__env->addLoop($__currentLoopData); foreach($__currentLoopData as $key=>$room): $__env->incrementLoopIndices(); $loop = $__env->getLastLoop(); ?>
+									<?php $__currentLoopData = $rooms->sortBy('price'); $__env->addLoop($__currentLoopData); foreach($__currentLoopData as $key=>$room): $__env->incrementLoopIndices(); $loop = $__env->getLastLoop(); ?>
 									<div class="ui segment">
 										<div class="ui stackable column grid">
 											<div class="four wide column">

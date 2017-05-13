@@ -17,7 +17,7 @@ Route::get('change/{locale}', function($locale) {
 Route::group(['middleware' => 'locale'], function() {
 	Auth::routes();
 	Route::get('/', 'AppController@home');
-	Route::get('/aspac2017', 'AppController@aspac');
+	Route::get('/aspac', 'AppController@aspac');
 	Route::get('question', 'AppController@showquestions');
 	Route::get('post/{id}', 'AppController@showPost');
 	Route::get('category/{id}', 'AppController@showCategory');

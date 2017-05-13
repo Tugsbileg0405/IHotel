@@ -34,7 +34,7 @@
 
     @yield('content')
 
-    @if(!Request::is('aspac2017') && !Request::is('searchresult'))
+    @if(!Request::is('aspac2017') && !Request::is('searchresult') && !Request::is('aspac'))
         @include('partials.footer')
     @endif
     

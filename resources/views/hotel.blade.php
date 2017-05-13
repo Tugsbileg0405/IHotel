@@ -341,7 +341,7 @@
 										</p>
 									</div>
 									<div class="ui large header">{{ __('messages.Rooms') }}</div>
-									@foreach($rooms as $key=>$room)
+									@foreach($rooms->sortBy('price')  as $key=>$room)
 									<div class="ui segment">
 										<div class="ui stackable column grid">
 											<div class="four wide column">

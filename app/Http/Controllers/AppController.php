@@ -283,9 +283,9 @@ class AppController extends Controller
         
         $startDate = Carbon::parse('2017-06-08')->format('m/d/Y');
         $endDate = Carbon::parse('2017-06-12')->format('m/d/Y');
-		$s_roNum = 1;
+        $s_roNum = 1;
         $p_Num = 1;
-		$place = $request->session()->get('place');
+        $place = $request->session()->get('place');
         $request->session()->put('roomnumber', $s_roNum);
         $request->session()->put('startDate', $startDate);
         $request->session()->put('endDate', $endDate);
@@ -294,9 +294,29 @@ class AppController extends Controller
         $hotels = Hotel::with('rooms')->get();
         $hotel_id = $request->session()->get('hotel_id');
         $rate = Option::find(7)->value;
-        $rooms = Room::max('price');
-        if ($rooms == null) {
-            $rooms = 100000;
+        $maxprice = Room::max('price');
+        $active_rooms = Room::whereHas('hotel', function ($query) {
+                    $query->where('published', true)
+                          ->where('is_active', true);
+        })->with('sales')->get();
+
+        $minprice = $active_rooms->min('price');
+        foreach ($active_rooms as $rooms) {
+            foreach ($rooms->sales as $sale) {
+                if ((strtotime($startDate) >= strtotime($sale->startdate)) && (strtotime($startDate) <= strtotime($sale->enddate))) {
+                    if ($sale->price < $minprice) {
+                        $minprice = $sale->price;
+                    }
+                }
+            }
+        }
+        
+        if ($maxprice == null) {
+            $maxprice = 100000;
+        }
+        
+        if ($minprice == null) {
+            $maxprice = 0;
         }
         $count =  collect($hotels)->count();
         return view('search', [
@@ -307,7 +327,8 @@ class AppController extends Controller
             'place' => $place,
             'count' => $count/10,
             'hotel_id' => $hotel_id,
-            'maxprice' => $rooms,
+            'maxprice' => $maxprice,
+            'minprice' => $minprice,
             'hotels' => $hotels,
             'rate' => $rate,
             ]);

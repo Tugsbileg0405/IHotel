@@ -420,22 +420,24 @@
 
         var maxprice = '<?php echo e($maxprice); ?>';
         var maxpricebydollar = numeral(maxprice/'<?php echo e($rate); ?>').format('0');
+        var minprice = '<?php echo e($minprice); ?>';
+        var minpricebydollar = numeral(minprice/'<?php echo e($rate); ?>').format('0');
         var snapSlider = document.getElementById('slider-snap');
         <?php if(App::isLocale('mn')): ?> 
             noUiSlider.create(snapSlider, {
-            start: [0, parseInt(maxprice)],
+            start: [parseInt(minprice), parseInt(maxprice)],
             step: 10,
             range: {
-                'min': [0],
+                'min': [parseInt(minprice)],
                 'max': [parseInt(maxprice)]
                 }
             });
         <?php elseif(App::isLocale('en')): ?> 
             noUiSlider.create(snapSlider, {
-            start: [0, parseInt(maxpricebydollar)],
+            start: [parseInt(minpricebydollar), parseInt(maxpricebydollar)],
             step: 1,
             range: {
-                'min': [0],
+                'min': [parseInt(minpricebydollar)],
                 'max': [parseInt(maxpricebydollar)]
                 }
             });
