@@ -139,6 +139,7 @@ class SearchController extends Controller
                 if ((strtotime($startDate) >= strtotime($sale->startdate)) && (strtotime($startDate) <= strtotime($sale->enddate))) {
                     $saled_room[] = $sale;
                     $room->saled_room = $saled_room;
+                    $room->price = $sale->price;
                     if ($sale->price < $minprice) {
                         $minprice_saled = $sale->price;
                     }
