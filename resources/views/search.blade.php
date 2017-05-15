@@ -578,11 +578,20 @@
                             star += "<i class='icon yellow star'></i>";
                     }
                     var lowest = data.data[key].rooms[0].price;
+                    if (data.data[key].rooms[0].price_op) {
+                    	lowest = data.data[key].rooms[0].price_op;
+                    }
                     var saledprice;
                     for(var i=0; i < data.data[key].rooms.length; i++){
                         tmp = data.data[key].rooms[i].price;
+                        if (data.data[key].rooms[i].price_op) {
+                        	tmp = data.data[key].rooms[i].price_op;
+                        }
                         if (data.data[key].rooms[i].sales.length > 0) {
                             tmp = data.data[key].rooms[i].sales[0].price;
+                            if (data.data[key].rooms[i].sales[0].price_op) {
+                            	tmp = data.data[key].rooms[i].sales[0].price_op;
+                            }
                         }
                         if (parseFloat(tmp) < parseFloat(lowest)) {
                         	lowest = tmp;
