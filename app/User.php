@@ -38,6 +38,16 @@ class User extends Authenticatable
         return false;
     }
 
+    public function isActivated()
+    {
+        if ($this->is_activated)
+        {
+            return true;
+        }
+        
+        return false;
+    }
+
     public function isHotelAdmin()
     {
         if ($this->hotels()->count() > 0)

@@ -14,8 +14,14 @@ Route::get('change/{locale}', function($locale) {
 	Session::put('locale', $locale);
 	return back();
 });
+
 Route::group(['middleware' => 'locale'], function() {
 	Auth::routes();
+	Route::get('user/activate', 'AppController@activateUser');
+	Route::get('user/activation', 'AppController@showActivate');
+});
+
+Route::group(['middleware' => ['locale', 'activated']], function() {
 	Route::get('/', 'AppController@home');
 	Route::get('/aspac', 'AppController@aspac');
 	Route::get('question', 'AppController@showquestions');

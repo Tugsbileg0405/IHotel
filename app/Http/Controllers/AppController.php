@@ -3,22 +3,7 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
-use App\Comment;
-use App\Information;
-use App\Page;
-use App\Post;
-use App\PostCategory;
-use App\Question;
-use App\Hotel;
-use App\Option;
-use App\Term;
-use App\Team;
-use App\Feedback;
-use App\Room;
-use App\User;
-use App\PostComment;
 use Image;
-use Carbon\Carbon;
 
 class AppController extends Controller
 {
@@ -28,15 +13,15 @@ class AppController extends Controller
      */
     public function home()
     {
-        $comments = Comment::get();
-        $informations = Information::get();
-        $firstPost = Post::where('post_category_id', '1')
+        $comments = \App\Comment::get();
+        $informations = \App\Information::get();
+        $firstPost = \App\Post::where('post_category_id', '1')
             ->orderby('created_at', 'desc')
             ->first();
-        $secondPost = Post::where('post_category_id', '2')
+        $secondPost = \App\Post::where('post_category_id', '2')
             ->orderby('created_at', 'desc')
             ->first();
-        $hotel = Hotel::where('sale', true)
+        $hotel = \App\Hotel::where('sale', true)
             ->where('published', true)
             ->orderby('priority', 'asc')
             ->first();
@@ -63,11 +48,11 @@ class AppController extends Controller
      */
     public function showPost($id, Request $request)
     {
-        $post = Post::findOrFail($id);
+        $post = \App\Post::findOrFail($id);
         $post->views = $post->views + 1;
         $post->save();
-        $categories = PostCategory::get();
-        $mostPosts = Post::orderby('views', 'desc')
+        $categories = \App\PostCategory::get();
+        $mostPosts = \App\Post::orderby('views', 'desc')
             ->limit(5)
             ->get();
         $comments = $post->comments()
@@ -97,15 +82,15 @@ class AppController extends Controller
      */
     public function showPosts(Request $request)
     {
-        $posts = Post::orderby('created_at', 'desc')
+        $posts = \App\Post::orderby('created_at', 'desc')
             ->paginate(10);
-        $categories = PostCategory::get();
+        $categories = \App\PostCategory::get();
         $s_roNum = $request->session()->get('roomnumber');
         $p_Num = $request->session()->get('peoplenumber');
         $startDate = $request->session()->get('startDate');
         $endDate = $request->session()->get('endDate');
         $place = $request->session()->get('place');
-        $mostPosts = Post::orderby('views', 'desc')
+        $mostPosts = \App\Post::orderby('views', 'desc')
             ->limit(5)
             ->get();
 
@@ -123,17 +108,17 @@ class AppController extends Controller
 
     public function showUserPosts(Request $request, $id)
     {
-        $user = User::findorfail($id);
+        $user = \App\User::findorfail($id);
         $posts = $user->posts()
             ->orderby('created_at', 'desc')
             ->paginate(10);
-        $categories = PostCategory::get();
+        $categories = \App\PostCategory::get();
         $s_roNum = $request->session()->get('roomnumber');
         $p_Num = $request->session()->get('peoplenumber');
         $startDate = $request->session()->get('startDate');
         $endDate = $request->session()->get('endDate');
         $place = $request->session()->get('place');
-        $mostPosts = Post::orderby('views', 'desc')
+        $mostPosts = \App\Post::orderby('views', 'desc')
             ->limit(5)
             ->get();
 
@@ -155,17 +140,17 @@ class AppController extends Controller
      */
     public function showCategory($id, Request $request)
     {
-        $category = PostCategory::findOrFail($id);
+        $category = \App\PostCategory::findOrFail($id);
         $posts = $category->posts()
             ->orderby('created_at', 'desc')
             ->paginate(10);
-        $categories = PostCategory::get();
+        $categories = \App\PostCategory::get();
         $s_roNum = $request->session()->get('roomnumber');
         $p_Num = $request->session()->get('peoplenumber');
         $startDate = $request->session()->get('startDate');
         $endDate = $request->session()->get('endDate');
         $place = $request->session()->get('place');
-        $mostPosts = Post::orderby('views', 'desc')
+        $mostPosts = \App\Post::orderby('views', 'desc')
             ->limit(5)
             ->get();
 
@@ -184,7 +169,7 @@ class AppController extends Controller
 
     public function storeComment(Request $request, $id)
     {
-        $comment = new PostComment;
+        $comment = new \App\PostComment;
         $comment->user_id = \Auth::user()->id;
         $comment->post_id = $id;
         $comment->content = $request->get('content');
@@ -201,7 +186,7 @@ class AppController extends Controller
      */
     public function showQuestions()
     {
-        $questions = Question::get();
+        $questions = \App\Question::get();
 
         return view('question', [
             'questions' => $questions,
@@ -214,8 +199,8 @@ class AppController extends Controller
      */
     public function showAbout()
     {
-        $options = Option::get();
-        $teams = Team::get();
+        $options = \App\Option::get();
+        $teams = \App\Team::get();
 
         return view('about', [
             'options' => $options,
@@ -229,8 +214,8 @@ class AppController extends Controller
      */
     public function showTerms()
     {
-        $terms = Term::get();
-        $latest = Term::orderby('updated_at', 'desc')
+        $terms = \App\Term::get();
+        $latest = \App\Term::orderby('updated_at', 'desc')
             ->first();
 
         return view('terms', [
@@ -245,7 +230,7 @@ class AppController extends Controller
      */
     public function showContact()
     {
-        $options = Option::get();
+        $options = \App\Option::get();
 
         return view('contact', [
             'options' => $options,
@@ -265,7 +250,7 @@ class AppController extends Controller
             'g-recaptcha-response' => 'required|recaptcha',
         ]);
 
-        $feedback = new Feedback;
+        $feedback = new \App\Feedback;
         $feedback->email = $request->get('email');
         $feedback->name = $request->get('name');
         $feedback->content = $request->get('content');
@@ -281,8 +266,8 @@ class AppController extends Controller
         \Session::put('locale', 'en');
         \App::setLocale('en');
         
-        $startDate = Carbon::parse('2017-06-08')->format('m/d/Y');
-        $endDate = Carbon::parse('2017-06-12')->format('m/d/Y');
+        $startDate = \Carbon\Carbon::parse('2017-06-08')->format('m/d/Y');
+        $endDate = \Carbon\Carbon::parse('2017-06-12')->format('m/d/Y');
         $s_roNum = 1;
         $p_Num = 1;
         $place = $request->session()->get('place');
@@ -291,11 +276,11 @@ class AppController extends Controller
         $request->session()->put('endDate', $endDate);
         $request->session()->put('peoplenumber', $p_Num);
         $request->session()->put('place', $place);
-        $hotels = Hotel::with('rooms')->get();
+        $hotels = \App\Hotel::with('rooms')->get();
         $hotel_id = $request->session()->get('hotel_id');
-        $rate = Option::find(7)->value;
-        $maxprice = Room::max('price');
-        $active_rooms = Room::whereHas('hotel', function ($query) {
+        $rate = \App\Option::find(7)->value;
+        $maxprice = \App\Room::max('price');
+        $active_rooms = \App\Room::whereHas('hotel', function ($query) {
                     $query->where('published', true)
                           ->where('is_active', true);
         })->with('sales')->get();
@@ -332,5 +317,37 @@ class AppController extends Controller
             'hotels' => $hotels,
             'rate' => $rate,
             ]);
+    }
+
+    public function activateUser(Request $request)
+    {
+        $code = $request->query('code');
+        $user = \App\User::where('activation_code', $code)
+            ->first();
+
+        if ($user) {
+            $user->is_activated = true;
+            $user->activation_code = null;
+            $user->save();
+            
+            if (\Auth::check()) {
+                return redirect('/');
+            }
+
+            return redirect('login');
+        }
+
+        abort(404);
+    }
+
+    public function showActivate()
+    {
+        if (\Auth::check()) {
+            if (!\Auth::user()->isActivated()) {
+                return view('activate');
+            }
+        }
+
+        abort(404);
     }
 }

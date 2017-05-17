@@ -24,6 +24,8 @@ class CreateUsersTable extends Migration
             $table->string('gender')->nullable()->default(null);
             $table->string('phone_number')->nullable()->default(null);
             $table->string('avatar')->default('img/uploads/users/avatar.png');
+            $table->boolean('is_activated')->default(false);
+            $table->string('activation_code')->nullable()->default(null);
             $table->rememberToken();
             $table->timestamps();
         });

@@ -61,5 +61,6 @@ class Kernel extends HttpKernel
         'step' => \App\Http\Middleware\StepMiddleware::class,
         'owner' => \App\Http\Middleware\OwnerMiddleware::class,
         'locale' => \App\Http\Middleware\LocaleMiddleware::class,
+        'activated' => \App\Http\Middleware\ActivatedMiddleware::class,
     ];
 }
