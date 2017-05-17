@@ -78,19 +78,22 @@
                                     <div class="eight wide column">
                                         <div class="ui success message">
                                             <div class="content">
-                                                <div class="header">You need to activate your account. We sent activation email to you.</div>
-                                                <p>{{ __('messages.Check your email') }}</p>
+                                                <div class="header">You need to activate your account</div>
+                                                <p>We sent activation email to you. {{ __('messages.Check your email') }}</p>
                                             </div>
                                         </div>
                                         <div class="ui stackable grid">
-                                            <div class="ui three column row">
-                                                <div class="column"></div>
+                                            <div class="ui two column row">
                                                 <div class="column">
-                                                    <a class="ui fluid  primary icon button" href="{{ url('/logout') }}" onclick="event.preventDefault(); document.getElementById('logout-form').submit();">
+                                                    <a class="ui fluid green button" href="{{ url('user/activation/resend') }}">
+                                                        {{ __('messages.Resend activation email') }}
+                                                    </a>
+                                                </div>
+                                                <div class="column">
+                                                    <a class="ui fluid primary button" href="{{ url('/logout') }}" onclick="event.preventDefault(); document.getElementById('logout-form').submit();">
                                                         {{ __('messages.Go to home page') }}
                                                     </a>
                                                 </div>
-                                                <div class="column"></div>
                                             </div>
                                         </div>
                                     </div>

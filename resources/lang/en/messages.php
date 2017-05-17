@@ -214,4 +214,5 @@ return [
     'Special requests' => 'Special requests',
     'Please write your requests in English' => 'Please write your requests in English',
     'Personal information' => 'Personal information',
+    'Resend activation email' => 'Resend activation email',
 ];

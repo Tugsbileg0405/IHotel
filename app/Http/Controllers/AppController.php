@@ -3,6 +3,8 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
+use App\Notifications\ActivationCodeRequested;
+use Notification;
 use Image;
 
 class AppController extends Controller
@@ -349,5 +351,17 @@ class AppController extends Controller
         }
 
         abort(404);
+    }
+
+    public function sendActivate(Request $request)
+    {
+        $id = $request->user()->id;
+        $user = \App\User::find($id);
+        $user->activation_code = \Hash::make(str_random(40));
+        $user->save();
+            
+        Notification::send($user, new ActivationCodeRequested);
+        
+        return back();
     }
 }

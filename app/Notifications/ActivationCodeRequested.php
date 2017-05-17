@@ -43,9 +43,9 @@ class ActivationCodeRequested extends Notification
         $url = url('user/activate?code='.$notifiable->activation_code);
 
         return (new MailMessage)
-                    ->line('Сайна байна уу?')
-                    ->line('Манай сайтад бүртгүүлсэнд баярлалаа. Та бүртгэлээ идэвхижүүлнэ үү.')
-                    ->action('Идэвхижүүлэх', $url);
+            ->line('Сайна байна уу?')
+            ->line('Манай сайтад бүртгүүлсэнд баярлалаа. Та бүртгэлээ идэвхижүүлнэ үү.')
+            ->action('Идэвхижүүлэх', $url);
     }
 
     /**

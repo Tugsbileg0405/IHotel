@@ -80,20 +80,24 @@
                                     <div class="eight wide column">
                                         <div class="ui success message">
                                             <div class="content">
-                                                <div class="header">We sent activation email to you.</div>
-                                                <p><?php echo e(__('messages.Check your email')); ?></p>
+                                                <div class="header">You need to activate your account</div>
+                                                <p>We sent activation email to you. <?php echo e(__('messages.Check your email')); ?></p>
                                             </div>
                                         </div>
                                         <div class="ui stackable grid">
-                                            <div class="ui three column row">
-                                                <div class="column"></div>
+                                            <div class="ui two column row">
                                                 <div class="column">
-                                                    <a class="ui fluid  primary icon button" href="<?php echo e(url('/logout')); ?>" onclick="event.preventDefault(); document.getElementById('logout-form').submit();">
+                                                    <a class="ui fluid green button" href="<?php echo e(url('user/activation/resend')); ?>">
+                                                        <?php echo e(__('messages.Resend activation email')); ?>
+
+                                                    </a>
+                                                </div>
+                                                <div class="column">
+                                                    <a class="ui fluid primary button" href="<?php echo e(url('/logout')); ?>" onclick="event.preventDefault(); document.getElementById('logout-form').submit();">
                                                         <?php echo e(__('messages.Go to home page')); ?>
 
                                                     </a>
                                                 </div>
-                                                <div class="column"></div>
                                             </div>
                                         </div>
                                     </div>
