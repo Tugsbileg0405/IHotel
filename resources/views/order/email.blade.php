@@ -246,7 +246,7 @@
                             <strong>Prepayment:</strong> Payment will be withdrawn any time after booking.
                         </p>
                         <p>
-                            <strong>Cancellation cost:</strong> No cancellation
+                            <strong>Cancellation policy:</strong> No cancellation
                         </p>
                     </td>
                 </tr>

@@ -202,6 +202,15 @@
 													<?php endforeach; $__env->popLoop(); $loop = $__env->getLastLoop(); ?>
 												</div>
 											</div>
+											<h4 class="ui header">SIM card</h4>
+											<div class="ui form">
+												<div class="field">
+													<div class="ui checkbox">
+														<input type="checkbox" name="sim" id="sim">
+														<label>4G LTE</label>
+													</div>
+												</div>
+											</div>
 											<h4 class="ui header"><?php echo e(__('messages.Rooms')); ?></h4>
 											<div id="roomtype" class="ui middle aligned divided list">
 												<div class="item" style="color:black" id="nullRoom">
@@ -816,7 +825,15 @@
             }
         })
     })
-    
+
+	$('#sim').change(function () {
+		if ($(this).is(':checked')) {
+			var sim = 1;
+		}
+		else {
+			var sim = 0;
+		}
+	});
 
     $.each(pickups, function (index, value) {
         $('#carrent'+value.id).change(function () {

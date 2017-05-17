@@ -25,6 +25,7 @@ class OrderController extends Controller
 		$request->session()->put('order_startdate', $request->order_startdate);
 		$request->session()->put('order_enddate', $request->order_enddate);
 		$request->session()->put('order_pickup', $request->order_pickup);
+		$request->session()->put('order_sim', $request->order_sim);
 
 		$enddate = strtotime($request->order_enddate);
 		$startdate = strtotime($request->order_startdate);

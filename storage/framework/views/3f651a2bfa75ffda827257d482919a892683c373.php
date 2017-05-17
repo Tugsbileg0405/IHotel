@@ -142,12 +142,22 @@
 														<?php endif; ?>
 													</tr>-->
 													<tr>
-														<td colspan="2"><?php echo e(__('messages.Total price')); ?></td>
+														<td colspan="2">
+															<p class="ui center aligned header"><?php echo e(__('messages.Total price')); ?></p>
+														</td>
 														<?php if(App::isLocale('mn')): ?> 
-															<td colspan="3"><?php echo e(number_format($price)); ?> ₮</td>
+															<td colspan="3">
+																<p class="ui center aligned header"><?php echo e(number_format($price)); ?> ₮</p>
+															</td>
 														<?php elseif(App::isLocale('en')): ?>
-															<td colspan="3"><?php echo e(number_format($price/$rate,2)); ?> $</td>
+															<td colspan="3">
+																<p class="ui center aligned header">$<?php echo e(number_format($price/$rate,2)); ?></p>
+															</td>
 														<?php endif; ?>
+													</tr>
+													<tr>
+														<td colspan="2">Cancellation policy</td>
+														<td colspan="3">No cancellation</td>
 													</tr>
 												</tbody>
 											</table>
@@ -157,8 +167,6 @@
 												<li>10% VAT is included</li>
 												<li>5% Property service charge is included.</li>
 												<li>1% City tax is included</li>
-												<li>Prepayment: Payment will be withdrawn any time after booking..</li>
-												<li>Cancellation cost: No cancellation</li>
 											</ul>
 										</div>
 				                        <div class="ui divider"></div>
