@@ -11,26 +11,28 @@
 			<tbody>
 				<tr>
 					<td>Захиалагчийн нэр</td>
-					<td>{{ $order->user->name }}</td>
+					<td>{{ json_decode($order->userdata)->name }}</td>
 				</tr>
 				<tr>
 					<td>Захиалагчийн овог</td>
-					<td>{{ $order->user->surname }}</td>
+					<td>{{ json_decode($order->userdata)->surname }}</td>
 				</tr>
 				<tr>
 					<td>Захиалагчийн улс</td>
-					<td>{{ $order->user->country }}</td>
+					<td>{{ json_decode($order->userdata)->country }}</td>
 				</tr>
 				<tr>
 					<td>Захиалагчийн и-мэйл</td>
-					<td>{{ $order->user->email }}</td>
+					<td>{{ json_decode($order->userdata)->email }}</td>
 				</tr>
-				@if ($order->user->phone_number)
-					<tr>
-						<td>Захиалагчийн утас</td>
-						<td>{{ $order->user->phone_number }}</td>
-					</tr>
-				@endif
+				<tr>
+					<td>Захиалагчийн утас</td>
+					<td>{{ json_decode($order->userdata)->phone_number }}</td>
+				</tr>
+				<tr>
+					<td>Бүртгэлтэй эсэх</td>
+					<td>{{ $order->user_id ? 'Тийм' : 'Үгүй' }}</td>
+				</tr>
 				<tr>
 					<td>Буудлын нэр</td>
 					<td>{{ $order->hotel_name }}</td>

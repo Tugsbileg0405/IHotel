@@ -16,7 +16,7 @@ class CreateOrdersTable extends Migration
         Schema::create('orders', function (Blueprint $table) {
             $table->increments('id');
             $table->string('number')->nullable()->default(null);
-            $table->integer('user_id');
+            $table->integer('user_id')->nullable()->default(null);
             $table->integer('hotel_id');
             $table->string('hotel_name');
             $table->text('rooms');
@@ -24,10 +24,12 @@ class CreateOrdersTable extends Migration
             $table->date('startdate');
             $table->date('enddate');
             $table->text('pickup')->nullable()->default(null);
+            $table->boolean('sim')->default(false);
             $table->integer('price')->nullable()->default(null);
             $table->float('price_dollar')->nullable()->default(null);
             $table->float('dollar_rate')->nullable()->default(null);
             $table->text('carddata');
+            $table->text('userdata');
             $table->text('request')->nullable()->default(null);
             $table->integer('status')->default(1);
             $table->timestamps();

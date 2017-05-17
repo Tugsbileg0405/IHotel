@@ -279,7 +279,7 @@
                     <tr>
                         <td colspan="5">
                             <p>
-                                <strong>Guest name:</strong> {{ $order->user->name }} {{ $order->user->surname }}
+                                <strong>Guest name:</strong> {{ json_decode($order->userdata)->name }} {{ json_decode($order->userdata)->surname }}
                             </p>
                             <p>
                                 <strong>Room:</strong> {{ $room['room_name'] }}

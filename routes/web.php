@@ -40,11 +40,9 @@ Route::group(['middleware' => 'locale'], function() {
 
 	Route::post('order', 'OrderController@order');
 
-	Route::group(['middleware' => 'auth'], function() {
-		Route::get('order/card', 'OrderController@showCard');
-		Route::post('order/card/store', 'OrderController@storeCard');
-		Route::get('order/success', 'OrderController@showSuccess');
-	});
+	Route::get('order/card', 'OrderController@showCard');
+	Route::post('order/card/store', 'OrderController@storeCard');
+	Route::get('order/success', 'OrderController@showSuccess');
 
 	Route::group(['middleware' => 'auth'], function(){
 		Route::get('hotel/create', 'HotelController@createHotel');

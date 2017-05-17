@@ -174,11 +174,11 @@
 											<div class="two fields">
 												<div class="required field">
 													<label>{{ __('messages.Name') }}</label>
-													<input type="text" name="name" placeholder="{{ __('messages.Name') }}" value="{{ Auth::user()->name }}">
+													<input type="text" name="name" placeholder="{{ __('messages.Name') }}" value="{{ Auth::check() ? Auth::user()->name: '' }}">
 												</div>
 												<div class="required field">
 													<label>{{ __('messages.Surname') }}</label>
-													<input type="text" name="surname" placeholder="{{ __('messages.Surname') }}" value="{{ Auth::user()->surname }}">
+													<input type="text" name="surname" placeholder="{{ __('messages.Surname') }}" value="{{ Auth::check() ? Auth::user()->surname : '' }}">
 												</div>
 											</div>
 											<div class="two fields">
@@ -187,15 +187,21 @@
 													<select class="ui fluid dropdown" name="country">
 															<option value="">{{ __('messages.Country') }}</option>
 															@foreach($countries as $country)
-																<option value="{{ $country }}" {{ Auth::user()->country == $country ? 'selected' : '' }}>{{ $country }}</option>
+																<option value="{{ $country }}" {{ Auth::check() && Auth::user()->country == $country ? 'selected' : '' }}>{{ $country }}</option>
 															@endforeach
 													</select>
 												</div>
 												<div class="required field">
 													<label>{{ __('messages.Phone') }}</label>
-													<input type="text" name="phone_number" placeholder="{{ __('messages.Phone') }}" value="{{ Auth::user()->phone_number }}">
+													<input type="text" name="phone_number" placeholder="{{ __('messages.Phone') }}" value="{{ Auth::check() ? Auth::user()->phone_number : '' }}">
 												</div>
 											</div>
+											@unless (Auth::check())
+												<div class="required field">
+													<label>{{ __('messages.Email') }}</label>
+													<input type="text" name="email" placeholder="{{ __('messages.Email') }}">
+												</div>
+											@endunless
 											<h4 class="ui header">{{ __('messages.Credit card information') }}</h4>
 											<div class="ui divider"></div>
 											<div class="field">
@@ -327,7 +333,20 @@
             	rules: [
             		{
                         type   : 'empty',
-                        prompt : '{{ __("form.Please enter a phone number") }}'
+                        prompt : '{{ __("form.Please enter your phone number") }}'
+            		}
+            	]
+            },
+            email: {
+            	identifier: 'email',
+            	rules: [
+            		{
+                        type   : 'email',
+                        prompt : '{{ __("form.Please enter your email") }}'
+            		},
+            		{
+                        type   : 'empty',
+                        prompt : '{{ __("form.Please enter your email") }}'
             		}
             	]
             },

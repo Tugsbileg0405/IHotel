@@ -46,7 +46,7 @@
 						@foreach ($orders as $order)
 							<tr>
 								<td>{{ $order->number }}</td>
-								<td>{{ $order->user->name }}</td>
+								<td>{{ json_decode($order->userdata)->name }}</td>
 								<td>{{ $order->hotel_name }}</td>
 								<td>{{ $order->startdate }}</td>
 								<td>{{ $order->enddate }}</td>

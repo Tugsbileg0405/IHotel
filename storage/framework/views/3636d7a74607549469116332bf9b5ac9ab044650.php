@@ -287,7 +287,7 @@
                     <tr>
                         <td colspan="5">
                             <p>
-                                <strong>Guest name:</strong> <?php echo e($order->user->name); ?> <?php echo e($order->user->surname); ?>
+                                <strong>Guest name:</strong> <?php echo e(json_decode($order->userdata)->name); ?> <?php echo e(json_decode($order->userdata)->surname); ?>
 
                             </p>
                             <p>

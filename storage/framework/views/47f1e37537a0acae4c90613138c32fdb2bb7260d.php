@@ -46,7 +46,7 @@
 						<?php $__currentLoopData = $orders; $__env->addLoop($__currentLoopData); foreach($__currentLoopData as $order): $__env->incrementLoopIndices(); $loop = $__env->getLastLoop(); ?>
 							<tr>
 								<td><?php echo e($order->number); ?></td>
-								<td><?php echo e($order->user->name); ?></td>
+								<td><?php echo e(json_decode($order->userdata)->name); ?></td>
 								<td><?php echo e($order->hotel_name); ?></td>
 								<td><?php echo e($order->startdate); ?></td>
 								<td><?php echo e($order->enddate); ?></td>

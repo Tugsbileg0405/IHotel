@@ -181,11 +181,11 @@
 											<div class="two fields">
 												<div class="required field">
 													<label><?php echo e(__('messages.Name')); ?></label>
-													<input type="text" name="name" placeholder="<?php echo e(__('messages.Name')); ?>" value="<?php echo e(Auth::user()->name); ?>">
+													<input type="text" name="name" placeholder="<?php echo e(__('messages.Name')); ?>" value="<?php echo e(Auth::check() ? Auth::user()->name: ''); ?>">
 												</div>
 												<div class="required field">
 													<label><?php echo e(__('messages.Surname')); ?></label>
-													<input type="text" name="surname" placeholder="<?php echo e(__('messages.Surname')); ?>" value="<?php echo e(Auth::user()->surname); ?>">
+													<input type="text" name="surname" placeholder="<?php echo e(__('messages.Surname')); ?>" value="<?php echo e(Auth::check() ? Auth::user()->surname : ''); ?>">
 												</div>
 											</div>
 											<div class="two fields">
@@ -194,15 +194,21 @@
 													<select class="ui fluid dropdown" name="country">
 															<option value=""><?php echo e(__('messages.Country')); ?></option>
 															<?php $__currentLoopData = $countries; $__env->addLoop($__currentLoopData); foreach($__currentLoopData as $country): $__env->incrementLoopIndices(); $loop = $__env->getLastLoop(); ?>
-																<option value="<?php echo e($country); ?>" <?php echo e(Auth::user()->country == $country ? 'selected' : ''); ?>><?php echo e($country); ?></option>
+																<option value="<?php echo e($country); ?>" <?php echo e(Auth::check() && Auth::user()->country == $country ? 'selected' : ''); ?>><?php echo e($country); ?></option>
 															<?php endforeach; $__env->popLoop(); $loop = $__env->getLastLoop(); ?>
 													</select>
 												</div>
 												<div class="required field">
 													<label><?php echo e(__('messages.Phone')); ?></label>
-													<input type="text" name="phone_number" placeholder="<?php echo e(__('messages.Phone')); ?>" value="<?php echo e(Auth::user()->phone_number); ?>">
+													<input type="text" name="phone_number" placeholder="<?php echo e(__('messages.Phone')); ?>" value="<?php echo e(Auth::check() ? Auth::user()->phone_number : ''); ?>">
 												</div>
 											</div>
+											<?php if (! (Auth::check())): ?>
+												<div class="required field">
+													<label><?php echo e(__('messages.Email')); ?></label>
+													<input type="text" name="email" placeholder="<?php echo e(__('messages.Email')); ?>">
+												</div>
+											<?php endif; ?>
 											<h4 class="ui header"><?php echo e(__('messages.Credit card information')); ?></h4>
 											<div class="ui divider"></div>
 											<div class="field">
@@ -334,7 +340,20 @@
             	rules: [
             		{
                         type   : 'empty',
-                        prompt : '<?php echo e(__("form.Please enter a phone number")); ?>'
+                        prompt : '<?php echo e(__("form.Please enter your phone number")); ?>'
+            		}
+            	]
+            },
+            email: {
+            	identifier: 'email',
+            	rules: [
+            		{
+                        type   : 'email',
+                        prompt : '<?php echo e(__("form.Please enter your email")); ?>'
+            		},
+            		{
+                        type   : 'empty',
+                        prompt : '<?php echo e(__("form.Please enter your email")); ?>'
             		}
             	]
             },

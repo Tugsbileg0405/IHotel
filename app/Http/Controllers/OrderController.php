@@ -178,12 +178,31 @@ class OrderController extends Controller
 
 	public function storeCard(OrderRequest $request)
 	{
-		$user = \App\User::find(Auth::user()->id);
-		$user->name = $request->get('name');
-		$user->surname = $request->get('surname');
-		$user->country = $request->get('country');
-		$user->phone_number = $request->get('phone_number');
-		$user->save();
+		if (Auth::check()) {
+			$user = \App\User::find(Auth::user()->id);
+			$user->name = $request->get('name');
+			$user->surname = $request->get('surname');
+			$user->country = $request->get('country');
+			$user->phone_number = $request->get('phone_number');
+			$user->save();
+
+			$userData = [
+				'name' => $user->name,
+				'surname' => $user->surname,
+				'country' => $user->country,
+				'phone_number' => $user->phone_number,
+				'email' => $user->email,
+			];
+		}
+		else {
+			$userData = [
+				'name' => $request->get('name'),
+				'surname' => $request->get('surname'),
+				'country' => $request->get('country'),
+				'phone_number' => $request->get('phone_number'),
+				'email' => $request->get('email'),
+			];
+		}
 
 		$rate = Option::find(7)->value;
 
@@ -194,12 +213,20 @@ class OrderController extends Controller
 		$expiryMonth = $request->get('expired_month');
 		$expiryYear = $request->get('expired_year');
 		$cvc = $request->get('cvc');
-		$cardData = array('cardnumber' => $cardNumber, 'cardname' => $cardName, 'expirymonth' => $expiryMonth, 'expiryyear' => $expiryYear, 'cvv' => $cvc);
+		$cardData = [
+			'cardnumber' => $cardNumber, 
+			'cardname' => $cardName, 
+			'expirymonth' => $expiryMonth, 
+			'expiryyear' => $expiryYear, 
+			'cvv' => $cvc,
+		];
 
 		$hotel = \App\Hotel::findOrFail($request->session()->get('order_hotelid'));
 
 		$order = new \App\Order;
-		$order->user_id = Auth::user()->id;
+		if (Auth::check()) {
+			$order->user_id = Auth::user()->id;
+		}
 		$order->hotel_id = $hotel->id;
 		$order->hotel_name = $hotel->name;
 		$array = [];
@@ -286,6 +313,7 @@ class OrderController extends Controller
 			$order->dollar_rate = $rate;
 		}
 		$order->carddata = json_encode($cardData);
+		$order->userdata = json_encode($userData);
 		$order->request = $request->get('request');
 		$order->save();
 
@@ -311,7 +339,7 @@ class OrderController extends Controller
 
 		$price = $request->session()->get('order_price');
 
-		Mail::to($order->user->email)->bcc(env('MAIL_FROM_ADDRESS'))
+		Mail::to($userData['email'])->bcc(env('MAIL_FROM_ADDRESS'))
 			->send(new Order($order));
 
 		$request->session()->pull('order_hotelid');

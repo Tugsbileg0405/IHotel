@@ -9,26 +9,28 @@
 			<tbody>
 				<tr>
 					<td>Захиалагчийн нэр</td>
-					<td><?php echo e($order->user->name); ?></td>
+					<td><?php echo e(json_decode($order->userdata)->name); ?></td>
 				</tr>
 				<tr>
 					<td>Захиалагчийн овог</td>
-					<td><?php echo e($order->user->surname); ?></td>
+					<td><?php echo e(json_decode($order->userdata)->surname); ?></td>
 				</tr>
 				<tr>
 					<td>Захиалагчийн улс</td>
-					<td><?php echo e($order->user->country); ?></td>
+					<td><?php echo e(json_decode($order->userdata)->country); ?></td>
 				</tr>
 				<tr>
 					<td>Захиалагчийн и-мэйл</td>
-					<td><?php echo e($order->user->email); ?></td>
+					<td><?php echo e(json_decode($order->userdata)->email); ?></td>
 				</tr>
-				<?php if($order->user->phone_number): ?>
-					<tr>
-						<td>Захиалагчийн утас</td>
-						<td><?php echo e($order->user->phone_number); ?></td>
-					</tr>
-				<?php endif; ?>
+				<tr>
+					<td>Захиалагчийн утас</td>
+					<td><?php echo e(json_decode($order->userdata)->phone_number); ?></td>
+				</tr>
+				<tr>
+					<td>Бүртгэлтэй эсэх</td>
+					<td><?php echo e($order->user_id ? 'Тийм' : 'Үгүй'); ?></td>
+				</tr>
 				<tr>
 					<td>Буудлын нэр</td>
 					<td><?php echo e($order->hotel_name); ?></td>
@@ -113,6 +115,10 @@
 				</tr>
 			</tbody>
 		</table>
+		<?php if($order->request): ?>
+			<h4 class="ui header">Хүсэлт</h4>
+			<p><?php echo e($order->request); ?></p>
+		<?php endif; ?>		
 		<h4 class="ui header">Статус</h4>
 		<div class="ui divider"></div>
 		<form id="order-form" class="ui left floated form">
