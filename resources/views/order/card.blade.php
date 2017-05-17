@@ -96,7 +96,7 @@
 														<th>{{ __('messages.Rooms') }}</th>
 														<th>{{ __('messages.Cost of per night') }}</th>
 														<th>{{ __('messages.Day') }}</th>
-														<th>{{ __('messages.Total') }}</th>
+														<th>{{ __('messages.Price') }}</th>
 													</tr>
 												</thead>
 												<tbody>
@@ -136,7 +136,7 @@
 														@endif
 													</tr>-->
 													<tr>
-														<td colspan="2">{{ __('messages.Price after tax') }}</td>
+														<td colspan="2">{{ __('messages.Total price') }}</td>
 														@if (App::isLocale('mn')) 
 															<td colspan="3">{{number_format($price)}} ₮</td>
 														@elseif (App::isLocale('en'))
@@ -146,9 +146,18 @@
 												</tbody>
 											</table>
 										</div>
+										<div class="ui message">
+											<ul class="list">
+												<li>10% VAT is included</li>
+												<li>5% Property service charge is included.</li>
+												<li>1% City tax is included</li>
+												<li>Prepayment: Payment will be withdrawn any time after booking..</li>
+												<li>Cancellation cost: No cancellation</li>
+											</ul>
+										</div>
+				                        <div class="ui divider"></div>
 										<div class="ui form">
 											<h4 class="ui header">{{ __('messages.Special requests') }}</h4>
-											<div class="ui divider"></div>
 											<div class="field">
 												<label>{{ __('messages.Please write your requests in English') }}</label>
 												<textarea id="request"></textarea>
@@ -182,7 +191,7 @@
 															@endforeach
 													</select>
 												</div>
-												<div class="field">
+												<div class="required field">
 													<label>{{ __('messages.Phone') }}</label>
 													<input type="text" name="phone_number" placeholder="{{ __('messages.Phone') }}" value="{{ Auth::user()->phone_number }}">
 												</div>
@@ -312,6 +321,15 @@
                         prompt : '{{ __("form.Please select a country") }}'
                     }
                 ]
+            },
+            phone_number: {
+            	identifier: 'phone_number',
+            	rules: [
+            		{
+                        type   : 'empty',
+                        prompt : '{{ __("form.Please enter a phone number") }}'
+            		}
+            	]
             },
             terms: {
                 identifier: 'terms',

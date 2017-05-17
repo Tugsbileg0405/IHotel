@@ -1,12 +1,11 @@
-@extends('layouts.profile')
+<?php $__env->startSection('title', 'Сэтгэгдэл'); ?>
 
-@section('title', 'Хамт олон')
-
-@section('content')
+<?php $__env->startSection('content'); ?>
 <div class="eleven wide column">
-	<form class="ui form green segment" action="{{ url('profile/team') }}" method="POST">
-		{{ csrf_field() }}
-		<h4 class="ui header">Хамт олон нэмэх</h4>
+	<form class="ui form green segment" action="<?php echo e(url('profile/comment')); ?>" method="POST">
+		<?php echo e(csrf_field()); ?>
+
+		<h4 class="ui header">Сэтгэгдэл нэмэх</h4>
 		<div class="ui divider"></div>
 	    <div class="required field">
 	    	<label>Нэр</label>
@@ -24,6 +23,14 @@
 	    	<label>Тайлбар (Англи)</label>
 			<input type="text" name="description_en">
 		</div>
+	    <div class="required field">
+	    	<label>Агуулга</label>
+			<textarea name="content"></textarea>
+		</div>
+	    <div class="required field">
+	    	<label>Агуулга (Англи)</label>
+			<textarea name="content_en"></textarea>
+		</div>
         <div class="required field">
 	    	<label>Зураг</label>
             <div class="ui segment">
@@ -31,7 +38,7 @@
                     <i class="plus icon"></i>
                 </a>
                 <div class="upload-zone"></div>
-                <input type="hidden" name="image">
+                <input type="text" name="image" style="display: none" required>
                 <input type="file" name="photo" style="display: none">
             </div>
         </div>
@@ -40,9 +47,9 @@
 		</div>
 	</form>
 </div>
-@endsection
+<?php $__env->stopSection(); ?>
 
-@push('script')
+<?php $__env->startPush('script'); ?>
 <script type="text/javascript">
 	$(document).ready(function() {
 	    $('.upload-browse').click(function() {
@@ -54,10 +61,10 @@
 	        segment.addClass('loading disabled');
             formData = new FormData();
             formData.append('photo', $(this)[0].files[0]);
-            formData.append('_token', '{{ csrf_token() }}');
+            formData.append('_token', '<?php echo e(csrf_token()); ?>');
 	        $.ajax({
 	            type: 'POST',
-	            url: '{{ url("profile/team/photo") }}',    
+	            url: '<?php echo e(url("profile/comment/photo")); ?>',    
 	            data: formData,
 	            contentType: false,
 	            processData: false,
@@ -67,7 +74,7 @@
 	            $(segment).removeClass('loading disabled');
 	            $(this).val('');
 	            $(container).empty();
-	            $('<div class="upload-zone-item"><img class="ui rounded image" src="{{ asset("/") }}' + data.image + '"></div>').appendTo(container).transition('scale in');
+	            $('<div class="upload-zone-item"><img class="ui rounded image" src="<?php echo e(asset("/")); ?>' + data.image + '"></div>').appendTo(container).transition('scale in');
 	            $(this).closest('form').find('button').removeClass('disabled');
 	        }).fail(function() {
 	            $(segment).removeClass('loading disabled');
@@ -131,6 +138,24 @@
 		                }
 		            ]
 		        },
+		        content: {
+		            identifier: 'content',
+		            rules: [
+		                {
+			                type   : 'empty',
+			                prompt : 'Агуулга оруулна уу'
+		                }
+		            ]
+		        },
+		        content_en: {
+		            identifier: 'content_en',
+		            rules: [
+		                {
+			                type   : 'empty',
+			                prompt : 'Агуулга оруулна уу'
+		                }
+		            ]
+		        },
 		    },
 		    onSuccess: function() {
 		    	$('.ui.form button').addClass('loading disabled');
@@ -138,4 +163,5 @@
 		});
 	});
 </script>
-@endpush
+<?php $__env->stopPush(); ?>
+<?php echo $__env->make('layouts.profile', array_except(get_defined_vars(), array('__data', '__path')))->render(); ?>

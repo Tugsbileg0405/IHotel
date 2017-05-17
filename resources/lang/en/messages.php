@@ -36,6 +36,7 @@ return [
     'Tax' => 'Tax',
     'Order' => 'Book',
     'Total price' => 'Total price',
+    'Price' => 'Price',
     'Options' => 'Options',
     'Wifi' => 'Wifi',
     'Children are welcome' => 'Children are welcome',

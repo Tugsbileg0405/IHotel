@@ -85,10 +85,13 @@
         var segment = $(this).closest('.segment');
         var container = $(this).siblings('.upload-zone');
         segment.addClass('loading disabled');
+        formData = new FormData();
+        formData.append('photo', $(this)[0].files[0]);
+        formData.append('_token', '{{ csrf_token() }}');
         $.ajax({
             type: 'POST',
             url: '{{ url("profile/update/photo") }}',     
-            data: new FormData($(this).closest('form')[0]),
+            data: formData,
             contentType: false,
             processData: false,
             context: this,

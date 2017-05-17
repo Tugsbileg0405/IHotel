@@ -8,6 +8,7 @@
 				<th>Өрөөний тоо</th>
 				<th>Од</th>
 				<th>Эрэмбэ</th>
+				<th>Идэвхитэй эсэх</th>
 				<th></th>
 				<th></th>
 				<th></th>
@@ -26,6 +27,7 @@
 						<?php endfor; ?>
 					</td>
 					<td><?php echo e($hotel->priority); ?></td>
+					<td><?php echo e($hotel->is_active ? 'Тийм' : 'Үгүй'); ?></td>
 					<td>
 						<a class="ui icon button open-EditModal" data-key="<?php echo e($key); ?>">
 							<i class="pencil icon"></i>

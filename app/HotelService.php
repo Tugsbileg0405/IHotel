@@ -13,6 +13,6 @@ class HotelService extends Model
 
 	public function hotels()
 	{
-		return $this->belongsToMany('App\Hotel', 'hotel_service');
+		return $this->belongsToMany('App\Hotel', 'hotel_hotel_service');
 	}
 }

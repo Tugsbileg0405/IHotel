@@ -1,26 +1,26 @@
-@extends('layouts.profile')
+<?php $__env->startSection('title', 'Буудлын үйлчилгээ'); ?>
 
-@section('title', 'Буудлын үйлчилгээ')
-
-@section('content')
+<?php $__env->startSection('content'); ?>
 <div class="eleven wide column">
-	<form class="ui form green segment" action="{{ url('profile/hotelservice', $service->id) }}" method="POST">
-		{{ csrf_field() }}
-		{{ method_field('PUT') }}
+	<form class="ui form green segment" action="<?php echo e(url('profile/hotelservice', $service->id)); ?>" method="POST">
+		<?php echo e(csrf_field()); ?>
+
+		<?php echo e(method_field('PUT')); ?>
+
 		<h4 class="ui header">Буудлын үйлчилгээ засах</h4>
 		<div class="ui divider"></div>
 	    <div class="required field">
 			<select class="ui disabled fluid dropdown error" name="category">
-				<option value="{{ $service->category->id }}">{{ $service->category->name }}</option>
+				<option value="<?php echo e($service->category->id); ?>"><?php echo e($service->category->name); ?></option>
 			</select>
 		</div>
 	    <div class="required field">
 	    	<label>Нэр</label>
-			<input type="text" name="name" value="{{ $service->name }}">
+			<input type="text" name="name" value="<?php echo e($service->name); ?>">
 		</div>
 	    <div class="required field">
 	    	<label>Нэр (Англи)</label>
-			<input type="text" name="name_en" value="{{ $service->name_en }}">
+			<input type="text" name="name_en" value="<?php echo e($service->name_en); ?>">
 		</div>
 	    <div class="field">
 	    	<label>Icon</label>
@@ -29,12 +29,12 @@
 				<i class="dropdown icon"></i>
 				<div class="default text">Сонгох</div>
 				<div class="menu">
-					@foreach ($icons as $icon)
-						<div class="item" data-value="{{ $icon }}">
-							<i class="{{ $icon }} icon"></i>
-							<span class="text">{{ $icon }}</span>
+					<?php $__currentLoopData = $icons; $__env->addLoop($__currentLoopData); foreach($__currentLoopData as $icon): $__env->incrementLoopIndices(); $loop = $__env->getLastLoop(); ?>
+						<div class="item" data-value="<?php echo e($icon); ?>">
+							<i class="<?php echo e($icon); ?> icon"></i>
+							<span class="text"><?php echo e($icon); ?></span>
 						</div>
-					@endforeach
+					<?php endforeach; $__env->popLoop(); $loop = $__env->getLastLoop(); ?>
 				</div>
 			</div>
 		</div>
@@ -43,12 +43,12 @@
 		</div>
 	</form>
 </div>
-@endsection
+<?php $__env->stopSection(); ?>
 
-@push('script')
+<?php $__env->startPush('script'); ?>
 <script type="text/javascript">
 	$(document).ready(function() {
-		$('.ui.dropdown').dropdown('set selected', '{{ $service->icon }}');
+		$('.ui.dropdown').dropdown('set selected', '<?php echo e($service->icon); ?>');
 		$('.ui.form').form({
 		    inline : true,
 		    fields: {
@@ -85,4 +85,5 @@
 		});
 	});
 </script>
-@endpush
+<?php $__env->stopPush(); ?>
+<?php echo $__env->make('layouts.profile', array_except(get_defined_vars(), array('__data', '__path')))->render(); ?>

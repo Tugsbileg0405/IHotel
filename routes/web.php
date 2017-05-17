@@ -79,14 +79,13 @@ Route::group(['middleware' => 'locale'], function() {
 		Route::get('profile', 'PostController@index');
 		Route::get('profile/edit', 'UserController@editProfile');
 		Route::put('profile', 'UserController@storeProfile');
-		Route::put('profile/update/photo', 'UserController@storePhoto');
+		Route::post('profile/update/photo', 'UserController@storePhoto');
 		Route::get('profile/edit/password', 'UserController@editPassword');
 		Route::put('profile/password', 'UserController@storePassword');
 		Route::resource('profile/posts', 'PostController', ['except' => [
 			'index', 'show',
 		]]);
 		Route::post('profile/post/photo', 'PostController@storePhoto');
-		Route::put('profile/post/update/photo', 'PostController@storePhoto');
 		Route::get('profile/rate', 'UserController@showRate');
 		Route::get('profile/rate/create/{id}', 'UserController@createRate');
 		Route::post('profile/rate/{id}', 'UserController@storeRate');
@@ -184,11 +183,8 @@ Route::group(['middleware' => 'locale'], function() {
 		Route::post('user/search', 'UserController@search');
 
 		Route::post('comment/photo', 'CommentController@storePhoto');
-		Route::put('comment/photo', 'CommentController@storePhoto');
 		Route::post('information/photo', 'InformationController@storePhoto');
-		Route::put('information/photo', 'InformationController@storePhoto');
 		Route::post('team/photo', 'TeamController@storePhoto');
-		Route::put('team/photo', 'TeamController@storePhoto');
 	});
 
 	Route::group(['middleware' => ['auth', 'hotel', 'owner']], function() {

@@ -4318,23 +4318,12 @@ h5.ui.header.search-header {
     margin-bottom: 0px;
     position: relative;
 }
-.list-item .img.left:hover .box-border{
-    opacity: 1;
+.list-item .img.left:hover,
+.list-item .img.left.hover {
+    -webkit-box-shadow: 0 4px 12px rgba(0,0,0,0.8);
+       -moz-box-shadow: 0 4px 12px rgba(0,0,0,0.8);
+            box-shadow: 0 4px 12px rgba(0,0,0,0.8);
     border-color:#2185D0;
-    /*background-image: linear-gradient(180deg,rgba(0,0,0,.498039) 0,transparent 15%,transparent 85%,rgba(0,0,0,.498039));*/
-}
-.box-border{
-    position: absolute;
-    top:0;
-    bottom:0;
-    left:0;
-    right: 0;
-    border:4px solid transparent;
-}
-.list-item .img.left.hover .box-border{
-    opacity: 1;
-    border-color:#2185D0;
-    /*background-image: linear-gradient(180deg,rgba(0,0,0,.498039) 0,transparent 15%,transparent 85%,rgba(0,0,0,.498039));*/
 }
 
 #pac-input {
@@ -4451,12 +4440,9 @@ html .ui-button.ui-state-disabled:active {
 }
 
 p.theme {
-    margin-left: 10px;
-    padding: 10px;
-    position: relative;
-    bottom: 110px;
-    float: left;
-    width: 100%;
+    position: absolute;
+    left: 15px;
+    bottom: 36px;
 }
 
 .ui.dropdown>.text {
@@ -4469,20 +4455,20 @@ p.theme {
 }
 
 .room-name {
-    position: relative;
-    bottom: 170px;
-    margin-left: 10px;
+    position: absolute;
+    bottom: 80px;
+    left: 15px;
+    right: 15px;
 }
 
-.room-name h4 {
-    position: relative;
-    width: 100%;
+.room-name h5 {
     font-weight: 400;
     text-transform: initial;
-    text-overflow: ellipsis;
-    overflow: hidden;
-    white-space: nowrap;
     box-sizing: border-box;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+    overflow: hidden;
+    text-shadow: 0 1px 2px rgba(0,0,0,0.6);
 }
 
 .block.right {
@@ -4862,29 +4848,26 @@ h6.ui.right.floated.header {
 }
 
 .price {
-    position: relative;
-    bottom: 255px;
-    margin-left: 10px;
+    display: inline-block;
+    position: absolute;
+    left: 5px;
+    top: 50px;
+    padding: 5px 10px;
     text-align: center;
     background: #d01919;
-    padding: 10px;
-    max-width: 130px;
+    color: #fff;
 }
 
 .review {
-    position: relative;
-    bottom: 250px;
-    padding-right: 20px;
-    color: #fff;
-    float: right;
+    position: absolute;
+    top: 20px;
+    right: 20px;
 }
 
 .room-button {
-    position: relative;
-    bottom: 150px;
-    padding-right: 20px;
-    color: #fff;
-    float: right;
+    position: absolute;
+    bottom: 30px;
+    right: 20px;
 }
 
 .review a {
@@ -4892,10 +4875,16 @@ h6.ui.right.floated.header {
 }
 
 .img.left {
-    position: relative;
-    background: cover;
-    background-image: linear-gradient(180deg, rgba(0, 0, 0, .5) 0, transparent 25%, transparent 50%, rgba(0, 0, 0, .7));
-    margin: 5px;
+    position: absolute;
+    top: 5px;
+    left: 5px;
+    right: 5px;
+    bottom: 5px;
+    -webkit-transition: -webkit-box-shadow 0.15s ease-in;
+       -moz-transition: -moz-box-shadow 0.15s ease-in;
+            transition: box-shadow 0.15s ease-in;
+    background-size: cover;
+    background-image: linear-gradient(180deg, rgba(0, 0, 0, .5), transparent 25%, transparent 50%, rgba(0, 0, 0, .7));
 }
 
 .img.left img {
@@ -6218,4 +6207,16 @@ input[type=checkbox]:checked:hover+span-calender {
 .spacerFixHeight{
     display: none !important;
     float: none !important;
+}
+.room_price.icon{
+    height: 1.2857em !important;
+    font-size: 14px !important;
+    line-height: 1.2857em !important;
+    color: rgba(0,0,0,0.6) !important;
+}
+.ui.list .list>.item>.icon+.content, 
+.ui.list .list>.item>.image+.content, 
+.ui.list>.item>.icon+.content, 
+.ui.list>.item>.image+.content {
+    vertical-align: middle !important;
 }

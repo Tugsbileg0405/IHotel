@@ -18,6 +18,7 @@ class CreateHotelServicesTable extends Migration
             $table->integer('service_category_id');
             $table->string('name');
             $table->string('name_en');
+            $table->string('icon')->nullable()->default(null);
             $table->timestamps();
         });
         Schema::create('hotel_hotel_service', function (Blueprint $table) {

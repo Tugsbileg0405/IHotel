@@ -20,7 +20,7 @@
 					<i class="hotel icon"></i><?php echo e(__('messages.Hotel')); ?>
 
 				</a>
-				<a href="<?php echo e(url('aspac2017')); ?>" class="item tab-travel">
+				<a href="<?php echo e(url('aspac')); ?>" class="item tab-travel">
 					<i class="world icon"></i>JCI ASPAC <?php echo e(date('Y')); ?>
 
 				</a>

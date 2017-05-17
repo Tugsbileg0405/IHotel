@@ -17,4 +17,5 @@ return [
     'Card number is wrong' => 'Card number is wrong',
     'Please enter a valid expiry date' => 'Please enter a valid expiry date',
     'Please enter a valid CVC' => 'Please enter a valid CVC',
+    'Please enter a phone number' => 'Please enter a phone number',
 ];

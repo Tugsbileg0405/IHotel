@@ -1,18 +1,12 @@
-@extends('layouts.profile')
+<?php $__env->startSection('title', 'Буудлын үйлчилгээний ангилал'); ?>
 
-@section('title', 'Буудлын үйлчилгээ')
-
-@section('content')
+<?php $__env->startSection('content'); ?>
 <div class="eleven wide column">
-	<form class="ui form green segment" action="{{ url('profile/hotelservice') }}" method="POST">
-		{{ csrf_field() }}
-		<h4 class="ui header">Буудлын үйлчилгээ нэмэх</h4>
+	<form class="ui form green segment" action="<?php echo e(url('profile/hotelservicecategory')); ?>" method="POST">
+		<?php echo e(csrf_field()); ?>
+
+		<h4 class="ui header">Буудлын үйлчилгээний ангилал нэмэх</h4>
 		<div class="ui divider"></div>
-	    <div class="required field">
-			<select class="ui disabled fluid dropdown error" name="category">
-				<option value="{{ $category->id }}">{{ $category->name }}</option>
-			</select>
-		</div>
 	    <div class="required field">
 	    	<label>Нэр</label>
 			<input type="text" name="name">
@@ -21,30 +15,14 @@
 	    	<label>Нэр (Англи)</label>
 			<input type="text" name="name_en">
 		</div>
-	    <div class="field">
-	    	<label>Icon</label>
-			<div class="ui fluid selection dropdown">
-				<input type="hidden" name="icon">
-				<i class="dropdown icon"></i>
-				<div class="default text">Сонгох</div>
-				<div class="menu">
-					@foreach ($icons as $icon)
-						<div class="item" data-value="{{ $icon }}">
-							<i class="{{ $icon }} icon"></i>
-							<span class="text">{{ $icon }}</span>
-						</div>
-					@endforeach
-				</div>
-			</div>
-		</div>
 		<div class="field">
 			<button class="ui button primary" type="submit">Хадгалах</button>
 		</div>
 	</form>
 </div>
-@endsection
+<?php $__env->stopSection(); ?>
 
-@push('script')
+<?php $__env->startPush('script'); ?>
 <script type="text/javascript">
 	$(document).ready(function() {
 		$('.ui.form').form({
@@ -55,7 +33,7 @@
 		            rules: [
 		                {
 			                type   : 'empty',
-			                prompt : 'Үйлчилгээ оруулна уу'
+			                prompt : 'Ангилал оруулна уу'
 		                },
 		                {
 		                    type   : 'maxLength[191]',
@@ -68,7 +46,7 @@
 		            rules: [
 		                {
 			                type   : 'empty',
-			                prompt : 'Үйлчилгээ оруулна уу'
+			                prompt : 'Ангилал оруулна уу'
 		                },
 		                {
 		                    type   : 'maxLength[191]',
@@ -83,4 +61,5 @@
 		});
 	});
 </script>
-@endpush
+<?php $__env->stopPush(); ?>
+<?php echo $__env->make('layouts.profile', array_except(get_defined_vars(), array('__data', '__path')))->render(); ?>

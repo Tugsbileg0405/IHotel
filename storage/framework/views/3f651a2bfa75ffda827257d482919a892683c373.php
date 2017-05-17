@@ -102,7 +102,7 @@
 														<th><?php echo e(__('messages.Rooms')); ?></th>
 														<th><?php echo e(__('messages.Cost of per night')); ?></th>
 														<th><?php echo e(__('messages.Day')); ?></th>
-														<th><?php echo e(__('messages.Total')); ?></th>
+														<th><?php echo e(__('messages.Price')); ?></th>
 													</tr>
 												</thead>
 												<tbody>
@@ -142,7 +142,7 @@
 														<?php endif; ?>
 													</tr>-->
 													<tr>
-														<td colspan="2"><?php echo e(__('messages.Price after tax')); ?></td>
+														<td colspan="2"><?php echo e(__('messages.Total price')); ?></td>
 														<?php if(App::isLocale('mn')): ?> 
 															<td colspan="3"><?php echo e(number_format($price)); ?> ₮</td>
 														<?php elseif(App::isLocale('en')): ?>
@@ -152,9 +152,18 @@
 												</tbody>
 											</table>
 										</div>
+										<div class="ui message">
+											<ul class="list">
+												<li>10% VAT is included</li>
+												<li>5% Property service charge is included.</li>
+												<li>1% City tax is included</li>
+												<li>Prepayment: Payment will be withdrawn any time after booking..</li>
+												<li>Cancellation cost: No cancellation</li>
+											</ul>
+										</div>
+				                        <div class="ui divider"></div>
 										<div class="ui form">
 											<h4 class="ui header"><?php echo e(__('messages.Special requests')); ?></h4>
-											<div class="ui divider"></div>
 											<div class="field">
 												<label><?php echo e(__('messages.Please write your requests in English')); ?></label>
 												<textarea id="request"></textarea>
@@ -189,7 +198,7 @@
 															<?php endforeach; $__env->popLoop(); $loop = $__env->getLastLoop(); ?>
 													</select>
 												</div>
-												<div class="field">
+												<div class="required field">
 													<label><?php echo e(__('messages.Phone')); ?></label>
 													<input type="text" name="phone_number" placeholder="<?php echo e(__('messages.Phone')); ?>" value="<?php echo e(Auth::user()->phone_number); ?>">
 												</div>
@@ -320,6 +329,15 @@
                     }
                 ]
             },
+            phone_number: {
+            	identifier: 'phone_number',
+            	rules: [
+            		{
+                        type   : 'empty',
+                        prompt : '<?php echo e(__("form.Please enter a phone number")); ?>'
+            		}
+            	]
+            },
             terms: {
                 identifier: 'terms',
                 rules: [
@@ -382,6 +400,14 @@
                 rules: [
                     {
                         type   : 'number',
+                        prompt : '<?php echo e(__("form.Please enter a valid CVC")); ?>'
+                    },
+                    {
+                        type   : 'minLength[3]',
+                        prompt : '<?php echo e(__("form.Please enter a valid CVC")); ?>'
+                    },
+                    {
+                        type   : 'maxLength[4]',
                         prompt : '<?php echo e(__("form.Please enter a valid CVC")); ?>'
                     },
                 ]

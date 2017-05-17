@@ -27,7 +27,7 @@ class OrderRequest extends FormRequest
             'name' => 'required',
             'surname' => 'required',
             'country' => 'required',
-            'phone_number' => 'nullable',
+            'phone_number' => 'required',
             'card_number' => 'required|numeric',
             'card_holders_name' => 'required',
             'expired_month' => 'required|numeric|digits:2',

@@ -105,6 +105,20 @@ class SearchController extends Controller
     public function hotelInfo($id, Request $request)
     {
         $hotel = \App\Hotel::with('rooms')->with('services')->findOrFail($id);
+
+        $grouped = $hotel->services->groupBy('service_category_id');
+
+        $services = [];  
+        foreach ($grouped as $key => $item) {
+            $category = \App\HotelServiceCategory::findOrFail($key);
+            if (\App::isLocale('mn')) {
+                $services[$category->name] = $item;
+            }
+            elseif (\App::isLocale('en')) {
+                $services[$category->name_en] = $item;
+            }
+        }
+
         if (!$request->session()->get('roomnumber') || !$request->session()->get('endDate') || !$request->session()->get('startDate') || !$request->session()->get('peoplenumber')) {
             $request->session()->put('roomnumber', 2);
             $request->session()->put('peoplenumber', 1);
@@ -157,6 +171,7 @@ class SearchController extends Controller
             'enddate' => $endDate,
             'rate' => $rate,
             'pickups' => $pickups,
+            'services' => $services,
         ]);
     }
 
