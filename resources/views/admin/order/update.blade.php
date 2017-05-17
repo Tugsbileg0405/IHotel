@@ -115,6 +115,10 @@
 				</tr>
 			</tbody>
 		</table>
+		@if ($order->request)
+			<h4 class="ui header">Хүсэлт</h4>
+			<p>{{ $order->request }}</p>
+		@endif		
 		<h4 class="ui header">Статус</h4>
 		<div class="ui divider"></div>
 		<form id="order-form" class="ui left floated form">
