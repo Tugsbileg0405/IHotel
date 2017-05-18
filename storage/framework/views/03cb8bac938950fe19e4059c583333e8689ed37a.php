@@ -202,15 +202,6 @@
 													<?php endforeach; $__env->popLoop(); $loop = $__env->getLastLoop(); ?>
 												</div>
 											</div>
-											<h4 class="ui header">SIM card</h4>
-											<div class="ui form">
-												<div class="field">
-													<div class="ui checkbox">
-														<input type="checkbox" name="sim" id="sim">
-														<label>4G LTE</label>
-													</div>
-												</div>
-											</div>
 											<h4 class="ui header"><?php echo e(__('messages.Rooms')); ?></h4>
 											<div id="roomtype" class="ui middle aligned divided list">
 												<div class="item" style="color:black" id="nullRoom">
@@ -302,17 +293,17 @@
 											<?php echo e(__('messages.Introduction')); ?>
 
 										</div>
-										<p class="ui justify">
+										<div class="ui justify">
 											<?php if(App::isLocale('mn')): ?> 
-												<?php echo e($hotel->introduction); ?> 
+												<?php echo $hotel->introduction; ?> 
 											<?php elseif(App::isLocale('en')): ?> 
 												<?php if($hotel->introduction_en): ?> 
-													<?php echo e($hotel->introduction_en); ?> 
+													<?php echo $hotel->introduction_en; ?> 
 												<?php else: ?> 
-													<?php echo e($hotel->introduction); ?> 
+													<?php echo $hotel->introduction; ?> 
 												<?php endif; ?> 
 											<?php endif; ?>
-										</p>
+										</div>
 									</div>
 									<div class="ui sizer vertical segment">
 										<div class="ui large header"><?php echo e(__('messages.Contact')); ?></div>
@@ -374,12 +365,12 @@
 												<div class="ui large header"><?php echo e($room->name); ?></div>
 												<p class="ui justify">
 													<?php if(App::isLocale('mn')): ?> 
-														<?php echo e($room->introduction); ?> 
+														<?php echo $room->introduction; ?> 
 													<?php elseif(App::isLocale('en')): ?> 
 														<?php if($room->introduction_en): ?> 
-															<?php echo e($room->introduction_en); ?> 
+															<?php echo $room->introduction_en; ?> 
 														<?php else: ?> 
-															<?php echo e($room->introduction); ?> 
+															<?php echo $room->introduction; ?> 
 														<?php endif; ?> 
 													<?php endif; ?>
 												</p>
@@ -826,15 +817,6 @@
         })
     })
 
-	$('#sim').change(function () {
-		if ($(this).is(':checked')) {
-			var sim = 1;
-		}
-		else {
-			var sim = 0;
-		}
-	});
-
     $.each(pickups, function (index, value) {
         $('#carrent'+value.id).change(function () {
             pickup.value = $(this).data('id');
@@ -1188,28 +1170,32 @@
     var selectedRoom = $('#selectedRoom');
     plus0.click(function (e) {
         var value = parseFloat(selectedRoom.val());
-        if (!value) {
-            value = 0;
+		if(!value){
+			value = 0;
         }
-        value = value + 1;
-        selectedRoom.val(value);
-        roomNumber = value;
-        e.preventDefault();
+		value = value + 1;
+		selectedRoom.val(value);
+		roomNumber = value;
+		$('#selectedPeople').val(value);
+		people = value;
+		e.preventDefault();
     });
     minus0.click(function (e) {
         var value = parseFloat(selectedRoom.val());
-        if (value < 16) {
-            $('.selectedRoom').dropdown('set selected', 14);
-            $('.selectedRoom').css("display", "");
-            $('.people').css("display", "none");
-        } else {
-            if (value > 1) {
-                value = value - 1;
-            }
-            selectedRoom.val(value);
-            roomNumber = value;
-        }
-        e.preventDefault();
+		if(value < 16){
+			$('.selectedRoom').dropdown('set selected', 14);
+			$('.selectedRoom').css("display","");
+			$('.people').css("display","none");
+		}else{	
+			if (value > 1) {
+				value = value - 1;
+			}
+			selectedRoom.val(value);
+			roomNumber = value;
+			$('#selectedPeople').val(value);
+			people = value;
+		}
+		e.preventDefault();
     });
 
     var plus1 = $('#plus1');
@@ -1217,60 +1203,67 @@
     var selectedPeople = $('#selectedPeople');
     plus1.click(function (e) {
         var value = parseFloat(selectedPeople.val());
-        if (!value) {
-            value = 0;
+		if(!value){
+			value = 0;
         }
-        value = value + 1;
-        selectedPeople.val(value);
-        people = value;
-        e.preventDefault();
+		value = value + 1;
+		selectedPeople.val(value);
+		people = value;
+		e.preventDefault();
     });
     minus1.click(function (e) {
         var value = parseFloat(selectedPeople.val());
-        if (value < 16) {
-            $('.selectedPeople').dropdown('set selected', 14);
-            $('.selectedPeople').css("display", "");
-            $('.room').css("display", "none");
-        } else {
-            if (value > 1) {
-                value = value - 1;
-            }
-            selectedPeople.val(value);
-            people = value;
-        }
-        e.preventDefault();
+		if(value < 16){
+			$('.selectedPeople').dropdown('set selected', 14);
+			$('.selectedPeople').css("display","");
+			$('.room').css("display","none");
+		}else{	
+			if (value > 1) {
+				value = value - 1;
+			}
+			selectedPeople.val(value);
+			people = value;
+		}
+		e.preventDefault();
     });
 
     $("#selectedRoom").keyup(function () {
-        var value = $(this).val();
-        roomNumber = value;
+        var value = $( this ).val();
+		roomNumber = value;
+		$('#selectedPeople').val(value);
+		people = value;
     });
 
     $("#selectedPeople").keyup(function () {
-        var value = $(this).val();
-        people = value;
+        var value = $( this ).val();
+		people = value;
     });
 
     $(".selectedPeople").change(function () {
-        if ($(this).val() === "more") {
-            $('.selectedPeople').css("display", "none");
-            $('.room').css("display", "");
-            $('#selectedPeople').val(15);
-            people = 15;
-        } else {
-            people = $(this).val();
-        }
+        if($(this).val() === "more"){
+			$('.selectedPeople').css("display","none");
+			$('.room').css("display","");
+            $('#selectedRoom').val(15);
+			people = 15;
+		}else{
+			$('.selectedPeople').css("display","");
+			$('.room').css("display","none");
+			people = $(this).val();
+		}
     });
 
     $(".selectedRoom").change(function () {
-        if ($(this).val() === "more") {
-            $('.selectedRoom').css("display", "none");
+        $('.selectedPeople').dropdown('set selected', $(this).val());
+		if($(this).val() === "more"){
+			$('.selectedRoom').css("display","none");
+			$('.people').css("display","");
             $('#selectedRoom').val(15);
-            $('.people').css("display", "");
-            roomNumber = 15;
-        } else {
-            roomNumber = $(this).val();
-        }
+            $('#selectedPeople').val(15);
+			roomNumber = 15;
+		}else{
+			roomNumber = $(this).val();
+			
+		}
     });
     $('#reservation').daterangepicker({
         "autoApply": true,

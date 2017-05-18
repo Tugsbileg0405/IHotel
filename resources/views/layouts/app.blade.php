@@ -71,7 +71,6 @@
     <script src="{{ asset('js/lightgallery.min.js') }}"></script>
     <script src="{{ asset('js/jquery.magnific-popup.min.js') }}"></script>
     <script src="{{ asset('js/jquery-scrolltofixed-min.js') }}"></script>
-    <script src="{{ asset('dist/js/map-icons.min.js') }}"></script>
     @stack('script')
 </body>
 </html>

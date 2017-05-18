@@ -213,6 +213,7 @@
 <script src="{{asset('dist/js/jplist.filter-dropdown-bundle.min.js') }}"></script>
 <link href="{{asset('css/simplepagination.css') }}" rel="stylesheet" type="text/css" />
 <script src="{{asset('js/simplepagination.js') }}"></script>
+<script src="{{ asset('dist/js/map-icons.min.js') }}"></script>
 <script type="text/javascript">
     $(document).ready(function() {
          $('.search-google-map').scrollToFixed({
@@ -221,7 +222,7 @@
                 var limit = $('#result').height() - $('.search-result').offset().top ;
                 return limit;
             },
-            zIndex: 10,
+            zIndex: 1,
         });
         $('.search-google-map').trigger('resize');
     });
@@ -273,6 +274,8 @@
 		value = value + 1;
 		selectedRoom.val(value);
 		roomNumber = value;
+		$('#selectedPeople').val(value);
+		people = value;
 		e.preventDefault();
 	});		
 	minus.click(function(e) {
@@ -287,6 +290,8 @@
 			}
 			selectedRoom.val(value);
 			roomNumber = value;
+			$('#selectedPeople').val(value);
+			people = value;
 		}
 		e.preventDefault();
 	});
@@ -321,12 +326,14 @@
 	});
 
 	$("#selectedRoom").keyup(function () {
-		var value = $(this).val();
+        var value = $( this ).val();
 		roomNumber = value;
+		$('#selectedPeople').val(value);
+		people = value;
 	});
 
 	$("#selectedPeople").keyup(function () {
-		var value = $(this).val();
+        var value = $( this ).val();
 		people = value;
 	});
 
@@ -334,21 +341,27 @@
 		if($(this).val() === "more"){
 			$('.selectedPeople').css("display","none");
 			$('.room').css("display","");
-            $('#selectedPeople').val(15);
+            $('#selectedRoom').val(15);
 			people = 15;
 		}else{
+			$('.selectedPeople').css("display","");
+			$('.room').css("display","none");
 			people = $(this).val();
 		}
 	});
 
+
 	$( ".selectedRoom" ).change(function() {
+		$('.selectedPeople').dropdown('set selected', $(this).val());
 		if($(this).val() === "more"){
 			$('.selectedRoom').css("display","none");
-            $('#selectedRoom').val(15);
 			$('.people').css("display","");
+            $('#selectedRoom').val(15);
+            $('#selectedPeople').val(15);
 			roomNumber = 15;
 		}else{
 			roomNumber = $(this).val();
+			
 		}
 	});
 
@@ -569,7 +582,7 @@
                     var rating = 0;
                     if (data.data[key].rating != 0) {
                         finalrating = "<div class='review'>\
-                            	<span class='ui green label'>" + parseFloat(data.data[key].rating).toFixed(1) + "</span>\
+                                <span class='ui green label'>" + parseFloat(data.data[key].rating).toFixed(1) + "</span>\
                             </div>";
                     }
                     else {
@@ -584,22 +597,22 @@
                     }
                     var lowest = data.data[key].rooms[0].price;
                     if (data.data[key].rooms[0].price_op) {
-                    	lowest = data.data[key].rooms[0].price_op;
+                        lowest = data.data[key].rooms[0].price_op;
                     }
                     var saledprice;
                     for(var i=0; i < data.data[key].rooms.length; i++){
                         tmp = data.data[key].rooms[i].price;
                         if (data.data[key].rooms[i].price_op) {
-                        	tmp = data.data[key].rooms[i].price_op;
+                            tmp = data.data[key].rooms[i].price_op;
                         }
                         if (data.data[key].rooms[i].sales.length > 0) {
                             tmp = data.data[key].rooms[i].sales[0].price;
                             if (data.data[key].rooms[i].sales[0].price_op) {
-                            	tmp = data.data[key].rooms[i].sales[0].price_op;
+                                tmp = data.data[key].rooms[i].sales[0].price_op;
                             }
                         }
                         if (parseFloat(tmp) < parseFloat(lowest)) {
-                        	lowest = tmp;
+                            lowest = tmp;
                         }
                     }
                     var url = '{{ route("search.hotel", "id") }}';
@@ -633,7 +646,7 @@
                                         </div>\
                                         <div class='room-name' >\
                                             <a href='" + url + "' style='color:white' target='_blank'>\
-                                            	<h5>" + data.data[key].name_en + "</h5>\
+                                                <h5>" + data.data[key].name_en + "</h5>\
                                             </a>\
                                         </div>\
                                         <p class='theme'>\
@@ -660,7 +673,7 @@
                                         </div>\
                                         <div class='room-name' >\
                                             <a href='" + url + "' style='color:white' target='_blank'>\
-                                            	<h5>" + data.data[key].name + "</h5>\
+                                                <h5>" + data.data[key].name + "</h5>\
                                             </a>\
                                         </div>\
                                         <p class='theme'>\
@@ -849,7 +862,7 @@
                                         tmp = el.rooms[i].sales[0].price;
                                 }
                                 if (parseFloat(tmp) < parseFloat(lowest)) {
-                                	lowest = tmp;
+                                    lowest = tmp;
                                 }
                             }
                             var url = '{{ route("search.hotel", "id") }}';
