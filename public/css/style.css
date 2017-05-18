@@ -6232,3 +6232,6 @@ input[type=checkbox]:checked:hover+span-calender {
 .search-result .ui.inverted.dimmer {
     background-color: #f2f2f2;
 }
+p {
+    margin-bottom: 10px;
+}

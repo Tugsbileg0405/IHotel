@@ -80,7 +80,7 @@
 	<?php if($mostPosts->count() > 0): ?>
 		<h4 class="ui header"><?php echo e(__('messages.The most viewed')); ?></h4>
 		<?php $__currentLoopData = $mostPosts; $__env->addLoop($__currentLoopData); foreach($__currentLoopData as $mostPost): $__env->incrementLoopIndices(); $loop = $__env->getLastLoop(); ?>
-			<div class="ui card">
+			<div class="ui fluid card">
 				<a class="image" href="<?php echo e(url('post', $mostPost->id)); ?>">
 					<img src="<?php echo e(asset(unserialize($mostPost->photos)[0])); ?>">
 				</a>

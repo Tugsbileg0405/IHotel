@@ -202,15 +202,6 @@
 													<?php endforeach; $__env->popLoop(); $loop = $__env->getLastLoop(); ?>
 												</div>
 											</div>
-											<h4 class="ui header">SIM card</h4>
-											<div class="ui form">
-												<div class="field">
-													<div class="ui checkbox">
-														<input type="checkbox" name="sim" id="sim">
-														<label>4G LTE</label>
-													</div>
-												</div>
-											</div>
 											<h4 class="ui header"><?php echo e(__('messages.Rooms')); ?></h4>
 											<div id="roomtype" class="ui middle aligned divided list">
 												<div class="item" style="color:black" id="nullRoom">
@@ -302,17 +293,17 @@
 											<?php echo e(__('messages.Introduction')); ?>
 
 										</div>
-										<p class="ui justify">
+										<div class="ui justify">
 											<?php if(App::isLocale('mn')): ?> 
-												<?php echo e($hotel->introduction); ?> 
+												<?php echo $hotel->introduction; ?> 
 											<?php elseif(App::isLocale('en')): ?> 
 												<?php if($hotel->introduction_en): ?> 
-													<?php echo e($hotel->introduction_en); ?> 
+													<?php echo $hotel->introduction_en; ?> 
 												<?php else: ?> 
-													<?php echo e($hotel->introduction); ?> 
+													<?php echo $hotel->introduction; ?> 
 												<?php endif; ?> 
 											<?php endif; ?>
-										</p>
+										</div>
 									</div>
 									<div class="ui sizer vertical segment">
 										<div class="ui large header"><?php echo e(__('messages.Contact')); ?></div>
@@ -374,12 +365,12 @@
 												<div class="ui large header"><?php echo e($room->name); ?></div>
 												<p class="ui justify">
 													<?php if(App::isLocale('mn')): ?> 
-														<?php echo e($room->introduction); ?> 
+														<?php echo $room->introduction; ?> 
 													<?php elseif(App::isLocale('en')): ?> 
 														<?php if($room->introduction_en): ?> 
-															<?php echo e($room->introduction_en); ?> 
+															<?php echo $room->introduction_en; ?> 
 														<?php else: ?> 
-															<?php echo e($room->introduction); ?> 
+															<?php echo $room->introduction; ?> 
 														<?php endif; ?> 
 													<?php endif; ?>
 												</p>
@@ -825,15 +816,6 @@
             }
         })
     })
-
-	$('#sim').change(function () {
-		if ($(this).is(':checked')) {
-			var sim = 1;
-		}
-		else {
-			var sim = 0;
-		}
-	});
 
     $.each(pickups, function (index, value) {
         $('#carrent'+value.id).change(function () {

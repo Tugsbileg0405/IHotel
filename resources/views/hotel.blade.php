@@ -286,7 +286,7 @@
 										<div class="ui large header">
 											{{ __('messages.Introduction') }}
 										</div>
-										<p class="ui justify">
+										<div class="ui justify">
 											@if (App::isLocale('mn')) 
 												{!! $hotel->introduction !!} 
 											@elseif (App::isLocale('en')) 
@@ -296,7 +296,7 @@
 													{!! $hotel->introduction !!} 
 												@endif 
 											@endif
-										</p>
+										</div>
 									</div>
 									<div class="ui sizer vertical segment">
 										<div class="ui large header">{{ __('messages.Contact') }}</div>
