@@ -355,6 +355,10 @@
             		{
                         type   : 'empty',
                         prompt : '<?php echo e(__("form.Please enter your phone number")); ?>'
+            		},
+            		{
+                        type   : 'number',
+                        prompt : '<?php echo e(__("form.Please enter your phone number")); ?>'
             		}
             	]
             },
