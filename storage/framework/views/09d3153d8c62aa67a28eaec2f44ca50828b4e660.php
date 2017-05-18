@@ -32,6 +32,11 @@
                                         <a class="item" href="<?php echo e(url('register')); ?>"><?php echo e(__('messages.Register')); ?></a>
                                     </div>
                                     <div class="ui bottom attached segment">
+                                        <?php if(session('activation')): ?>
+                                            <div class="ui success message">
+                                               <i class="check icon"></i> Successfully registered
+                                            </div>
+                                        <?php endif; ?>
                                         <form class="ui form" id="login" action="<?php echo e(url('login')); ?>" method="POST">
                                             <?php echo e(csrf_field()); ?>
 
@@ -68,14 +73,6 @@
                                                 <a href="<?php echo e(url('/password/reset')); ?>"><?php echo e(__('messages.Forgot password?')); ?></a>
                                             </p>
                                         </form>
-                                        <?php if(session('activation')): ?>
-                                            <div class="ui success message">
-                                               <i class="check icon"></i>
-                                            </div>
-                                        <?php endif; ?>
-                                            <div class="ui success message">
-                                               <i class="check icon"></i>
-                                            </div>
                                     </div>
                                 </div>
                                 <div class="column"></div>

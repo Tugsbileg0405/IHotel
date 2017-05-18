@@ -71,7 +71,6 @@
     <script src="<?php echo e(asset('js/lightgallery.min.js')); ?>"></script>
     <script src="<?php echo e(asset('js/jquery.magnific-popup.min.js')); ?>"></script>
     <script src="<?php echo e(asset('js/jquery-scrolltofixed-min.js')); ?>"></script>
-    <script src="<?php echo e(asset('dist/js/map-icons.min.js')); ?>"></script>
     <?php echo $__env->yieldPushContent('script'); ?>
 </body>
 </html>

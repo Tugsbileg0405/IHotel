@@ -1164,28 +1164,32 @@
     var selectedRoom = $('#selectedRoom');
     plus0.click(function (e) {
         var value = parseFloat(selectedRoom.val());
-        if (!value) {
-            value = 0;
+		if(!value){
+			value = 0;
         }
-        value = value + 1;
-        selectedRoom.val(value);
-        roomNumber = value;
-        e.preventDefault();
+		value = value + 1;
+		selectedRoom.val(value);
+		roomNumber = value;
+		$('#selectedPeople').val(value);
+		people = value;
+		e.preventDefault();
     });
     minus0.click(function (e) {
         var value = parseFloat(selectedRoom.val());
-        if (value < 16) {
-            $('.selectedRoom').dropdown('set selected', 14);
-            $('.selectedRoom').css("display", "");
-            $('.people').css("display", "none");
-        } else {
-            if (value > 1) {
-                value = value - 1;
-            }
-            selectedRoom.val(value);
-            roomNumber = value;
-        }
-        e.preventDefault();
+		if(value < 16){
+			$('.selectedRoom').dropdown('set selected', 14);
+			$('.selectedRoom').css("display","");
+			$('.people').css("display","none");
+		}else{	
+			if (value > 1) {
+				value = value - 1;
+			}
+			selectedRoom.val(value);
+			roomNumber = value;
+			$('#selectedPeople').val(value);
+			people = value;
+		}
+		e.preventDefault();
     });
 
     var plus1 = $('#plus1');
@@ -1193,60 +1197,67 @@
     var selectedPeople = $('#selectedPeople');
     plus1.click(function (e) {
         var value = parseFloat(selectedPeople.val());
-        if (!value) {
-            value = 0;
+		if(!value){
+			value = 0;
         }
-        value = value + 1;
-        selectedPeople.val(value);
-        people = value;
-        e.preventDefault();
+		value = value + 1;
+		selectedPeople.val(value);
+		people = value;
+		e.preventDefault();
     });
     minus1.click(function (e) {
         var value = parseFloat(selectedPeople.val());
-        if (value < 16) {
-            $('.selectedPeople').dropdown('set selected', 14);
-            $('.selectedPeople').css("display", "");
-            $('.room').css("display", "none");
-        } else {
-            if (value > 1) {
-                value = value - 1;
-            }
-            selectedPeople.val(value);
-            people = value;
-        }
-        e.preventDefault();
+		if(value < 16){
+			$('.selectedPeople').dropdown('set selected', 14);
+			$('.selectedPeople').css("display","");
+			$('.room').css("display","none");
+		}else{	
+			if (value > 1) {
+				value = value - 1;
+			}
+			selectedPeople.val(value);
+			people = value;
+		}
+		e.preventDefault();
     });
 
     $("#selectedRoom").keyup(function () {
-        var value = $(this).val();
-        roomNumber = value;
+        var value = $( this ).val();
+		roomNumber = value;
+		$('#selectedPeople').val(value);
+		people = value;
     });
 
     $("#selectedPeople").keyup(function () {
-        var value = $(this).val();
-        people = value;
+        var value = $( this ).val();
+		people = value;
     });
 
     $(".selectedPeople").change(function () {
-        if ($(this).val() === "more") {
-            $('.selectedPeople').css("display", "none");
-            $('.room').css("display", "");
-            $('#selectedPeople').val(15);
-            people = 15;
-        } else {
-            people = $(this).val();
-        }
+        if($(this).val() === "more"){
+			$('.selectedPeople').css("display","none");
+			$('.room').css("display","");
+            $('#selectedRoom').val(15);
+			people = 15;
+		}else{
+			$('.selectedPeople').css("display","");
+			$('.room').css("display","none");
+			people = $(this).val();
+		}
     });
 
     $(".selectedRoom").change(function () {
-        if ($(this).val() === "more") {
-            $('.selectedRoom').css("display", "none");
+        $('.selectedPeople').dropdown('set selected', $(this).val());
+		if($(this).val() === "more"){
+			$('.selectedRoom').css("display","none");
+			$('.people').css("display","");
             $('#selectedRoom').val(15);
-            $('.people').css("display", "");
-            roomNumber = 15;
-        } else {
-            roomNumber = $(this).val();
-        }
+            $('#selectedPeople').val(15);
+			roomNumber = 15;
+		}else{
+			roomNumber = $(this).val();
+			
+		}
     });
     $('#reservation').daterangepicker({
         "autoApply": true,

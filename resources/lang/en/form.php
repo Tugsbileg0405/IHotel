@@ -17,6 +17,6 @@ return [
     'Please select a score' => 'Please select a score',
     'Card number is wrong' => 'Card number is wrong',
     'Please enter a valid expiry date' => 'Please enter a valid expiry date',
-    'Please enter a valid CVC' => 'Please enter a valid CVC',
+    'Please enter a valid CVV' => 'Please enter a valid CVV',
     'Please enter your phone number' => 'Please enter your phone number',
 ];

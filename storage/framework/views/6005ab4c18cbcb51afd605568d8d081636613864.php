@@ -42,22 +42,22 @@
 											<h6 class="ui horizontal header divider ihotel-title">Буудлын нэмэлт мэдээлэл</h6>
 											<div class="required field">
 												<label>Танилцуулга</label>
-												<textarea name="introduction"><?php echo e($hotel->introduction_en); ?></textarea>
+												<textarea name="introduction" class="editor"><?php echo e($hotel->introduction_en); ?></textarea>
 											</div>
 											<div class="field">
 												<label>Бусад нэмэлт мэдээллүүд</label>
-												<textarea name="other_service"><?php echo e($hotel->other_service_en); ?></textarea>
+												<textarea name="other_service" class="editor"><?php echo e($hotel->other_service_en); ?></textarea>
 											</div>
 											<h6 class="ui horizontal header divider ihotel-title">Өрөөний танилцуулга</h6>
 											<?php $__currentLoopData = $hotel->rooms; $__env->addLoop($__currentLoopData); foreach($__currentLoopData as $room): $__env->incrementLoopIndices(); $loop = $__env->getLastLoop(); ?>
 												<div class="required field">
 													<label><?php echo e($room->name); ?></label>
-													<textarea name="room-introduction-<?php echo e($room->id); ?>"><?php echo e($room->introduction_en); ?></textarea>
+													<textarea name="room-introduction-<?php echo e($room->id); ?>" class="editor"><?php echo e($room->introduction_en); ?></textarea>
 												</div>
 											<?php endforeach; $__env->popLoop(); $loop = $__env->getLastLoop(); ?>
 											<h6 class="ui horizontal header divider ihotel-title">Бусад мэдээлэл</h6>
 											<div class="field">
-												<textarea name="other_info" placeholder="Нэмэлт мэдээлэл"><?php echo e($hotel->other_info_en); ?></textarea>
+												<textarea name="other_info" placeholder="Нэмэлт мэдээлэл" class="editor"><?php echo e($hotel->other_info_en); ?></textarea>
 											</div>
 											<div class="field">
 												<button class="ui right floated primary button" type="submit">Хадгалах</button>
