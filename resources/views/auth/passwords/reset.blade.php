@@ -7,13 +7,13 @@
     <div class="ui container">
         <div class="ui stackable column grid">
             <div class="six wide column">
-                <h3 class="ui header">{{ __('messages.Reset Password')}}</h3>
+                <h3 class="ui header">{{ __('messages.Reset password') }}</h3>
             </div>
             <div class="right aligned ten wide column">
                 <div class="ui breadcrumb">
-                    <a class="section">{{ __('messages.Home')}}</a>
+                    <a class="section">{{ __('messages.Home') }}</a>
                     <span class="divider">/</span>
-                    <div class="active section">{{ __('messages.Reset Password')}}</div>
+                    <div class="active section">{{ __('messages.Reset password') }}</div>
                 </div>
             </div>
         </div>
