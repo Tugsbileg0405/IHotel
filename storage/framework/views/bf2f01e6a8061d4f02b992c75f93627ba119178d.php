@@ -434,6 +434,7 @@
 		if(!value){
 			value = 0;
         }
+		$('#selectedPeople').val(value);
 		value = value + 1;
 		selectedRoom.val(value);
 		roomNumber = value;
@@ -441,6 +442,9 @@
 	});		
 	minus.click(function(e) {
 		var value = parseFloat(selectedRoom.val());
+		// if(value > $('#selectedRoom').val()){
+		// 	$('#selectedRoom').val(value);
+		// }
 		if(value < 16){
 			$('.selectedRoom').dropdown('set selected', 14);
 			$('.selectedRoom').css("display","");
@@ -460,6 +464,9 @@
 	var selectedPeople = $('#selectedPeople');
 	plus1.click(function(e) {
 		var value = parseFloat(selectedPeople.val());
+		// if(value > $('#selectedPeople').val()){
+		// 	$('#selectedPeople').val(value);
+		// }
 		if(!value){
 			value = 0;
         }
@@ -470,6 +477,9 @@
 	});		
 	minus1.click(function(e) {
 		var value = parseFloat(selectedPeople.val());
+		// if(value > $('#selectedPeople').val()){
+		// 	$('#selectedPeople').val(value);
+		// }
 		if(value < 16){
 			$('.selectedPeople').dropdown('set selected', 14);
 			$('.selectedPeople').css("display","");
@@ -485,18 +495,24 @@
 	});
 
 	$( "#selectedRoom" ).keyup(function() {
+		if($(this).val() > $('#selectedPeople').val()){
+			$('#selectedPeople').val($(this).val());
+		}
 		var value = $( this ).val();
 		roomNumber = value;
 	})
 
 	$( "#selectedPeople" ).keyup(function() {
+		if($(this).val() > $('#selectedRoom').val()){
+			$('#selectedRoom').val($(this).val());
+		}
 		var value = $( this ).val();
 		people = value;
 	})
 
 
 	$( ".selectedPeople" ).change(function() {
-		if($(this).val() > $('.selectedRoom').val()){
+		if($(this).val() > $('.selectedRoom').dropdown('get value')){
 			$('.selectedRoom').dropdown('set selected', $(this).val());
 		}
 		if($(this).val() === "more"){
@@ -509,7 +525,7 @@
 	});
 
 	$( ".selectedRoom" ).change(function() {
-		if($(this).val() > $('.selectedPeople').val()){
+		if($(this).val() > $('.selectedPeople').dropdown('get value')){
 			$('.selectedPeople').dropdown('set selected', $(this).val());
 		}
 		if($(this).val() === "more"){
@@ -542,24 +558,25 @@
     
         $("#searchButton").click(function(){
             $('#searchButton').addClass('loading');
-            if(!people){
-                people = 2;
-            }
-            $.ajaxSetup({
-            headers: {
-                'X-CSRF-TOKEN': $('meta[name="_token"]').attr('content')
-            }
-            })
-            searchPlace = $('#searchplace').val();
-            $.get('search?roomnumber=' + roomNumber + '&peoplenumber=' + people + '&startdate=' + startDate + '&enddate=' + endDate + '&place=' + searchPlace)
-            .success(function (data) {
-                window.location = "<?php echo e(URL::to('searchresult')); ?>";
-            })
-            .error(function(jqXHR, textStatus, errorThrown){
-                if (textStatus == 'error'){
-                        alert(errorThrown);
-                }
-            });
+            console.log(roomNumber,people);
+            // if(!people){
+            //     people = 2;
+            // }
+            // $.ajaxSetup({
+            // headers: {
+            //     'X-CSRF-TOKEN': $('meta[name="_token"]').attr('content')
+            // }
+            // })
+            // searchPlace = $('#searchplace').val();
+            // $.get('search?roomnumber=' + roomNumber + '&peoplenumber=' + people + '&startdate=' + startDate + '&enddate=' + endDate + '&place=' + searchPlace)
+            // .success(function (data) {
+            //     window.location = "<?php echo e(URL::to('searchresult')); ?>";
+            // })
+            // .error(function(jqXHR, textStatus, errorThrown){
+            //     if (textStatus == 'error'){
+            //             alert(errorThrown);
+            //     }
+            // });
         });
 
     

@@ -201,15 +201,6 @@
 													@endforeach
 												</div>
 											</div>
-											<h4 class="ui header">SIM card</h4>
-											<div class="ui form">
-												<div class="field">
-													<div class="ui checkbox">
-														<input type="checkbox" name="sim" id="sim">
-														<label>4G LTE</label>
-													</div>
-												</div>
-											</div>
 											<h4 class="ui header">{{ __('messages.Rooms') }}</h4>
 											<div id="roomtype" class="ui middle aligned divided list">
 												<div class="item" style="color:black" id="nullRoom">
@@ -297,12 +288,12 @@
 										</div>
 										<p class="ui justify">
 											@if (App::isLocale('mn')) 
-												{{ $hotel->introduction }} 
+												{!! $hotel->introduction !!} 
 											@elseif (App::isLocale('en')) 
 												@if($hotel->introduction_en) 
-													{{ $hotel->introduction_en}} 
+													{!! $hotel->introduction_en !!} 
 												@else 
-													{{$hotel->introduction}} 
+													{!! $hotel->introduction !!} 
 												@endif 
 											@endif
 										</p>
@@ -363,12 +354,12 @@
 												<div class="ui large header">{{$room->name}}</div>
 												<p class="ui justify">
 													@if (App::isLocale('mn')) 
-														{{ $room->introduction }} 
+														{!! $room->introduction !!} 
 													@elseif (App::isLocale('en')) 
 														@if($room->introduction_en) 
-															{{ $room->introduction_en}} 
+															{!! $room->introduction_en !!} 
 														@else 
-															{{$room->introduction}} 
+															{!! $room->introduction !!} 
 														@endif 
 													@endif
 												</p>
@@ -807,15 +798,6 @@
             }
         })
     })
-
-	$('#sim').change(function () {
-		if ($(this).is(':checked')) {
-			var sim = 1;
-		}
-		else {
-			var sim = 0;
-		}
-	});
 
     $.each(pickups, function (index, value) {
         $('#carrent'+value.id).change(function () {
