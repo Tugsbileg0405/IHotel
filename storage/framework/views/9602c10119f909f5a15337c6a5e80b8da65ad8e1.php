@@ -29,7 +29,7 @@
 													</div>
 													<div class="six wide column">
 														<div class="ui large header"><?php echo e($room->name); ?> - <?php echo e(number_format($room->price)); ?>₮/хоног</div>
-														<p class="ui justify"><?php echo e($room->introduction); ?></p>
+														<p class="ui justify"><?php echo $room->introduction; ?></p>
 														<div class="ui horizontal list">
 															<div class="item">
 																<i class="circular user icon"></i>
@@ -287,7 +287,7 @@
 		           	data: $(this).serialize(),
 	            	context: this,
 		           	success: function(data) {
-		           		$(this).form('reset');
+		           		$(this).trigger('reset');
 		           		$(this).find('.dropdown').form('clear');
 		           		$(this).closest('.ui.grid').siblings('.closedRooms').html(data);
 		    			$(this).find('button').removeClass('loading disabled');
@@ -346,8 +346,7 @@
 		           	data: $(this).serialize(),
 	            	context: this,
 		           	success: function(data) {
-		           		$(this).form('reset');
-		           		$(this).find('.dropdown').form('clear');
+		           		$(this).trigger('reset');
 		           		$(this).closest('.ui.grid').siblings('.saledRooms').html(data);
 		    			$(this).find('button').removeClass('loading disabled');
 		       		},

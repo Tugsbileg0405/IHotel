@@ -71,11 +71,11 @@
 		@endforeach
 		<div class="required field">
 			<label>Танилцуулга</label>
-			<textarea name="introduction">{{ $hotel->introduction }}</textarea>
+			<textarea name="introduction" class="editor">{{ $hotel->introduction }}</textarea>
 		</div>
 		<div class="field">
 			<label>Бусад нэмэлт мэдээллүүд</label>
-			<textarea name="other_service">{{ $hotel->other_service }}</textarea>
+			<textarea name="other_service" class="editor">{{ $hotel->other_service }}</textarea>
 		</div>
 		<div class="ui right floated buttons">
 			<a class="ui ihotel-back button" href="{{ url('hotel/update', $hotel->id) }}">Буцах</a>

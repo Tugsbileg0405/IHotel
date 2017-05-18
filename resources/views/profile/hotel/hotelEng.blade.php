@@ -42,22 +42,22 @@
 											<h6 class="ui horizontal header divider ihotel-title">Буудлын нэмэлт мэдээлэл</h6>
 											<div class="required field">
 												<label>Танилцуулга</label>
-												<textarea name="introduction">{{ $hotel->introduction_en }}</textarea>
+												<textarea name="introduction" class="editor">{{ $hotel->introduction_en }}</textarea>
 											</div>
 											<div class="field">
 												<label>Бусад нэмэлт мэдээллүүд</label>
-												<textarea name="other_service">{{ $hotel->other_service_en }}</textarea>
+												<textarea name="other_service" class="editor">{{ $hotel->other_service_en }}</textarea>
 											</div>
 											<h6 class="ui horizontal header divider ihotel-title">Өрөөний танилцуулга</h6>
 											@foreach ($hotel->rooms as $room)
 												<div class="required field">
 													<label>{{ $room->name }}</label>
-													<textarea name="room-introduction-{{ $room->id }}">{{ $room->introduction_en }}</textarea>
+													<textarea name="room-introduction-{{ $room->id }}" class="editor">{{ $room->introduction_en }}</textarea>
 												</div>
 											@endforeach
 											<h6 class="ui horizontal header divider ihotel-title">Бусад мэдээлэл</h6>
 											<div class="field">
-												<textarea name="other_info" placeholder="Нэмэлт мэдээлэл">{{ $hotel->other_info_en }}</textarea>
+												<textarea name="other_info" placeholder="Нэмэлт мэдээлэл" class="editor">{{ $hotel->other_info_en }}</textarea>
 											</div>
 											<div class="field">
 												<button class="ui right floated primary button" type="submit">Хадгалах</button>

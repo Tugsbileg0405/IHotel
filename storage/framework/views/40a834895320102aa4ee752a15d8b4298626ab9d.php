@@ -71,11 +71,11 @@
 		<?php endforeach; $__env->popLoop(); $loop = $__env->getLastLoop(); ?>
 		<div class="required field">
 			<label>Танилцуулга</label>
-			<textarea name="introduction"><?php echo e($hotel->introduction); ?></textarea>
+			<textarea name="introduction" class="editor"><?php echo e($hotel->introduction); ?></textarea>
 		</div>
 		<div class="field">
 			<label>Бусад нэмэлт мэдээллүүд</label>
-			<textarea name="other_service"><?php echo e($hotel->other_service); ?></textarea>
+			<textarea name="other_service" class="editor"><?php echo e($hotel->other_service); ?></textarea>
 		</div>
 		<div class="ui right floated buttons">
 			<a class="ui ihotel-back button" href="<?php echo e(url('hotel/update', $hotel->id)); ?>">Буцах</a>

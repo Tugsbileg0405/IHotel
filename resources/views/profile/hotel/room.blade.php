@@ -30,7 +30,7 @@
 													</div>
 													<div class="six wide column">
 														<div class="ui large header">{{ $room->name }} - {{ number_format($room->price) }}₮/хоног</div>
-														<p class="ui justify">{{ $room->introduction }}</p>
+														<p class="ui justify">{!! $room->introduction !!}</p>
 														<div class="ui horizontal list">
 															<div class="item">
 																<i class="circular user icon"></i>

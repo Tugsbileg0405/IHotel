@@ -19,6 +19,15 @@
 
     <script src="<?php echo e(asset('js/jquery-3.1.1.min.js')); ?>"></script>
     <script src="<?php echo e(asset('dist/semantic.min.js')); ?>"></script>
+    <script src="//cdn.tinymce.com/4/tinymce.min.js"></script>
+    <script>
+        tinymce.init({
+            height: '250',
+            selector: '.editor',
+            toolbar: 'undo redo',
+            menubar: false,
+        });
+    </script>
 
     <script>
         window.Laravel = <?php echo json_encode([

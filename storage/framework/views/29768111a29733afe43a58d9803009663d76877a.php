@@ -48,14 +48,14 @@
 												<td class="collapsing">
 													<h5 class="ui header">Танилцуулга</h5>
 												</td>
-												<td><?php echo e($hotel->introduction); ?></td>
+												<td><?php echo $hotel->introduction; ?></td>
 											</tr>
 											<?php if($hotel->other_service): ?>
 												<tr class="ihotel-blue">
 													<td class="collapsing">
 														<h5 class="ui header">Бусад нэмэлт мэдээлэл</h5>
 													</td>
-													<td><?php echo e($hotel->other_service); ?></td>
+													<td><?php echo $hotel->other_service; ?></td>
 												</tr>
 											<?php endif; ?>
 										</tbody>

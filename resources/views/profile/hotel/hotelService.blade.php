@@ -46,14 +46,14 @@
 												<td class="collapsing">
 													<h5 class="ui header">Танилцуулга</h5>
 												</td>
-												<td>{{ $hotel->introduction }}</td>
+												<td>{!! $hotel->introduction !!}</td>
 											</tr>
 											@if ($hotel->other_service)
 												<tr class="ihotel-blue">
 													<td class="collapsing">
 														<h5 class="ui header">Бусад нэмэлт мэдээлэл</h5>
 													</td>
-													<td>{{ $hotel->other_service }}</td>
+													<td>{!! $hotel->other_service !!}</td>
 												</tr>
 											@endif
 										</tbody>

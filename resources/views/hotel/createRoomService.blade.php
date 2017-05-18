@@ -47,12 +47,12 @@
 		@foreach ($rooms as $room)
 			<div class="required field">
 				<label>{{ $room->name }}</label>
-				<textarea name="room-introduction-{{ $room->id }}">{{ $room->introduction }}</textarea>
+				<textarea name="room-introduction-{{ $room->id }}" class="editor">{{ $room->introduction }}</textarea>
 			</div>
 		@endforeach
 		<h6 class="ui horizontal header divider ihotel-title">Бусад мэдээлэл</h6>
 		<div class="field">
-			<textarea name="other_info" placeholder="Нэмэлт мэдээлэл">{{ $hotel->other_info }}</textarea>
+			<textarea name="other_info" placeholder="Нэмэлт мэдээлэл" class="editor">{{ $hotel->other_info }}</textarea>
 		</div>
 		<div class="ui right floated buttons">
 			<a class="ui ihotel-back button" href="{{ url('hotel/room', $hotel->id) }}">Буцах</a>
