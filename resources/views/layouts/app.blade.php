@@ -6,7 +6,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <meta name="csrf-token" content="{{ csrf_token() }}">
     <!-- Facebook Metadata /-->
-   
+    <meta property="og:url" content="https://www.ihotel.mn" />
     <meta property="og:title" content="IHotel" />
     <meta property="og:image" content="{{ asset('img/share.jpg')}}" />
     <meta property="og:description" content="iHotel.mn нь аялагчид Монголын 500 гаруй, дэлхийн сая илүү зочид буудал, амралтын газрыг хамгийн хурдан, хялбар, нэмэлт төлбөр, шимтгэлгүйгээр эх хэл дээрээ, найдвартай захиалах боломжтой онлайн зөвлөгч юм. Бид олон улсын нэр хүнд бүхий booking.com, agoda.com, airbnb, ctrip гэх мэт онлайн захиалгын системүүдийн албан ёсны түнш бөгөөд өөрийн 3 жилийн туршлага дээрээ үндэслэн танд хамгийн хямд, тав тухтай, байрлал сайтай, хэрэгцээ шаардлагад тань төгс тохирох сонголтуудыг ямагт санал болгоно. Та эх хэл дээрээ сонголтоо хийж, аяллын зөвлөгөөг үнэгүй авснаар учирч болох олон эрсдэлээс сэргийлж илүү хямд зардал, бага энергиэр аялах боломжтой." />
