@@ -125,9 +125,6 @@ Route::group(['middleware' => ['locale', 'activated']], function() {
 		Route::get('roomservice/{id}', 'RoomServiceController@index');
 		Route::get('roomservice/create/{id}', 'RoomServiceController@create');
 		
-		Route::resource('page', 'PageController', ['except' => [
-			'show',
-		]]);
 		Route::resource('comment', 'CommentController', ['except' => [
 			'show',
 		]]);

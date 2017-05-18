@@ -38,19 +38,21 @@
                                         </div>
                                     </div>
                                     <div class="ui stackable grid">
-                                        <div class="ui three column row">
+                                        <div class="ui <?php echo e(Auth::check() ? 'three' : 'two'); ?> column row">
                                             <div class="column">
                                                 <a class="ui fluid  primary icon button" href="<?php echo e(url('/')); ?>">
                                                     <?php echo e(__('messages.Go to home page')); ?>
 
                                                 </a>
                                             </div>
-                                            <div class="column">
-                                                <a class="ui fluid  primary icon button" href="<?php echo e(url('/profile/orders')); ?>">
-                                                    <?php echo e(__('messages.Go to order page')); ?>
+                                            <?php if(Auth::check()): ?>
+                                                <div class="column">
+                                                    <a class="ui fluid  primary icon button" href="<?php echo e(url('/profile/orders')); ?>">
+                                                        <?php echo e(__('messages.Go to order page')); ?>
 
-                                                </a>
-                                            </div>
+                                                    </a>
+                                                </div>
+                                            <?php endif; ?>
                                             <div class="column">
                                                 <a class="ui fluid  primary icon button" href="<?php echo e(url('/searchresult')); ?>">
                                                     <?php echo e(__('messages.Go to search page')); ?>
@@ -59,7 +61,6 @@
                                             </div>
                                         </div>
                                     </div>
-                                   
                                 </div>
                                 <div class="four wide column"></div>
                             </div>

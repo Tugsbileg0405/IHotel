@@ -39,17 +39,19 @@
                                         </div>
                                     </div>
                                     <div class="ui stackable grid">
-                                        <div class="ui three column row">
+                                        <div class="ui {{ Auth::check() ? 'three' : 'two' }} column row">
                                             <div class="column">
                                                 <a class="ui fluid  primary icon button" href="{{ url('/') }}">
                                                     {{ __('messages.Go to home page') }}
                                                 </a>
                                             </div>
-                                            <div class="column">
-                                                <a class="ui fluid  primary icon button" href="{{ url('/profile/orders') }}">
-                                                    {{ __('messages.Go to order page') }}
-                                                </a>
-                                            </div>
+                                            @if (Auth::check())
+                                                <div class="column">
+                                                    <a class="ui fluid  primary icon button" href="{{ url('/profile/orders') }}">
+                                                        {{ __('messages.Go to order page') }}
+                                                    </a>
+                                                </div>
+                                            @endif
                                             <div class="column">
                                                 <a class="ui fluid  primary icon button" href="{{ url('/searchresult') }}">
                                                     {{ __('messages.Go to search page') }}
@@ -57,7 +59,6 @@
                                             </div>
                                         </div>
                                     </div>
-                                   
                                 </div>
                                 <div class="four wide column"></div>
                             </div>
