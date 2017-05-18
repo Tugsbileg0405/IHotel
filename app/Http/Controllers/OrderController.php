@@ -201,7 +201,7 @@ class OrderController extends Controller
 				'surname' => $request->get('surname'),
 				'country' => $request->get('country'),
 				'phone_number' => $request->get('phone_number'),
-				'email' => $request->get('email'),
+				'email' => $request->get('email_order'),
 			];
 		}
 

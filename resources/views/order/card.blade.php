@@ -205,9 +205,15 @@
 												</div>
 											</div>
 											@unless (Auth::check())
-												<div class="required field">
-													<label>{{ __('messages.Email') }}</label>
-													<input type="text" name="email" placeholder="{{ __('messages.Email') }}">
+												<div class="two fields">
+													<div class="required field">
+														<label>{{ __('messages.Email') }}</label>
+														<input type="text" name="email_order" placeholder="{{ __('messages.Email') }}">
+													</div>
+													<div class="required field">
+														<label>{{ __('messages.Confirm email') }}</label>
+														<input type="text" name="email_confirm" placeholder="{{ __('messages.Confirm email') }}">
+													</div>
 												</div>
 											@endunless
 											<h4 class="ui header">{{ __('messages.Credit card information') }}</h4>
@@ -345,8 +351,8 @@
             		}
             	]
             },
-            email: {
-            	identifier: 'email',
+            email_order: {
+            	identifier: 'email_order',
             	rules: [
             		{
                         type   : 'email',
@@ -356,6 +362,15 @@
                         type   : 'empty',
                         prompt : '{{ __("form.Please enter your email") }}'
             		}
+            	]
+            },
+            email_confirm: {
+            	identifier: 'email_confirm',
+            	rules: [
+            		{
+                        type   : 'match[email_order]',
+                        prompt : '{{ __("form.Email doesnt match") }}'
+            		},
             	]
             },
             terms: {
