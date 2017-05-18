@@ -202,6 +202,15 @@
 													<?php endforeach; $__env->popLoop(); $loop = $__env->getLastLoop(); ?>
 												</div>
 											</div>
+											<h4 class="ui header">SIM card</h4>
+											<div class="ui form">
+												<div class="field">
+													<div class="ui checkbox">
+														<input type="checkbox" name="sim" id="sim">
+														<label>4G LTE</label>
+													</div>
+												</div>
+											</div>
 											<h4 class="ui header"><?php echo e(__('messages.Rooms')); ?></h4>
 											<div id="roomtype" class="ui middle aligned divided list">
 												<div class="item" style="color:black" id="nullRoom">
@@ -258,30 +267,31 @@
 
 												</div>
 											</div>
-											<?php endif; ?> 
-											<?php if($hotel->services): ?> 
-												<?php $__currentLoopData = $hotel->services; $__env->addLoop($__currentLoopData); foreach($__currentLoopData as $service): $__env->incrementLoopIndices(); $loop = $__env->getLastLoop(); ?>
-												<div class="item">
-													<i class="circular tags icon"></i>
-													<div class="content">
-														<?php if(App::isLocale('en')): ?> 
-															<?php if($service->name_en): ?> 
-																<?php if($service->name_en): ?> 
-																	<?php echo e($service->name_en); ?> 
-																<?php else: ?> 
-																	<?php echo e($service->name); ?>
-
-																<?php endif; ?> 
-															<?php else: ?> 
-																<?php echo e($service->name); ?> 
-															<?php endif; ?> 
-														<?php elseif(App::isLocale('mn')): ?> 
-															<?php echo e($service->name); ?> 
-														<?php endif; ?>
-													</div>
-												</div>
-												<?php endforeach; $__env->popLoop(); $loop = $__env->getLastLoop(); ?> 
 											<?php endif; ?>
+											<?php $__currentLoopData = $services; $__env->addLoop($__currentLoopData); foreach($__currentLoopData as $name => $service): $__env->incrementLoopIndices(); $loop = $__env->getLastLoop(); ?>
+												<div class="ui large header"><?php echo e($name); ?></div>
+												<?php $__currentLoopData = $service; $__env->addLoop($__currentLoopData); foreach($__currentLoopData as $item): $__env->incrementLoopIndices(); $loop = $__env->getLastLoop(); ?>
+													<div class="item">
+														<i class="circular <?php echo e($item->icon); ?> icon"></i>
+														<div class="content">
+															<?php if(App::isLocale('en')): ?> 
+																<?php if($item->name_en): ?> 
+																	<?php if($item->name_en): ?> 
+																		<?php echo e($item->name_en); ?> 
+																	<?php else: ?> 
+																		<?php echo e($item->name); ?>
+
+																	<?php endif; ?> 
+																<?php else: ?> 
+																	<?php echo e($item->name); ?> 
+																<?php endif; ?> 
+															<?php elseif(App::isLocale('mn')): ?> 
+																<?php echo e($item->name); ?> 
+															<?php endif; ?>
+														</div>
+													</div>
+												<?php endforeach; $__env->popLoop(); $loop = $__env->getLastLoop(); ?>
+											<?php endforeach; $__env->popLoop(); $loop = $__env->getLastLoop(); ?> 
 										</div>
 									</div>
 									<?php endif; ?>
@@ -409,12 +419,12 @@
 														<?php $__currentLoopData = $room->saled_room; $__env->addLoop($__currentLoopData); foreach($__currentLoopData as $sale): $__env->incrementLoopIndices(); $loop = $__env->getLastLoop(); ?>
 															<div class="ui large header" id="price<?php echo e($key); ?>" data-price="<?php echo e($sale->price); ?>">
 																<!--<span class="sub header" style="text-decoration: line-through"><?php echo e(number_format($room->price)); ?>₮/<?php echo e(__('messages.per night')); ?></span>-->
-																<div><?php if($room->price_op): ?><i class="icon couple"></i><?php endif; ?><?php echo e(number_format($sale->price)); ?>₮/<?php echo e(__('messages.per night')); ?></div>
+																<div><?php if($room->price_op): ?><i class="icon couple room_price"></i><?php endif; ?><?php echo e(number_format($sale->price)); ?>₮/<?php echo e(__('messages.per night')); ?></div>
 															</div>
 														<?php endforeach; $__env->popLoop(); $loop = $__env->getLastLoop(); ?>
 													<?php else: ?>
 														<div class="ui large header" id="price<?php echo e($key); ?>" data-price="<?php echo e($room->price); ?>">
-															<?php if($room->price_op): ?><i class="icon couple"></i><?php endif; ?><?php echo e(number_format($room->price)); ?>₮/<?php echo e(__('messages.per night')); ?>
+															<?php if($room->price_op): ?><i class="icon couple room_price"></i><?php endif; ?><?php echo e(number_format($room->price)); ?>₮/<?php echo e(__('messages.per night')); ?>
 
 														</div>
 													<?php endif; ?> 
@@ -423,12 +433,12 @@
 														<?php $__currentLoopData = $room->saled_room; $__env->addLoop($__currentLoopData); foreach($__currentLoopData as $sale): $__env->incrementLoopIndices(); $loop = $__env->getLastLoop(); ?>
 														<div class="ui large header" id="price<?php echo e($key); ?>" data-price="<?php echo e($sale->price); ?>">
 															<!--<span  class="sub header" style="text-decoration: line-through"><?php echo e(number_format($room->price/$rate,2)); ?>$/<?php echo e(__('messages.per night')); ?></span>-->
-															<div><?php if($room->price_op): ?><i class="icon couple"></i><?php endif; ?><?php echo e(number_format($sale->price/$rate,2)); ?>$/<?php echo e(__('messages.per night')); ?></div>
+															<div><?php if($room->price_op): ?><i class="icon couple room_price"></i><?php endif; ?><?php echo e(number_format($sale->price/$rate,2)); ?>$/<?php echo e(__('messages.per night')); ?></div>
 														</div>
 														<?php endforeach; $__env->popLoop(); $loop = $__env->getLastLoop(); ?> 
 													<?php else: ?>
 														<div class="ui large header" id="price<?php echo e($key); ?>" data-price="<?php echo e($room->price); ?>">
-															<?php if($room->price_op): ?><i class="icon couple"></i><?php endif; ?><?php echo e(number_format($room->price/$rate,2)); ?>$/<?php echo e(__('messages.per night')); ?>
+															<?php if($room->price_op): ?><i class="icon couple room_price"></i><?php endif; ?><?php echo e(number_format($room->price/$rate,2)); ?>$/<?php echo e(__('messages.per night')); ?>
 
 														</div>
 													<?php endif; ?> 
@@ -469,12 +479,12 @@
 															<?php $__currentLoopData = $room->saled_room; $__env->addLoop($__currentLoopData); foreach($__currentLoopData as $sale): $__env->incrementLoopIndices(); $loop = $__env->getLastLoop(); ?>
 																<div class="ui large header" id="price_op<?php echo e($key); ?>" data-price="<?php echo e($sale->price_op); ?>">
 																	<!--<span class="sub header" style="text-decoration: line-through"><?php echo e(number_format($room->price)); ?>₮/<?php echo e(__('messages.per night')); ?></span>-->
-																	<div><i class="icon male"></i><?php echo e(number_format($sale->price_op)); ?>₮/<?php echo e(__('messages.per night')); ?></div>
+																	<div><i class="icon user room_price"></i><?php echo e(number_format($sale->price_op)); ?>₮/<?php echo e(__('messages.per night')); ?></div>
 																</div>
 															<?php endforeach; $__env->popLoop(); $loop = $__env->getLastLoop(); ?>
 														<?php else: ?>
 															<div class="ui large header" id="price_op<?php echo e($key); ?>" data-price="<?php echo e($room->price_op); ?>">
-																<i class="icon male"></i><?php echo e(number_format($room->price_op)); ?>₮/<?php echo e(__('messages.per night')); ?>
+																<i class="icon user room_price"></i><?php echo e(number_format($room->price_op)); ?>₮/<?php echo e(__('messages.per night')); ?>
 
 															</div>
 														<?php endif; ?> 
@@ -483,14 +493,14 @@
 															<?php $__currentLoopData = $room->saled_room; $__env->addLoop($__currentLoopData); foreach($__currentLoopData as $sale): $__env->incrementLoopIndices(); $loop = $__env->getLastLoop(); ?>
 															<div class="ui large header" id="price_op<?php echo e($key); ?>" data-price="<?php echo e($sale->price_op); ?>">
 																<!--<span  class="sub header" style="text-decoration: line-through"><?php echo e(number_format($room->price/$rate,2)); ?>$/<?php echo e(__('messages.per night')); ?></span>-->
-																<div><i class="icon male"></i><?php echo e(number_format($sale->price_op/$rate,2)); ?>$/<?php echo e(__('messages.per night')); ?>
+																<div><i class="icon user room_price"></i><?php echo e(number_format($sale->price_op/$rate,2)); ?>$/<?php echo e(__('messages.per night')); ?>
 
 																</div>
 															</div>
 															<?php endforeach; $__env->popLoop(); $loop = $__env->getLastLoop(); ?> 
 														<?php else: ?>
 															<div class="ui large header" id="price_op<?php echo e($key); ?>" data-price="<?php echo e($room->price_op); ?>">
-																<i class="icon male"></i><?php echo e(number_format($room->price_op/$rate,2)); ?>$/<?php echo e(__('messages.per night')); ?>
+																<i class="icon user room_price"></i><?php echo e(number_format($room->price_op/$rate,2)); ?>$/<?php echo e(__('messages.per night')); ?>
 
 															</div>
 														<?php endif; ?> 
@@ -815,7 +825,15 @@
             }
         })
     })
-    
+
+	$('#sim').change(function () {
+		if ($(this).is(':checked')) {
+			var sim = 1;
+		}
+		else {
+			var sim = 0;
+		}
+	});
 
     $.each(pickups, function (index, value) {
         $('#carrent'+value.id).change(function () {
