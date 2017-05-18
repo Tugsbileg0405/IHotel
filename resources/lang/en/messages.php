@@ -216,4 +216,6 @@ return [
     'Personal information' => 'Personal information',
     'Resend activation email' => 'Resend activation email',
     'Confirm email' => 'Confirm email',
+    'Please confirm your email address' => 'Please confirm your email address',
+    'We sent you an email with activation button to your email address. Please click on activate button.' => 'We sent you an email with activation button to your :email email address. Please click on activate button.',
 ];

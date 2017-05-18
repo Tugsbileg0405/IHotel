@@ -54,15 +54,16 @@
         <div class="ui container">
             <div class="ui stackable column grid">
                 <div class="six wide column">
-                    <h3 class="ui header">Hello</h3>
+                    <h3 class="ui header"><?php echo e(__('messages.Please confirm your email address')); ?></h3>
                 </div>
                 <div class="right aligned ten wide column">
                     <div class="ui breadcrumb">
-                    <a href="<?php echo e(url('/logout')); ?>"
-                                onclick="event.preventDefault();
-                                         document.getElementById('logout-form').submit();"><?php echo e(__("messages.Home")); ?></a>
-                        <span class="divider">/</span>
-                        <div class="active section">Hello</div>
+                        <a href="<?php echo e(url('/logout')); ?>"
+                                    onclick="event.preventDefault();
+                                             document.getElementById('logout-form').submit();">
+                             <?php echo e(__("messages.Home")); ?>
+
+                         </a>
                     </div>
                 </div>
             </div>
@@ -80,9 +81,9 @@
                                     <div class="eight wide column">
                                         <div class="ui success message">
                                             <div class="content">
-                                                <div class="header">You need to activate your account</div>
-                                                <p>We sent activation email to you. <?php echo e(__('messages.Check your email')); ?></p>
-                                            </div>
+                                                <div class="header"><?php echo e(__('messages.Please confirm your email address')); ?></div>
+                                                <p><?php echo e(__('messages.We sent you an email with activation button to your email address. Please click on activate button.', ['email' =>  Auth::user()->email])); ?></p>
+                                            </div> 
                                         </div>
                                         <div class="ui stackable grid">
                                             <div class="ui two column row">

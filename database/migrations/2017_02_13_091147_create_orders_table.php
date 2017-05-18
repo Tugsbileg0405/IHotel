@@ -24,7 +24,6 @@ class CreateOrdersTable extends Migration
             $table->date('startdate');
             $table->date('enddate');
             $table->text('pickup')->nullable()->default(null);
-            $table->boolean('sim')->default(false);
             $table->integer('price')->nullable()->default(null);
             $table->float('price_dollar')->nullable()->default(null);
             $table->float('dollar_rate')->nullable()->default(null);
