@@ -165,6 +165,10 @@
 				<div class="ui stackable two column grid">
 					<div class="row">
 						<div class="search-result column">
+							<div class="jp-alert">
+								<p>モンゴルへようこそ</p>
+								<p>ホテルのご予約する際に日本語での対応をご希望の方は、aspac@ihotel.mnまで直接ご連絡くださいませ。</p>
+							</div>
 							<div class="ui inverted dimmer" id="loader">
 								<div class="ui small text loader"></div>
 							</div>

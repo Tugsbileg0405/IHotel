@@ -215,4 +215,5 @@ return [
     'Please write your requests in English' => 'Please write your requests in English',
     'Personal information' => 'Personal information',
     'Resend activation email' => 'Resend activation email',
+    'Confirm email' => 'Confirm email',
 ];

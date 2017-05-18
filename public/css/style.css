@@ -6220,3 +6220,15 @@ input[type=checkbox]:checked:hover+span-calender {
 .ui.list>.item>.image+.content {
     vertical-align: middle !important;
 }
+.jp-alert {
+    margin: 5px;
+    padding: 5px 10px;
+    background-color: #03629A; 
+}
+.jp-alert p {
+    text-align: center;
+    color: rgba(255,255,255,0.87);
+}
+.search-result .ui.inverted.dimmer {
+    background-color: #f2f2f2;
+}

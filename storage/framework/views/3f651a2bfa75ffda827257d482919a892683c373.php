@@ -212,9 +212,15 @@
 												</div>
 											</div>
 											<?php if (! (Auth::check())): ?>
-												<div class="required field">
-													<label><?php echo e(__('messages.Email')); ?></label>
-													<input type="text" name="email" placeholder="<?php echo e(__('messages.Email')); ?>">
+												<div class="two fields">
+													<div class="required field">
+														<label><?php echo e(__('messages.Email')); ?></label>
+														<input type="text" name="email_order" placeholder="<?php echo e(__('messages.Email')); ?>">
+													</div>
+													<div class="required field">
+														<label><?php echo e(__('messages.Confirm email')); ?></label>
+														<input type="text" name="email_confirm" placeholder="<?php echo e(__('messages.Confirm email')); ?>">
+													</div>
 												</div>
 											<?php endif; ?>
 											<h4 class="ui header"><?php echo e(__('messages.Credit card information')); ?></h4>
@@ -352,8 +358,8 @@
             		}
             	]
             },
-            email: {
-            	identifier: 'email',
+            email_order: {
+            	identifier: 'email_order',
             	rules: [
             		{
                         type   : 'email',
@@ -361,6 +367,15 @@
             		},
             		{
                         type   : 'empty',
+                        prompt : '<?php echo e(__("form.Please enter your email")); ?>'
+            		}
+            	]
+            },
+            email_confirm: {
+            	identifier: 'email_confirm',
+            	rules: [
+            		{
+                        type   : 'match[email_order]',
                         prompt : '<?php echo e(__("form.Please enter your email")); ?>'
             		}
             	]

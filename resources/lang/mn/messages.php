@@ -212,5 +212,6 @@ return [
     'Special requests' => 'Хүсэлт',
     'Please write your requests in English' => 'Захиалгын хүсэлтээ энд бичнэ үү',
     'Personal information' => 'Хувийн мэдээлэл',
-    'Resend activation email' => 'Дахин илгээх'
+    'Resend activation email' => 'Дахин илгээх',
+    'Confirm email' => 'И-мэйл дахин оруулна уу',
 ];
