@@ -420,7 +420,9 @@
 		if(!value){
 			value = 0;
         }
-		$('#selectedPeople').val(value);
+		if(value >= parseFloat($('#selectedPeople').val())){
+			$('#selectedPeople').val(value);
+		}
 		value = value + 1;
 		selectedRoom.val(value);
 		roomNumber = value;
@@ -545,24 +547,24 @@
         $("#searchButton").click(function(){
             $('#searchButton').addClass('loading');
             console.log(roomNumber,people);
-            // if(!people){
-            //     people = 2;
-            // }
-            // $.ajaxSetup({
-            // headers: {
-            //     'X-CSRF-TOKEN': $('meta[name="_token"]').attr('content')
-            // }
-            // })
-            // searchPlace = $('#searchplace').val();
-            // $.get('search?roomnumber=' + roomNumber + '&peoplenumber=' + people + '&startdate=' + startDate + '&enddate=' + endDate + '&place=' + searchPlace)
-            // .success(function (data) {
-            //     window.location = "{{URL::to('searchresult')}}";
-            // })
-            // .error(function(jqXHR, textStatus, errorThrown){
-            //     if (textStatus == 'error'){
-            //             alert(errorThrown);
-            //     }
-            // });
+            if(!people){
+                people = 2;
+            }
+            $.ajaxSetup({
+            headers: {
+                'X-CSRF-TOKEN': $('meta[name="_token"]').attr('content')
+            }
+            })
+            searchPlace = $('#searchplace').val();
+            $.get('search?roomnumber=' + roomNumber + '&peoplenumber=' + people + '&startdate=' + startDate + '&enddate=' + endDate + '&place=' + searchPlace)
+            .success(function (data) {
+                window.location = "{{URL::to('searchresult')}}";
+            })
+            .error(function(jqXHR, textStatus, errorThrown){
+                if (textStatus == 'error'){
+                        alert(errorThrown);
+                }
+            });
         });
 
     
