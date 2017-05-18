@@ -68,6 +68,14 @@
                                                 <a href="<?php echo e(url('/password/reset')); ?>"><?php echo e(__('messages.Forgot password?')); ?></a>
                                             </p>
                                         </form>
+                                        <?php if(session('activation')): ?>
+                                            <div class="ui success message">
+                                               <i class="check icon"></i>
+                                            </div>
+                                        <?php endif; ?>
+                                            <div class="ui success message">
+                                               <i class="check icon"></i>
+                                            </div>
                                     </div>
                                 </div>
                                 <div class="column"></div>

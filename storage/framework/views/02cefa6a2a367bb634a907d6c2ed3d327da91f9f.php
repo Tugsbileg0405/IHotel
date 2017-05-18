@@ -327,26 +327,20 @@
 												<?php endif; ?> 
 											<?php endif; ?>
 										</p>
-									</div>
-									<div class="ui sizer vertical segment">
-										<div class="ui large header">what3words</div>
 										<p class="ui justify" style="vertical-align:middle;line-height:30px !important;display:flex">
 											<img src="<?php echo e(asset('img/what3word.jpg')); ?>" height="30" style="border-radius:50%;margin-right:10px" width="30" alt="">											
 											<?php if(App::isLocale('mn')): ?>
 												<a href="https://map.what3words.com/<?php echo e($hotel->what3words); ?>" target="_blank">
-													<?php echo e($hotel->what3words); ?>
-
+													<?php echo e($hotel->what3words); ?> (what3words)
 												</a> 
 											<?php elseif(App::isLocale('en')): ?> 
 												<?php if($hotel->what3words_en): ?>
 													<a href="https://map.what3words.com/<?php echo e($hotel->what3words_en); ?>" target="_blank">
-														<?php echo e($hotel->what3words_en); ?>
-
+														<?php echo e($hotel->what3words_en); ?> (what3words)
 													</a> 
 												<?php else: ?>
 													<a href="https://map.what3words.com/<?php echo e($hotel->what3words); ?>" target="_blank">
-														<?php echo e($hotel->what3words); ?>
-
+														<?php echo e($hotel->what3words); ?> (what3words)
 													</a> 
 												<?php endif; ?> 
 											<?php endif; ?>

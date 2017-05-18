@@ -13,6 +13,7 @@ return [
     'Please agree terms of service' => 'Үйлчилгээний нөхцөл зөвшөөрөөгүй байна',
     'Please enter a value' => 'Утга оруулна уу',
     'Password doesnt match' => 'Нууц үг таарахгүй байна',
+    'Email doesnt match' => 'И-мэйл хаяг буруу байна',
     'Please select a score' => 'Оноо сонгоно уу',
     'Card number is wrong' => 'Картын дугаар буруу байна.',
     'Please enter a valid expiry date' => 'Картын хугацаа дууссан байна.',

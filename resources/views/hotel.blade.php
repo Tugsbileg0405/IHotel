@@ -319,23 +319,20 @@
 												@endif 
 											@endif
 										</p>
-									</div>
-									<div class="ui sizer vertical segment">
-										<div class="ui large header">what3words</div>
 										<p class="ui justify" style="vertical-align:middle;line-height:30px !important;display:flex">
 											<img src="{{ asset('img/what3word.jpg')}}" height="30" style="border-radius:50%;margin-right:10px" width="30" alt="">											
 											@if (App::isLocale('mn'))
 												<a href="https://map.what3words.com/{{$hotel->what3words}}" target="_blank">
-													{{$hotel->what3words}}
+													{{$hotel->what3words}} (what3words)
 												</a> 
 											@elseif (App::isLocale('en')) 
 												@if($hotel->what3words_en)
 													<a href="https://map.what3words.com/{{$hotel->what3words_en}}" target="_blank">
-														{{$hotel->what3words_en}}
+														{{$hotel->what3words_en}} (what3words)
 													</a> 
 												@else
 													<a href="https://map.what3words.com/{{$hotel->what3words}}" target="_blank">
-														{{$hotel->what3words}}
+														{{$hotel->what3words}} (what3words)
 													</a> 
 												@endif 
 											@endif
