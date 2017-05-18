@@ -384,7 +384,7 @@ class SearchController extends Controller
                 ->with('rates')->get();
             }
 
-            if ($filterprice1 !== null && $filterprice2 !== null && $rating1 !== null && $rating2 !== null) {
+            if ($filterprice1 !== null && $filterprice2 !== null && $rating1 !== null && $rating2 !== null && $filter == null) {
                 $filterprice1 = $filterprice1 * $rate;
                 $filterprice2 = $filterprice2 * $rate;
                 $collection = Hotel::where('name_en', '!=', null)
