@@ -336,6 +336,7 @@ class AppController extends Controller
                 return redirect('/');
             }
 
+            $request->session()->flash('activation', 'Successfully');
             return redirect('login');
         }
 
@@ -357,7 +358,10 @@ class AppController extends Controller
     {
         $id = $request->user()->id;
         $user = \App\User::find($id);
-        $user->activation_code = \Hash::make(str_random(40));
+        if ($user->is_activated) {
+            return redirect('/');
+        }
+        $user->activation_code = \Hash::make(microtime().$user->id);
         $user->save();
             
         Notification::send($user, new ActivationCodeRequested);

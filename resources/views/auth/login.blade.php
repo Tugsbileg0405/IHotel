@@ -34,6 +34,11 @@
                                         <a class="item" href="{{ url('register') }}">{{ __('messages.Register') }}</a>
                                     </div>
                                     <div class="ui bottom attached segment">
+                                        @if (session('activation'))
+                                            <div class="ui success message">
+                                               <i class="check icon"></i> Successfully registered
+                                            </div>
+                                        @endif
                                         <form class="ui form" id="login" action="{{ url('login') }}" method="POST">
                                             {{ csrf_field() }}
                                             <img class="ui centered tiny image hotel-add" src="{{ asset('img/marker.png') }}">

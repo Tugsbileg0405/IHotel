@@ -376,8 +376,8 @@
             	rules: [
             		{
                         type   : 'match[email_order]',
-                        prompt : '<?php echo e(__("form.Please enter your email")); ?>'
-            		}
+                        prompt : '<?php echo e(__("form.Email doesnt match")); ?>'
+            		},
             	]
             },
             terms: {

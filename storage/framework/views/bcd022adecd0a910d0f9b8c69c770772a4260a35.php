@@ -6,7 +6,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <meta name="csrf-token" content="<?php echo e(csrf_token()); ?>">
 
-    <title><?php echo $__env->yieldContent('title'); ?></title>
+    <title>Please confirm your email address</title>
 
     <link rel="icon" href="<?php echo e(asset('img/favicon.ico')); ?>">
     <link href='https://fonts.googleapis.com/css?family=Roboto:400,400italic,300,300italic,100,100italic,500,500italic,700,700italic,900,900italic&subset=latin,cyrillic' rel='stylesheet' type='text/css'>
@@ -111,5 +111,10 @@
             </div>
         </div>
     </div>
+    <script type="text/javascript">
+        $('.green.button').click(function() {
+            $(this).addClass('loading disabled');
+        });
+    </script>
 </body>
 </html>
