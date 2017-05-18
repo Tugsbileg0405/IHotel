@@ -35,6 +35,10 @@ class Handler extends ExceptionHandler
         if ($exception instanceof \Illuminate\Session\TokenMismatchException) {
             abort(500);
         }
+
+        if ($exception instanceof \Symfony\Component\HttpKernel\Exception\MethodNotAllowedHttpException) {
+            abort(503);
+        }
         
         parent::report($exception);
     }
