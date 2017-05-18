@@ -576,10 +576,12 @@
                     $("#noresult").css("display", "");
                     $("#loader").removeClass("active");
                     $("#pagination").css("display", "none");
+                    $("#errorresult").css("display", "none");
                 } else {
                     $("#noresult").css("display", "none");
                     $("#pagination").css("display", "");
                     $("#loader").removeClass("active");
+                    $("#errorresult").css("display", "none");
                 }
                 for (var key in data.data) {
                     if (data.data.hasOwnProperty(key)) {
