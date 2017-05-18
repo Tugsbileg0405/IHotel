@@ -43,7 +43,7 @@ class ActivationCodeRequested extends Notification
         $url = url('user/activate?code='.$notifiable->activation_code);
 
         return (new MailMessage)
-            ->line('Thanks for registering on iHotel!')
+            ->greeting('Thanks for registering on iHotel!')
             ->line('Please click on following button to activate your account.')
             ->action('Activate', $url);
     }

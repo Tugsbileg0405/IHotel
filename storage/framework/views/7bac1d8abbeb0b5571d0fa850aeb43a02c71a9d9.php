@@ -1,136 +1,199 @@
 <!DOCTYPE html>
 <html>
-
 <head>
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
-
-    <style type="text/css" rel="stylesheet" media="all">
-        /* Media Queries */
-        @media  only screen and (max-width: 500px) {
-            .button {
-                width: 100% !important;
-            }
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>iHotel</title>
+    <style>
+        @import  url('https://fonts.googleapis.com/css?family=Roboto:400,700&subset=cyrillic,cyrillic-ext,latin-ext');
+        html {
+            line-height: 1.25;
+            -ms-text-size-adjust: 100%;
+            -webkit-text-size-adjust: 100%;
+            font-size: 16px;
+            font-weight: 400;
+            font-family: 'Roboto', sans-serif;
+        }
+        body {
+            margin: 0;
+            font-size: 14px;
+            font-weight: 400;
+            font-family: 'Roboto', sans-serif;
+            background-color: #fff;
+        }
+        * {
+            -webkit-box-sizing: border-box;
+               -moz-box-sizing: border-box;
+                    box-sizing: border-box;
+        }
+        *:before,
+        *:after {
+            -webkit-box-sizing: border-box;
+               -moz-box-sizing: border-box;
+                    box-sizing: border-box;
+        }
+        article,
+        aside,
+        footer,
+        header,
+        nav,
+        section {
+            display: block;
+        }
+        h1,h2,h3,h4,h5,h6 {
+            font-weight: 400;
+            margin: 0 0 10px;
+        }
+        h1 {
+            font-size: 24px;
+        }
+        h2 {
+            font-size: 20px;
+        }
+        h3 {
+            font-size: 28px;
+        }
+        h4 {
+            font-size: 15px;
+        }
+        h5 {
+            font-size: 14px;
+        }
+        h6 {
+            font-size: 12px;
+        }
+        p {
+            margin: 0 0 10px;
+        }
+        hr {
+            box-sizing: content-box;
+            height: 0;
+            overflow: visible;
+        }
+        a {
+            background-color: transparent;
+            -webkit-text-decoration-skip: objects;
+        }
+        b,
+        strong {
+            font-weight: 700;
+        }
+        small {
+            font-size: 80%;
+        }
+        img {
+            border-style: none;
+            display: inline-block;
+            width: auto;
+        }
+        [hidden] {
+            display: none;
+        }
+        .container {
+            width: 100%;
+            margin: 0 auto;
+            padding: 0 20px;
+            max-width: 1400px;
+        }
+        .pull-left {
+            text-align: left;
+        }
+        .pull-right {
+            text-align: right;
+        }
+        .text-uppercase {
+            text-transform: uppercase;
+        }
+        .text-center {
+            text-align: center;
+        }
+        table {
+            width: 100%;
+        }
+        .table {
+            border-spacing: 0;
+            border-collapse: collapse;
+            empty-cells: hide;
+        }
+        .table .header td {
+            padding-bottom: 40px;
+            border-bottom: 1px solid #ddd;
+        }
+        .table .content td {
+            padding-top: 40px; 
+        }
+        .table .content h1 {
+            margin: 0 0 20px 0;
+            font-size: 19px;
+            font-weight: bold;
+            color: #2f3133;
+        }
+        .table .content p {
+            margin: 0 0 20px 0;
+            font-size: 16px;
+            line-height: 1.5em;
+            color: #74787e;
+        }
+        .button {
+            display: inline-block;
+            padding: 10px;
+            margin: 0 0 20px 0;
+            min-width: 200px;
+            border-radius: 3px;
+            font-size: 15px;
+            line-height: 25px;
+            text-align: center;
+            text-decoration: none;
+            background-color: #3869D4;
+            color: #fff;
+        }
+        .button.success {
+            background-color: #22bc66;
+        }
+        .button.error {
+            background-color: #dc4d2f;
+        }
+        .table tr,
+        .table td {
+            border: none;
+        }
+        [colspan] {
+            display: table-cell;
         }
     </style>
 </head>
+<body>
+    <div class="container">
+        <table class="table">
+            <tbody>
+                <tr class="header">
+                    <td class="text-center">
+                        <img src="<?php echo e(asset('img/logo.png')); ?>" style="display:inline-block;height: 60px;">
+                    </td>
+                </tr>
+                <tr class="content">
+                    <td>
+                        <h1><?php echo e($greeting); ?></h1>
+                        <?php $__currentLoopData = $introLines; $__env->addLoop($__currentLoopData); foreach($__currentLoopData as $line): $__env->incrementLoopIndices(); $loop = $__env->getLastLoop(); ?>
+                            <p><?php echo e($line); ?></p>
+                        <?php endforeach; $__env->popLoop(); $loop = $__env->getLastLoop(); ?>
+                        <?php if($actionText): ?>
+                            <div class="text-center">
+                                <a href="<?php echo e($actionUrl); ?>" class="button <?php echo e($level ? $level : ''); ?>">
+                                    <?php echo e($actionText); ?>
 
-<?php
-
-$style = [
-    /* Layout ------------------------------ */
-
-    'body' => 'margin: 0; padding: 0; width: 100%; background-color: #F2F4F6;',
-    'email-wrapper' => 'width: 100%; margin: 0; padding: 0; background-color: #F2F4F6;',
-
-    /* Masthead ----------------------- */
-
-    'email-masthead' => 'padding: 25px 0; text-align: center;',
-    'email-masthead_name' => 'font-size: 16px; font-weight: bold; color: #2F3133; text-decoration: none; text-shadow: 0 1px 0 white;',
-
-    'email-body' => 'width: 100%; margin: 0; padding: 0; border-top: 1px solid #EDEFF2; border-bottom: 1px solid #EDEFF2; background-color: #FFF;',
-    'email-body_inner' => 'width: auto; max-width: 570px; margin: 0 auto; padding: 0;',
-    'email-body_cell' => 'padding: 35px;',
-
-    'email-footer' => 'width: auto; max-width: 570px; margin: 0 auto; padding: 0; text-align: center;',
-    'email-footer_cell' => 'color: #AEAEAE; padding: 35px; text-align: center;',
-
-    /* Body ------------------------------ */
-
-    'body_action' => 'width: 100%; margin: 30px auto; padding: 0; text-align: center;',
-    'body_sub' => 'margin-top: 25px; padding-top: 25px; border-top: 1px solid #EDEFF2;',
-
-    /* Type ------------------------------ */
-
-    'anchor' => 'color: #3869D4;',
-    'header-1' => 'margin-top: 0; color: #2F3133; font-size: 19px; font-weight: bold; text-align: left;',
-    'paragraph' => 'margin-top: 0; color: #74787E; font-size: 16px; line-height: 1.5em;',
-    'paragraph-sub' => 'margin-top: 0; color: #74787E; font-size: 12px; line-height: 1.5em;',
-    'paragraph-center' => 'text-align: center;',
-
-    /* Buttons ------------------------------ */
-
-    'button' => 'display: block; display: inline-block; width: 200px; min-height: 20px; padding: 10px;
-                 background-color: #3869D4; border-radius: 3px; color: #ffffff; font-size: 15px; line-height: 25px;
-                 text-align: center; text-decoration: none; -webkit-text-size-adjust: none;',
-
-    'button--green' => 'background-color: #22BC66;',
-    'button--red' => 'background-color: #dc4d2f;',
-    'button--blue' => 'background-color: #3869D4;',
-];
-?>
-
-<?php $fontFamily = 'font-family: Arial, \'Helvetica Neue\', Helvetica, sans-serif;'; ?>
-
-<body style="<?php echo e($style['body']); ?>">
-    <table width="100%" cellpadding="0" cellspacing="0">
-        <tr>
-            <td style="<?php echo e($style['email-wrapper']); ?>" align="center">
-                <table width="100%" cellpadding="0" cellspacing="0">
-                    <!-- Logo -->
-                    <tr style="background-color:#fff;border:0">
-                        <td style="background-color:#fff;border:0;text-align:center;">
-                            <img src="<?php echo e(asset('img/logo.png')); ?>" style="display:inline-block;height: 60px;">
-                        </td>
-                    </tr>
-
-                    <!-- Email Body -->
-                    <tr>
-                        <td style="<?php echo e($style['email-body']); ?>" width="100%">
-                            <table style="<?php echo e($style['email-body_inner']); ?>" align="center" width="570" cellpadding="0" cellspacing="0">
-                                <tr>
-                                    <td style="<?php echo e($fontFamily); ?> <?php echo e($style['email-body_cell']); ?>">
-                                        <!-- Greeting -->
-                                        <h1 style="<?php echo e($style['header-1']); ?>">
-                                            <?php echo e(__('messages.Hello')); ?>
-
-                                        </h1>
-
-                                        <!-- Intro -->
-                                        <?php $__currentLoopData = $introLines; $__env->addLoop($__currentLoopData); foreach($__currentLoopData as $line): $__env->incrementLoopIndices(); $loop = $__env->getLastLoop(); ?>
-                                            <p style="<?php echo e($style['paragraph']); ?>">
-                                                <?php echo e(__('messages.You are receiving this email because we received a password reset request for your account')); ?>
-
-                                            </p>
-                                        <?php endforeach; $__env->popLoop(); $loop = $__env->getLastLoop(); ?>
-
-                                        <!-- Action Button -->
-                                        <?php if(isset($actionText)): ?>
-                                            <table style="<?php echo e($style['body_action']); ?>" align="center" width="100%" cellpadding="0" cellspacing="0">
-                                                <tr>
-                                                    <td align="center">
-                                                        <?php
-                                                            switch ($level) {
-                                                                case 'success':
-                                                                    $actionColor = 'button--green';
-                                                                    break;
-                                                                case 'error':
-                                                                    $actionColor = 'button--red';
-                                                                    break;
-                                                                default:
-                                                                    $actionColor = 'button--blue';
-                                                            }
-                                                        ?>
-
-                                                        <a href="<?php echo e($actionUrl); ?>"
-                                                            style="<?php echo e($fontFamily); ?> <?php echo e($style['button']); ?> <?php echo e($style[$actionColor]); ?>"
-                                                            class="button"
-                                                            target="_blank">
-                                                            <?php echo e(__('messages.Reset password')); ?>
-
-                                                        </a>
-                                                    </td>
-                                                </tr>
-                                            </table>
-                                        <?php endif; ?>
-                                    </td>
-                                </tr>
-                            </table>
-                        </td>
-                    </tr>
-                </table>
-            </td>
-        </tr>
-    </table>
+                                </a>
+                            </div>
+                        <?php endif; ?>
+                        <?php $__currentLoopData = $outroLines; $__env->addLoop($__currentLoopData); foreach($__currentLoopData as $line): $__env->incrementLoopIndices(); $loop = $__env->getLastLoop(); ?>
+                            <p><?php echo e($line); ?></p>
+                        <?php endforeach; $__env->popLoop(); $loop = $__env->getLastLoop(); ?>
+                        <p>Regards, iHotel.mn</p>
+                    </td>
+                </tr>
+            </tbody>
+        </table>
+    </div>
 </body>
 </html>
