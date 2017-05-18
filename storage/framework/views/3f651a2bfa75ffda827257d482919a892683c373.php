@@ -261,7 +261,7 @@
 											</div>
 											<div class="field">
 												<div class="ui left icon input">
-													<input type="text" name="cvc" placeholder="CVC" maxlength="4">
+													<input type="text" name="cvc" placeholder="CVV" maxlength="4">
 													<i class="blue lock icon"></i>
 												</div>
 											</div>
@@ -442,15 +442,15 @@
                 rules: [
                     {
                         type   : 'number',
-                        prompt : '<?php echo e(__("form.Please enter a valid CVC")); ?>'
+                        prompt : '<?php echo e(__("form.Please enter a valid CVV")); ?>'
                     },
                     {
                         type   : 'minLength[3]',
-                        prompt : '<?php echo e(__("form.Please enter a valid CVC")); ?>'
+                        prompt : '<?php echo e(__("form.Please enter a valid CVV")); ?>'
                     },
                     {
                         type   : 'maxLength[4]',
-                        prompt : '<?php echo e(__("form.Please enter a valid CVC")); ?>'
+                        prompt : '<?php echo e(__("form.Please enter a valid CVV")); ?>'
                     },
                 ]
             },
