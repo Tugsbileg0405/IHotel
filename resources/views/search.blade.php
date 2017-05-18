@@ -958,8 +958,9 @@
                     .error(function(jqXHR, textStatus, errorThrown) { 
                         $("#loader").removeClass("active");
                         $('.searchResult').empty();
-                        $("#errorresult").css("display", "");
+                        $("#noresult").css("display", "none");
                         $('#pagination').css('display','none');
+                        $("#errorresult").css("display", "");
                         if (textStatus == 'timeout'){
                             $('#errorresult .header').html('The server is not responding');
                         }
