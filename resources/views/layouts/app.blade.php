@@ -7,20 +7,20 @@
     <meta name="csrf-token" content="{{ csrf_token() }}">
     <!-- Facebook Metadata /-->
     <meta property="og:url" content="https://www.ihotel.mn" />
-    <meta property="og:title" content="IHotel" />
+    <meta property="og:title" content="iHotel.mn" />
     <meta property="og:image" content="{{ asset('img/share.jpg')}}" />
-    <meta property="og:description" content="iHotel.mn нь аялагчид Монголын 500 гаруй, дэлхийн сая илүү зочид буудал, амралтын газрыг хамгийн хурдан, хялбар, нэмэлт төлбөр, шимтгэлгүйгээр эх хэл дээрээ, найдвартай захиалах боломжтой онлайн зөвлөгч юм. Бид олон улсын нэр хүнд бүхий booking.com, agoda.com, airbnb, ctrip гэх мэт онлайн захиалгын системүүдийн албан ёсны түнш бөгөөд өөрийн 3 жилийн туршлага дээрээ үндэслэн танд хамгийн хямд, тав тухтай, байрлал сайтай, хэрэгцээ шаардлагад тань төгс тохирох сонголтуудыг ямагт санал болгоно. Та эх хэл дээрээ сонголтоо хийж, аяллын зөвлөгөөг үнэгүй авснаар учирч болох олон эрсдэлээс сэргийлж илүү хямд зардал, бага энергиэр аялах боломжтой." />
+    <meta property="og:description" content="iHotel.mn: JCI ASPAC 2017's official partner, Onilne hotel reservation" />
 
     <!-- Google Metadata /-->
-    <meta itemprop="name" content="IHotel">
-    <meta itemprop="description" content="iHotel.mn нь аялагчид Монголын 500 гаруй, дэлхийн сая илүү зочид буудал, амралтын газрыг хамгийн хурдан, хялбар, нэмэлт төлбөр, шимтгэлгүйгээр эх хэл дээрээ, найдвартай захиалах боломжтой онлайн зөвлөгч юм. Бид олон улсын нэр хүнд бүхий booking.com, agoda.com, airbnb, ctrip гэх мэт онлайн захиалгын системүүдийн албан ёсны түнш бөгөөд өөрийн 3 жилийн туршлага дээрээ үндэслэн танд хамгийн хямд, тав тухтай, байрлал сайтай, хэрэгцээ шаардлагад тань төгс тохирох сонголтуудыг ямагт санал болгоно. Та эх хэл дээрээ сонголтоо хийж, аяллын зөвлөгөөг үнэгүй авснаар учирч болох олон эрсдэлээс сэргийлж илүү хямд зардал, бага энергиэр аялах боломжтой."/>
+    <meta itemprop="name" content="iHotel.mn">
+    <meta itemprop="description" content="iHotel.mn: JCI ASPAC 2017's official partner, Onilne hotel reservation"/>
     <meta itemprop="image" content="{{ asset('img/share.jpg')}}" />
 
     <!-- Twitter Metadata /-->
     <meta name="twitter:card" content="summary" />
     <meta name="twitter:site" content="@ihotelmn" />
-    <meta name="twitter:title" content="IHotel">
-    <meta name="twitter:description" content="iHotel.mn нь аялагчид Монголын 500 гаруй, дэлхийн сая илүү зочид буудал, амралтын газрыг хамгийн хурдан, хялбар, нэмэлт төлбөр, шимтгэлгүйгээр эх хэл дээрээ, найдвартай захиалах боломжтой онлайн зөвлөгч юм. Бид олон улсын нэр хүнд бүхий booking.com, agoda.com, airbnb, ctrip гэх мэт онлайн захиалгын системүүдийн албан ёсны түнш бөгөөд өөрийн 3 жилийн туршлага дээрээ үндэслэн танд хамгийн хямд, тав тухтай, байрлал сайтай, хэрэгцээ шаардлагад тань төгс тохирох сонголтуудыг ямагт санал болгоно. Та эх хэл дээрээ сонголтоо хийж, аяллын зөвлөгөөг үнэгүй авснаар учирч болох олон эрсдэлээс сэргийлж илүү хямд зардал, бага энергиэр аялах боломжтой."/>
+    <meta name="twitter:title" content="iHotel.mn">
+    <meta name="twitter:description" content="iHotel.mn: JCI ASPAC 2017's official partner, Onilne hotel reservation"/>
     <meta name="twitter:image" content="{{ asset('img/share.jpg')}}" />
 
     <title>@yield('title')</title>
