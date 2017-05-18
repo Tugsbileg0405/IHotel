@@ -348,6 +348,10 @@
             		{
                         type   : 'empty',
                         prompt : '{{ __("form.Please enter your phone number") }}'
+            		},
+            		{
+                        type   : 'number',
+                        prompt : '{{ __("form.Please enter your phone number") }}'
             		}
             	]
             },
