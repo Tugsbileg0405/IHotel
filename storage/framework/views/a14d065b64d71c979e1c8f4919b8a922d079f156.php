@@ -567,12 +567,13 @@
                 for (var key in data.data) {
                     if (data.data.hasOwnProperty(key)) {
                     var rating = 0;
-                    var finalrating = 0;
                     if (data.data[key].rating != 0) {
-                        finalrating = '<i class="icon thumbs up"></i>' + parseFloat(data.data[key].rating).toFixed(1);
+                        finalrating = "<div class='review'>\
+                            	<span class='ui green label'>" + parseFloat(data.data[key].rating).toFixed(1) + "</span>\
+                            </div>";
                     }
                     else {
-                        finalrating = '';
+                        finalrating = "";
                     }
 
                     var star = "";
@@ -582,11 +583,20 @@
                             star += "<i class='icon yellow star'></i>";
                     }
                     var lowest = data.data[key].rooms[0].price;
+                    if (data.data[key].rooms[0].price_op) {
+                    	lowest = data.data[key].rooms[0].price_op;
+                    }
                     var saledprice;
                     for(var i=0; i < data.data[key].rooms.length; i++){
                         tmp = data.data[key].rooms[i].price;
+                        if (data.data[key].rooms[i].price_op) {
+                        	tmp = data.data[key].rooms[i].price_op;
+                        }
                         if (data.data[key].rooms[i].sales.length > 0) {
                             tmp = data.data[key].rooms[i].sales[0].price;
+                            if (data.data[key].rooms[i].sales[0].price_op) {
+                            	tmp = data.data[key].rooms[i].sales[0].price_op;
+                            }
                         }
                         if (parseFloat(tmp) < parseFloat(lowest)) {
                         	lowest = tmp;
@@ -609,14 +619,6 @@
                     } else if (data.data[key].star == 5) {
                         star_class = 'fivestar';
                     }
-                    var likedString="";
-                    if('<?php echo e(Auth::check()); ?>'){
-                        if($.inArray(data.data[key].id,data.favorites) != -1){
-                            likedString = "<div class='like-heart'><a href='#' class='favorite-btn' data-id="+data.data[key].id+"><i class='icon heart'></i></a></div>"; 
-                        }else{
-                            likedString = "<div class='like-heart'><a href='#' class='favorite-btn' data-id="+data.data[key].id+"><i class='icon empty heart'></i></a></div>"; 
-                        }
-                    }
                     <?php if(App::isLocale('en')): ?> {
                     textToInsert = "<div class='list-item box' id='"+ data.data[key].id +"' data-id='"+ data.data[key].id +"'> \
                                         <div class='img left'> \
@@ -625,21 +627,14 @@
                                             <img class='ui fluid image' style='max-width:100%;max-height:100%' src='" + data.data[key].cover_photo + "'/> \
                                             </a>\
                                         </div>\
-                                        <div class='block left'>\
-                                            "+likedString+"\
-                                            <div class='review'>\
-                                                <h4><a href='#'>" + finalrating + "</a></h4>\
-                                            </div>\
+                                        " + finalrating + "\
+                                        <div class='price'>\
+                                            <h4>$" + numeral(lowest/rating).format('0,0') + "</h4>\
                                         </div>\
-                                        <div class='block right'>\
-                                            <div class='price'>\
-                                                <h4>$" + numeral(lowest/rating).format('0,0') + "</h4>\
-                                            </div>\
-                                            <div class='room-name' >\
-                                                <a href='" + url + "' style='color:white' target='_blank'>\
-                                                <h4>" + data.data[key].name_en + "</h4>\
-                                                </a>\
-                                            </div>\
+                                        <div class='room-name' >\
+                                            <a href='" + url + "' style='color:white' target='_blank'>\
+                                            	<h5>" + data.data[key].name_en + "</h5>\
+                                            </a>\
                                         </div>\
                                         <p class='theme'>\
                                             <span class='" + star_class + "'>\
@@ -659,21 +654,14 @@
                                             <img class='ui fluid image' style='max-width:100%;max-height:100%' src='" + data.data[key].cover_photo + "'/> \
                                             </a>\
                                         </div>\
-                                        <div class='block left'>\
-                                            "+likedString+"\
-                                            <div class='review'>\
-                                                <h4><a href='#'>" + finalrating + "</a></h4>\
-                                            </div>\
+                                        " + finalrating + "\
+                                        <div class='price'>\
+                                            <h4>" + numeral(lowest).format('0,0') + "₮</h4>\
                                         </div>\
-                                        <div class='block right'>\
-                                            <div class='price'>\
-                                                <h4>" + numeral(lowest).format('0,0') + "₮</h4>\
-                                            </div>\
-                                            <div class='room-name' >\
-                                                <a href='" + url + "' style='color:white' target='_blank'>\
-                                                <h4>" + data.data[key].name + "</h4>\
-                                                </a>\
-                                            </div>\
+                                        <div class='room-name' >\
+                                            <a href='" + url + "' style='color:white' target='_blank'>\
+                                            	<h5>" + data.data[key].name + "</h5>\
+                                            </a>\
                                         </div>\
                                         <p class='theme'>\
                                             <span class='" + star_class + "'>\

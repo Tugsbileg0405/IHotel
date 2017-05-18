@@ -496,6 +496,9 @@
 
 
 	$( ".selectedPeople" ).change(function() {
+		if($(this).val() > $('.selectedRoom').val()){
+			$('.selectedRoom').dropdown('set selected', $(this).val());
+		}
 		if($(this).val() === "more"){
 			$('.selectedPeople').css("display","none");
 			$('.room').css("display","");
@@ -506,6 +509,9 @@
 	});
 
 	$( ".selectedRoom" ).change(function() {
+		if($(this).val() > $('.selectedPeople').val()){
+			$('.selectedPeople').dropdown('set selected', $(this).val());
+		}
 		if($(this).val() === "more"){
 			$('.selectedRoom').css("display","none");
 			$('.people').css("display","");
@@ -532,29 +538,29 @@
                 startDate = start.format('L');
                 endDate = end.format('L');
     });
-	
-	
-		$("#searchButton").click(function(){
-			$('#searchButton').addClass('loading');
-			if(!people){
-				people = 2;
-			}
-			$.ajaxSetup({
-			headers: {
-				'X-CSRF-TOKEN': $('meta[name="_token"]').attr('content')
-			}
-			})
-			searchPlace = $('#searchplace').val();
-			$.get('search?roomnumber=' + roomNumber + '&peoplenumber=' + people + '&startdate=' + startDate + '&enddate=' + endDate + '&place=' + searchPlace)
-			.success(function (data) {
-				window.location = "<?php echo e(URL::to('searchresult')); ?>";
-			})
-			.error(function(jqXHR, textStatus, errorThrown){
-				if (textStatus == 'error'){
-						alert(errorThrown);
-				}
-			});
-		});
+    
+    
+        $("#searchButton").click(function(){
+            $('#searchButton').addClass('loading');
+            if(!people){
+                people = 2;
+            }
+            $.ajaxSetup({
+            headers: {
+                'X-CSRF-TOKEN': $('meta[name="_token"]').attr('content')
+            }
+            })
+            searchPlace = $('#searchplace').val();
+            $.get('search?roomnumber=' + roomNumber + '&peoplenumber=' + people + '&startdate=' + startDate + '&enddate=' + endDate + '&place=' + searchPlace)
+            .success(function (data) {
+                window.location = "<?php echo e(URL::to('searchresult')); ?>";
+            })
+            .error(function(jqXHR, textStatus, errorThrown){
+                if (textStatus == 'error'){
+                        alert(errorThrown);
+                }
+            });
+        });
 
     
 </script>
