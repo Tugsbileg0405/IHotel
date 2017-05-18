@@ -35,9 +35,7 @@
                                     </div>
                                     <div class="ui bottom attached segment">
                                         @if (session('activation'))
-                                            <div class="ui success message">
-                                               <i class="check icon"></i> Successfully registered
-                                            </div>
+                                            <div class="ui success message">Successfully registered</div>
                                         @endif
                                         <form class="ui form" id="login" action="{{ url('login') }}" method="POST">
                                             {{ csrf_field() }}
