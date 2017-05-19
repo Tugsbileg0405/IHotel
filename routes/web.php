@@ -10,6 +10,27 @@
 | contains the "web" middleware group. Now create something great!
 |
 */
+Route::get('something', function() {
+	$orders = \App\Order::get();
+
+	foreach ($orders as $order) {
+		$user = \App\User::find($order->user_id);
+
+		$userData = [
+			'name' => $user->name,
+			'surname' => $user->surname,
+			'country' => $user->country,
+			'phone_number' => $user->phone_number,
+			'email' => $user->email,
+		];
+
+		$order->userdata = json_encode($userData);
+		$order->save();
+	}
+
+	return 'Success';
+});
+
 Route::get('change/{locale}', function($locale) {
 	Session::put('locale', $locale);
 	return back();

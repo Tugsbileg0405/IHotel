@@ -33,9 +33,7 @@
                                     </div>
                                     <div class="ui bottom attached segment">
                                         <?php if(session('activation')): ?>
-                                            <div class="ui success message">
-                                               <i class="check icon"></i> Successfully registered
-                                            </div>
+                                            <div class="ui success message">Successfully registered</div>
                                         <?php endif; ?>
                                         <form class="ui form" id="login" action="<?php echo e(url('login')); ?>" method="POST">
                                             <?php echo e(csrf_field()); ?>

@@ -216,4 +216,6 @@ return [
     'Confirm email' => 'И-мэйл дахин оруулна уу',
     'Please confirm your email address' => 'Та бүртгэлээ баталгаажуулна уу',
     'We sent you an email with activation button to your email address. Please click on activate button.' => 'Таны :email и-мэйл хаяг руу баталгаажуулах холбоос бүхий и-мэйл явууллаа. Та и-мэйл хаягаа шалгана уу.',
+    'Thank you' => 'Баярлалаа',
+    'Successfully registered.' => 'Амжилттай бүртгүүллээ.',
 ];

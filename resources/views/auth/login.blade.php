@@ -35,7 +35,10 @@
                                     </div>
                                     <div class="ui bottom attached segment">
                                         @if (session('activation'))
-                                            <div class="ui success message">Successfully registered</div>
+                                            <div class="ui success message">
+                                                <div class="header">{{ __('messages.Thank you') }}</div>
+                                                <p>{{ __('messages.Successfully registered.') }}</p>
+                                            </div>
                                         @endif
                                         <form class="ui form" id="login" action="{{ url('login') }}" method="POST">
                                             {{ csrf_field() }}
