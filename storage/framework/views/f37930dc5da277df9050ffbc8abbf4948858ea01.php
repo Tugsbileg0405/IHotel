@@ -63,7 +63,8 @@
     <?php if(!Request::is('aspac2017') && !Request::is('searchresult') && !Request::is('aspac')): ?>
         <?php echo $__env->make('partials.footer', array_except(get_defined_vars(), array('__data', '__path')))->render(); ?>
     <?php endif; ?>
-    
+
+    <a id="btnToTop"><i class="chevron up icon"></i></a>
     <script src="<?php echo e(asset('js/modernizr.js')); ?>"></script>
     <script src="<?php echo e(asset('dist/components/popup.js')); ?>"></script>
     <script src="<?php echo e(asset('dist/components/dropdown.js')); ?>"></script>

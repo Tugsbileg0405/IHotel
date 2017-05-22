@@ -89,72 +89,74 @@
 												</div>
 											</div>
 											<h4 class="header">{{ __('messages.Ordered rooms') }}</h4>
-											<table class="ui celled table">
-												<thead>
-													<tr>
-														<th>{{ __('messages.Room name') }}</th>
-														<th>{{ __('messages.Rooms') }}</th>
-														<th>{{ __('messages.Cost of per night') }}</th>
-														<th>{{ __('messages.Day') }}</th>
-														<th>{{ __('messages.Price') }}</th>
-													</tr>
-												</thead>
-												<tbody>
-													@foreach($rooms as $room)
+											<div class="responsive-table">
+												<table class="ui celled unstackable table" id="order-table">
+													<thead>
 														<tr>
-															<td>{{$room->name}}</td>
-															<td>{{$room->ordered_number}}</td>
+															<th>{{ __('messages.Room name') }}</th>
+															<th>{{ __('messages.Number of room') }}</th>
+															<th>{{ __('messages.Cost of per night') }}</th>
+														</tr>
+													</thead>
+													<tbody>
+														@foreach ($rooms as $room)
+															<tr>
+																<td>{{ $room->name }}</td>
+																<td>{{ $room->ordered_number }}</td>
+																@if (App::isLocale('mn')) 
+																	<td>{{number_format($room->price)}}₮</td>
+																@elseif (App::isLocale('en'))
+																	<td>${{number_format($room->price/$rate,2)}}</td>
+																@endif
+															</tr>
+															<tr>
+																<td colspan="2">
+																	<p class="ui right aligned header">{{__('messages.Duration')}}</p>
+																</td>
+																<td>{{ $orderday }} {{ __('messages.Day') }}</td>
+															</tr>
+															<tr>
+																<td colspan="2">
+																	<p class="ui right aligned header">{{__('messages.Subtotal')}}</p>
+																</td>
+																@if (App::isLocale('mn')) 
+																	<td>{{number_format($room->price * $room->ordered_number * $orderday)}}₮</td>
+																@elseif (App::isLocale('en'))
+																	<td>${{number_format($room->price * $room->ordered_number * $orderday/$rate,2)}}</td>
+																@endif
+															</tr>
+														@endforeach
+														@if ($pickup)
+															<tr>
+																<td colspan="2">{{ __('messages.Pickup service') }}</td>
+																@if (App::isLocale('mn'))
+																	<td colspan="3">{{ $pickup->name }} - {{number_format($pickup->price)}}₮</td>
+																@elseif (App::isLocale('en'))
+																	<td colspan="3">{{ $pickup->name_en }} - {{number_format($pickup->price/$rate,2)}}$</td>
+																@endif
+															</tr>
+														@endif
+														<tr>
+															<td colspan="2">
+																<p class="ui center aligned header" style="text-transform: uppercase;">{{ __('messages.Total price') }}</p>
+															</td>
 															@if (App::isLocale('mn')) 
-																<td>{{number_format($room->price)}}₮</td>
+																<td colspan="3">
+																	<p class="ui center aligned header">{{number_format($price)}} ₮</p>
+																</td>
 															@elseif (App::isLocale('en'))
-																<td>${{number_format($room->price/$rate,2)}}</td>
-															@endif
-															<td>{{ $orderday }}</td>
-															@if (App::isLocale('mn')) 
-																<td>{{number_format($room->price * $room->ordered_number * $orderday)}}₮</td>
-															@elseif (App::isLocale('en'))
-																<td>${{number_format($room->price * $room->ordered_number * $orderday/$rate,2)}}</td>
+																<td colspan="3">
+																	<p class="ui center aligned header">${{number_format($price/$rate,2)}}</p>
+																</td>
 															@endif
 														</tr>
-													@endforeach
-													@if ($pickup)
 														<tr>
-															<td colspan="2">{{ __('messages.Pickup service') }}</td>
-															@if (App::isLocale('mn'))
-																<td colspan="3">{{ $pickup->name }} - {{number_format($pickup->price)}}₮</td>
-															@elseif (App::isLocale('en'))
-																<td colspan="3">{{ $pickup->name_en }} - {{number_format($pickup->price/$rate,2)}}$</td>
-															@endif
+															<td colspan="2">Cancellation policy</td>
+															<td colspan="3">No cancellation</td>
 														</tr>
-													@endif
-													<!--<tr>
-														<td colspan="2">{{ __('messages.Price before tax') }} ({{ __('messages.Tax') }} 10%)</td>
-														@if (App::isLocale('mn')) 
-															<td colspan="3">{{number_format($price)}} ₮ ({{number_format($price*0.1)}} ₮)</td>
-														@elseif (App::isLocale('en'))
-															<td colspan="3">{{number_format($price/$rate,2)}} $ ({{number_format($price*0.1/$rate,2)}} $)</td>
-														@endif
-													</tr>-->
-													<tr>
-														<td colspan="2">
-															<p class="ui center aligned header">{{ __('messages.Total price') }}</p>
-														</td>
-														@if (App::isLocale('mn')) 
-															<td colspan="3">
-																<p class="ui center aligned header">{{number_format($price)}} ₮</p>
-															</td>
-														@elseif (App::isLocale('en'))
-															<td colspan="3">
-																<p class="ui center aligned header">${{number_format($price/$rate,2)}}</p>
-															</td>
-														@endif
-													</tr>
-													<tr>
-														<td colspan="2">Cancellation policy</td>
-														<td colspan="3">No cancellation</td>
-													</tr>
-												</tbody>
-											</table>
+													</tbody>
+												</table>
+											</div>
 										</div>
 										<div class="ui message">
 											<ul class="list">
@@ -192,12 +194,19 @@
 											<div class="two fields">
 												<div class="required field">
 													<label>{{ __('messages.Country') }}</label>
-													<select class="ui fluid dropdown" name="country">
-															<option value="">{{ __('messages.Country') }}</option>
+													<div class="ui fluid search selection dropdown" id="country">
+														<input type="hidden" name="country">
+														<i class="dropdown icon"></i>
+														<input class="search">
+														<div class="default text">Улс сонгох</div>
+														<div class="menu">
 															@foreach($countries as $country)
-																<option value="{{ $country }}" {{ Auth::check() && Auth::user()->country == $country ? 'selected' : '' }}>{{ $country }}</option>
+																<div class="item" data-value="{{ $country }}">
+																	{{ $country }}
+																</div>
 															@endforeach
-													</select>
+														</div>
+													</div>
 												</div>
 												<div class="required field">
 													<label>{{ __('messages.Phone') }}</label>
@@ -285,6 +294,9 @@
 
 @push('script')
 <script type="text/javascript">
+	$(document).ready(function() {
+		$('#country').dropdown('set selected', '{{ Auth::check() ? Auth::user()->country : "" }}');
+	});
 	$.fn.form.settings.rules.month = function(value) {
 		var year = $('[name="expired_year"]').val();
 		if (year == '{{ date("y") }}') {

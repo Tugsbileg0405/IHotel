@@ -22,6 +22,7 @@ return [
     'Send' => 'Илгээх',
     'User Rating' => 'Үнэлгээ',
     'Destination' => 'Очих газар',
+    'Number of room' => 'Өрөөний тоо',
     'Rooms' => 'Өрөө',
     'room' => 'өрөө',
     'remove' => 'хасах',
@@ -218,4 +219,6 @@ return [
     'We sent you an email with activation button to your email address. Please click on activate button.' => 'Таны :email и-мэйл хаяг руу баталгаажуулах холбоос бүхий и-мэйл явууллаа. Та и-мэйл хаягаа шалгана уу.',
     'Thank you' => 'Баярлалаа',
     'Successfully registered.' => 'Амжилттай бүртгүүллээ.',
+    'Subtotal' => 'Өрөөний нийт үнэ',
+    'Duration' => 'Хугацаа',
 ];

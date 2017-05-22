@@ -63,7 +63,8 @@
     @if(!Request::is('aspac2017') && !Request::is('searchresult') && !Request::is('aspac'))
         @include('partials.footer')
     @endif
-    
+
+    <a id="btnToTop"><i class="chevron up icon"></i></a>
     <script src="{{ asset('js/modernizr.js') }}"></script>
     <script src="{{ asset('dist/components/popup.js') }}"></script>
     <script src="{{ asset('dist/components/dropdown.js') }}"></script>

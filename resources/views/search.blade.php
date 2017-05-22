@@ -784,9 +784,10 @@
 
                     google.maps.event.addListener(marker, 'click', (function (marker, contentString1, infowindow1, infowindow) {
                         return function () {
-                            clicked = true;
-                            infowindow.close();
-                            infowindow1.open(map, marker);
+                            // clicked = true;
+                            // infowindow.close();
+                            // infowindow1.open(map, marker);
+                            window.open("{{ url('search/hotel') }}/" + data.data[key].id, "_blank");
                             marker.setIcon(image2);
                         };
                     })(marker, contentString1, infowindow1, infowindow));
@@ -947,10 +948,11 @@
 
                             google.maps.event.addListener(marker, 'click', (function (marker, contentString1, infowindow1, infowindow) {
                                 return function () {
-                                    clicked = true;
-                                    infowindow.close();
-                                    infowindow1.open(map, marker);
+                                //     clicked = true;
+                                //     infowindow.close();
+                                //     infowindow1.open(map, marker);
                                     marker.setIcon(icon2);
+		                            window.open("{{ url('search/hotel') }}/" + data.data[key].id, "_blank");
                                 };
                             })(marker, contentString1, infowindow1, infowindow));
                             markers.push(marker);

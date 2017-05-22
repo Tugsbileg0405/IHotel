@@ -95,72 +95,74 @@
 												</div>
 											</div>
 											<h4 class="header"><?php echo e(__('messages.Ordered rooms')); ?></h4>
-											<table class="ui celled table">
-												<thead>
-													<tr>
-														<th><?php echo e(__('messages.Room name')); ?></th>
-														<th><?php echo e(__('messages.Rooms')); ?></th>
-														<th><?php echo e(__('messages.Cost of per night')); ?></th>
-														<th><?php echo e(__('messages.Day')); ?></th>
-														<th><?php echo e(__('messages.Price')); ?></th>
-													</tr>
-												</thead>
-												<tbody>
-													<?php $__currentLoopData = $rooms; $__env->addLoop($__currentLoopData); foreach($__currentLoopData as $room): $__env->incrementLoopIndices(); $loop = $__env->getLastLoop(); ?>
+											<div class="responsive-table">
+												<table class="ui celled unstackable table" id="order-table">
+													<thead>
 														<tr>
-															<td><?php echo e($room->name); ?></td>
-															<td><?php echo e($room->ordered_number); ?></td>
+															<th><?php echo e(__('messages.Room name')); ?></th>
+															<th><?php echo e(__('messages.Number of room')); ?></th>
+															<th><?php echo e(__('messages.Cost of per night')); ?></th>
+														</tr>
+													</thead>
+													<tbody>
+														<?php $__currentLoopData = $rooms; $__env->addLoop($__currentLoopData); foreach($__currentLoopData as $room): $__env->incrementLoopIndices(); $loop = $__env->getLastLoop(); ?>
+															<tr>
+																<td><?php echo e($room->name); ?></td>
+																<td><?php echo e($room->ordered_number); ?></td>
+																<?php if(App::isLocale('mn')): ?> 
+																	<td><?php echo e(number_format($room->price)); ?>₮</td>
+																<?php elseif(App::isLocale('en')): ?>
+																	<td>$<?php echo e(number_format($room->price/$rate,2)); ?></td>
+																<?php endif; ?>
+															</tr>
+															<tr>
+																<td colspan="2">
+																	<p class="ui right aligned header"><?php echo e(__('messages.Duration')); ?></p>
+																</td>
+																<td><?php echo e($orderday); ?> <?php echo e(__('messages.Day')); ?></td>
+															</tr>
+															<tr>
+																<td colspan="2">
+																	<p class="ui right aligned header"><?php echo e(__('messages.Subtotal')); ?></p>
+																</td>
+																<?php if(App::isLocale('mn')): ?> 
+																	<td><?php echo e(number_format($room->price * $room->ordered_number * $orderday)); ?>₮</td>
+																<?php elseif(App::isLocale('en')): ?>
+																	<td>$<?php echo e(number_format($room->price * $room->ordered_number * $orderday/$rate,2)); ?></td>
+																<?php endif; ?>
+															</tr>
+														<?php endforeach; $__env->popLoop(); $loop = $__env->getLastLoop(); ?>
+														<?php if($pickup): ?>
+															<tr>
+																<td colspan="2"><?php echo e(__('messages.Pickup service')); ?></td>
+																<?php if(App::isLocale('mn')): ?>
+																	<td colspan="3"><?php echo e($pickup->name); ?> - <?php echo e(number_format($pickup->price)); ?>₮</td>
+																<?php elseif(App::isLocale('en')): ?>
+																	<td colspan="3"><?php echo e($pickup->name_en); ?> - <?php echo e(number_format($pickup->price/$rate,2)); ?>$</td>
+																<?php endif; ?>
+															</tr>
+														<?php endif; ?>
+														<tr>
+															<td colspan="2">
+																<p class="ui center aligned header" style="text-transform: uppercase;"><?php echo e(__('messages.Total price')); ?></p>
+															</td>
 															<?php if(App::isLocale('mn')): ?> 
-																<td><?php echo e(number_format($room->price)); ?>₮</td>
+																<td colspan="3">
+																	<p class="ui center aligned header"><?php echo e(number_format($price)); ?> ₮</p>
+																</td>
 															<?php elseif(App::isLocale('en')): ?>
-																<td>$<?php echo e(number_format($room->price/$rate,2)); ?></td>
-															<?php endif; ?>
-															<td><?php echo e($orderday); ?></td>
-															<?php if(App::isLocale('mn')): ?> 
-																<td><?php echo e(number_format($room->price * $room->ordered_number * $orderday)); ?>₮</td>
-															<?php elseif(App::isLocale('en')): ?>
-																<td>$<?php echo e(number_format($room->price * $room->ordered_number * $orderday/$rate,2)); ?></td>
+																<td colspan="3">
+																	<p class="ui center aligned header">$<?php echo e(number_format($price/$rate,2)); ?></p>
+																</td>
 															<?php endif; ?>
 														</tr>
-													<?php endforeach; $__env->popLoop(); $loop = $__env->getLastLoop(); ?>
-													<?php if($pickup): ?>
 														<tr>
-															<td colspan="2"><?php echo e(__('messages.Pickup service')); ?></td>
-															<?php if(App::isLocale('mn')): ?>
-																<td colspan="3"><?php echo e($pickup->name); ?> - <?php echo e(number_format($pickup->price)); ?>₮</td>
-															<?php elseif(App::isLocale('en')): ?>
-																<td colspan="3"><?php echo e($pickup->name_en); ?> - <?php echo e(number_format($pickup->price/$rate,2)); ?>$</td>
-															<?php endif; ?>
+															<td colspan="2">Cancellation policy</td>
+															<td colspan="3">No cancellation</td>
 														</tr>
-													<?php endif; ?>
-													<!--<tr>
-														<td colspan="2"><?php echo e(__('messages.Price before tax')); ?> (<?php echo e(__('messages.Tax')); ?> 10%)</td>
-														<?php if(App::isLocale('mn')): ?> 
-															<td colspan="3"><?php echo e(number_format($price)); ?> ₮ (<?php echo e(number_format($price*0.1)); ?> ₮)</td>
-														<?php elseif(App::isLocale('en')): ?>
-															<td colspan="3"><?php echo e(number_format($price/$rate,2)); ?> $ (<?php echo e(number_format($price*0.1/$rate,2)); ?> $)</td>
-														<?php endif; ?>
-													</tr>-->
-													<tr>
-														<td colspan="2">
-															<p class="ui center aligned header"><?php echo e(__('messages.Total price')); ?></p>
-														</td>
-														<?php if(App::isLocale('mn')): ?> 
-															<td colspan="3">
-																<p class="ui center aligned header"><?php echo e(number_format($price)); ?> ₮</p>
-															</td>
-														<?php elseif(App::isLocale('en')): ?>
-															<td colspan="3">
-																<p class="ui center aligned header">$<?php echo e(number_format($price/$rate,2)); ?></p>
-															</td>
-														<?php endif; ?>
-													</tr>
-													<tr>
-														<td colspan="2">Cancellation policy</td>
-														<td colspan="3">No cancellation</td>
-													</tr>
-												</tbody>
-											</table>
+													</tbody>
+												</table>
+											</div>
 										</div>
 										<div class="ui message">
 											<ul class="list">
@@ -199,12 +201,20 @@
 											<div class="two fields">
 												<div class="required field">
 													<label><?php echo e(__('messages.Country')); ?></label>
-													<select class="ui fluid dropdown" name="country">
-															<option value=""><?php echo e(__('messages.Country')); ?></option>
+													<div class="ui fluid search selection dropdown" id="country">
+														<input type="hidden" name="country">
+														<i class="dropdown icon"></i>
+														<input class="search">
+														<div class="default text">Улс сонгох</div>
+														<div class="menu">
 															<?php $__currentLoopData = $countries; $__env->addLoop($__currentLoopData); foreach($__currentLoopData as $country): $__env->incrementLoopIndices(); $loop = $__env->getLastLoop(); ?>
-																<option value="<?php echo e($country); ?>" <?php echo e(Auth::check() && Auth::user()->country == $country ? 'selected' : ''); ?>><?php echo e($country); ?></option>
+																<div class="item" data-value="<?php echo e($country); ?>">
+																	<?php echo e($country); ?>
+
+																</div>
 															<?php endforeach; $__env->popLoop(); $loop = $__env->getLastLoop(); ?>
-													</select>
+														</div>
+													</div>
 												</div>
 												<div class="required field">
 													<label><?php echo e(__('messages.Phone')); ?></label>
@@ -292,6 +302,9 @@
 
 <?php $__env->startPush('script'); ?>
 <script type="text/javascript">
+	$(document).ready(function() {
+		$('#country').dropdown('set selected', '<?php echo e(Auth::check() ? Auth::user()->country : ""); ?>');
+	});
 	$.fn.form.settings.rules.month = function(value) {
 		var year = $('[name="expired_year"]').val();
 		if (year == '<?php echo e(date("y")); ?>') {

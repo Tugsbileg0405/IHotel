@@ -27,29 +27,15 @@ $('.special.cards .image').dimmer({
     on: 'hover'
 });
 $('.progress').progress();
-var content = [
-    { title: 'Andorra' },
-    { title: 'United Arab Emirates' },
-    { title: 'Afghanistan' },
-    { title: 'Antigua' },
-    { title: 'Anguilla' },
-    { title: 'Albania' },
-    { title: 'Armenia' },
-    { title: 'Netherlands Antilles' },
-    { title: 'Angola' },
-    { title: 'Argentina' },
-    { title: 'American Samoa' },
-    { title: 'Austria' },
-    { title: 'Australia' },
-    { title: 'Aruba' },
-    { title: 'Aland Islands' },
-    { title: 'Azerbaijan' },
-    { title: 'Bosnia' },
-    { title: 'Barbados' },
-    { title: 'Bangladesh' },
-    { title: 'Belgium' },
-    { title: 'Burkina Faso' },
-    { title: 'Bulgaria' },
-    { title: 'Bahrain' },
-    { title: 'Burundi' }
-];
+$(window).scroll(function() {
+    if ($(window).scrollTop() > $(window).height()) {
+        $('#btnToTop').addClass('scrolled');
+    }
+    else {
+        $('#btnToTop').removeClass('scrolled');
+    }
+});
+$('#btnToTop').click(function(e) {
+    $('html, body').animate({ scrollTop: 0 }, 500);
+    e.preventDefault();
+});
