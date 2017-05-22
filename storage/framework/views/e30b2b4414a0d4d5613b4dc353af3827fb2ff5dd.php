@@ -21,7 +21,7 @@
 	<div class="ui container ">
 		<div class="ui stackable column grid">
 			<div class="eleven wide column">
-				<?php if(count($posts) > 0): ?>
+				<?php if($posts->count() > 0): ?>
 					<?php $__currentLoopData = $posts; $__env->addLoop($__currentLoopData); foreach($__currentLoopData as $post): $__env->incrementLoopIndices(); $loop = $__env->getLastLoop(); ?>
 						<div class="ui segment">
 							<div class="content">
@@ -29,7 +29,12 @@
 									<a href="<?php echo e(url('post', $post->id)); ?>"><?php echo e($post->title); ?></a>
 								</h4>
 								<div class="ui divided horizontal list">
-									
+									<div class="item">
+										<img class="ui avatar image" src="<?php echo e(asset($post->user->avatar)); ?>">
+										<div class="content">
+											<a href="<?php echo e(url('posts/user', $post->user->id)); ?>" class="header"><?php echo e($post->user->name); ?></a>
+										</div>
+									</div>
 									<div class="item">
 										<a class="header" href="<?php echo e(url('category', $post->category->id)); ?>">
 											<i class="icon folder"></i>

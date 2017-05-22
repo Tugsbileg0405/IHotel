@@ -9,7 +9,7 @@
 			</div>
 			<div class="right aligned ten wide column">
 				<div class="ui breadcrumb">
-					<a class="section"><?php echo e(__('messages.Home')); ?></a>
+					<a class="section" href="<?php echo e(url('/')); ?>"><?php echo e(__('messages.Home')); ?></a>
 					<span class="divider">/</span>
 					<div class="active section"><?php echo e(__('messages.Terms of service')); ?></div>
 				</div>
