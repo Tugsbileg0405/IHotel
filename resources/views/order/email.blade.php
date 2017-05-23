@@ -288,7 +288,7 @@
                                 <strong>Bed Sizes:</strong> {{ $room['room_category'] }}
                             </p>
                             <p>
-                                <strong>Number:</strong> {{ $room['room_number'] }}
+                                <strong>Guests:</strong> {{ $room['person_number'] }}
                             </p>
                         </td>
                         @if (!unserialize($order->pickup))
