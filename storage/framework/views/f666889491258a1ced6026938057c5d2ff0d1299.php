@@ -95,6 +95,26 @@
 				<?php endforeach; $__env->popLoop(); $loop = $__env->getLastLoop(); ?>
 			</tbody>
 		</table>
+		<?php if(unserialize($order->pickup)): ?>
+			<h4 class="ui header">Нислэгийн мэдээлэл</h4>
+			<div class="ui divider"></div>
+			<table class="ui celled padded table">
+				<thead>
+					<tr>
+						<th>Ирэх өдөр</th>
+						<th>Ирэх цаг</th>
+						<th>Нислэгийн дугаар</th>
+					</tr>
+				</thead>
+				<tbody>
+					<tr>
+						<td><?php echo e(json_decode($order->flightdata)->arrival_date ? json_decode($order->flightdata)->arrival_date : 'Байхгүй'); ?></td>
+						<td><?php echo e(json_decode($order->flightdata)->arrival_time ? json_decode($order->flightdata)->arrival_time : 'Байхгүй'); ?></td>
+						<td><?php echo e(json_decode($order->flightdata)->flight_number ? json_decode($order->flightdata)->flight_number : 'Байхгүй'); ?></td>
+					</tr>
+				</tbody>
+			</table>
+		<?php endif; ?>
 		<h4 class="ui header">Картын мэдээлэл</h4>
 		<div class="ui divider"></div>
 		<table class="ui celled padded table">

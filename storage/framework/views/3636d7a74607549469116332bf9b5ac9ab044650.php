@@ -299,7 +299,7 @@
 
                             </p>
                             <p>
-                                <strong>Number:</strong> <?php echo e($room['room_number']); ?>
+                                <strong>Guests:</strong> <?php echo e($room['person_number']); ?>
 
                             </p>
                         </td>

@@ -29,6 +29,7 @@ class CreateOrdersTable extends Migration
             $table->float('dollar_rate')->nullable()->default(null);
             $table->text('carddata');
             $table->text('userdata');
+            $table->text('flightdata')->nullable()->default(null);
             $table->text('request')->nullable()->default(null);
             $table->integer('status')->default(1);
             $table->timestamps();

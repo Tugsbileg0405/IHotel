@@ -22,7 +22,7 @@
     <script src="{{ asset('js/jquery-2.1.4.min.js') }}"></script>
     <script src="{{ asset('dist/semantic.min.js') }}"></script>
     <script src="//cdn.tinymce.com/4/tinymce.min.js"></script>
-    <script>tinymce.init({height: '250',selector: '.editor',toolbar: 'undo redo',menubar: false,})</script>
+    <script>tinymce.init({height: '250',selector: '.editor',toolbar: 'undo redo removeformat',menubar: false,plugins: 'paste',paste_as_text: true})</script>
     
     <script>
         window.Laravel = <?php echo json_encode([

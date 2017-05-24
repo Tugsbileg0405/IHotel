@@ -37,7 +37,7 @@
 							<div class="extra">
 								@if ($order->status == 1)
 									<div class="ui left floated teal label">{{ __('messages.Checking') }}</div>
-									<button class="ui primary right floated button open-CancelModal" data-id="{{ $order->id }}">{{ __('messages.Cancel')}}</button>
+									<!-- <button class="ui primary right floated button open-CancelModal" data-id="{{ $order->id }}">{{ __('messages.Cancel')}}</button> -->
 								@elseif ($order->status == 2)
 									<div class="ui left floated green label">{{ __('messages.Approved') }}</div>
 								@elseif ($order->status == 3)
@@ -54,7 +54,7 @@
 		<div class="ui segment">{{ __('messages.You havent ordered yet') }}</div>
 	@endif
 </div>
-<div id="cancel-modal" class="ui modal">
+<!-- <div id="cancel-modal" class="ui modal">
 	<div class="header">{{ __('messages.Cancel order') }}</div>
 	<div class="content">
 		<p>{{ __('Are you sure to cancel the order?') }}</p>
@@ -68,10 +68,10 @@
 			{{ csrf_field() }}
 		</form>
 	</div>
-</div>
+</div> -->
 @endsection
 
-@push('script')
+<!-- @push('script')
 <script type="text/javascript">
     $('.open-CancelModal').click(function() {
     	var button = $(this);
@@ -85,4 +85,4 @@
 		}).modal('show');
 	});
 </script>
-@endpush
+@endpush -->

@@ -221,4 +221,5 @@ return [
     'Successfully registered.' => 'Амжилттай бүртгүүллээ.',
     'Subtotal' => 'Өрөөний нийт үнэ',
     'Duration' => 'Хугацаа',
+    'Flight information for airport pickup service' => 'Нислэгийн мэдээлэл',
 ];

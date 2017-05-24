@@ -221,4 +221,5 @@ return [
     'Successfully registered.' => 'Successfully registered.',
     'Subtotal' => 'Subtotal',
     'Duration' => 'Duration',
+    'Flight information for airport pickup service' => 'Flight information for airport pickup service',
 ];

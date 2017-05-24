@@ -205,6 +205,12 @@ class OrderController extends Controller
 			];
 		}
 
+		$flightdata = [
+			'arrival_date' => $request->get('arrivaldate'),
+			'arrival_time' => $request->get('arrivaltime'),
+			'flight_number' => $request->get('flightnumber'),
+		];
+
 		$rate = Option::find(7)->value;
 
 		$roomdatas = $request->session()->get('order_roomdata');
@@ -315,6 +321,7 @@ class OrderController extends Controller
 		}
 		$order->carddata = json_encode($cardData);
 		$order->userdata = json_encode($userData);
+		$order->flightdata = json_encode($flightdata);
 		$order->request = $request->get('request');
 		$order->save();
 

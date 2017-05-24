@@ -172,6 +172,25 @@
 											</ul>
 										</div>
 				                        <div class="ui divider"></div>
+										<?php if($pickup): ?>
+					                        <div class="ui form">
+												<h4 class="ui header"><?php echo e(__('messages.Flight information for airport pickup service')); ?></h4>
+												<div class="three fields">
+													<div class="field">
+														<div class="ui left icon input">
+															<input type="text" id="arrivaldate" placeholder="Arrival date">
+															<i class="calendar icon"></i>
+														</div>
+													</div>
+													<div class="field">
+														<input type="text" id="flightnumber" placeholder="Flight number">
+													</div>
+													<div class="field">
+														<input type="text" id="arrivaltime" placeholder="Arrival time">
+													</div>
+												</div>
+					                        </div>
+				                        <?php endif; ?>
 										<div class="ui form">
 											<h4 class="ui header"><?php echo e(__('messages.Special requests')); ?></h4>
 											<div class="field">
@@ -243,6 +262,22 @@
 													<input type="text" name="total" value="<?php echo e(number_format($price/$rate,2)); ?> $" disabled="">
 												<?php endif; ?>
 											</div>
+											<div class="two fields">
+												<div class="field">
+													<img class="ui image" src="<?php echo e(asset('img/ssl.png')); ?>">
+												</div>
+												<div class="field">
+													<span>We accept:</span>
+													<div class="two fields">
+														<div class="field">
+															<img class="ui image" src="<?php echo e(asset('img/visa.png')); ?>">
+														</div>
+														<div class="field">
+															<img class="ui image" src="<?php echo e(asset('img/jcb.png')); ?>">
+														</div>
+													</div>
+												</div>
+											</div>
 											<div class="field">
 												<div class="ui left icon input">
 													<input type="tel" name="card_number" placeholder="Card number" maxlength="19">
@@ -286,6 +321,9 @@
 												</div>
 											</div>
 											<input type="hidden" name="request">
+											<input type="hidden" name="arrivaldate">
+											<input type="hidden" name="flightnumber">
+											<input type="hidden" name="arrivaltime">
 											<button type="submit" class="ui primary fluid button"><?php echo e(__('messages.Order')); ?></button>
 										</form>
 									</div>
@@ -301,7 +339,17 @@
 <?php $__env->stopSection(); ?>
 
 <?php $__env->startPush('script'); ?>
+<script src="<?php echo e(asset('js/moment.js')); ?>"></script>
+<script src="<?php echo e(asset('js/daterangepicker.js')); ?>"></script>
 <script type="text/javascript">
+    $('#arrivaldate').daterangepicker({
+		autoApply: true,
+		autoUpdateInput: false,
+		singleDatePicker: true,
+    });
+	$('#arrivaldate').on('apply.daterangepicker', function(ev, picker) {
+		$(this).val(picker.startDate.format('YYYY-MM-DD'));
+	});
 	$(document).ready(function() {
 		$('#country').dropdown('set selected', '<?php echo e(Auth::check() ? Auth::user()->country : ""); ?>');
 	});
@@ -473,8 +521,10 @@
             },
         },
         onSuccess: function() {
-        	var value = $('#request').val();
-        	$('#card-form').find('[name=request]').val(value);
+        	$('#card-form').find('[name=request]').val($('#request').val());
+        	$('#card-form').find('[name=arrivaldate]').val($('#arrivaldate').val());
+        	$('#card-form').find('[name=flightnumber]').val($('#flightnumber').val());
+        	$('#card-form').find('[name=arrivaltime]').val($('#arrivaltime').val());
 			$('#card-form').find('button[type=submit]').addClass('loading disabled');
         },
 		onFailure: function(formErrors, fields) {

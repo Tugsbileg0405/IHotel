@@ -39,7 +39,7 @@
 							<div class="extra">
 								<?php if($order->status == 1): ?>
 									<div class="ui left floated teal label"><?php echo e(__('messages.Checking')); ?></div>
-									<button class="ui primary right floated button open-CancelModal" data-id="<?php echo e($order->id); ?>"><?php echo e(__('messages.Cancel')); ?></button>
+									<!-- <button class="ui primary right floated button open-CancelModal" data-id="<?php echo e($order->id); ?>"><?php echo e(__('messages.Cancel')); ?></button> -->
 								<?php elseif($order->status == 2): ?>
 									<div class="ui left floated green label"><?php echo e(__('messages.Approved')); ?></div>
 								<?php elseif($order->status == 3): ?>
@@ -57,7 +57,7 @@
 		<div class="ui segment"><?php echo e(__('messages.You havent ordered yet')); ?></div>
 	<?php endif; ?>
 </div>
-<div id="cancel-modal" class="ui modal">
+<!-- <div id="cancel-modal" class="ui modal">
 	<div class="header"><?php echo e(__('messages.Cancel order')); ?></div>
 	<div class="content">
 		<p><?php echo e(__('Are you sure to cancel the order?')); ?></p>
@@ -73,10 +73,10 @@
 
 		</form>
 	</div>
-</div>
+</div> -->
 <?php $__env->stopSection(); ?>
 
-<?php $__env->startPush('script'); ?>
+<!-- <?php $__env->startPush('script'); ?>
 <script type="text/javascript">
     $('.open-CancelModal').click(function() {
     	var button = $(this);
@@ -90,5 +90,5 @@
 		}).modal('show');
 	});
 </script>
-<?php $__env->stopPush(); ?>
+<?php $__env->stopPush(); ?> -->
 <?php echo $__env->make('layouts.profile', array_except(get_defined_vars(), array('__data', '__path')))->render(); ?>

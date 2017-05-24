@@ -97,6 +97,28 @@
 				@endforeach
 			</tbody>
 		</table>
+		@if (unserialize($order->pickup))
+			@if ($order->flightdata)
+				<h4 class="ui header">Нислэгийн мэдээлэл</h4>
+				<div class="ui divider"></div>
+				<table class="ui celled padded table">
+					<thead>
+						<tr>
+							<th>Ирэх өдөр</th>
+							<th>Ирэх цаг</th>
+							<th>Нислэгийн дугаар</th>
+						</tr>
+					</thead>
+					<tbody>
+						<tr>
+							<td>{{ json_decode($order->flightdata)->arrival_date ? json_decode($order->flightdata)->arrival_date : 'Байхгүй' }}</td>
+							<td>{{ json_decode($order->flightdata)->arrival_time ? json_decode($order->flightdata)->arrival_time : 'Байхгүй' }}</td>
+							<td>{{ json_decode($order->flightdata)->flight_number ? json_decode($order->flightdata)->flight_number : 'Байхгүй' }}</td>
+						</tr>
+					</tbody>
+				</table>
+			@endif
+		@endif
 		<h4 class="ui header">Картын мэдээлэл</h4>
 		<div class="ui divider"></div>
 		<table class="ui celled padded table">
