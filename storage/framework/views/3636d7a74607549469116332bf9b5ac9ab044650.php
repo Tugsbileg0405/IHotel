@@ -269,6 +269,24 @@
 
                                 <?php endif; ?>
                             </p>
+                            <?php if(json_decode($order->flightdata)->arrival_date): ?>
+                                <p>
+                                    <strong>Arrival date:</strong> <?php echo e(json_decode($order->flightdata)->arrival_date); ?>
+
+                                </p>
+                            <?php endif; ?>
+                            <?php if(json_decode($order->flightdata)->arrival_time): ?>
+                                <p>
+                                    <strong>Arrival time:</strong> <?php echo e(json_decode($order->flightdata)->arrival_time); ?>
+
+                                </p>
+                            <?php endif; ?>
+                            <?php if(json_decode($order->flightdata)->flight_number): ?>
+                                <p>
+                                    <strong>Flight number:</strong> <?php echo e(json_decode($order->flightdata)->flight_number); ?>
+
+                                </p>
+                            <?php endif; ?>
                         </td>
                         <td colspan="3" rowspan="<?php echo e(count(unserialize($order->rooms)) + 1); ?>">
                             <p>

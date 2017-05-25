@@ -787,7 +787,7 @@
                             // clicked = true;
                             // infowindow.close();
                             // infowindow1.open(map, marker);
-                            window.open("{{ url('search/hotel') }}/" + data.data[key].id, "_blank");
+                            window.open("{{ url('search/hotel') }}/" + marker.id, "_blank");
                             marker.setIcon(image2);
                         };
                     })(marker, contentString1, infowindow1, infowindow));

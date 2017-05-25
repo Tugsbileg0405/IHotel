@@ -791,7 +791,7 @@
                             // clicked = true;
                             // infowindow.close();
                             // infowindow1.open(map, marker);
-                            window.open("<?php echo e(url('search/hotel')); ?>/" + data.data[key].id, "_blank");
+                            window.open("<?php echo e(url('search/hotel')); ?>/" + marker.id, "_blank");
                             marker.setIcon(image2);
                         };
                     })(marker, contentString1, infowindow1, infowindow));

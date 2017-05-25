@@ -261,6 +261,21 @@
                                     {{ unserialize($order->pickup)['name_en'] }}
                                 @endif
                             </p>
+                            @if (json_decode($order->flightdata)->arrival_date)
+                                <p>
+                                    <strong>Arrival date:</strong> {{ json_decode($order->flightdata)->arrival_date }}
+                                </p>
+                            @endif
+                            @if (json_decode($order->flightdata)->arrival_time)
+                                <p>
+                                    <strong>Arrival time:</strong> {{ json_decode($order->flightdata)->arrival_time }}
+                                </p>
+                            @endif
+                            @if (json_decode($order->flightdata)->flight_number)
+                                <p>
+                                    <strong>Flight number:</strong> {{ json_decode($order->flightdata)->flight_number }}
+                                </p>
+                            @endif
                         </td>
                         <td colspan="3" rowspan="{{ count(unserialize($order->rooms)) + 1 }}">
                             <p>
