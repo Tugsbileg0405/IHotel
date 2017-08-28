@@ -6284,3 +6284,8 @@ p {
 #order-table {
     text-align: center;
 }
+
+.home-carousel .item {
+    height: 100vh;
+    background-size: cover;
+}

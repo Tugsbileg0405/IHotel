@@ -6,7 +6,23 @@
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <meta name="csrf-token" content="{{ csrf_token() }}">
 
-    <title>@yield('title')</title>
+    <!-- Facebook Metadata /-->
+    <meta property="og:url" content="https://www.ihotel.mn" />
+    <meta property="og:title" content="iHotel.mn: Online hotel booking" />
+    <meta property="og:image" content="{{ asset('img/share.jpg')}}" />
+    <meta property="og:description" content="Олон улсын зочид буудлын захиалга" />
+
+    <!-- Google Metadata /-->
+    <meta itemprop="name" content="iHotel.mn: Online hotel booking">
+    <meta itemprop="description" content="Олон улсын зочид буудлын захиалга"/>
+    <meta itemprop="image" content="{{ asset('img/share.jpg')}}" />
+
+    <!-- Twitter Metadata /-->
+    <meta name="twitter:card" content="summary" />
+    <meta name="twitter:site" content="@ihotelmn" />
+    <meta name="twitter:title" content="iHotel.mn: Online hotel booking">
+    <meta name="twitter:description" content="Олон улсын зочид буудлын захиалга"/>
+    <meta name="twitter:image" content="{{ asset('img/share.jpg')}}" />
 
     <link rel="icon" href="{{ asset('img/favicon.ico') }}">
     <link href='https://fonts.googleapis.com/css?family=Roboto:400,400italic,300,300italic,100,100italic,500,500italic,700,700italic,900,900italic&subset=latin,cyrillic' rel='stylesheet' type='text/css'>
@@ -20,6 +36,7 @@
     <script src="{{ asset('dist/semantic.min.js') }}"></script>
     <script src="//cdn.tinymce.com/4/tinymce.min.js"></script>
     <script>tinymce.init({ selector:'#editor' });</script>
+    <title>@yield('title')</title>
 
     <script>
         window.Laravel = <?php echo json_encode([
@@ -129,7 +146,10 @@
                                 Түгээмэл асуулт
                             </a>
                             <a class="item" href="{{ url('profile/information') }}">
-                                Слайд
+                                Нүүр хуудасны слайд
+                            </a>
+                            <a class="item" href="{{ url('profile/slide') }}">
+                                Нүүр хуудасны зураг
                             </a>
                             <a class="item" href="{{ url('profile/comment') }}">
                                 Сэтгэгдэл

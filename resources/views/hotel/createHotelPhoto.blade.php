@@ -30,7 +30,6 @@
 			  		</div>
 				</div>
 			</div>
-			{{ csrf_field() }}
 			<div class="required field">
 				<label>Бусад зураг</label>
 				<div class="ui segment">

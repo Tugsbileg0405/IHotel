@@ -15,7 +15,8 @@
         "laravel/tinker": "~1.0",
         "php-http/guzzle6-adapter": "^1.1",
         "php-http/message": "^1.5",
-        "torann/currency": "^1.0"
+        "torann/currency": "^1.0",
+        "torann/geoip": "^1.0"
     },
     "require-dev": {
         "fzaninotto/faker": "~1.4",

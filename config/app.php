@@ -171,6 +171,7 @@ return [
         Laravel\Tinker\TinkerServiceProvider::class,
         \Torann\Currency\CurrencyServiceProvider::class,
         Swap\Laravel\SwapServiceProvider::class,
+        \Torann\GeoIP\GeoIPServiceProvider::class,
         /*
          * Application Service Providers...
          */
@@ -232,6 +233,7 @@ return [
         'Recaptcha' => Greggilbert\Recaptcha\Facades\Recaptcha::class,
         'Currency' => \Torann\Currency\Facades\Currency::class,
         'Swap' => Swap\Laravel\Facades\Swap::class,
+        'GeoIP' => \Torann\GeoIP\Facades\GeoIP::class,
     ],
 
 ];

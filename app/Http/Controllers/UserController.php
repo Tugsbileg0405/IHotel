@@ -5,7 +5,9 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Hash;
+use App\Mail\OrderCanceled;
 use Image;
+use Mail;
 
 class UserController extends Controller
 {
@@ -211,7 +213,10 @@ class UserController extends Controller
 				$order->status = 3;
 				$order->save();
 
-				$order->closes()->delete();
+                $order->closes()->delete();
+                
+                Mail::to(json_decode($order->userdata)['email'])->bcc(env('MAIL_FROM_ADDRESS'))
+                ->send(new OrderCanceled($order));
 
 				return back();
 			}

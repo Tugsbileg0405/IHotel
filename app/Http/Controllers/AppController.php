@@ -27,6 +27,14 @@ class AppController extends Controller
             ->where('published', true)
             ->orderby('priority', 'asc')
             ->first();
+        if (\App::isLocale('en')) {
+            $slides = \App\Slide::where('locale', 1)
+                ->get();
+        }
+        elseif (\App::isLocale('mn')) {
+            $slides = \App\Slide::where('locale', 2)
+                ->get();
+        }
 
         $room = '';
         if ($hotel) {
@@ -41,6 +49,7 @@ class AppController extends Controller
             'secondPost' => $secondPost,
             'hotel' => $hotel,
             'room' => $room,
+            'slides' => $slides,
         ]);
     }
 
@@ -367,5 +376,15 @@ class AppController extends Controller
         Notification::send($user, new ActivationCodeRequested);
         
         return back();
+    }
+
+    public function cityCode(Request $request)
+    {
+        $city = \App\City::where('name', $request->get('city'))
+            ->firstorfail();
+
+        return response()->json([
+            'code' => $city->code,
+        ], 200);
     }
 }

@@ -82,15 +82,11 @@
 						</div>
 						<div class="ui stackable grid">
 							<div class="three wide column">
-                                @If(App::isLocale('mn'))
 								<h4 class="ui header">{{ __('messages.Search results') }}
 									<div class="sub header">
 										{{ __('messages.Total') }}: <span id="resultLength">0</span> {{ __('messages.found') }}
 									</div>
 								</h4>
-                                @else
-                                    <img src="{{asset('img/aspac_logo.png')}}" class="ui image"/>
-                                @endif
 							</div>
 							<div class="five wide column">
 								<div class="ui computer tablet mobile grid" style="padding:10px 0">
@@ -165,10 +161,6 @@
 				<div class="ui stackable two column grid">
 					<div class="row">
 						<div class="search-result column">
-							<div class="jp-alert">
-								<p>モンゴルへようこそ</p>
-								<p>ホテルのご予約する際に日本語での対応をご希望の方は、aspac@ihotel.mnまで直接ご連絡くださいませ。</p>
-							</div>
 							<div class="ui inverted dimmer" id="loader">
 								<div class="ui small text loader"></div>
 							</div>

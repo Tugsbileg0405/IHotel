@@ -17,11 +17,18 @@ class LocaleMiddleware
      * @return mixed
      */
     public function handle($request, Closure $next)
-    {   
-        $locale = Config::get('app.locale');
-        
+    {
         if (Session::has('locale')) {
             $locale = Session::get('locale');
+        }
+        else {
+            if (geoip()->getLocation($request->ip())['attributes']['iso_code'] == 'MN') {
+                $locale = 'mn';
+            }
+            else {
+                $locale = 'en';
+            }
+            Session::put('locale', $locale);
         }
         
         App::setLocale($locale);

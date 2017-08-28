@@ -23,6 +23,7 @@ Route::group(['middleware' => 'locale'], function() {
 });
 
 Route::group(['middleware' => ['locale', 'activated']], function() {
+    Route::post('citycode', 'AppController@cityCode'); // Хотын код авч байгаа функц
 	Route::get('/', 'AppController@home');
 	Route::get('/aspac', 'AppController@aspac');
 	Route::get('question', 'AppController@showquestions');
@@ -96,7 +97,7 @@ Route::group(['middleware' => ['locale', 'activated']], function() {
 		Route::post('profile/rate/{id}', 'UserController@storeRate');
 		Route::post('profile/review/{id}', 'UserController@storeReview');
 		Route::get('profile/orders', 'UserController@showOrders');
-		// Route::post('profile/orders/cancel/{id}', 'UserController@cancelOrder');
+		Route::post('profile/orders/cancel/{id}', 'UserController@cancelOrder');
 		Route::post('comment/{id}', 'AppController@storeComment');
 	});
 
@@ -186,7 +187,11 @@ Route::group(['middleware' => ['locale', 'activated']], function() {
 
 		Route::post('comment/photo', 'CommentController@storePhoto');
 		Route::post('information/photo', 'InformationController@storePhoto');
-		Route::post('team/photo', 'TeamController@storePhoto');
+        Route::post('team/photo', 'TeamController@storePhoto');
+        
+		Route::get('slide', 'SlideController@index');
+		Route::post('slide/upload', 'SlideController@storePhoto');
+		Route::post('slide/destroy/{id}', 'SlideController@destroyPhoto');
 	});
 
 	Route::group(['middleware' => ['auth', 'hotel', 'owner']], function() {

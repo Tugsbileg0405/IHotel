@@ -89,13 +89,13 @@
 <div class="ui basic modal" id="success-message">
 	<div class="ui icon header">
 		<i class="green check icon"></i>
-        	{{ __('messages.Successfully sent') }}
+        {{ __('messages.Successfully sent') }}
 	</div>
 </div>
 <div class="ui basic modal" id="error-message">
 	<div class="ui icon header">
 		<i class="red close icon"></i>
-        	{{ __('messages.Error occured') }}
+        {{ __('messages.Error occured') }}
 	</div>
 </div>
 @endsection

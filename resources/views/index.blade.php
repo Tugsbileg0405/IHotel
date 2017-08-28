@@ -3,26 +3,27 @@
 @section('title', 'iHotel')
 
 @section('content')
-<div class="home-banner">
-	<ul class="rslides">
-		<li>
-			@if (App::isLocale('en'))
-				<div class="rslides-item" style="background-image: url({{ asset('img/banner5.jpg') }})"></div>
-			@else
-				<img src="{{ asset('img/banner1.jpg') }}">
-			@endif
-		</li>
-	</ul>
+<div class="owl-carousel home-carousel">
+    @if ($slides->count() > 0)
+        @foreach ($slides as $slide)
+            <div class="item" style="background-image: url({{ asset($slide->photo) }})"></div>
+        @endforeach
+    @else
+        <div class="item" style="background-image: url({{ asset('img/uploads/slides/default.jpg') }})"></div>
+    @endif
 </div>
-<div id="main-search" style="top: {{ App::isLocale('en') ? '33vh' : '150px' }}">
+<div id="main-search" style="top: 33vh">
 	<div class="ui stackable container">
 		<div id="context2">
 			<div class="ui stackable secondary menu">
 				<a class="item active" data-tab="hotel">
 					<i class="hotel icon"></i>{{ __('messages.Hotel') }}
 				</a>
-				<a href="{{ url('aspac') }}" class="item tab-travel">
-					<i class="world icon"></i>JCI ASPAC {{ date('Y') }}
+				<a href="https://www.booking.com/?aid=1336206" target="_blank" class="item">
+					<i class="world icon"></i>Booking.com
+				</a>
+				<a href="https://www.agoda.com/?cid=1761533" target="_blank" class="item">
+					<i class="world icon"></i>Agoda.com
 				</a>
 				<a href="https://www.sixt.com/php/reservation" target="_blance" class="item">
 					<i class="car icon"></i>{{ __('messages.Rent a car') }}
@@ -358,15 +359,22 @@
 <script src="{{ asset('js/daterangepicker.js') }}"></script>
 <script src="{{ asset('js/jquery.flexslider.js') }}"></script>
 <script type="text/javascript">
-	$(window).load(function() {
-		$('.flexslider').flexslider({
-			animation: "slide",
-			controlsContainer: $(".custom-controls-container"),
-			customDirectionNav: $(".custom-navigation a"),
-		});
-	});
-</script>
-<script>
+    $('.home-carousel').owlCarousel({
+        loop: true,
+        autoplay: true,
+        items: 1,
+        dots: false,
+        animateIn: 'fadeIn',
+        animateOut: 'fadeOut',
+        mouseDrag: false,
+        autoplayTimeout: 6000,
+    })
+    $('.flexslider').flexslider({
+        animation: "slide",
+        controlsContainer: $(".custom-controls-container"),
+        customDirectionNav: $(".custom-navigation a"),
+    });
+    var cityName = 'Ulaanbaatar'; // Хотын нэр хадгалж байгаа хувьсагч
 	$('#searchplace').val('Ulaanbaatar, Mongolia');
 	function initialize() {
 		var input = document.getElementById('searchplace');
@@ -386,10 +394,17 @@
 				var service = new google.maps.places.PlacesService(document.getElementById('places'));
 				service.getDetails(request, function(place, status) {
 					if (status === google.maps.places.PlacesServiceStatus.OK) {
-							$('#searchplace').val(place.formatted_address);
+                        $('#searchplace').val(place.formatted_address);
+                        cityName = place.address_components[0].long_name;
 					}
 				});
 		});
+
+        // Хот солигдох эвэнт
+        autocomplete.addListener('place_changed', function() {
+            let place = autocomplete.getPlace();
+            cityName = place.address_components[0].long_name;
+        });
 
    }
    google.maps.event.addDomListener(window, 'load', initialize);
@@ -541,17 +556,35 @@
         }
         })
         searchPlace = $('#searchplace').val();
-        $.get('search?roomnumber=' + roomNumber + '&peoplenumber=' + people + '&startdate=' + startDate + '&enddate=' + endDate + '&place=' + searchPlace)
-        .success(function (data) {
-            window.location = "{{URL::to('searchresult')}}";
-        })
-        .error(function(jqXHR, textStatus, errorThrown){
-            if (textStatus == 'error'){
-                    alert(errorThrown);
-            }
-        });
+        if (cityName == undefined || cityName == 'Ulaanbaatar') {
+            $.get('search?roomnumber=' + roomNumber + '&peoplenumber=' + people + '&startdate=' + startDate + '&enddate=' + endDate + '&place=' + searchPlace)
+            .success(function (data) {
+                window.location = "{{ URL::to('searchresult') }}";
+            })
+            .error(function(jqXHR, textStatus, errorThrown){
+                if (textStatus == 'error'){
+                        alert(errorThrown);
+                }
+            });
+        }
+        else {
+            var cityNameForm = new FormData();
+            cityNameForm.append('city', cityName);
+            cityNameForm.append('_token', '{{ csrf_token() }}');
+		    $.ajax({
+				type: "POST",
+				url: "{{ url('citycode') }}",
+	           	data: cityNameForm,
+				contentType: false,
+				processData: false,
+	           	success: function(data) {
+                    window.location = "https://www.booking.com/?aid=1336206";
+	       		},
+				error: function(){
+                    window.location = "https://www.booking.com/?aid=1336206";
+				}
+			});
+        }
     });
-
-    
 </script>
 @endpush

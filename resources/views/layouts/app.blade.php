@@ -7,21 +7,21 @@
     <meta name="csrf-token" content="{{ csrf_token() }}">
     <!-- Facebook Metadata /-->
     <meta property="og:url" content="https://www.ihotel.mn" />
-    <meta property="og:title" content="iHotel.mn" />
-    <meta property="og:image" content="{{ asset('img/shareSocial.jpg')}}" />
-    <meta property="og:description" content="iHotel.mn: JCI ASPAC 2017's official partner, Onilne hotel reservation" />
+    <meta property="og:title" content="iHotel.mn: Online hotel booking" />
+    <meta property="og:image" content="{{ asset('img/share.jpg')}}" />
+    <meta property="og:description" content="Олон улсын зочид буудлын захиалга" />
 
     <!-- Google Metadata /-->
-    <meta itemprop="name" content="iHotel.mn">
-    <meta itemprop="description" content="iHotel.mn: JCI ASPAC 2017's official partner, Onilne hotel reservation"/>
-    <meta itemprop="image" content="{{ asset('img/shareSocial.jpg')}}" />
+    <meta itemprop="name" content="iHotel.mn: Online hotel booking">
+    <meta itemprop="description" content="Олон улсын зочид буудлын захиалга"/>
+    <meta itemprop="image" content="{{ asset('img/share.jpg')}}" />
 
     <!-- Twitter Metadata /-->
     <meta name="twitter:card" content="summary" />
     <meta name="twitter:site" content="@ihotelmn" />
-    <meta name="twitter:title" content="iHotel.mn">
-    <meta name="twitter:description" content="iHotel.mn: JCI ASPAC 2017's official partner, Onilne hotel reservation"/>
-    <meta name="twitter:image" content="{{ asset('img/shareSocial.jpg')}}" />
+    <meta name="twitter:title" content="iHotel.mn: Online hotel booking">
+    <meta name="twitter:description" content="Олон улсын зочид буудлын захиалга"/>
+    <meta name="twitter:image" content="{{ asset('img/share.jpg')}}" />
 
     <title>@yield('title')</title>
 
@@ -39,6 +39,7 @@
     <link rel="stylesheet" href="{{ asset('css/lightgallery.min.css') }}">
     <link rel="stylesheet" href="{{ asset('css/magnific-popup.css') }}">
     <link rel="stylesheet" href="{{ asset('dist/css/map-icons.css') }}">
+    <link rel="stylesheet" href="{{asset('css/owl.carousel.css')}}">
     <script src="{{ asset('js/jquery-2.1.4.min.js') }}"></script>
     <script src="{{ asset('dist/semantic.min.js') }}"></script>
     <script>
@@ -80,6 +81,7 @@
     <script src="{{ asset('js/lightgallery.min.js') }}"></script>
     <script src="{{ asset('js/jquery.magnific-popup.min.js') }}"></script>
     <script src="{{ asset('js/jquery-scrolltofixed-min.js') }}"></script>
+    <script src="{{asset('js/owl.carousel.min.js')}}"></script>
     @stack('script')
 </body>
 </html>

@@ -1,4 +1,24 @@
-@extends('layouts.app')
+@extends('layouts.post')
+
+@section('metatag')
+<!-- Facebook Metadata /-->
+<meta property="og:url" content="https://www.ihotel.mn" />
+<meta property="og:title" content="iHotel.mn | {{ $post->title }}" />
+<meta property="og:image" content="{{ asset(unserialize($post->photos)[0])}}" />
+<meta property="og:description" content="{{ $post->excerpt }}" />
+
+<!-- Google Metadata /-->
+<meta itemprop="name" content="iHotel.mn | {{ $post->title }}">
+<meta itemprop="description" content="{{ $post->excerpt }}"/>
+<meta itemprop="image" content="{{ asset(unserialize($post->photos)[0])}}" />
+
+<!-- Twitter Metadata /-->
+<meta name="twitter:card" content="summary" />
+<meta name="twitter:site" content="@ihotelmn" />
+<meta name="twitter:title" content="iHotel.mn | {{ $post->title }}">
+<meta name="twitter:description" content="{{ $post->excerpt }}"/>
+<meta name="twitter:image" content="{{ asset(unserialize($post->photos)[0])}}" />
+@endsection
 
 @section('title', 'iHotel')
 
