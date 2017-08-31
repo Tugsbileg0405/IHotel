@@ -122,7 +122,7 @@
 @endsection
 
 @push('script')
-<script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyBjW4iZ6gWxhzJOE3Vi4wvHZcTH0vgdDqk&sensor=false&libraries=places"></script>
+<script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyDssMBUJqsqfD7XE5DKCbk6jK9R1C81MH0&sensor=false&libraries=places"></script>
 <script type="text/javascript">
 	function initMap() {
 	    var map = new google.maps.Map(document.getElementById('map'), {

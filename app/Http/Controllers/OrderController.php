@@ -322,7 +322,8 @@ class OrderController extends Controller
 		$order->carddata = json_encode($cardData);
 		$order->userdata = json_encode($userData);
 		$order->flightdata = json_encode($flightdata);
-		$order->request = $request->get('request');
+        $order->request = $request->get('request');
+        $order->token = \Hash::make(str_random(40));
 		$order->save();
 
 		$id = $order->id;
@@ -368,5 +369,20 @@ class OrderController extends Controller
 	public function showSuccess()
 	{
 		return view('order.success');
-	}
+    }
+    
+    public function cancel($token)
+    {
+        $order = \App\Order::where('token', $token)
+            ->first();
+        $order->status = 3;
+        $order->save();
+
+        $order->closes()->delete();
+        
+        Mail::to(json_decode($order->userdata)['email'])->bcc(env('MAIL_FROM_ADDRESS'))
+            ->send(new OrderCanceled($order));
+            
+		return view('order.canceled');
+    }
 }

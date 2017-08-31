@@ -142,11 +142,6 @@
                             <img src="{{ asset('img/logo.png') }}" style="height: 60px;">
                         </div>
                     </td>
-                    <td>
-                        <div class="pull-right">
-                            <img src="{{ asset('img/aspac_logo.png') }}" style="height: 80px;">
-                        </div>
-                    </td>
                 </tr>
             </tbody>
         </table>
@@ -335,6 +330,9 @@
                 @endif
             </tbody>
         </table>
+        <div style="max-width: 600px; margin: 20px auto">
+            <p>If you want to cancel the order click <a href="{{ url('order/cancel', $order->token) }}">here</a></p>
+        </div>
     </div>
 </body>
 </html>
