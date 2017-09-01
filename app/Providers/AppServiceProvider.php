@@ -19,7 +19,7 @@ class AppServiceProvider extends ServiceProvider
         Schema::defaultStringLength(191);
         
         \App\User::creating(function ($user) {
-            $user->activation_code = \Hash::make(str_random(40));
+            $user->activation_code = str_random(40);
             
             Notification::send($user, new ActivationCodeRequested);
             

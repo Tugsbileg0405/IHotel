@@ -324,7 +324,7 @@ class OrderController extends Controller
 		$order->userdata = json_encode($userData);
 		$order->flightdata = json_encode($flightdata);
         $order->request = $request->get('request');
-        $order->token = \Hash::make(str_random(40));;
+        $order->token = str_random(40);
 		$order->save();
 
 		$id = $order->id;
@@ -379,10 +379,11 @@ class OrderController extends Controller
 
         if ($order->token == $token) {
             $order->status = 3;
+            $order->token = null;
             $order->save();
             $order->closes()->delete();
             
-            Mail::to(json_decode($order->userdata)->email)->bcc(env('MAIL_FROM_ADDRESS'))
+            Mail::to(var_dump(json_decode($order->userdata, true))->email)->bcc(env('MAIL_FROM_ADDRESS'))
                 ->send(new OrderCanceled($order));
         }
         else {

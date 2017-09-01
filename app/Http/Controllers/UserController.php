@@ -211,12 +211,13 @@ class UserController extends Controller
 		if ($order->user->id == Auth::user()->id) {
 			if ($order->status == 1) {
 				$order->status = 3;
+                $order->token = null;
 				$order->save();
 
                 $order->closes()->delete();
                 
-                Mail::to(json_decode($order->userdata)->email)->bcc(env('MAIL_FROM_ADDRESS'))
-                ->send(new OrderCanceled($order));
+                Mail::to(var_dump(json_decode($order->userdata, true))->email)->bcc(env('MAIL_FROM_ADDRESS'))
+                    ->send(new OrderCanceled($order));
 
 				return back();
 			}
