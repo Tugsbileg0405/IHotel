@@ -51,7 +51,7 @@ Route::group(['middleware' => ['locale', 'activated']], function() {
 	Route::get('order/card', 'OrderController@showCard');
 	Route::post('order/card/store', 'OrderController@storeCard');
     Route::get('order/success', 'OrderController@showSuccess');
-    Route::get('order/cancel/{token}', 'OrderController@cancel');
+    Route::get('order/cancel/{id}/{token}', 'OrderController@cancel');
 
 	Route::group(['middleware' => 'auth'], function(){
 		Route::get('hotel/create', 'HotelController@createHotel');

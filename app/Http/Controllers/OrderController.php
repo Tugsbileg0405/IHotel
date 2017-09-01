@@ -371,17 +371,21 @@ class OrderController extends Controller
 		return view('order.success');
     }
     
-    public function cancel($token)
+    public function cancel($id, $token)
     {
-        $order = \App\Order::where('token', $token)
-            ->first();
-        $order->status = 3;
-        $order->save();
+        $order = \App\Order::findorfail($id);
 
-        $order->closes()->delete();
-        
-        Mail::to(json_decode($order->userdata)['email'])->bcc(env('MAIL_FROM_ADDRESS'))
-            ->send(new OrderCanceled($order));
+        if ($order->token == $token) {
+            $order->status = 3;
+            $order->save();
+            $order->closes()->delete();
+            
+            Mail::to(json_decode($order->userdata)['email'])->bcc(env('MAIL_FROM_ADDRESS'))
+                ->send(new OrderCanceled($order));
+        }
+        else {
+            abort(404);
+        }
             
 		return view('order.canceled');
     }
