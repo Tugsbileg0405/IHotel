@@ -30,11 +30,11 @@ class CreateUsersTable extends Migration
             $table->timestamps();
         });
 
-        \App\User::create([
-            'email' => 'info@ihotel.mn',
-            'is_admin' => true,
-            'password' => bcrypt('123456'),
-        ]);
+        // \App\User::create([
+        //     'email' => 'info@ihotel.mn',
+        //     'is_admin' => true,
+        //     'password' => bcrypt('123456'),
+        // ]);
 
         // $users = [
         //     [

@@ -330,13 +330,12 @@ class AppController extends Controller
             ]);
     }
 
-    public function activateUser(Request $request)
+    public function activateUser(Request $request, $id)
     {
         $code = $request->query('code');
-        $user = \App\User::where('activation_code', $code)
-            ->first();
+        $user = \App\User::findorfail($id);
 
-        if ($user) {
+        if ($user->activation_code == $code) {
             $user->is_activated = true;
             $user->activation_code = null;
             $user->save();

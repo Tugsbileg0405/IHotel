@@ -6,6 +6,7 @@ use Illuminate\Http\Request;
 use App\Http\Requests\OrderRequest;
 use Illuminate\Support\Facades\Auth;
 use App\Mail\Order;
+use App\Mail\OrderCanceled;
 use Carbon\Carbon;
 use App\Option;
 use Mail;
@@ -323,7 +324,7 @@ class OrderController extends Controller
 		$order->userdata = json_encode($userData);
 		$order->flightdata = json_encode($flightdata);
         $order->request = $request->get('request');
-        $order->token = \Hash::make(str_random(40));
+        $order->token = str_random(40);
 		$order->save();
 
 		$id = $order->id;
@@ -380,7 +381,7 @@ class OrderController extends Controller
             $order->save();
             $order->closes()->delete();
             
-            Mail::to(json_decode($order->userdata)['email'])->bcc(env('MAIL_FROM_ADDRESS'))
+            Mail::to(json_decode($order->userdata)->email)->bcc(env('MAIL_FROM_ADDRESS'))
                 ->send(new OrderCanceled($order));
         }
         else {

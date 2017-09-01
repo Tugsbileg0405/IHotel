@@ -222,4 +222,6 @@ return [
     'Subtotal' => 'Өрөөний нийт үнэ',
     'Duration' => 'Хугацаа',
     'Flight information for airport pickup service' => 'Нислэгийн мэдээлэл',
+    'Your order is cancelled successfully' => 'Таны захиалга амжилттай цуцлагдлаа',
+    'Order cancelled' => 'Захиалга цуцлагдлаа',
 ];

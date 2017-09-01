@@ -40,7 +40,7 @@ class ActivationCodeRequested extends Notification
      */
     public function toMail($notifiable)
     {
-        $url = url('user/activate?code='.$notifiable->activation_code);
+        $url = url('user/'.$notifiable->id.'/activate?code='.$notifiable->activation_code);
 
         return (new MailMessage)
             ->greeting('Thanks for registering on iHotel!')

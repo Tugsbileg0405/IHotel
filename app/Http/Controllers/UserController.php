@@ -215,7 +215,7 @@ class UserController extends Controller
 
                 $order->closes()->delete();
                 
-                Mail::to(json_decode($order->userdata)['email'])->bcc(env('MAIL_FROM_ADDRESS'))
+                Mail::to(json_decode($order->userdata)->email)->bcc(env('MAIL_FROM_ADDRESS'))
                 ->send(new OrderCanceled($order));
 
 				return back();

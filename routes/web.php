@@ -17,7 +17,7 @@ Route::get('change/{locale}', function($locale) {
 
 Route::group(['middleware' => 'locale'], function() {
 	Auth::routes();
-	Route::get('user/activate', 'AppController@activateUser');
+	Route::get('user/activate/{id}', 'AppController@activateUser');
 	Route::get('user/activation', 'AppController@showActivate');
 	Route::get('user/activation/resend', 'AppController@sendActivate');
 });

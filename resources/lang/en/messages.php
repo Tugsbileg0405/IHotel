@@ -222,4 +222,6 @@ return [
     'Subtotal' => 'Subtotal',
     'Duration' => 'Duration',
     'Flight information for airport pickup service' => 'Flight information for airport pickup service',
+    'Your order is cancelled successfully' => 'Your order is cancelled successfully',
+    'Order cancelled' => 'Order cancelled',
 ];
