@@ -5,9 +5,11 @@
                 <img src="{{ asset('img/logo-white.png') }}" alt="Logo">
             </a>
         </div>
-        <div class="important-word">
-            <i class="spinner loading icon"></i>{{ __('messages.Collect memories, not a property') }}
-        </div>
+        @if (Request::is('posts'))
+            <div class="important-word">
+                <i class="spinner loading icon"></i>{{ __('messages.Collect memories, not a property') }}
+            </div>
+        @endif
         <nav class="main-nav cd-main-nav-wrapper">
             <ul class="cd-main-nav">
                 @if (Auth::guest())
