@@ -324,7 +324,7 @@ class OrderController extends Controller
 		$order->userdata = json_encode($userData);
 		$order->flightdata = json_encode($flightdata);
         $order->request = $request->get('request');
-        $order->token = str_random(40);
+        $order->token = \Hash::make(str_random(40));;
 		$order->save();
 
 		$id = $order->id;
@@ -372,8 +372,9 @@ class OrderController extends Controller
 		return view('order.success');
     }
     
-    public function cancel($id, $token)
+    public function cancel(Request $request, $id)
     {
+        $token = $request->query('token');
         $order = \App\Order::findorfail($id);
 
         if ($order->token == $token) {

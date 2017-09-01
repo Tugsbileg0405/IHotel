@@ -331,7 +331,7 @@
             </tbody>
         </table>
         <div style="max-width: 600px; margin: 20px auto">
-            <p>If you want to cancel the order click <a href="{{ url('order/cancel/'.$order->id.'/'.$order->token) }}">here</a></p>
+            <p>If you want to cancel the order click <a href="{{ url('order/cancel/'.$order->id.'?token='.$order->token) }}">here</a></p>
         </div>
     </div>
 </body>
