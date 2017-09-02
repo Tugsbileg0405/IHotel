@@ -43,8 +43,6 @@ class HotelController extends Controller
         $hotel->room_number = $request->get('room_number');
         $hotel->website = $request->get('website');
         $hotel->contact = $request->get('contact');
-        $hotel->what3words = $request->get('what3words');
-        $hotel->what3words_en = $request->get('what3words_en');
         $hotel->phone_number = $request->get('phone_number');
         $hotel->email = $request->get('email');
         $hotel->address = $request->get('address');
@@ -63,8 +61,6 @@ class HotelController extends Controller
         $hotel->category_id = $request->get('category');
         $hotel->name = $request->get('name');
         $hotel->star = $request->get('star');
-        $hotel->what3words = $request->get('what3words');
-        $hotel->what3words_en = $request->get('what3words_en');
         $hotel->room_number = $request->get('room_number');
         $hotel->website = $request->get('website');
         $hotel->contact = $request->get('contact');
