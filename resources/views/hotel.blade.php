@@ -38,12 +38,12 @@
 							</a>
 						</div>
 						<select class="{{$roomnumber < 15 ? 'ui' : '' }} fluid search dropdown selectedRoom" style="display: {{$roomnumber < 15 ? '' : 'none' }}">
-                        	    <option value="">{{ __('messages.Rooms') }}</option>
-                        	    @for ($i=1; $i< 15; $i++)
-                        	    <option value="{{ $i }}" @If($i == $roomnumber) selected @endif>{{ $i }} {{ __('messages.room') }}</option>
-                        	    @endfor
-                        	    <option value="more">{{ __('messages.More') }}</option>
-                        	</select>
+                            <option value="">{{ __('messages.Rooms') }}</option>
+                            @for ($i=1; $i< 15; $i++)
+                                <option value="{{ $i }}" @If($i == $roomnumber) selected @endif>{{ $i }} {{ __('messages.room') }}</option>
+                            @endfor
+                            <option value="more">{{ __('messages.More') }}</option>
+                        </select>
 					</div>
 				</div>
 				<div class="three wide column">
@@ -58,12 +58,12 @@
 							</a>
 						</div>
 						<select class="{{$peoplenumber < 15 ? 'ui' : '' }} fluid search dropdown selectedPeople" style="display: {{$peoplenumber < 15 ? '' : 'none' }}">
-                                 <option value="">{{ __('messages.People') }}</option>
-                                 @for ($i=1; $i< 15; $i++)
-                                 <option value="{{ $i }}" @If($i == $peoplenumber) selected @endif>{{ $i }} {{ __('messages.people') }}</option>
-                                 @endfor
-                                 <option value="more">{{ __('messages.More') }}</option>
-                             </select>
+                            <option value="">{{ __('messages.People') }}</option>
+                            @for ($i=1; $i< 15; $i++)
+                                <option value="{{ $i }}" @If($i == $peoplenumber) selected @endif>{{ $i }} {{ __('messages.people') }}</option>
+                            @endfor
+                            <option value="more">{{ __('messages.More') }}</option>
+                        </select>
 					</div>
 				</div>
 				<div class="two wide column">
@@ -319,24 +319,6 @@
 												@endif 
 											@endif
 										</p>
-										<p class="ui justify" style="vertical-align:middle;line-height:30px !important;display:flex">
-											<img src="{{ asset('img/what3word.jpg')}}" height="30" style="border-radius:50%;margin-right:10px" width="30" alt="">											
-											@if (App::isLocale('mn'))
-												<a href="https://map.what3words.com/{{$hotel->what3words}}" target="_blank">
-													{{$hotel->what3words}} (what3words)
-												</a> 
-											@elseif (App::isLocale('en')) 
-												@if($hotel->what3words_en)
-													<a href="https://map.what3words.com/{{$hotel->what3words_en}}" target="_blank">
-														{{$hotel->what3words_en}} (what3words)
-													</a> 
-												@else
-													<a href="https://map.what3words.com/{{$hotel->what3words}}" target="_blank">
-														{{$hotel->what3words}} (what3words)
-													</a> 
-												@endif 
-											@endif
-										</p>
 									</div>
 									<div class="ui large header">{{ __('messages.Rooms') }}</div>
 									@foreach($rooms->sortBy('price')  as $key=>$room)
@@ -532,10 +514,7 @@
 	}
 
 	initMap();
-
-	$('.ui.radio.checkbox')
-		.checkbox()
-		;
+	$('.ui.radio.checkbox').checkbox();
 	$(window).load(function () {
 		$('#carousel').flexslider({
 			animation: "slide",
@@ -556,7 +535,6 @@
 				$('body').removeClass('loading');
 			}
 		});
-
 		$('.popup-link').magnificPopup({
 			type: 'image',
 			gallery: { enabled: true }

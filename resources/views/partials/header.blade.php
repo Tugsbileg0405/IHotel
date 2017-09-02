@@ -5,7 +5,7 @@
                 <img src="{{ asset('img/logo-white.png') }}" alt="Logo">
             </a>
         </div>
-        @if (Request::is('posts'))
+        @if (Request::is('posts') OR Request::is('post/*'))
             <div class="important-word">
                 <i class="spinner loading icon"></i>{{ __('messages.Collect memories, not a property') }}
             </div>

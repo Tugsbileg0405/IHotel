@@ -44,8 +44,6 @@ class CreateHotelsTable extends Migration
             $table->string('co_payment')->nullable()->default(null);
             $table->boolean('sale')->default(false);
             $table->text('location');
-            $table->string('what3words')->nullable()->default(null);
-            $table->string('what3words_en')->nullable()->default(null);
             $table->boolean('published')->default(false);
             $table->boolean('is_active')->default(true);
             $table->float('rating')->default(0);

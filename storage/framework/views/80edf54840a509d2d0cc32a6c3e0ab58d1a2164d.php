@@ -5,10 +5,12 @@
                 <img src="<?php echo e(asset('img/logo-white.png')); ?>" alt="Logo">
             </a>
         </div>
-        <div class="important-word">
-            <i class="spinner loading icon"></i><?php echo e(__('messages.Collect memories, not a property')); ?>
+        <?php if(Request::is('posts')): ?>
+            <div class="important-word">
+                <i class="spinner loading icon"></i><?php echo e(__('messages.Collect memories, not a property')); ?>
 
-        </div>
+            </div>
+        <?php endif; ?>
         <nav class="main-nav cd-main-nav-wrapper">
             <ul class="cd-main-nav">
                 <?php if(Auth::guest()): ?>

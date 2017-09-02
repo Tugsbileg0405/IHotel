@@ -77,11 +77,6 @@
 			<input type="hidden" value="{{ json_decode($hotel->location)[0] }}" name="lat" id="lat">
 			<input type="hidden" value="{{ json_decode($hotel->location)[1] }}" name="lon" id="lon">
 		</div>
-		<div class="required field">
-			<label>3 үгт хаяг (what3words)</label>
-			<input type="text" value="{{ $hotel->what3words }}" name="what3words" id="what3words">
-			<input type="hidden" value="saving.masts.pile" name="what3words_en" id="what3words_en">
-		</div>
 		<div class="ui right floated buttons">
 			<button class="ui primary button" type="submit">
 				Дараах<i class="right chevron icon"></i>
@@ -113,26 +108,6 @@
 	    	$('#create-hotel-form').find('button').addClass('disabled');
 			var lat = e.latLng.lat();
 			var lon = e.latLng.lng();
-			$.ajax({
-				"async": true,
-				"crossDomain": true,
-				"url": "https://api.what3words.com/v2/reverse?coords="+lat+","+lon+"&display=full&lang=mn&format=json&key=Y2CPOYC3",
-				"method": "GET",
-				"headers": {},
-			}).done(function (response) {
-				$('#what3words').val(response.words);
-	    		$('#create-hotel-form').find('button').removeClass('disabled');
-			});
-			$.ajax({
-				"async": true,
-				"crossDomain": true,
-				"url": "https://api.what3words.com/v2/reverse?coords="+lat+","+lon+"&display=full&lang=en&format=json&key=Y2CPOYC3",
-				"method": "GET",
-				"headers": {},
-			}).done(function (response) {
-				$('#what3words_en').val(response.words);
-	    		$('#create-hotel-form').find('button').removeClass('disabled');
-			});
 			marker.setPosition(new google.maps.LatLng(lat, lon));
 			$('#lat').val(lat);
 			$('#lon').val(lon);
