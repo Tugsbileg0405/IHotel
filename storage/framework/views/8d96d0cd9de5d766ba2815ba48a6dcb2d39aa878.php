@@ -421,8 +421,6 @@
 
    }
    google.maps.event.addDomListener(window, 'load', initialize);
-  
-
    var searchPlace;
    
    $('.datalocation input')
@@ -438,7 +436,6 @@
 	
 	roomNumber = $('.selectedRoom').val();
 	people =$('.selectedPeople').val();
-	
 	
 	var plus = $('#plus');
 	var minus = $('#minus');
@@ -501,20 +498,16 @@
 		}
 		e.preventDefault();
 	});
-
 	$( "#selectedRoom" ).keyup(function() {
 		var value = $( this ).val();
 		roomNumber = value;
 		$('#selectedPeople').val(value);
 		people = value;
 	})
-
 	$( "#selectedPeople" ).keyup(function() {
 		var value = $( this ).val();
 		people = value;
 	})
-
-
 	$( ".selectedPeople" ).change(function() {
 		if($(this).val() === "more"){
 			$('.selectedPeople').css("display","none");
@@ -535,7 +528,6 @@
 			roomNumber = 15;
 		}else{
 			roomNumber = $(this).val();
-			
 		}
 	});
 
@@ -545,7 +537,7 @@
     "opens": "center",
     "autoApply": true,
     dateLimitMin: {
-            days: 1
+        days: 1
     },
     "showCustomRangeLabel": true,
     "alwaysShowCalendars": true,
@@ -553,10 +545,9 @@
     cancelClass : 'ui button',
     locale: { cancelLabel: 'Хаах',applyLabel: 'Сонгох' }  
     }, function(start, end, label) {
-                startDate = start.format('L');
-                endDate = end.format('L');
+        startDate = start.format('L');
+        endDate = end.format('L');
     });
-    
     
     $("#searchButton").click(function(){
         $('#searchButton').addClass('loading');
@@ -581,6 +572,8 @@
             });
         }
         else {
+            startDate = moment(startDate).format('YYYY-MM-DD');
+            endDate = moment(endDate).format('YYYY-MM-DD');
             var cityNameForm = new FormData();
             cityNameForm.append('city', cityName);
             cityNameForm.append('_token', '<?php echo e(csrf_token()); ?>');
@@ -591,10 +584,10 @@
 				contentType: false,
 				processData: false,
 	           	success: function(data) {
-                    window.location = "https://www.booking.com/?aid=1336206";
+                    window.location = 'https://www.agoda.com/pages/agoda/default/DestinationSearchResult.aspx?cid=1761533&city=' + data.code + '&checkIn=' + moment(startDate).format('YYYY-MM-DD') + '&checkOut=' + moment(endDate).format('YYYY-MM-DD') + '&los=1&rooms=' + roomNumber + '&adults=' + people + '&children=0';
 	       		},
-				error: function(){
-                    window.location = "https://www.booking.com/?aid=1336206";
+				error: function(data){
+                    window.location = 'https://www.agoda.com/?cid=1761533';
 				}
 			});
         }
