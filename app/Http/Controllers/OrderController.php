@@ -378,18 +378,23 @@ class OrderController extends Controller
         $order = \App\Order::findorfail($id);
 
         if ($order->token == $token) {
-            $order->status = 3;
-            $order->token = null;
-            $order->save();
-            $order->closes()->delete();
-            
-            Mail::to(var_dump(json_decode($order->userdata, true))->email)->bcc(env('MAIL_FROM_ADDRESS'))
-                ->send(new OrderCanceled($order));
+			if ($order->status == 1) {
+                $order->status = 3;
+                $order->token = null;
+                $order->save();
+                $order->closes()->delete();
+                
+                // Mail::to(var_dump(json_decode($order->userdata, true))->email)->bcc(env('MAIL_FROM_ADDRESS'))
+                //     ->send(new OrderCanceled($order));
+                    
+                return view('order.canceled');
+            }
+            else {
+                abort(404);
+            }
         }
         else {
             abort(404);
         }
-            
-		return view('order.canceled');
     }
 }
