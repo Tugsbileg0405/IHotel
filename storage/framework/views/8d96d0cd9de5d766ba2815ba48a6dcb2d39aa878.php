@@ -584,7 +584,7 @@
 				contentType: false,
 				processData: false,
 	           	success: function(data) {
-                    window.location = 'https://www.agoda.com/pages/agoda/default/DestinationSearchResult.aspx?cid=1761533&city=' + data.code + '&checkIn=' + moment(startDate).format('YYYY-MM-DD') + '&checkOut=' + moment(endDate).format('YYYY-MM-DD') + '&los=1&rooms=' + roomNumber + '&adults=' + people + '&children=0';
+                    window.location = 'https://www.agoda.com/pages/agoda/default/DestinationSearchResult.aspx?cid=1761533&pcs=1&city=' + data.code + '&checkIn=' + moment(startDate).format('YYYY-MM-DD') + '&checkOut=' + moment(endDate).format('YYYY-MM-DD') + '&los=1&rooms=' + roomNumber + '&adults=' + people + '&children=0';
 	       		},
 				error: function(data){
                     window.location = 'https://www.agoda.com/?cid=1761533';
