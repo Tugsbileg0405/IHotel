@@ -141,16 +141,16 @@
 		var hotels = <?php echo json_encode($hotels) ?>;
 		var key = $(this).data('key');
 		$('#edit-modal').modal('show');
-		$('#edit-hotel-form').find('.ui.header').html(hotels[key].name);
-		$('#edit-hotel-form').attr('action', '{{ url("profile/hotel") }}/' + hotels[key].id);
-		$('#edit-hotel-form').find('[name=priority]').val(hotels[key].priority);
-		if (hotels[key].is_active == 1) {
+		$('#edit-hotel-form').find('.ui.header').html(hotels.data[key].name);
+		$('#edit-hotel-form').attr('action', '{{ url("profile/hotel") }}/' + hotels.data[key].id);
+		$('#edit-hotel-form').find('[name=priority]').val(hotels.data[key].priority);
+		if (hotels.data[key].is_active == 1) {
 			$('#edit-hotel-form').find('[name=is_active]').dropdown('set selected', '1');
 		}
 		else {
 			$('#edit-hotel-form').find('[name=is_active]').dropdown('set selected', '0');
 		}
-		if (hotels[key].sale == 1) {
+		if (hotels.data[key].sale == 1) {
 			$('#edit-hotel-form').find('[name=sale]').dropdown('set selected', '1');
 		}
 		else {
