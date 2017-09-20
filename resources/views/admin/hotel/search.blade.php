@@ -15,21 +15,21 @@
 			</tr>
 		</thead>
 		<tbody>
-			@foreach ($hotels as $key => $hotel)
+			@foreach ($hotels as $hotel)
 				<tr>
 					<td>{{ $hotel->id }}</td>
 					<td>{{ $hotel->name }}</td>
 					<td>{{ $hotel->category->name }}</td>
 					<td>{{ $hotel->room_number }}</td>
 					<td>
-						@for ($i=0; $i<$hotel->star; $i++)
+						@for ($i = 0; $i < $hotel->star; $i++)
 							<i class="icon yellow star"></i>
 						@endfor
 					</td>
 					<td>{{ $hotel->priority }}</td>
 					<td>{{ $hotel->is_active ? 'Тийм' : 'Үгүй' }}</td>
 					<td>
-						<a class="ui icon button open-EditModal" data-key="{{ $key }}">
+						<a class="ui icon button open-EditModal" data-id="{{ $hotel->id }}">
 							<i class="pencil icon"></i>
 						</a>
 					</td>
@@ -47,7 +47,6 @@
 			@endforeach
 		</tbody>
 	</table>
-	{{ $hotels->links() }}
 @else
 	Илэрц олдсонгүй
 @endif

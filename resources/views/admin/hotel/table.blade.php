@@ -48,21 +48,21 @@
 						</tr>
 					</thead>
 					<tbody>
-						@foreach ($hotels as $key => $hotel)
+						@foreach ($hotels as $hotel)
 							<tr>
 								<td>{{ $hotel->id }}</td>
 								<td>{{ $hotel->name }}</td>
 								<td>{{ $hotel->category->name }}</td>
 								<td>{{ $hotel->room_number }}</td>
 								<td>
-									@for ($i=0; $i<$hotel->star; $i++)
+									@for ($i = 0; $i < $hotel->star; $i++)
 										<i class="icon yellow star"></i>
 									@endfor
 								</td>
 								<td>{{ $hotel->priority }}</td>
 								<td>{{ $hotel->is_active ? 'Тийм' : 'Үгүй' }}</td>
 								<td>
-									<a class="ui icon button open-EditModal" data-key="{{ $key }}">
+									<a class="ui icon button open-EditModal" data-id="{{ $hotel->id }}">
 										<i class="pencil icon"></i>
 									</a>
 								</td>
@@ -137,20 +137,21 @@
 
 @push('script')
 <script type="text/javascript">
-    $('#result').on('click', '.open-EditModal', function(e) {
-		var hotels = <?php echo json_encode($hotels) ?>;
-		var key = $(this).data('key');
+    var hotels = <?php echo json_encode($allhotels) ?>;
+    $(document).on('click', '#result .open-EditModal', function(e) {
+		var id = $(this).data('id');
+        var hotel = hotels[hotels.findIndex(hotel => hotel.id == id)];
 		$('#edit-modal').modal('show');
-		$('#edit-hotel-form').find('.ui.header').html(hotels.data[key].name);
-		$('#edit-hotel-form').attr('action', '{{ url("profile/hotel") }}/' + hotels.data[key].id);
-		$('#edit-hotel-form').find('[name=priority]').val(hotels.data[key].priority);
-		if (hotels.data[key].is_active == 1) {
+		$('#edit-hotel-form').find('.ui.header').html(hotel.name);
+		$('#edit-hotel-form').attr('action', '{{ url("profile/hotel") }}/' + hotel.id);
+		$('#edit-hotel-form').find('[name=priority]').val(hotel.priority);
+		if (hotel.is_active == 1) {
 			$('#edit-hotel-form').find('[name=is_active]').dropdown('set selected', '1');
 		}
 		else {
 			$('#edit-hotel-form').find('[name=is_active]').dropdown('set selected', '0');
 		}
-		if (hotels.data[key].sale == 1) {
+		if (hotel.sale == 1) {
 			$('#edit-hotel-form').find('[name=sale]').dropdown('set selected', '1');
 		}
 		else {

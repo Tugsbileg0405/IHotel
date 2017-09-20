@@ -21,9 +21,12 @@ class HotelController extends Controller
     {
         $hotels = Hotel::orderby('priority', 'desc')
             ->paginate(20);
+        $allhotels = Hotel::orderby('priority', 'desc')
+            ->get();
 
         return view('admin.hotel.table', [
             'hotels' => $hotels,
+            'allhotels' => $allhotels,
         ]);
     }
 
@@ -115,7 +118,7 @@ class HotelController extends Controller
         $search = $request->get('search');
         $hotels = \App\Hotel::where('name', 'LIKE', '%' . $search . '%')
             ->orderby('priority', 'desc')
-            ->paginate(20);
+            ->get();
 
         return response()->view('admin.hotel.search', [
             'hotels' => $hotels,
