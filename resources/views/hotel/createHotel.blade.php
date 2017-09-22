@@ -135,7 +135,6 @@
 			map: map        
 		});
 		google.maps.event.addListener(map, "click", function (e) {
-	    	$('#create-hotel-form').find('button').addClass('disabled');
 			var lat = e.latLng.lat();
 			var lon = e.latLng.lng();
 			marker.setPosition(new google.maps.LatLng(lat, lon));
