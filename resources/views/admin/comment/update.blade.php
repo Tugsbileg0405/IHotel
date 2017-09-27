@@ -31,7 +31,7 @@
 		</div>
 	    <div class="required field">
 	    	<label>Агуулга (Англи)</label>
-			<textarea name="content">{{ $comment->content_en }}</textarea>
+			<textarea name="content_en">{{ $comment->content_en }}</textarea>
 		</div>
         <div class="required field">
 	    	<label>Зураг</label>
