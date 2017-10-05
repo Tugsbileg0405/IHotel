@@ -325,11 +325,11 @@
 									<div class="ui segment">
 										<div class="ui stackable column grid">
 											<div class="four wide column">
-                                                <div id="slider1" class="flexslider">
+                                                <div class="slider-room flexslider">
                                                     <ul class="slides">
                                                         @foreach (unserialize($room->photos) as $photo)
                                                             <li>
-                                                                <a class="popup-link-room" href="{{ asset($photo) }}">
+                                                                <a class="popup-link-room-{{ $room->id }}" href="{{ asset($photo) }}">
                                                                     <img src="{{ asset($photo) }}">
                                                                 </a>
                                                             </li>
@@ -542,7 +542,7 @@
 				$('body').removeClass('loading');
 			}
 		});
-		$('#slider1').flexslider({
+		$('.slider-room').flexslider({
 			animation: "slide",
 			controlNav: false,
 			animationLoop: false,
@@ -552,10 +552,12 @@
 			type: 'image',
 			gallery: { enabled: true }
 		});
-		$('.popup-link-room').magnificPopup({
-			type: 'image',
-			gallery: { enabled: true }
-		});
+        '@foreach ($rooms as $room)'
+            $('.popup-link-room-{{ $room->id }}').magnificPopup({
+                type: 'image',
+                gallery: { enabled: true }
+            });
+        '@endforeach'
 	});
 </script>
 <script>

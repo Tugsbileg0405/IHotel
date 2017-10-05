@@ -333,11 +333,11 @@
 									<div class="ui segment">
 										<div class="ui stackable column grid">
 											<div class="four wide column">
-                                                <div id="slider1" class="flexslider">
+                                                <div class="slider-room flexslider">
                                                     <ul class="slides">
                                                         <?php $__currentLoopData = unserialize($room->photos); $__env->addLoop($__currentLoopData); foreach($__currentLoopData as $photo): $__env->incrementLoopIndices(); $loop = $__env->getLastLoop(); ?>
                                                             <li>
-                                                                <a class="popup-link-room" href="<?php echo e(asset($photo)); ?>">
+                                                                <a class="popup-link-room-<?php echo e($room->id); ?>" href="<?php echo e(asset($photo)); ?>">
                                                                     <img src="<?php echo e(asset($photo)); ?>">
                                                                 </a>
                                                             </li>
@@ -557,7 +557,7 @@
 				$('body').removeClass('loading');
 			}
 		});
-		$('#slider1').flexslider({
+		$('.slider-room').flexslider({
 			animation: "slide",
 			controlNav: false,
 			animationLoop: false,
@@ -567,10 +567,12 @@
 			type: 'image',
 			gallery: { enabled: true }
 		});
-		$('.popup-link-room').magnificPopup({
-			type: 'image',
-			gallery: { enabled: true }
-		});
+        '<?php $__currentLoopData = $rooms; $__env->addLoop($__currentLoopData); foreach($__currentLoopData as $room): $__env->incrementLoopIndices(); $loop = $__env->getLastLoop(); ?>'
+            $('.popup-link-room-<?php echo e($room->id); ?>').magnificPopup({
+                type: 'image',
+                gallery: { enabled: true }
+            });
+        '<?php endforeach; $__env->popLoop(); $loop = $__env->getLastLoop(); ?>'
 	});
 </script>
 <script>

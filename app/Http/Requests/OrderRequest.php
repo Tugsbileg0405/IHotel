@@ -28,11 +28,11 @@ class OrderRequest extends FormRequest
             'surname' => 'required',
             'country' => 'required',
             'phone_number' => 'required',
-            'card_number' => 'required|numeric',
-            'card_holders_name' => 'required',
-            'expired_month' => 'required|numeric|digits:2',
-            'expired_year' => 'required|numeric|digits:2',
-            'cvc' => 'required|numeric',
+            'card_number' => 'nullable|numeric',
+            'card_holders_name' => 'nullable',
+            'expired_month' => 'nullable|numeric|digits:2',
+            'expired_year' => 'nullable|numeric|digits:2',
+            'cvc' => 'nullable|numeric',
             'request' => 'nullable',
         ];
     }

@@ -381,7 +381,8 @@
         lat: 47.913138,
         lng: 106.920123
     }
-    if ('{{ $place }}' == 'Amsterdam, NetherLands') {
+    
+    if ('{{ $place }}' == 'Amsterdam, Netherlands') {
         mapCenter = { 
             lat: 52.3702,
             lng: 4.8952

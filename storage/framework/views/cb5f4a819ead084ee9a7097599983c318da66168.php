@@ -271,53 +271,86 @@
 													</div>
 												</div>
 											</div>
-											<div class="field">
-												<div class="ui left icon input">
-													<input type="tel" name="card_number" placeholder="Card number" maxlength="19">
-													<i class="blue credit card alternative icon"></i>
-												</div>
-											</div>
-											<div class="field">
-												<div class="ui left icon input">
-													<input type="text" name="card_holders_name" placeholder="Name on card">
-													<i class="blue user icon"></i>
-												</div>
-											</div>
-											<div class="two fields">
-												<div class="field">
-													<div class="ui left icon input">
-														<input type="text" name="expired_month" placeholder="MM" maxlength="2">
-														<i class="blue calendar icon"></i>
-													</div>
-												</div>
-												<div class="field">
-													<div class="ui left icon input">
-														<input type="text" name="expired_year" placeholder="YY" maxlength="2">
-														<i class="blue calendar icon"></i>
-													</div>
-												</div>
-											</div>
-											<div class="field">
-												<div class="ui left icon input">
-													<input type="text" name="cvc" placeholder="CVV" maxlength="4">
-													<i class="blue lock icon"></i>
-												</div>
-											</div>
-											<div class="field">
-												<div class="ui checkbox">
-													<input type="checkbox" name="terms">
-													<?php if(App::isLocale('mn')): ?> 
-														<label><a href="<?php echo e(url('/terms')); ?>" onClick="check()" target="_blank">Үйлчилгээний нөхцөл</a> зөвшөөрөх</label>
-													<?php elseif(App::isLocale('en')): ?> 
-														<label>I agree to<a href="<?php echo e(url('/terms')); ?>" onClick="check()" target="_blank"> terms and condition</a></label>
-													<?php endif; ?>
-												</div>
-											</div>
+                                            <div class="ui form">
+                                                <div class="grouped fields">
+                                                    <label>Төлбөр төлөх хэлбэр сонгоно уу</label>
+                                                    <div class="field">
+                                                        <div class="ui checkbox">
+                                                            <input type="radio" name="payment-option" value="1" checked>
+                                                            <label>Картаар төлөх</label>
+                                                        </div>
+                                                    </div>
+                                                    <div class="field">
+                                                        <div class="ui checkbox">
+                                                            <input type="radio" name="payment-option" value="2">
+                                                            <label>Дансаар төлөх</label>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <div class="ui divider"></div>
+                                            <div id="payment-message" class="ui hidden message">
+                                                <ul class="list">
+                                                    <li><?php echo e(__('messages.Bank name: Golomt bank')); ?></li>
+                                                    <li><?php echo e(__('messages.Account number: 1415101077')); ?></li>
+                                                    <li><?php echo e(__('messages.Account name: iHotel LLC')); ?></li>
+                                                    <?php if(App::isLocale('en')): ?>
+                                                        <li><?php echo e(__('messages.Account currency: USD')); ?></li>
+                                                    <?php endif; ?>
+                                                    <li><?php echo e(__('messages.Remark: Reservation number; Guest name')); ?></li>
+                                                </ul>
+                                                <p><?php echo e(__('messages.Transaction must be done in 48 hours (delivered by email)')); ?></p>
+                                            </div>
+                                            <div id="payment-card">
+                                                <div class="field">
+                                                    <div class="ui left icon input">
+                                                        <input type="tel" name="card_number" placeholder="Card number" maxlength="19">
+                                                        <i class="blue credit card alternative icon"></i>
+                                                    </div>
+                                                </div>
+                                                <div class="field">
+                                                    <div class="ui left icon input">
+                                                        <input type="text" name="card_holders_name" placeholder="Name on card">
+                                                        <i class="blue user icon"></i>
+                                                    </div>
+                                                </div>
+                                                <div class="two fields">
+                                                    <div class="field">
+                                                        <div class="ui left icon input">
+                                                            <input type="text" name="expired_month" placeholder="MM" maxlength="2">
+                                                            <i class="blue calendar icon"></i>
+                                                        </div>
+                                                    </div>
+                                                    <div class="field">
+                                                        <div class="ui left icon input">
+                                                            <input type="text" name="expired_year" placeholder="YY" maxlength="2">
+                                                            <i class="blue calendar icon"></i>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                                <div class="field">
+                                                    <div class="ui left icon input">
+                                                        <input type="text" name="cvc" placeholder="CVV" maxlength="4">
+                                                        <i class="blue lock icon"></i>
+                                                    </div>
+                                                </div>
+                                                <div class="field"></div>
+                                            </div>
+                                            <div class="field">
+                                                <div class="ui checkbox">
+                                                    <input type="checkbox" name="terms">
+                                                    <?php if(App::isLocale('mn')): ?> 
+                                                        <label><a href="<?php echo e(url('/terms')); ?>" onClick="check()" target="_blank">Үйлчилгээний нөхцөл</a> зөвшөөрөх</label>
+                                                    <?php elseif(App::isLocale('en')): ?> 
+                                                        <label>I agree to<a href="<?php echo e(url('/terms')); ?>" onClick="check()" target="_blank"> terms and condition</a></label>
+                                                    <?php endif; ?>
+                                                </div>
+                                            </div>
 											<input type="hidden" name="request">
 											<input type="hidden" name="arrivaldate">
 											<input type="hidden" name="flightnumber">
 											<input type="hidden" name="arrivaltime">
-											<button type="submit" class="ui primary fluid button"><?php echo e(__('messages.Order')); ?></button>
+                                            <button type="submit" class="ui primary fluid button"><?php echo e(__('messages.Order')); ?></button>
 										</form>
 									</div>
 								</div>
@@ -335,6 +368,297 @@
 <script src="<?php echo e(asset('js/moment.js')); ?>"></script>
 <script src="<?php echo e(asset('js/daterangepicker.js')); ?>"></script>
 <script type="text/javascript">
+    $('[name=payment-option]').change(function () {
+        if ($(this).val() == 1) {
+            $('#payment-card').css('display', 'block');
+            $('#payment-message').addClass('hidden');
+            $('#card-form').form('destroy');
+            $('#card-form').form({
+                inline : true,
+                fields: {
+                    name: {
+                        identifier: 'name',
+                        rules: [
+                            {
+                                type   : 'empty',
+                                prompt : '<?php echo e(__("form.Please enter your name")); ?>'
+                            },
+                            {
+                                type   : 'maxLength[191]',
+                                prompt : '<?php echo e(__("form.Please enter at most 191 characters")); ?>'
+                            }
+                        ]
+                    },
+                    surname: {
+                        identifier: 'surname',
+                        rules: [
+                            {
+                                type   : 'empty',
+                                prompt : '<?php echo e(__("form.Please enter your surname")); ?>'
+                            },
+                            {
+                                type   : 'maxLength[191]',
+                                prompt : '<?php echo e(__("form.Please enter at most 191 characters")); ?>'
+                            }
+                        ]
+                    },
+                    country: {
+                        identifier: 'country',
+                        rules: [
+                            {
+                                type   : 'empty',
+                                prompt : '<?php echo e(__("form.Please select a country")); ?>'
+                            }
+                        ]
+                    },
+                    phone_number: {
+                        identifier: 'phone_number',
+                        rules: [
+                            {
+                                type   : 'empty',
+                                prompt : '<?php echo e(__("form.Please enter your phone number")); ?>'
+                            },
+                            {
+                                type   : 'number',
+                                prompt : '<?php echo e(__("form.Please enter your phone number")); ?>'
+                            }
+                        ]
+                    },
+                    email_order: {
+                        identifier: 'email_order',
+                        rules: [
+                            {
+                                type   : 'email',
+                                prompt : '<?php echo e(__("form.Please enter your email")); ?>'
+                            },
+                            {
+                                type   : 'empty',
+                                prompt : '<?php echo e(__("form.Please enter your email")); ?>'
+                            }
+                        ]
+                    },
+                    email_confirm: {
+                        identifier: 'email_confirm',
+                        rules: [
+                            {
+                                type   : 'match[email_order]',
+                                prompt : '<?php echo e(__("form.Email doesnt match")); ?>'
+                            },
+                        ]
+                    },
+                    terms: {
+                        identifier: 'terms',
+                        rules: [
+                            {
+                                type   : 'checked',
+                                prompt : '<?php echo e(__("form.Please agree terms of service")); ?>'
+                            }
+                        ]
+                    },
+                    card_number: {
+                        identifier: 'card_number',
+                        rules: [
+                            {
+                                type   : 'creditCard',
+                                prompt : '<?php echo e(__("form.Card number is wrong")); ?>'
+                            }
+                        ]
+                    },
+                    card_holders_name: {
+                        identifier: 'card_holders_name',
+                        rules: [
+                            {
+                                type   : 'empty',
+                                prompt : '<?php echo e(__("form.Please enter a value")); ?>'
+                            },
+                            {
+                                type   : 'maxLength[191]',
+                                prompt : '<?php echo e(__("form.Please enter at most 191 characters")); ?>'
+                            }
+                        ]
+                    },
+                    expired_month: {
+                        identifier: 'expired_month',
+                        rules: [
+                            {
+                                type   : 'month',
+                                prompt : '<?php echo e(__("form.Please enter a valid expiry date")); ?>',
+                            },
+                            {
+                                type   : 'exactLength[2]',
+                                prompt : '<?php echo e(__("form.Please enter a valid expiry date")); ?>'
+                            },
+                        ]
+                    },
+                    expired_year: {
+                        identifier: 'expired_year',
+                        rules: [
+                            {
+                                type   : 'integer[<?php echo e(date("y")); ?>..99]',
+                                prompt : '<?php echo e(__("form.Please enter a valid expiry date")); ?>'
+                            },
+                            {
+                                type   : 'exactLength[2]',
+                                prompt : '<?php echo e(__("form.Please enter a valid expiry date")); ?>'
+                            },
+                        ]
+                    },
+                    cvc: {
+                        identifier: 'cvc',
+                        rules: [
+                            {
+                                type   : 'number',
+                                prompt : '<?php echo e(__("form.Please enter a valid CVV")); ?>'
+                            },
+                            {
+                                type   : 'minLength[3]',
+                                prompt : '<?php echo e(__("form.Please enter a valid CVV")); ?>'
+                            },
+                            {
+                                type   : 'maxLength[4]',
+                                prompt : '<?php echo e(__("form.Please enter a valid CVV")); ?>'
+                            },
+                        ]
+                    }
+                },
+                onSuccess: function() {
+                    $('#card-form').find('[name=request]').val($('#request').val());
+                    $('#card-form').find('[name=arrivaldate]').val($('#arrivaldate').val());
+                    $('#card-form').find('[name=flightnumber]').val($('#flightnumber').val());
+                    $('#card-form').find('[name=arrivaltime]').val($('#arrivaltime').val());
+                    $('#card-form').find('button[type=submit]').addClass('loading disabled');
+                },
+                onFailure: function(formErrors, fields) {
+                    var element;
+                    $.each(fields, function(e) {
+                        element = $('[name=' + e + ']');
+                        if(element.closest('.field').hasClass('error')) {
+                            if (element.parent().hasClass('dropdown')) {
+                                $(window).scrollTop(element.parent().offset().top - $(window).height() / 2);
+                            }
+                            else {
+                                element.focus();
+                            }
+                            return false;
+                        }
+                    });
+                    return false;
+                },
+            });
+        }
+        else {
+            $('#payment-card').css('display', 'none');
+            $('#payment-message').removeClass('hidden');
+            $('#card-form').form('destroy');
+            $('#card-form').form({
+                inline : true,
+                fields: {
+                    name: {
+                        identifier: 'name',
+                        rules: [
+                            {
+                                type   : 'empty',
+                                prompt : '<?php echo e(__("form.Please enter your name")); ?>'
+                            },
+                            {
+                                type   : 'maxLength[191]',
+                                prompt : '<?php echo e(__("form.Please enter at most 191 characters")); ?>'
+                            }
+                        ]
+                    },
+                    surname: {
+                        identifier: 'surname',
+                        rules: [
+                            {
+                                type   : 'empty',
+                                prompt : '<?php echo e(__("form.Please enter your surname")); ?>'
+                            },
+                            {
+                                type   : 'maxLength[191]',
+                                prompt : '<?php echo e(__("form.Please enter at most 191 characters")); ?>'
+                            }
+                        ]
+                    },
+                    country: {
+                        identifier: 'country',
+                        rules: [
+                            {
+                                type   : 'empty',
+                                prompt : '<?php echo e(__("form.Please select a country")); ?>'
+                            }
+                        ]
+                    },
+                    phone_number: {
+                        identifier: 'phone_number',
+                        rules: [
+                            {
+                                type   : 'empty',
+                                prompt : '<?php echo e(__("form.Please enter your phone number")); ?>'
+                            },
+                            {
+                                type   : 'number',
+                                prompt : '<?php echo e(__("form.Please enter your phone number")); ?>'
+                            }
+                        ]
+                    },
+                    email_order: {
+                        identifier: 'email_order',
+                        rules: [
+                            {
+                                type   : 'email',
+                                prompt : '<?php echo e(__("form.Please enter your email")); ?>'
+                            },
+                            {
+                                type   : 'empty',
+                                prompt : '<?php echo e(__("form.Please enter your email")); ?>'
+                            }
+                        ]
+                    },
+                    email_confirm: {
+                        identifier: 'email_confirm',
+                        rules: [
+                            {
+                                type   : 'match[email_order]',
+                                prompt : '<?php echo e(__("form.Email doesnt match")); ?>'
+                            },
+                        ]
+                    },
+                    terms: {
+                        identifier: 'terms',
+                        rules: [
+                            {
+                                type   : 'checked',
+                                prompt : '<?php echo e(__("form.Please agree terms of service")); ?>'
+                            }
+                        ]
+                    }
+                },
+                onSuccess: function() {
+                    $('#card-form').find('[name=request]').val($('#request').val());
+                    $('#card-form').find('[name=arrivaldate]').val($('#arrivaldate').val());
+                    $('#card-form').find('[name=flightnumber]').val($('#flightnumber').val());
+                    $('#card-form').find('[name=arrivaltime]').val($('#arrivaltime').val());
+                    $('#card-form').find('button[type=submit]').addClass('loading disabled');
+                },
+                onFailure: function(formErrors, fields) {
+                    var element;
+                    $.each(fields, function(e) {
+                        element = $('[name=' + e + ']');
+                        if(element.closest('.field').hasClass('error')) {
+                            if (element.parent().hasClass('dropdown')) {
+                                $(window).scrollTop(element.parent().offset().top - $(window).height() / 2);
+                            }
+                            else {
+                                element.focus();
+                            }
+                            return false;
+                        }
+                    });
+                    return false;
+                },
+            });
+        }
+    });
     $('#arrivaldate').daterangepicker({
 		autoApply: true,
 		autoUpdateInput: false,
@@ -404,39 +728,39 @@
                 ]
             },
             phone_number: {
-            	identifier: 'phone_number',
-            	rules: [
-            		{
+                identifier: 'phone_number',
+                rules: [
+                    {
                         type   : 'empty',
                         prompt : '<?php echo e(__("form.Please enter your phone number")); ?>'
-            		},
-            		{
+                    },
+                    {
                         type   : 'number',
                         prompt : '<?php echo e(__("form.Please enter your phone number")); ?>'
-            		}
-            	]
+                    }
+                ]
             },
             email_order: {
-            	identifier: 'email_order',
-            	rules: [
-            		{
+                identifier: 'email_order',
+                rules: [
+                    {
                         type   : 'email',
                         prompt : '<?php echo e(__("form.Please enter your email")); ?>'
-            		},
-            		{
+                    },
+                    {
                         type   : 'empty',
                         prompt : '<?php echo e(__("form.Please enter your email")); ?>'
-            		}
-            	]
+                    }
+                ]
             },
             email_confirm: {
-            	identifier: 'email_confirm',
-            	rules: [
-            		{
+                identifier: 'email_confirm',
+                rules: [
+                    {
                         type   : 'match[email_order]',
                         prompt : '<?php echo e(__("form.Email doesnt match")); ?>'
-            		},
-            	]
+                    },
+                ]
             },
             terms: {
                 identifier: 'terms',
@@ -448,13 +772,13 @@
                 ]
             },
             card_number: {
-            	identifier: 'card_number',
-            	rules: [
-            		{
-            			type   : 'creditCard',
-            			prompt : '<?php echo e(__("form.Card number is wrong")); ?>'
-            		}
-            	]
+                identifier: 'card_number',
+                rules: [
+                    {
+                        type   : 'creditCard',
+                        prompt : '<?php echo e(__("form.Card number is wrong")); ?>'
+                    }
+                ]
             },
             card_holders_name: {
                 identifier: 'card_holders_name',
@@ -511,7 +835,7 @@
                         prompt : '<?php echo e(__("form.Please enter a valid CVV")); ?>'
                     },
                 ]
-            },
+            }
         },
         onSuccess: function() {
         	$('#card-form').find('[name=request]').val($('#request').val());

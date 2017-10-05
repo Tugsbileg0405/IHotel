@@ -215,19 +215,21 @@ class OrderController extends Controller
 		$rate = Option::find(7)->value;
 
 		$roomdatas = $request->session()->get('order_roomdata');
-		
-		$cardNumber = $request->get('card_number');
-		$cardName = $request->get('card_holders_name');
-		$expiryMonth = $request->get('expired_month');
-		$expiryYear = $request->get('expired_year');
-		$cvc = $request->get('cvc');
-		$cardData = [
-			'cardnumber' => $cardNumber, 
-			'cardname' => $cardName, 
-			'expirymonth' => $expiryMonth, 
-			'expiryyear' => $expiryYear, 
-			'cvv' => $cvc,
-		];
+        
+        if ($request->get('payment-option') == 1) {
+            $cardNumber = $request->get('card_number');
+            $cardName = $request->get('card_holders_name');
+            $expiryMonth = $request->get('expired_month');
+            $expiryYear = $request->get('expired_year');
+            $cvc = $request->get('cvc');
+            $cardData = [
+                'cardnumber' => $cardNumber, 
+                'cardname' => $cardName, 
+                'expirymonth' => $expiryMonth, 
+                'expiryyear' => $expiryYear, 
+                'cvv' => $cvc,
+            ];
+        }
 
 		$hotel = \App\Hotel::findOrFail($request->session()->get('order_hotelid'));
 
@@ -319,8 +321,10 @@ class OrderController extends Controller
 		if (\App::isLocale('en')) {
 			$order->price_dollar = $request->session()->get('order_price') / $rate;
 			$order->dollar_rate = $rate;
-		}
-		$order->carddata = json_encode($cardData);
+        }
+        if ($request->get('payment-option') == 1) {
+            $order->carddata = json_encode($cardData);
+        }
 		$order->userdata = json_encode($userData);
 		$order->flightdata = json_encode($flightdata);
         $order->request = $request->get('request');

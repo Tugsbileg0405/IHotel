@@ -21,12 +21,6 @@
 				<a id="jci-world" class="item tab-aspac">
 					<i class="globe icon"></i>JCI World Congress 2017
 				</a>
-				<a href="https://www.booking.com/?aid=1336206" target="_blank" class="item">
-					<i class="world icon"></i>Booking.com
-				</a>
-				<a href="https://www.agoda.com/?cid=1761533" target="_blank" class="item">
-					<i class="world icon"></i>Agoda.com
-				</a>
 				<a href="<?php echo e(url('posts')); ?>" class="item">
 					<i class="plane icon"></i><?php echo e(__('messages.Travel Inspiration')); ?>
 
@@ -594,21 +588,22 @@
 				contentType: false,
 				processData: false,
 	           	success: function(data) {
-                    window.open('https://www.agoda.com/pages/agoda/default/DestinationSearchResult.aspx?cid=1761533&pcs=1&city=' + data.code + '&checkIn=' + moment(startDate).format('YYYY-MM-DD') + '&checkOut=' + moment(endDate).format('YYYY-MM-DD') + '&los=1&rooms=' + roomNumber + '&adults=' + people + '&children=0');
+                    window.location = 'https://www.agoda.com/pages/agoda/default/DestinationSearchResult.aspx?cid=1761533&pcs=1&city=' + data.code + '&checkIn=' + moment(startDate).format('YYYY-MM-DD') + '&checkOut=' + moment(endDate).format('YYYY-MM-DD') + '&los=1&rooms=' + roomNumber + '&adults=' + people + '&children=0';
 	       		},
 				error: function(data){
-                    window.open('https://www.agoda.com/?cid=1761533');
+                    window.location = 'https://www.agoda.com/?cid=1761533';
 				}
 			});
         }
     });
     $('#jci-world').click(function (e) {
+        $(this).addClass('loading');
         $.ajaxSetup({
             headers: {
                 'X-CSRF-TOKEN': $('meta[name="_token"]').attr('content')
             }
         });
-        $.get('search?roomnumber=1&peoplenumber=2&startdate=11/06/2017&enddate=11/11/2017&place=Amsterdam, NetherLands')
+        $.get('search?roomnumber=1&peoplenumber=2&startdate=11/06/2017&enddate=11/11/2017&place=Amsterdam, Netherlands')
             .success(function (data) {
                 window.location = "<?php echo e(URL::to('searchresult')); ?>";
             })

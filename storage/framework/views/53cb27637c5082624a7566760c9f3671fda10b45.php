@@ -385,7 +385,8 @@
         lat: 47.913138,
         lng: 106.920123
     }
-    if ('<?php echo e($place); ?>' == 'Amsterdam, NetherLands') {
+    
+    if ('<?php echo e($place); ?>' == 'Amsterdam, Netherlands') {
         mapCenter = { 
             lat: 52.3702,
             lng: 4.8952
@@ -393,7 +394,7 @@
     }
     function initMap() {
         var map = new google.maps.Map(document.getElementById('map'), {
-            zoom: 12,
+            zoom: 13,
             scrollwheel: false,
             center: mapCenter,
         });

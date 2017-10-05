@@ -224,4 +224,10 @@ return [
     'Flight information for airport pickup service' => 'Нислэгийн мэдээлэл',
     'Your order is cancelled successfully' => 'Таны захиалга амжилттай цуцлагдлаа',
     'Order cancelled' => 'Захиалга цуцлагдлаа',
+    'Transaction must be done in 48 hours (delivered by email)' => 'Та 48 цагийн дотор мөнгөө шилжүүлнэ үү (Таны и-мэйл хаяг руу захиалгын дугаар очих болно)',
+    'Bank name: Golomt bank' => 'Банкны нэр: Голомт банк',
+    'Account number: 1415101077' => 'Дансны дугаар: 1415101077',
+    'Account currency: USD' => 'Валютын төрөл: USD',
+    'Account name: iHotel LLC' => 'Дансны нэр: Айхотел ХХК',
+    'Remark: Reservation number; Guest name' => 'Гүйлгээний утга: Захиалгын дугаар; Зочны нэр'
 ];

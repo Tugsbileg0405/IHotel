@@ -224,4 +224,10 @@ return [
     'Flight information for airport pickup service' => 'Flight information for airport pickup service',
     'Your order is cancelled successfully' => 'Your order is cancelled successfully',
     'Order cancelled' => 'Order cancelled',
+    'Transaction must be done in 48 hours (delivered by email)' => 'Transaction must be done in 48 hours (delivered by email)',
+    'Bank name: Golomt bank' => 'Bank name: Golomt bank',
+    'Account number: 1415101077' => 'Account number: 1415101077',
+    'Account currency: USD' => 'Account currency: USD',
+    'Account name: iHotel LLC' => 'Account name: iHotel LLC',
+    'Remark: Reservation number; Guest name' => 'Remark: Reservation number (delivered by email); Guest name',
 ];
