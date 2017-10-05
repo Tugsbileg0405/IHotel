@@ -19,16 +19,16 @@
 				<a class="item active" data-tab="hotel">
 					<i class="hotel icon"></i>{{ __('messages.Hotel') }}
 				</a>
+				<a target="_blank" class="item tab-aspac">
+					<i class="globe icon"></i>{{ __('messages.Amsterdam') }}
+				</a>
 				<a href="https://www.booking.com/?aid=1336206" target="_blank" class="item">
 					<i class="world icon"></i>Booking.com
 				</a>
 				<a href="https://www.agoda.com/?cid=1761533" target="_blank" class="item">
 					<i class="world icon"></i>Agoda.com
 				</a>
-				<a href="https://www.sixt.com/php/reservation" target="_blance" class="item">
-					<i class="car icon"></i>{{ __('messages.Rent a car') }}
-				</a>
-				<a href="{{ url('posts') }}" class="item tab-aspac">
+				<a href="{{ url('posts') }}" class="item">
 					<i class="plane icon"></i>{{ __('messages.Travel Inspiration') }}
 				</a>
 			</div>
@@ -547,7 +547,18 @@
         }
         })
         searchPlace = $('#searchplace').val();
-        if (cityName == undefined || cityName == 'Ulaanbaatar') {
+        if (searchPlace == 'Ulaanbaatar, Mongolia') {
+            $.get('search?roomnumber=' + roomNumber + '&peoplenumber=' + people + '&startdate=' + startDate + '&enddate=' + endDate + '&place=' + searchPlace)
+            .success(function (data) {
+                window.location = "{{ URL::to('searchresult') }}";
+            })
+            .error(function(jqXHR, textStatus, errorThrown){
+                if (textStatus == 'error'){
+                        alert(errorThrown);
+                }
+            });
+        }
+        else if (searchPlace == 'Amsterdam, Netherlands') {
             $.get('search?roomnumber=' + roomNumber + '&peoplenumber=' + people + '&startdate=' + startDate + '&enddate=' + endDate + '&place=' + searchPlace)
             .success(function (data) {
                 window.location = "{{ URL::to('searchresult') }}";
@@ -571,10 +582,10 @@
 				contentType: false,
 				processData: false,
 	           	success: function(data) {
-                    window.location = 'https://www.agoda.com/pages/agoda/default/DestinationSearchResult.aspx?cid=1761533&pcs=1&city=' + data.code + '&checkIn=' + moment(startDate).format('YYYY-MM-DD') + '&checkOut=' + moment(endDate).format('YYYY-MM-DD') + '&los=1&rooms=' + roomNumber + '&adults=' + people + '&children=0';
+                    window.open('https://www.agoda.com/pages/agoda/default/DestinationSearchResult.aspx?cid=1761533&pcs=1&city=' + data.code + '&checkIn=' + moment(startDate).format('YYYY-MM-DD') + '&checkOut=' + moment(endDate).format('YYYY-MM-DD') + '&los=1&rooms=' + roomNumber + '&adults=' + people + '&children=0');
 	       		},
 				error: function(data){
-                    window.location = 'https://www.agoda.com/?cid=1761533';
+                    window.open('https://www.agoda.com/?cid=1761533');
 				}
 			});
         }

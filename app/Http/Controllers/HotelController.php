@@ -46,6 +46,7 @@ class HotelController extends Controller
         $hotel->phone_number = $request->get('phone_number');
         $hotel->email = $request->get('email');
         $hotel->address = $request->get('address');
+        $hotel->country = $request->get('country');
         $array = array($request->get('lat'), $request->get('lon'));
         $hotel->location = json_encode($array);
         $hotel->step = 2;
@@ -67,6 +68,7 @@ class HotelController extends Controller
         $hotel->phone_number = $request->get('phone_number');
         $hotel->email = $request->get('email');
         $hotel->address = $request->get('address');
+        $hotel->country = $request->get('country');
         $array = array($request->get('lat'), $request->get('lon'));
         $hotel->location = json_encode($array);
         if ($hotel->step < 2) {

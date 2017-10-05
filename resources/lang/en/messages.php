@@ -78,7 +78,7 @@ return [
     'Cost of per night' => 'Cost of per night',
     'Price before tax' => 'Price before tax',
     'Price after tax' => 'Price after tax',
-    'Credit card information' => 'Credit card information',
+    'Credit card information' => 'Payment information',
     'Verify' => 'Verify',
     'The order number' => 'The order number',
     'Phone' => 'Phone',

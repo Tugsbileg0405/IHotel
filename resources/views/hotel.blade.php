@@ -321,13 +321,21 @@
 										</p>
 									</div>
 									<div class="ui large header">{{ __('messages.Rooms') }}</div>
-									@foreach($rooms->sortBy('price')  as $key=>$room)
+									@foreach($rooms->sortBy('price')  as $key => $room)
 									<div class="ui segment">
 										<div class="ui stackable column grid">
 											<div class="four wide column">
-											@if($room->photos)
-												<img class="ui image" src="{{ asset(unserialize($room->photos)[0]) }}" />
-											@endif
+                                                <div id="slider1" class="flexslider">
+                                                    <ul class="slides">
+                                                        @foreach (unserialize($room->photos) as $photo)
+                                                            <li>
+                                                                <a class="popup-link-room" href="{{ asset($photo) }}">
+                                                                    <img src="{{ asset($photo) }}">
+                                                                </a>
+                                                            </li>
+                                                        @endforeach
+                                                    </ul>
+                                                </div>
 											</div>
 											<div class="seven wide column">
 												<div class="ui large header">{{$room->name}}</div>
@@ -512,7 +520,6 @@
 		var input = document.getElementById('searchplace');
 		var autocomplete = new google.maps.places.Autocomplete(input, { types: ['(cities)'] });
 	}
-
 	initMap();
 	$('.ui.radio.checkbox').checkbox();
 	$(window).load(function () {
@@ -535,12 +542,21 @@
 				$('body').removeClass('loading');
 			}
 		});
+		$('#slider1').flexslider({
+			animation: "slide",
+			controlNav: false,
+			animationLoop: false,
+			slideshow: false
+		});
 		$('.popup-link').magnificPopup({
 			type: 'image',
 			gallery: { enabled: true }
 		});
+		$('.popup-link-room').magnificPopup({
+			type: 'image',
+			gallery: { enabled: true }
+		});
 	});
-
 </script>
 <script>
 	// =============================================================================
@@ -1103,7 +1119,6 @@
     else {
         $('.datalocation input').val(searchPlace);
     }
-
 
     endDate = moment('{{  $enddate  }}').format('L');
     startDate = moment('{{  $startdate  }}').format('L');

@@ -158,13 +158,6 @@
 												</table>
 											</div>
 										</div>
-										<div class="ui message">
-											<ul class="list">
-												<li>10% VAT is included</li>
-												<li>5% Property service charge is included.</li>
-												<li>1% City tax is included</li>
-											</ul>
-										</div>
 				                        <div class="ui divider"></div>
 										@if ($pickup)
 					                        <div class="ui form">

@@ -38,12 +38,12 @@
 							</a>
 						</div>
 						<select class="<?php echo e($roomnumber < 15 ? 'ui' : ''); ?> fluid search dropdown selectedRoom" style="display: <?php echo e($roomnumber < 15 ? '' : 'none'); ?>">
-                        	    <option value=""><?php echo e(__('messages.Rooms')); ?></option>
-                        	    <?php for($i=1; $i< 15; $i++): ?>
-                        	    <option value="<?php echo e($i); ?>" <?php if($i == $roomnumber): ?> selected <?php endif; ?>><?php echo e($i); ?> <?php echo e(__('messages.room')); ?></option>
-                        	    <?php endfor; ?>
-                        	    <option value="more"><?php echo e(__('messages.More')); ?></option>
-                        	</select>
+                            <option value=""><?php echo e(__('messages.Rooms')); ?></option>
+                            <?php for($i=1; $i< 15; $i++): ?>
+                                <option value="<?php echo e($i); ?>" <?php if($i == $roomnumber): ?> selected <?php endif; ?>><?php echo e($i); ?> <?php echo e(__('messages.room')); ?></option>
+                            <?php endfor; ?>
+                            <option value="more"><?php echo e(__('messages.More')); ?></option>
+                        </select>
 					</div>
 				</div>
 				<div class="three wide column">
@@ -58,12 +58,12 @@
 							</a>
 						</div>
 						<select class="<?php echo e($peoplenumber < 15 ? 'ui' : ''); ?> fluid search dropdown selectedPeople" style="display: <?php echo e($peoplenumber < 15 ? '' : 'none'); ?>">
-                                 <option value=""><?php echo e(__('messages.People')); ?></option>
-                                 <?php for($i=1; $i< 15; $i++): ?>
-                                 <option value="<?php echo e($i); ?>" <?php if($i == $peoplenumber): ?> selected <?php endif; ?>><?php echo e($i); ?> <?php echo e(__('messages.people')); ?></option>
-                                 <?php endfor; ?>
-                                 <option value="more"><?php echo e(__('messages.More')); ?></option>
-                             </select>
+                            <option value=""><?php echo e(__('messages.People')); ?></option>
+                            <?php for($i=1; $i< 15; $i++): ?>
+                                <option value="<?php echo e($i); ?>" <?php if($i == $peoplenumber): ?> selected <?php endif; ?>><?php echo e($i); ?> <?php echo e(__('messages.people')); ?></option>
+                            <?php endfor; ?>
+                            <option value="more"><?php echo e(__('messages.More')); ?></option>
+                        </select>
 					</div>
 				</div>
 				<div class="two wide column">
@@ -327,33 +327,23 @@
 												<?php endif; ?> 
 											<?php endif; ?>
 										</p>
-										<p class="ui justify" style="vertical-align:middle;line-height:30px !important;display:flex">
-											<img src="<?php echo e(asset('img/what3word.jpg')); ?>" height="30" style="border-radius:50%;margin-right:10px" width="30" alt="">											
-											<?php if(App::isLocale('mn')): ?>
-												<a href="https://map.what3words.com/<?php echo e($hotel->what3words); ?>" target="_blank">
-													<?php echo e($hotel->what3words); ?> (what3words)
-												</a> 
-											<?php elseif(App::isLocale('en')): ?> 
-												<?php if($hotel->what3words_en): ?>
-													<a href="https://map.what3words.com/<?php echo e($hotel->what3words_en); ?>" target="_blank">
-														<?php echo e($hotel->what3words_en); ?> (what3words)
-													</a> 
-												<?php else: ?>
-													<a href="https://map.what3words.com/<?php echo e($hotel->what3words); ?>" target="_blank">
-														<?php echo e($hotel->what3words); ?> (what3words)
-													</a> 
-												<?php endif; ?> 
-											<?php endif; ?>
-										</p>
 									</div>
 									<div class="ui large header"><?php echo e(__('messages.Rooms')); ?></div>
-									<?php $__currentLoopData = $rooms->sortBy('price'); $__env->addLoop($__currentLoopData); foreach($__currentLoopData as $key=>$room): $__env->incrementLoopIndices(); $loop = $__env->getLastLoop(); ?>
+									<?php $__currentLoopData = $rooms->sortBy('price'); $__env->addLoop($__currentLoopData); foreach($__currentLoopData as $key => $room): $__env->incrementLoopIndices(); $loop = $__env->getLastLoop(); ?>
 									<div class="ui segment">
 										<div class="ui stackable column grid">
 											<div class="four wide column">
-											<?php if($room->photos): ?>
-												<img class="ui image" src="<?php echo e(asset(unserialize($room->photos)[0])); ?>" />
-											<?php endif; ?>
+                                                <div id="slider1" class="flexslider">
+                                                    <ul class="slides">
+                                                        <?php $__currentLoopData = unserialize($room->photos); $__env->addLoop($__currentLoopData); foreach($__currentLoopData as $photo): $__env->incrementLoopIndices(); $loop = $__env->getLastLoop(); ?>
+                                                            <li>
+                                                                <a class="popup-link-room" href="<?php echo e(asset($photo)); ?>">
+                                                                    <img src="<?php echo e(asset($photo)); ?>">
+                                                                </a>
+                                                            </li>
+                                                        <?php endforeach; $__env->popLoop(); $loop = $__env->getLastLoop(); ?>
+                                                    </ul>
+                                                </div>
 											</div>
 											<div class="seven wide column">
 												<div class="ui large header"><?php echo e($room->name); ?></div>
@@ -538,19 +528,15 @@
 <script src="<?php echo e(asset('js/moment.js')); ?>"></script>
 <script src="<?php echo e(asset('js/daterangepicker.js')); ?>"></script>
 <script defer src="<?php echo e(asset('js/jquery.flexslider.js')); ?>"></script>
-<script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyBjW4iZ6gWxhzJOE3Vi4wvHZcTH0vgdDqk&libraries=places"></script>
+<script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyDssMBUJqsqfD7XE5DKCbk6jK9R1C81MH0&libraries=places"></script>
 <link rel="stylesheet" href="<?php echo e(asset('css/flexslider.css')); ?>" type="text/css" media="screen" />
 <script>
 	function initMap() {
 		var input = document.getElementById('searchplace');
 		var autocomplete = new google.maps.places.Autocomplete(input, { types: ['(cities)'] });
 	}
-
 	initMap();
-
-	$('.ui.radio.checkbox')
-		.checkbox()
-		;
+	$('.ui.radio.checkbox').checkbox();
 	$(window).load(function () {
 		$('#carousel').flexslider({
 			animation: "slide",
@@ -571,13 +557,21 @@
 				$('body').removeClass('loading');
 			}
 		});
-
+		$('#slider1').flexslider({
+			animation: "slide",
+			controlNav: false,
+			animationLoop: false,
+			slideshow: false
+		});
 		$('.popup-link').magnificPopup({
 			type: 'image',
 			gallery: { enabled: true }
 		});
+		$('.popup-link-room').magnificPopup({
+			type: 'image',
+			gallery: { enabled: true }
+		});
 	});
-
 </script>
 <script>
 	// =============================================================================
@@ -1140,7 +1134,6 @@
     else {
         $('.datalocation input').val(searchPlace);
     }
-
 
     endDate = moment('<?php echo e($enddate); ?>').format('L');
     startDate = moment('<?php echo e($startdate); ?>').format('L');

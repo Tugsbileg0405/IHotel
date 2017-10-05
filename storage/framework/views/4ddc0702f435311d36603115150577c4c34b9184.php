@@ -1,55 +1,24 @@
 <?php $__env->startSection('title', 'iHotel'); ?>
 
 <?php $__env->startSection('content'); ?>
-<div class="sixteen wide column ihotel-progress">
-    <div class="ui tiny green progress" data-value="10" data-total="100">
-        <div class="bar"></div>
-    </div>
-</div>
-<div class="four wide column">
-    <div class="ui fluid vertical pointing menu">
-        <a class="item active">
-            Үндсэн мэдээлэл
-        </a>
-        <a class="item disabled">
-            Буудлын мэдээлэл
-        </a>
-        <a class="item disabled">
-            Буудлын зураг
-        </a>
-        <a class="item disabled">
-            Өрөөний товч мэдээлэл
-        </a>
-        <a class="item disabled">
-            Өрөөний дэлгэрэнгүй мэдээлэл
-        </a>
-        <a class="item disabled">
-            Өрөөний зураг
-        </a>
-        <a class="item disabled">
-            Төлбөрийн нөхцөл
-        </a>
-        <a class="item disabled">
-            Гэрээ хийх
-        </a>
-    </div>
-</div>
+<?php echo $__env->make('hotel.sidebar', array_except(get_defined_vars(), array('__data', '__path')))->render(); ?>
 <div class="twelve wide column">
-	<form class="ui form segment" id="create-hotel-form" action="<?php echo e(url('hotel/create')); ?>" method="POST">
+	<form class="ui form segment" id="create-hotel-form" action="<?php echo e(url('hotel/update', $hotel->id)); ?>" method="POST">
 		<?php echo e(csrf_field()); ?>
 
 		<img class="ui centered tiny image hotel-add" src="<?php echo e(asset('img/marker.png')); ?>">
 		<h6 class="ui horizontal header divider ihotel-title">Үндсэн мэдээлэл</h6>
 		<div class="required field">
 			<label>Буудлын нэр</label>
-			<input type="text" name="name">
+			<input type="text" name="name" value="<?php echo e($hotel->name); ?>">
 		</div>
 		<div class="required field">
 			<label>Зочид буудын төрөл</label>
 			<select class="ui fluid dropdown" name="category">
 			<option value="">Сонгох</option>
 				<?php $__currentLoopData = $categories; $__env->addLoop($__currentLoopData); foreach($__currentLoopData as $category): $__env->incrementLoopIndices(); $loop = $__env->getLastLoop(); ?>
-					<option value="<?php echo e($category->id); ?>">
+					<option value="<?php echo e($category->id); ?>"
+						<?php echo e($hotel->category_id == $category->id ? 'selected' : ''); ?>>
 						<?php echo e($category->name); ?>
 
 					</option>
@@ -62,7 +31,8 @@
 				<select name="star" class="ui fluid dropdown">
 					<option value="">Сонгох</option>
 					<?php for($i=1; $i<=5; $i++): ?>
-						<option value="<?php echo e($i); ?>">
+						<option value="<?php echo e($i); ?>"
+							<?php echo e($hotel->star == $i ? 'selected' : ''); ?>>
 							<?php echo e($i); ?> од
 						</option>
 					<?php endfor; ?>
@@ -70,14 +40,14 @@
 			</div>
 			<div class="required field">
 				<label>Өрөөний тоо</label>
-				<input type="text" name="room_number">
+				<input type="number" name="room_number" min="1" value="<?php echo e($hotel->room_number); ?>">
 			</div>
 		</div>
 		<div class="field">
 			<label>Цахим хуудас</label>
 			<div class="ui labeled input">
 				<div class="ui label">http://</div>
-				<input type="text" name="website" placeholder="mysite.com">
+				<input type="text" name="website" placeholder="mysite.com" value="<?php echo e($hotel->website); ?>">
 			</div>
 		</div>
 		<h6 class="ui horizontal header divider ihotel-title">
@@ -86,30 +56,30 @@
 		<div class="two fields">
 			<div class="required field">
 				<label>Холбоо барих ажилтны нэр</label>
-				<input type="text" name="contact">
-		</div>
+				<input type="text" name="contact" value="<?php echo e($hotel->contact); ?>">
+			</div>
 			<div class="required field">
 				<label>Утас</label>
-				<input type="text" name="phone_number">
+				<input type="text" name="phone_number" value="<?php echo e($hotel->phone_number); ?>">
 			</div>
 		</div>
 		<div class="required field">
 			<label>И-мэйл</label>
-			<input type="text" name="email">
+			<input type="text" name="email" value="<?php echo e($hotel->email); ?>">
 		</div>
 		<div class="required field">
 			<label>Хаяг</label>
-			<textarea name="address"></textarea>
+			<textarea name="address"><?php echo e($hotel->address); ?></textarea>
 		</div>
 		<div class="required field">
 			<label>Хот</label>
-			<input type="text" id="searchplace" name="country">
+			<input type="text" id="searchplace" name="country" value="<?php echo e($hotel->country); ?>">
 		</div>
 		<div class="required field">
 			<label>Байршил</label>
 			<div id="map" style="height:300px"></div>
-			<input type="hidden" value="47.921622" name="lat" id="lat">
-			<input type="hidden" value="106.922362" name="lon" id="lon">
+			<input type="hidden" value="<?php echo e(json_decode($hotel->location)[0]); ?>" name="lat" id="lat">
+			<input type="hidden" value="<?php echo e(json_decode($hotel->location)[1]); ?>" name="lon" id="lon">
 		</div>
 		<div class="ui right floated buttons">
 			<button class="ui primary button" type="submit">
@@ -123,7 +93,6 @@
 <?php $__env->startPush('script'); ?>
 <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyDssMBUJqsqfD7XE5DKCbk6jK9R1C81MH0&sensor=false&libraries=places"></script>
 <script type="text/javascript">
-	$('#searchplace').val('Ulaanbaatar, Mongolia');
 	function initialize() {
 		var input = document.getElementById('searchplace');
 
@@ -151,18 +120,21 @@
 	    var map = new google.maps.Map(document.getElementById('map'), {
 	        zoom: 13,
 	        center: {
-	        	lat: 47.921622,
-	        	lng: 106.922362
+	        	lat: <?php echo e(json_decode($hotel->location)[0]); ?>, 
+	        	lng: <?php echo e(json_decode($hotel->location)[1]); ?>
+
 	        },
 	    });
 		marker = new google.maps.Marker({
 			position: {
-	        	lat: 47.921622,
-	        	lng: 106.922362
+				lat: <?php echo e(json_decode($hotel->location)[0]); ?>, 
+				lng: <?php echo e(json_decode($hotel->location)[1]); ?>
+
 			},
 			map: map        
 		});
 		google.maps.event.addListener(map, "click", function (e) {
+	    	$('#create-hotel-form').find('button').addClass('disabled');
 			var lat = e.latLng.lat();
 			var lon = e.latLng.lng();
 			marker.setPosition(new google.maps.LatLng(lat, lon));
@@ -213,7 +185,7 @@
 	                    prompt : 'Өрөөний тоо оруулна уу'
 	                },
 	                {
-	                    type   : 'integer[1..999999]',
+	                    type   : 'integer',
 	                    prompt : 'Өрөөний тоо оруулна уу'
 	                },
 	                {

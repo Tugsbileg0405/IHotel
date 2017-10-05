@@ -78,7 +78,7 @@ return [
     'Cost of per night' => 'Өрөөний үнэ/шөнө',
     'Price before tax' => 'НӨАТ-ын өмнө үнэ',
     'Price after tax' => 'НӨАТ-ын дараах үнэ',
-    'Credit card information' => 'Кредит картын мэдээлэл',
+    'Credit card information' => 'Төлбөрийн мэдээлэл',
     'Verify' => 'Баталгаажуулах',
     'The order number' => 'Захиалгын дугаар',
     'Phone' => 'Утас',

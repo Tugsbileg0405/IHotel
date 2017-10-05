@@ -29,6 +29,7 @@ class CreateHotelsTable extends Migration
             $table->string('email');
             $table->text('address');
             $table->text('address_en')->nullable()->default(null);
+            $table->string('country')->nullable()->default(null);
             $table->text('introduction')->nullable()->default(null);
             $table->text('introduction_en')->nullable()->default(null);
             $table->boolean('is_child')->nullable()->default(null);
