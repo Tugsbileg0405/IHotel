@@ -377,12 +377,21 @@
     //  - Show google map 
     // =============================================================================
 
-    
+    var mapCenter = { 
+        lat: 47.913138,
+        lng: 106.920123
+    }
+    if ('{{ $place }}' == 'Amsterdam, NetherLands') {
+        mapCenter = { 
+            lat: 52.3702,
+            lng: 4.8952
+        }
+    }
     function initMap() {
         var map = new google.maps.Map(document.getElementById('map'), {
             zoom: 13,
             scrollwheel: false,
-            center: { lat: 47.913138, lng: 106.920123 },
+            center: mapCenter,
         });
         setMarkers(map);
         var input = document.getElementById('searchplace');

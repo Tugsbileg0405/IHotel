@@ -18,9 +18,8 @@
 					<i class="hotel icon"></i><?php echo e(__('messages.Hotel')); ?>
 
 				</a>
-				<a target="_blank" class="item tab-aspac">
-					<i class="globe icon"></i><?php echo e(__('messages.Amsterdam')); ?>
-
+				<a id="jci-world" class="item tab-aspac">
+					<i class="globe icon"></i>JCI World Congress 2017
 				</a>
 				<a href="https://www.booking.com/?aid=1336206" target="_blank" class="item">
 					<i class="world icon"></i>Booking.com
@@ -555,10 +554,10 @@
             people = 2;
         }
         $.ajaxSetup({
-        headers: {
-            'X-CSRF-TOKEN': $('meta[name="_token"]').attr('content')
-        }
-        })
+            headers: {
+                'X-CSRF-TOKEN': $('meta[name="_token"]').attr('content')
+            }
+        });
         searchPlace = $('#searchplace').val();
         if (searchPlace == 'Ulaanbaatar, Mongolia') {
             $.get('search?roomnumber=' + roomNumber + '&peoplenumber=' + people + '&startdate=' + startDate + '&enddate=' + endDate + '&place=' + searchPlace)
@@ -602,6 +601,23 @@
 				}
 			});
         }
+    });
+    $('#jci-world').click(function (e) {
+        $.ajaxSetup({
+            headers: {
+                'X-CSRF-TOKEN': $('meta[name="_token"]').attr('content')
+            }
+        });
+        $.get('search?roomnumber=1&peoplenumber=2&startdate=11/06/2017&enddate=11/11/2017&place=Amsterdam, NetherLands')
+            .success(function (data) {
+                window.location = "<?php echo e(URL::to('searchresult')); ?>";
+            })
+            .error(function(jqXHR, textStatus, errorThrown){
+                if (textStatus == 'error'){
+                        alert(errorThrown);
+                }
+            });
+        e.preventDefault();
     });
 </script>
 <?php $__env->stopPush(); ?>
