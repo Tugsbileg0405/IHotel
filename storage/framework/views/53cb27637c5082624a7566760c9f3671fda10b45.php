@@ -566,6 +566,17 @@
                     markers[i].setMap(null);
             }
             markers = [];
+            var hqmarker = new google.maps.Marker({
+                map: map,
+                animation: google.maps.Animation.DROP,
+                position: {
+                    lat: 52.3778973,
+                    lng: 4.9120969
+                },
+                icon: "<?php echo e(asset('/img/mapicon/hq.png')); ?>",
+                zIndex:100
+            });
+            markers.push(hqmarker);
             $.get('checkhotels?page=' + page + '&filterprice1=' + first + '&filterprice2=' + last + '&filterstar=' + star + '&rating1=' + rating1 + '&rating2=' + rating2)
                 .success(function (data) {
                 allHotels = data.allhotels;

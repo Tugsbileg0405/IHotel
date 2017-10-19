@@ -234,9 +234,6 @@
                                 @endif
                             </h1>
                         </div>
-                        <p>10% VAT is included.</p>
-                        <p>5% Property service charge is included.</p>
-                        <p>1% City tax is included.</p>
                         <p>
                             <strong>Prepayment:</strong> Payment will be withdrawn any time after booking.
                         </p>
@@ -330,9 +327,9 @@
                 @endif
             </tbody>
         </table>
-        <div style="max-width: 600px; margin: 20px auto">
+        <!-- <div style="max-width: 600px; margin: 20px auto">
             <p>If you want to cancel the order click <a href="{{ url('order/cancel/'.$order->id.'?token='.$order->token) }}">here</a></p>
-        </div>
+        </div> -->
     </div>
 </body>
 </html>

@@ -21,18 +21,22 @@ class SearchController extends Controller
     // =========================================================================
     public function index(Request $request)
     {
-        $roomnumber = $request->roomnumber;
-        $startDate = $request->startdate;
-        $endDate = $request->enddate;
-        $peoplenumber = $request->peoplenumber;
-        $place = $request->place;
+        $roomnumber = urldecode($request->roomnumber);
+        $startDate = urldecode($request->startdate);
+        $endDate = urldecode($request->enddate);
+        $peoplenumber = urldecode($request->peoplenumber);
+        $place = urldecode($request->place);
         $request->session()->put('roomnumber', $roomnumber);
         $request->session()->put('startDate', $startDate);
         $request->session()->put('endDate', $endDate);
         $request->session()->put('peoplenumber', $peoplenumber);
         $request->session()->put('place', $place);
-        
-        return 'success';
+
+        if($request->ajax()){
+            return 'success';
+        }
+
+        return redirect('searchresult');
     }
 
     // =========================================================================
@@ -104,7 +108,11 @@ class SearchController extends Controller
 
     public function hotelInfo($id, Request $request)
     {
-        $hotel = \App\Hotel::with('rooms')->with('services')->findOrFail($id);
+        $hotel = \App\Hotel::where('published', true)
+            ->where('is_active', true)
+            ->with('services')
+            ->with('rooms')
+            ->findOrFail($id);
 
         $grouped = $hotel->services->groupBy('service_category_id');
 

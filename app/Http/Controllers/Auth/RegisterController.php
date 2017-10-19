@@ -29,6 +29,11 @@ class RegisterController extends Controller
      */
     protected $redirectTo = '/';
 
+    public function redirectTo()
+    {
+        return session()->get('url.intended') ? session()->get('url.intended') : $this->redirectTo;
+    }
+
     /**
      * Create a new controller instance.
      *
